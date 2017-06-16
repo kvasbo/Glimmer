@@ -12,7 +12,9 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
-import HTMLView from 'react-native-htmlview';
+import ForumText from './ForumText.js';
+
+var s = require('./Styles');
 
 //https://github.com/jsdf/react-native-htmlview
 
@@ -57,8 +59,8 @@ export default class ForumComment extends React.Component {
     render () {
 
         return (
-            <View>
-                <Text>{this.props.data.body}</Text>
+            <View style={s.commentContainer}>
+                <ForumText cut={false} text={this.props.data.body}/>
                 <CommentMetadata data={this.props.data}/>
             </View>
         )
