@@ -75,6 +75,21 @@ export default class StreamForumPost extends React.Component {
     {
         var out = body;
 
+        if(cut)
+        {
+           var tmp = out.split(" ");
+
+           tmp = tmp.slice(0, 100);
+
+           if(tmp.length > 99)
+           {
+               tmp.push("(...)");
+           }
+
+           out = tmp.join(" ");
+
+        }
+
         //Add https to image links
         out = out.replace('href="//images', 'href="https://images');
         out = out.replace('src="//images', 'src="https://images');

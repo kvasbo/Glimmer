@@ -8,6 +8,7 @@ import {
     StyleSheet,
     Text,
     View,
+    Image,
     ScrollView,
     TouchableOpacity
 } from 'react-native';
@@ -22,11 +23,23 @@ class CommentMetadata extends React.Component {
         super(props);
     }
 
+    getTime()
+    {
+        return new moment(this.props.data.created_at).calendar();
+    }
+
     render () {
 
         return (
             <View>
-                <Text>{this.props.data.body}</Text>
+                <Image
+
+                    style={{width: 25, height: 25}}
+                    source={{uri: this.props.data.creator.image_url}}
+                />
+                <Text>{this.props.data.creator.name}</Text>
+                <Text>{this.props.data.creator.id}</Text>
+                <Text>{this.getTime()}</Text>
             </View>
         )
 
@@ -46,6 +59,7 @@ export default class ForumComment extends React.Component {
         return (
             <View>
                 <Text>{this.props.data.body}</Text>
+                <CommentMetadata data={this.props.data}/>
             </View>
         )
 

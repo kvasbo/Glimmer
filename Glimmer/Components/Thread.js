@@ -10,10 +10,11 @@ import {
     View,
     ScrollView
 } from 'react-native';
-
+import KeyboardSpace from 'react-native-keyboard-space';
 
 import StreamForumPost from "./ForumPost";
 import ForumComment from "./ForumComment";
+import AddCommentBlock from "./ForumAddComment";
 
 export default class Thread extends React.Component {
 
@@ -24,7 +25,7 @@ export default class Thread extends React.Component {
     }
 
     static navigationOptions = ({ navigation }) => ({
-        title: `Tråd ${navigation.state.params.postId}`,
+        title: `${navigation.state.params.post.title}`,
     });
 
     componentDidMount()
@@ -63,6 +64,8 @@ export default class Thread extends React.Component {
             <ScrollView style={pageStyles.container}>
                <StreamForumPost data={this.props.navigation.state.params.post}/>
                 {this.getComments()}
+                <AddCommentBlock postId={this.props.navigation.state.params.post.id}/>
+                <KeyboardSpace />
             </ScrollView>
         );
     }
