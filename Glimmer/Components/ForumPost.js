@@ -8,21 +8,37 @@ import {
     StyleSheet,
     Text,
     View,
-    WebView,
-    ScrollView
+    ScrollView,
+    TouchableOpacity
 } from 'react-native';
+import HTMLView from 'react-native-htmlview';
 
-export default class ForumPost extends React.Component {
 
-    styles = StyleSheet.create({
-        container: {
-            backgroundColor: '#FFFFFF',
-            paddingLeft: 20,
-            paddingTop: 30,
-            paddingBottom: 30,
-            paddingRight: 30,
-        },
-    })
+
+//https://github.com/jsdf/react-native-htmlview
+
+class MetaDataFirstPost extends React.Component {
+
+    constructor(props)
+    {
+        super(props);
+    }
+
+    render () {
+
+        return (
+            <View>
+                <Text>{this.props.comments} Kommentarer</Text>
+                <Text>{this.props.forum}</Text>
+                <Text></Text>
+            </View>
+        )
+
+    }
+
+}
+
+export default class StreamForumPost extends React.Component {
 
     constructor(props)
     {
@@ -32,10 +48,30 @@ export default class ForumPost extends React.Component {
 
     componentDidMount()
     {
-        console.log(this.props.data);
+        //console.log(this.props.data);
     }
 
-    fixBody(body)
+    styles = StyleSheet.create({
+        container: {
+            backgroundColor: '#FFFFFF',
+            paddingLeft: 20,
+            paddingTop: 30,
+            paddingBottom: 30,
+            paddingRight: 30,
+            marginTop: 0,
+            marginBottom: 20,
+        },
+    })
+
+    wrapper = {
+        start: "<html><head><style>" +
+        ".skogspost {font-family: -apple-system, Roboto, sans-serif; padding-left: 0px} .textile {padding-left: 0px; margin-left: 0px;}" +
+        "img {width: 100px}" +
+        "</style></head><body><div class='skogspost'>",
+        end: "</div></body></html>"
+    }
+
+    fixBody(body, cut)
     {
         var out = body;
 
@@ -48,37 +84,29 @@ export default class ForumPost extends React.Component {
         return out;
     }
 
-    render() {
-
-        var postBody = this.fixBody(this.props.data.body);
-
-        console.log(postBody);
-
-        return (
-            <View style={this.styles.container}>
-                <Text>{this.props.data.title}</Text>
-                <Text>{this.props.data.creator.name}</Text>
-                <Text>{this.props.data.created_at}</Text>
-                <WebView
-                    style={{
-                        backgroundColor: "#FFFFFF",
-                        height: 100,
-
-                    }}
-                    source={{html: postBody}}
-                    scalesPageToFit={false}
-                />
-
-            </View>
-        );
+    getTime(time)
+    {
+        return new moment(this.props.data.created_at).calendar();
     }
 
-    wrapper = {
-        start: "<html><head><style>" +
-            ".skogspost {font-family: -apple-system, Roboto, sans-serif; padding-left: 0px} .textile {padding-left: 0px; margin-left: 0px;}" +
-        "img {width: 100px}" +
-        "</style></head><body><div class='skogspost'>",
-        end: "</div></body>"
+    render() {
+
+        var postBody = this.fixBody(this.props.data.body, true);
+
+        return (
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Thread', { post: this.props.data, postId: this.props.data.id })}>
+                <View style={this.styles.container}>
+                    <Text style={{fontSize: 15}}>{this.props.data.title}</Text>
+                    <Text>{this.props.data.creator.name}</Text>
+                    <Text>{this.getTime()}</Text>
+                    <HTMLView
+                        value={postBody}
+                        stylesheet={styles}
+                    />
+                    <MetaDataFirstPost comments={this.props.data.comment_count} forum={this.props.data.forum.title}/>
+                </View>
+            </TouchableOpacity>
+        );
     }
 
 }
@@ -97,3 +125,13 @@ class ViewUser extends Component {
 
 
 }
+
+const styles = StyleSheet.create({
+    a: {
+        fontWeight: '300',
+        color: '#FF3366', // make links coloured pink
+    },
+    img: {
+        maxWidth: 200
+    }
+});

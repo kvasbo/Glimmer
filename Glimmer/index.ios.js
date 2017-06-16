@@ -11,14 +11,22 @@ import {
     Text,
     View,
 } from 'react-native';
-import Tabs from './Components/TabsNavigation';
+import { StackNavigator } from 'react-navigation';
+import Stream from "./Components/Stream";
+import Thread from "./Components/Thread";
+
+global.moment = require('moment');
+
+import 'moment/locale/nb';
+moment.locale('nb')
+
 import GlimmerAuth from "./src/auth.js";
 
 const config = require("./config.js");
 
 global.auth = new GlimmerAuth();
 
-export default class Glimmer extends Component {
+export default class HomeScreen extends Component {
 
     constructor(props)
     {
@@ -28,10 +36,9 @@ export default class Glimmer extends Component {
 
     }
 
-    test(data)
-    {
-        console.log("running", data);
-    }
+    static navigationOptions = {
+        title: 'Glimmer',
+    };
 
     componentDidMount()
     {
@@ -70,33 +77,21 @@ export default class Glimmer extends Component {
         )
     }
 
-    getMainScreen()
-    {
-        return(
-            <Tabs style={styles.container} />
-        )
-    }
-
     render() {
 
-        const isLoggedIn = this.state.loggedIn;
-
-        let screen = null;
-
-        if(!isLoggedIn)
-        {
-            screen = this.getLoginScreen();
-        }
-        else
-        {
-            screen = this.getMainScreen();
-        }
-
         return (
-           screen
+            <View style={styles.container}>
+                <Text onPress={() => this.props.navigation.navigate('Stream')} style={styles.welcome}>Strøm</Text>
+            </View>
         )
     }
 }
+
+const Glimmer = StackNavigator({
+    Home: { screen: HomeScreen },
+    Stream: {screen: Stream},
+    Thread: {screen: Thread }
+});
 
 const styles = StyleSheet.create({
     container: {
@@ -104,7 +99,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
-        top: 20,
+        top: 0,
         bottom: 0,
         left: 0,
         right: 0

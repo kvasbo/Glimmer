@@ -11,7 +11,7 @@ import {
     ScrollView
 } from 'react-native';
 
-import ForumPost from "./ForumPost";
+import StreamForumPost from "./ForumPost";
 
 export default class StreamPage extends React.Component {
 
@@ -20,6 +20,10 @@ export default class StreamPage extends React.Component {
         super(props);
         this.state = {posts: [], next: null};
     }
+
+    static navigationOptions = {
+        title: 'Strøm',
+    };
 
     componentDidMount()
     {
@@ -39,15 +43,17 @@ export default class StreamPage extends React.Component {
 
         for(post in this.state.posts)
         {
-            out.push(<ForumPost key={this.state.posts[post].id} data={this.state.posts[post]} />);
+            out.push(<StreamForumPost navigation={this.props.navigation} key={this.state.posts[post].id} data={this.state.posts[post]} />);
         }
         return out;
     }
 
     render() {
 
+
+
         return (
-            <ScrollView style={pageStyles.pageContainer}>
+            <ScrollView style={pageStyles.container}>
                 {this.createPostList()}
             </ScrollView>
         );
@@ -57,10 +63,10 @@ export default class StreamPage extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
-        paddingLeft: 20,
-        paddingTop: 30,
+        backgroundColor: '#CCCCCC',
+        paddingLeft: 0,
+        paddingTop: 0,
         paddingBottom: 30,
-        paddingRight: 30,
+        paddingRight: 0,
     },
 });
