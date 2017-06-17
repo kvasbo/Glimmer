@@ -11,7 +11,7 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
-import HTMLView from 'react-native-htmlview';
+
 
 import ForumText from './ForumText.js';
 
@@ -61,7 +61,7 @@ export default class StreamForumPost extends React.Component {
     render() {
 
         return (
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Thread', { post: this.props.data, postId: this.props.data.id })}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('PageThread', { post: this.props.data, postId: this.props.data.id })}>
                 <View style={s.postContainer}>
                     <Text style={{fontSize: 15}}>{this.props.data.title}</Text>
                     <Text>{this.props.data.creator.name}</Text>

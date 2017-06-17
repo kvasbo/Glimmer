@@ -13,6 +13,7 @@ import {
 //import HTMLView from 'react-native-htmlview';
 //import Dimensions from 'Dimensions';
 import MyWebView from 'react-native-webview-autoheight';
+import AutoHeightWebView from 'react-native-autoheight-webview';
 //import HTML from 'react-native-render-html'
 
 export default class ForumText extends React.Component {
@@ -20,7 +21,7 @@ export default class ForumText extends React.Component {
     wrapper = {
         start: "<html><head><style>" +
         ".skogspost {font-family: -apple-system, Roboto, sans-serif; padding-left: 0px} .textile {padding-left: 0px; margin-left: 0px;}" +
-        "img {}" +
+        "img {max-width:80% !important; height: auto !important;}" +
         "</style></head><body><div class='skogspost'>",
         end: "</div></body></html>"
     }
@@ -90,13 +91,19 @@ export default class ForumText extends React.Component {
 
         }
 
-        //Add https to image links
-        out = out.replace('href="//images', 'href="https://images');
-        out = out.replace('src="//images', 'src="https://images');
+        out = this.replaceAll(out, 'href="//images', 'href="https://images');
+        out = this.replaceAll(out, 'src="//images', 'src="https://images');
 
+       
         out = this.wrapper.start + out + this.wrapper.end;
 
+
+
         return out;
+    }
+
+    replaceAll(str, find, replace) {
+        return str.replace(new RegExp(find, 'g'), replace);
     }
 
     getTime(time) {
@@ -126,7 +133,13 @@ export default class ForumText extends React.Component {
         return (
 
             <View>
-
+                <AutoHeightWebView
+                    enableAnimation={true}
+                    animationDuration={255}
+                    source={{ html: postBody}}
+                    //onHeightUpdated={height => console.log(height)}
+                    heightOffset={5}
+                    />
             </View>
         );
     }
@@ -148,4 +161,9 @@ const styles = StyleSheet.create({
  />
 
  <HTML html={postBody} />
+
+ <MyWebView
+ source={{html: postBody}}
+ startInLoadingState={true}
+ />
  */

@@ -12,8 +12,14 @@ import {
     View,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import Stream from "./Components/Stream";
-import Thread from "./Components/Thread";
+import PageStream from "./Components/PageStream";
+import PageThread from "./Components/PageThread";
+import PageCalendar from "./Components/PageCalendar";
+import PageMessages from "./Components/PageMessages";
+import PageSettings from "./Components/PageSettings";
+
+import { Button } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 
 global.moment = require('moment');
 
@@ -21,6 +27,7 @@ import 'moment/locale/nb';
 moment.locale('nb')
 
 import GlimmerAuth from "./src/auth.js";
+
 
 const config = require("./config.js");
 
@@ -73,6 +80,7 @@ export default class HomeScreen extends Component {
         return(
             <View style={styles.container}>
                 <Text style={styles.welcome}>Glimmer</Text>
+
             </View>
         )
     }
@@ -81,7 +89,26 @@ export default class HomeScreen extends Component {
 
         return (
             <View style={styles.container}>
-                <Text onPress={() => this.props.navigation.navigate('Stream')} style={styles.welcome}>Strøm</Text>
+                <Button
+                    onPress={() => this.props.navigation.navigate('PageStream')}
+                    large
+                    icon={{name: 'view-agenda'}}
+                    title='Strøm' />
+                <Button
+                    onPress={() => this.props.navigation.navigate('PageCalendar')}
+                    large
+                    icon={{name: 'event'}}
+                    title='Kalender' />
+                <Button
+                    onPress={() => this.props.navigation.navigate('PageMessages')}
+                    large
+                    icon={{name: 'message'}}
+                    title='Meldinger' />
+                <Button
+                    onPress={() => this.props.navigation.navigate('PageSettings')}
+                    large
+                    icon={{name: 'settings'}}
+                    title='Innstillinger' />
             </View>
         )
     }
@@ -89,8 +116,11 @@ export default class HomeScreen extends Component {
 
 const Glimmer = StackNavigator({
     Home: { screen: HomeScreen },
-    Stream: {screen: Stream},
-    Thread: {screen: Thread }
+    PageStream: {screen: PageStream},
+    PageThread: {screen: PageThread },
+    PageMessages: {screen: PageMessages},
+    PageSettings: {screen: PageSettings},
+    PageCalendar: {screen: PageCalendar}
 });
 
 const styles = StyleSheet.create({

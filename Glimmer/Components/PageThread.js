@@ -8,7 +8,8 @@ import {
     StyleSheet,
     Text,
     View,
-    ScrollView
+    ScrollView,
+    KeyboardAvoidingView
 } from 'react-native';
 import KeyboardSpace from 'react-native-keyboard-space';
 
@@ -16,7 +17,7 @@ import StreamForumPost from "./ForumPost";
 import ForumComment from "./ForumComment";
 import AddCommentBlock from "./ForumAddComment";
 
-export default class Thread extends React.Component {
+export default class PageThread extends React.Component {
 
     constructor(props)
     {
@@ -61,12 +62,14 @@ export default class Thread extends React.Component {
     render() {
 
         return (
-            <ScrollView style={pageStyles.container}>
-               <StreamForumPost data={this.props.navigation.state.params.post}/>
-                {this.getComments()}
-                <AddCommentBlock postId={this.props.navigation.state.params.post.id}/>
-                <KeyboardSpace />
-            </ScrollView>
+
+                <ScrollView style={pageStyles.container}>
+                   <StreamForumPost data={this.props.navigation.state.params.post}/>
+                    {this.getComments()}
+                    <AddCommentBlock postId={this.props.navigation.state.params.post.id}/>
+                    <KeyboardAvoidingView behavior="padding" />
+                </ScrollView>
+
         );
     }
 }
