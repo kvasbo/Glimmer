@@ -17,6 +17,7 @@ import PageThread from "./Components/PageThread";
 import PageCalendar from "./Components/PageCalendar";
 import PageMessages from "./Components/PageMessages";
 import PageSettings from "./Components/PageSettings";
+import PageConversation from "./Components/PageConversation";
 
 import { Button } from 'react-native-elements'
 import { Icon } from 'react-native-elements'
@@ -34,7 +35,6 @@ console.ignoredYellowBox = ['[xmldom warning]'];
 const config = require("./config.js");
 
 global.auth = new GlimmerAuth();
-global.loggedInUserName = "kvasbo"; //TODO TODOTDO
 
 export default class HomeScreen extends Component {
 
@@ -129,7 +129,8 @@ const Glimmer = StackNavigator({
     PageThread: {screen: PageThread },
     PageMessages: {screen: PageMessages},
     PageSettings: {screen: PageSettings},
-    PageCalendar: {screen: PageCalendar}
+    PageCalendar: {screen: PageCalendar},
+    PageConversation: {screen: PageConversation}
 });
 
 const styles = StyleSheet.create({

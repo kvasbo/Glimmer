@@ -70,7 +70,9 @@ export default class PageMessages extends React.Component {
 
         for (conversation in this.state.conversations) {
             out.push(<Conversation key={this.state.conversations[conversation].user.name}
-                                   data={this.state.conversations[conversation]}/>);
+                                   data={this.state.conversations[conversation]}
+                                   navigation={this.props.navigation}
+            />);
         }
 
         return out;
@@ -130,10 +132,14 @@ class Conversation extends React.Component {
 
     render() {
 
-        console.log(this.props.data);
+      //  console.log(this.props.data);
 
         return (
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('PageConversation', {
+                    user: this.props.data.user
+                })}
+            >
                 <Card title={this.props.data.user.name}>
                     <Text>{this.getTime()}</Text>
                     {this.getAvsender()}

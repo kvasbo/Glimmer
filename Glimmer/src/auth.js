@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {
-    Linking,AsyncStorage
+    Linking, AsyncStorage
 } from 'react-native';
 
 const shittyQs = require("shitty-qs");
@@ -12,7 +12,12 @@ const config = require("../config.js");
 
 export default class glimmerAuth {
 
-    token = null;
+    baseURL = "https://underskog.no/api/v1";
+
+    token = config.dev_token;
+
+    loggedInUserName = "kvasbo"; //TODO TODOTDO
+    loggedInUserId = 6619; //TODO TODOTDO
 
     underskogOauth(app_key, callback) {
         Linking.openURL([
@@ -59,19 +64,61 @@ export default class glimmerAuth {
         })
     }
 
+    /**
+     * Payload is an object. Yes it is. key:value becomes &key=value; urlencoded.
+     * @param call
+     * @param payload
+     * @param callback
+     */
+    makeApiPostCall(kall, payload, callback)
+    {
+
+        var data = "";
+        for(element in payload)
+        {
+            var tempStr = encodeURIComponent(element) + "=" + encodeURIComponent(payload[element]) + "&"
+            data += tempStr;
+        }
+
+        var url = this.baseURL + kall + "?" + data;
+        var token = config.dev_token;
+
+        console.log("API POST", url);
+
+
+        fetch(
+            url,
+            {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer "+this.token
+                }
+            }
+        ).then((response) => response.json())
+            .then((responseJson) => {
+                callback(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+
+
     makeApiGetCall(kall, callback)
     {
-        var baseURL = "https://underskog.no/api/v1";
-        var url = baseURL + kall;
 
-        var token = config.dev_token;
+        var url = this.baseURL + kall;
+        console.log("API GET", url);
+
+
 
         fetch(
                 url,
                 {
                     method: "GET",
                     headers: {
-                    "Authorization": "Bearer "+token
+                    "Authorization": "Bearer "+this.token
                     }
                 }
         ).then((response) => response.json())

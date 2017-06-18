@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 
-export default class Thread extends React.Component {
+export default class EmptyPage extends React.Component {
 
     constructor(props)
     {
