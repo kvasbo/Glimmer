@@ -53,6 +53,7 @@ export default class glimmerAuth {
 
             //TODO fikse om man ikke er logga inn
             console.log("Tester om bruker er innlogga", data, status);
+            global.loggedInUserName = data.name;
             callBack(data);
 
         })

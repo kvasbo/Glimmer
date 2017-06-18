@@ -13,6 +13,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import ForumText from './ForumText.js';
+import {Card, Icon, Badge, Divider} from 'react-native-elements'
 
 var s = require('./Styles');
 
@@ -30,18 +31,23 @@ class CommentMetadata extends React.Component {
         return new moment(this.props.data.created_at).calendar();
     }
 
+    styles =  StyleSheet.create({
+        element: {
+            margin: 0,
+            marginRight: 6,
+        }
+    })
+
     render () {
 
         return (
-            <View>
+            <View style={{flexDirection: "row", alignItems: "center", marginBottom: 3}}>
                 <Image
-
-                    style={{width: 25, height: 25}}
+                    style={[this.styles.element, {width: 30, height: 30}]}
                     source={{uri: this.props.data.creator.image_url}}
                 />
-                <Text>{this.props.data.creator.name}</Text>
-                <Text>{this.props.data.creator.id}</Text>
-                <Text>{this.getTime()}</Text>
+                <Text style={this.styles.element}>{this.props.data.creator.name}</Text>
+                <Text style={this.styles.element}>{this.getTime()}</Text>
             </View>
         )
 
@@ -59,10 +65,11 @@ export default class ForumComment extends React.Component {
     render () {
 
         return (
-            <View style={s.commentContainer}>
-                <ForumText cut={false} text={this.props.data.body}/>
+            <Card>
                 <CommentMetadata data={this.props.data}/>
-            </View>
+                <Divider/>
+                <ForumText cut={false} text={this.props.data.body}/>
+            </Card>
         )
 
     }

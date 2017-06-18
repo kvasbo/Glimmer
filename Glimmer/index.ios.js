@@ -28,10 +28,13 @@ moment.locale('nb')
 
 import GlimmerAuth from "./src/auth.js";
 
+//Some hacks
+console.ignoredYellowBox = ['[xmldom warning]'];
 
 const config = require("./config.js");
 
 global.auth = new GlimmerAuth();
+global.loggedInUserName = "kvasbo"; //TODO TODOTDO
 
 export default class HomeScreen extends Component {
 
@@ -41,6 +44,8 @@ export default class HomeScreen extends Component {
 
         this.state = {userName: null, loggedIn: false}
 
+        auth.testAuth((data)=>{this.startApp(data)});
+
     }
 
     static navigationOptions = {
@@ -49,8 +54,9 @@ export default class HomeScreen extends Component {
 
     componentDidMount()
     {
-        auth.testAuth((data)=>{this.startApp(data)});
-        //auth.underskogOauth(config.app_key, auth.handleAuthResponse);
+        //debug
+        this.props.navigation.navigate('PageMessages');
+
     }
 
     startApp(userObject)
@@ -59,6 +65,9 @@ export default class HomeScreen extends Component {
         if(typeof(userObject.data.name !== "undefined"))
         {
             this.setState({userName: userObject.data.name, loggedIn: true});
+
+            global.loggedInUserName = userObject.data.name;
+
         }
 
     }

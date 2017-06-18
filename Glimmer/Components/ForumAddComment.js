@@ -13,7 +13,7 @@ import {
     TouchableOpacity,
     TextInput
 } from 'react-native';
-
+import {Card, Icon, Badge, Divider} from 'react-native-elements'
 
 export default class AddCommentBlock extends React.Component {
 
@@ -26,16 +26,24 @@ export default class AddCommentBlock extends React.Component {
     render () {
 
         return (
-            <View>
-                <Text>Add comment</Text>
-                <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                    onChangeText={(text) => this.setState({text})}
-                    value={this.state.text}
-                />
-            </View>
+            <Card>
+                <Icon
+                    reverse
+                    color='#517fa4'
+                    name='comment' />
+            </Card>
         )
 
     }
 
 }
+
+/*
+
+ <TextInput
+ style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+ onChangeText={(text) => this.setState({text})}
+ value={this.state.text}
+ />
+
+ */

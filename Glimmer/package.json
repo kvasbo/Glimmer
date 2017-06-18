@@ -13,6 +13,7 @@
     "react-native-autoheight-webview": "^0.2.5",
     "react-native-elements": "^0.13.0",
     "react-native-exception-handler": "^1.0.1",
+    "react-native-html-parser": "0.0.4",
     "react-native-keyboard-space": "^1.0.1",
     "react-native-vector-icons": "^4.2.0",
     "react-native-webview-autoheight": "^1.0.4",

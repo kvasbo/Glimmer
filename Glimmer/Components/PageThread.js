@@ -49,7 +49,7 @@ export default class PageThread extends React.Component {
     {
         var out = [];
 
-        for(var i=0; i < this.state.comments.length; i++)
+        for(var i = this.state.comments.length-1; i >= 0; i--)
         {
             var c = this.state.comments[i];
             console.log("Comment", this.state.comments[i]);
@@ -64,10 +64,11 @@ export default class PageThread extends React.Component {
         return (
 
                 <ScrollView style={pageStyles.container}>
-                   <StreamForumPost data={this.props.navigation.state.params.post}/>
+                   <StreamForumPost data={this.props.navigation.state.params.post} metaData={false} cut={false} touchable={true} />
                     {this.getComments()}
                     <AddCommentBlock postId={this.props.navigation.state.params.post.id}/>
                     <KeyboardAvoidingView behavior="padding" />
+                    <View style={{height: 20}}/>
                 </ScrollView>
 
         );
@@ -77,7 +78,7 @@ export default class PageThread extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#CCCCCC',
+        backgroundColor: '#AAAAAA',
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

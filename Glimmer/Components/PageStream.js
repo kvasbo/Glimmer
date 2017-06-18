@@ -27,15 +27,14 @@ export default class PageStream extends React.Component {
     };
 
     componentDidMount() {
-
         this.getPosts();
     }
 
     getFromCache(){
         AsyncStorage.getItem('@Cache:latestStream', (err, result) => {
-            if(!err) {
+            if(!err && result !== null) {
                 var resultP = JSON.parse(result);
-                console.log(resultP);
+                //console.log(resultP);
                 this.setState({posts: resultP.data, paging: resultP.paging})
             }
         });
@@ -44,7 +43,6 @@ export default class PageStream extends React.Component {
     getPosts()
     {
         var uri = "/streams/posts";
-        var key = encodeURI(uri);
 
         auth.makeApiGetCall("/streams/posts", (data)=>{
 
@@ -65,7 +63,7 @@ export default class PageStream extends React.Component {
         for(post in this.state.posts)
         {
             out.push(
-                <StreamForumPost navigation={this.props.navigation} key={this.state.posts[post].id} data={this.state.posts[post]} />
+                <StreamForumPost touchable={true} navigation={this.props.navigation} key={this.state.posts[post].id} cut={true} images={false} data={this.state.posts[post]} />
             );
         }
         return out;
