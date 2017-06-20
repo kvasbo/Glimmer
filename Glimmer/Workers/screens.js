@@ -8,6 +8,8 @@ import PageMessages from "../Components/PageMessages";
 import PageSettings from "../Components/PageSettings";
 import PageConversation from "../Components/PageConversation";
 
+import MenuLeft from "../Components/MenuLeft";
+
 // register all screens of the app (including internal ones)
 export function registerScreens() {
     Navigation.registerComponent('glimmer.HomeScreen', () => HomeScreen);
@@ -17,4 +19,5 @@ export function registerScreens() {
     Navigation.registerComponent('glimmer.PageSettings', () => PageSettings);
     Navigation.registerComponent('glimmer.PageConversation', () => PageConversation);
     Navigation.registerComponent('glimmer.PageCalendar', () => PageCalendar);
+    Navigation.registerComponent('glimmer.MenuLeft', () => MenuLeft);
 }

@@ -13,7 +13,9 @@ import {
     RefreshControl
 } from 'react-native';
 
-import StreamForumPost from "./ForumPost";
+import StreamForumPost from "./StreamForumPost";
+
+import NavigatorStyle from "../src/NavigatorStyle";
 
 export default class PageStream extends React.Component {
 
@@ -22,6 +24,13 @@ export default class PageStream extends React.Component {
         this.state = {posts: [], next: null, paging: null, refreshing: false};
         this.getFromCache();
     }
+
+    static navigatorStyle = {
+        drawUnderTabBar: true,
+        statusBarBlur: true,
+        navBarBlur: true,
+        navBarHidden: true,
+    };
 
     static navigationOptions = {
         title: 'Strøm',
@@ -99,8 +108,8 @@ const pageStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#CCCCCC',
         paddingLeft: 0,
-        paddingTop: 0,
-        paddingBottom: 30,
+        paddingTop: 30,
+        paddingBottom: 0,
         paddingRight: 0,
     },
 });

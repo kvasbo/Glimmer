@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import KeyboardSpace from 'react-native-keyboard-space';
 
-import StreamForumPost from "./ForumPost";
+import StreamForumPost from "./StreamForumPost";
 import ForumComment from "./ForumComment";
 import AddCommentBlock from "./ForumAddComment";
 
@@ -24,17 +24,12 @@ export default class PageThread extends React.Component {
         this.state = {id: null, next: null, comments: []};
     }
 
-    static navigationOptions = ({navigation}) => ({
-        title: `${navigation.state.params.post.title}`,
-    });
-
     componentDidMount() {
         this.refreshComments();
     }
 
-
     refreshComments() {
-        var uri = "/posts/" + this.props.navigation.state.params.post.id + "/comments";
+        var uri = "/posts/" + this.props.post.id + "/comments";
 
         auth.makeApiGetCall(uri).then((data) => {
             console.log(data);
@@ -59,10 +54,10 @@ export default class PageThread extends React.Component {
         return (
 
             <ScrollView style={pageStyles.container}>
-                <StreamForumPost data={this.props.navigation.state.params.post} metaData={false} cut={false}
+                <StreamForumPost data={this.props.post} metaData={false} cut={false}
                                  touchable={true}/>
                 {this.getComments()}
-                <AddCommentBlock postId={this.props.navigation.state.params.post.id}/>
+                <AddCommentBlock postId={this.props.post.id}/>
                 <KeyboardAvoidingView behavior="padding"/>
                 <View style={{height: 20}}/>
             </ScrollView>

@@ -6,14 +6,10 @@
 
 import React, {Component} from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     Text,
     View,
 } from 'react-native';
-
-
-import {Navigation} from 'react-native-navigation';
 
 import {Button} from 'react-native-elements'
 
@@ -52,9 +48,6 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        //debug
-        // arbeidsMaur.forumUpdater.update(this.saveWorkerDataToState);
-        // this.props.navigation.navigate('PageMessages');
 
     }
 
@@ -66,7 +59,6 @@ export default class HomeScreen extends React.Component {
             global.loggedInUserName = userObject.data.name;
 
         }
-
     }
 
     getUserName() {

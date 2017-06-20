@@ -70,12 +70,10 @@ export default class StreamForumPost extends React.Component {
 
         this.images = this.getImages();
 
-        //console.log(this.images);
-
     }
 
     componentDidMount() {
-        //console.log(this.props.data);
+
     }
 
     getTime(time) {
@@ -153,8 +151,9 @@ export default class StreamForumPost extends React.Component {
 
             <TouchableOpacity
                 onPress={ () => this.props.navigator.push({
-                    screen: 'glimmer.PageStream',
-                    title: 'Pushed Screen'
+                    screen: 'glimmer.PageThread',
+                    title: this.props.data.title,
+                    passProps: {post: this.props.data}
                 })}
             >
                 <Card title={this.props.data.title} image={this.getFirstImage()}>
