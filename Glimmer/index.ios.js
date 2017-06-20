@@ -70,11 +70,11 @@ function startApp() {
             }
             ,
             {
-                label: 'ForumListTest',
+                label: 'Velg forum',
                 screen: 'glimmer.PageForumList',
                 icon: require('./icons/chat.png'),
                 //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                title: 'ForumListTest'
+                title: 'Forum List Test'
             }
         ],
         drawer: { // optional, add this if you want a side menu drawer in your app
