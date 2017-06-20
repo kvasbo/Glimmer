@@ -19,8 +19,10 @@ import PageMessages from "./Components/PageMessages";
 import PageSettings from "./Components/PageSettings";
 import PageConversation from "./Components/PageConversation";
 
+
 import { Button } from 'react-native-elements'
 import { Icon } from 'react-native-elements'
+import Workers from "./Workers/index.js";
 
 global.moment = require('moment');
 
@@ -32,29 +34,54 @@ import GlimmerAuth from "./src/auth.js";
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];
 
-const config = require("./config.js");
+//const config = require("./config.js");
 
 global.auth = new GlimmerAuth();
 
-export default class HomeScreen extends Component {
+const arbeidsMaur = new Workers();
+
+export default class HomeScreen extends React.Component {
 
     constructor(props)
     {
         super(props);
 
-        this.state = {userName: null, loggedIn: false}
+        this.state = {userName: null, loggedIn: false, frontpage: []}
 
         auth.testAuth((data)=>{this.startApp(data)});
 
+        this.saveWorkerDataToState = this.saveWorkerDataToState.bind(this);
     }
 
     static navigationOptions = {
         title: 'Glimmer',
     };
 
+    componentWillMount()
+    {
+
+    }
+
+    saveWorkerDataToState(data)
+    {
+        if(typeof(data.name) !== "undefined" && data.success === true)
+        {
+            console.log("saving data to state", data);
+            if(data.name === "forside")
+            {
+                this.setState({frontpage:data.data});
+            }
+        }
+        else
+        {
+            console.log("Error in worker return data", data);
+        }
+    }
+
     componentDidMount()
     {
         //debug
+        arbeidsMaur.forumUpdater.update(this.saveWorkerDataToState);
         this.props.navigation.navigate('PageMessages');
 
     }
@@ -135,7 +162,6 @@ const Glimmer = StackNavigator({
 
 const styles = StyleSheet.create({
     container: {
-
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
