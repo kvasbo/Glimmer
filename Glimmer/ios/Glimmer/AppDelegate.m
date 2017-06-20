@@ -12,6 +12,9 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+//Native navi change
+#import "RCCManager.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -20,6 +23,15 @@
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
+  // **********************************************
+  // *** DON'T MISS: THIS IS HOW WE BOOTSTRAP *****
+  // **********************************************
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window.backgroundColor = [UIColor whiteColor];
+  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
+  
+  //Commented out when adding react native navi
+  /**
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Glimmer"
                                                initialProperties:nil
@@ -31,6 +43,9 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+   */
+   
   return YES;
 }
 

@@ -43,6 +43,7 @@
 		84FDA6F1A6C3416083694074 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9841C8DE45C7485C813B46FE /* FontAwesome.ttf */; };
 		9905C18F64F14BAB9FAA86FA /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5C5D84F735D4C89AC68DB61 /* SimpleLineIcons.ttf */; };
 		9D34CB971BCE49DA8EB7EA9A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B22FC0111BF45F7BE5F74DD /* MaterialIcons.ttf */; };
+		AD134F8F1EF9042900ED5A39 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD134F8D1EF9040B00ED5A39 /* libReactNativeNavigation.a */; };
 		B42ADAD64C894A62B4B203BA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71FF6007A0C8445E8585EB3F /* Zocial.ttf */; };
 		BC3777E7D2AB4E9384289430 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25AED8EBEA97437FA7C5F443 /* MaterialCommunityIcons.ttf */; };
 		C197F6B7F12B46D499C9B24A /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEFA3198F5934082A072AF03 /* Ionicons.ttf */; };
@@ -239,6 +240,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		AD134F8C1EF9040B00ED5A39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D8AFADBD1BEE6F3F00A4592D;
+			remoteInfo = ReactNativeNavigation;
+		};
 		ADC058691EF5195D007B758B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 335372550C084A8AB5801973 /* RNVectorIcons.xcodeproj */;
@@ -283,6 +291,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		977F61DB6862493092546B92 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		9841C8DE45C7485C813B46FE /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		B5C5D84F735D4C89AC68DB61 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		BEFA3198F5934082A072AF03 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -300,6 +309,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD134F8F1EF9042900ED5A39 /* libReactNativeNavigation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -467,6 +477,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -531,6 +542,14 @@
 				71FF6007A0C8445E8585EB3F /* Zocial.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		AD134F701EF9040B00ED5A39 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD134F8D1EF9040B00ED5A39 /* libReactNativeNavigation.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		ADC0584D1EF5195D007B758B /* Products */ = {
@@ -701,6 +720,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = AD134F701EF9040B00ED5A39 /* Products */;
+					ProjectRef = AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */;
 				},
 				{
 					ProductGroup = ADC0584D1EF5195D007B758B /* Products */;
@@ -891,6 +914,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD134F8D1EF9040B00ED5A39 /* libReactNativeNavigation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeNavigation.a;
+			remoteRef = AD134F8C1EF9040B00ED5A39 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ADC0586A1EF5195D007B758B /* libRNVectorIcons.a */ = {
@@ -1294,6 +1324,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-navigation/ios/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1331,6 +1362,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-navigation/ios/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;

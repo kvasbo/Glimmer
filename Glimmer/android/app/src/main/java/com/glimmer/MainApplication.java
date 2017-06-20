@@ -10,35 +10,37 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
+//Change made to add react native navigation
+import com.reactnativenavigation.NavigationApplication;
+
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends NavigationApplication {
 
-  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-    @Override
+
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
 
-    @Override
-    protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new VectorIconsPackage(),
-            new AutoHeightWebViewPackage()
-      );
-    }
-  };
 
-  @Override
-  public ReactNativeHost getReactNativeHost() {
-    return mReactNativeHost;
-  }
+     public boolean isDebug() {
+         // Make sure you are using BuildConfig from your own application
+         return BuildConfig.DEBUG;
+     }
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
-  }
+     protected List<ReactPackage> getPackages() {
+         // Add additional packages you require here
+         // No need to add RnnPackage and MainReactPackage
+         return Arrays.<ReactPackage>asList(
+             // eg. new VectorIconsPackage()
+               new VectorIconsPackage(),
+               new AutoHeightWebViewPackage()
+         );
+     }
+
+     @Override
+     public List<ReactPackage> createAdditionalReactPackages() {
+         return getPackages();
+     }
 }
