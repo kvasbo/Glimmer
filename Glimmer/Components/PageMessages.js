@@ -50,7 +50,7 @@ export default class PageMessages extends React.Component {
 
         var uri = "/messages/conversations";
 
-        auth.makeApiGetCall(uri, (data) => {
+        auth.makeApiGetCall(uri).then((data) => {
 
             try {
                 AsyncStorage.setItem('@Cache:Conversations', JSON.stringify(data));
@@ -71,7 +71,7 @@ export default class PageMessages extends React.Component {
         for (conversation in this.state.conversations) {
             out.push(<Conversation key={this.state.conversations[conversation].user.name}
                                    data={this.state.conversations[conversation]}
-                                   navigation={this.props.navigation}
+                                   navigator={this.props.navigator}
             />);
         }
 
@@ -136,8 +136,10 @@ class Conversation extends React.Component {
 
         return (
             <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('PageConversation', {
-                    user: this.props.data.user
+                onPress={ () => this.props.navigator.push({
+                    screen: 'glimmer.PageConversation',
+                    title: 'Chat med '+this.props.data.user.name,
+                    passProps: {user:this.props.data.user}
                 })}
             >
                 <Card title={this.props.data.user.name}>

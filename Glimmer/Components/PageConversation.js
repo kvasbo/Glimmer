@@ -23,13 +23,9 @@ export default class PageConversation extends React.Component {
         this.parseMessageForGiftedChat = this.parseMessageForGiftedChat.bind(this);
     }
 
-    static navigationOptions = ({ navigation }) => ({
-        title: "Meldinger med "+navigation.state.params.user.name
-    });
-
     componentWillMount() {
 
-        var uri = "/messages/with/"+this.props.navigation.state.params.user.id;
+        var uri = "/messages/with/"+this.props.user.id;
 
         auth.makeApiGetCall(uri).then((result)=> {
 
@@ -72,7 +68,7 @@ export default class PageConversation extends React.Component {
 
     onSend(messages = []) {
 
-        var payload = {user_id:this.props.navigation.state.params.user.id, body:messages[0].text};
+        var payload = {user_id:this.props.user.id, body:messages[0].text};
 
         console.log(payload);
 
