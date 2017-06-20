@@ -39,7 +39,7 @@ export default class PageThread extends React.Component {
     {
         var uri = "/posts/"+this.props.navigation.state.params.post.id+"/comments";
 
-        auth.makeApiGetCall(uri, (data)=>{
+        auth.makeApiGetCall(uri).then((data)=>{
             console.log(data);
             this.setState({comments:data.data, next: data.paging.next});
         })

@@ -31,7 +31,7 @@ export default class PageConversation extends React.Component {
 
         var uri = "/messages/with/"+this.props.navigation.state.params.user.id;
 
-        auth.makeApiGetCall(uri, (result)=> {
+        auth.makeApiGetCall(uri).then((result)=> {
 
             console.log("Messages", result);
 
@@ -46,21 +46,6 @@ export default class PageConversation extends React.Component {
            this.setState({messages:msg});
 
         })
-
-        /*this.setState({
-            messages: [
-                {
-                    _id: 1,
-                    text: 'Hello developer',
-                    createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-                    user: {
-                        _id: 2,
-                        name: 'React Native',
-                        avatar: 'https://facebook.github.io/react/img/logo_og.png',
-                    },
-                },
-            ],
-        });*/
     }
 
     parseMessageForGiftedChat(mess)
@@ -91,7 +76,7 @@ export default class PageConversation extends React.Component {
 
         console.log(payload);
 
-        global.auth.makeApiPostCall("/messages", payload, (data) => {
+        global.auth.makeApiPostCall("/messages", payload,).then((data) => {
             console.log(data);
         } )
 

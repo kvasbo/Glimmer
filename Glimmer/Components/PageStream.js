@@ -9,7 +9,8 @@ import {
     Text,
     View,
     ScrollView,
-    AsyncStorage
+    AsyncStorage,
+    RefreshControl
 } from 'react-native';
 
 import StreamForumPost from "./ForumPost";
@@ -18,7 +19,7 @@ export default class PageStream extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {posts: [], next: null, paging: null};
+        this.state = {posts: [], next: null, paging: null, refreshing: false};
         this.getFromCache();
     }
 
@@ -44,15 +45,18 @@ export default class PageStream extends React.Component {
     {
         var uri = "/streams/posts";
 
-        auth.makeApiGetCall("/streams/posts", (data)=>{
+        return new Promise((resolve, reject) => {
+            auth.makeApiGetCall("/streams/posts").then((data)=>{
 
-            try {
-                AsyncStorage.setItem('@Cache:latestStream', JSON.stringify(data));
-            } catch (error) {
-                // Error saving data
-            }
+                try {
+                    AsyncStorage.setItem('@Cache:latestStream', JSON.stringify(data));
+                    this.setState({posts:data.data,  paging: data.paging});
+                    resolve(data);
 
-            this.setState({posts:data.data,  paging: data.paging});
+                } catch (error) {
+                    reject(Error(error));
+                }
+            })
         })
     }
 
@@ -63,18 +67,29 @@ export default class PageStream extends React.Component {
         for(post in this.state.posts)
         {
             out.push(
-                <StreamForumPost touchable={true} navigation={this.props.navigation} key={this.state.posts[post].id} cut={true} images={false} data={this.state.posts[post]} />
+                <StreamForumPost touchable={true} navigator={this.props.navigator} key={this.state.posts[post].id} cut={true} images={false} data={this.state.posts[post]} />
             );
         }
         return out;
     }
 
+    _onRefresh() {
+        this.setState({refreshing: true});
+        this.getPosts().then(() => {
+            this.setState({refreshing: false});
+        });
+    }
+
     render() {
 
-
-
         return (
-            <ScrollView style={pageStyles.container}>
+            <ScrollView style={pageStyles.container}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={this._onRefresh.bind(this)}
+                            />}
+                        >
                 {this.createPostList()}
             </ScrollView>
         );

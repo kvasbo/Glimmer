@@ -152,10 +152,15 @@ export default class StreamForumPost extends React.Component {
         return (
 
             <TouchableOpacity
+                onPress={ () => this.props.navigator.push({
+                    screen: 'glimmer.PageStream',
+                    title: 'Pushed Screen'
+                })}
+                /*
                 onPress={() => this.props.navigation.navigate('PageThread', {
                     post: this.props.data,
                     postId: this.props.data.id
-                })}
+                })} */
             >
                 <Card title={this.props.data.title} image={this.getFirstImage()}>
                     <Text>{this.props.data.creator.name}, {this.getTime()}. {this.props.data.forum.title}.</Text>
@@ -165,6 +170,7 @@ export default class StreamForumPost extends React.Component {
                     {this.getMetadataSection()}
 
                 </Card>
+
             </TouchableOpacity>
 
         );

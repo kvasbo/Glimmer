@@ -81,53 +81,52 @@ export default class glimmerAuth {
         }
 
         var url = this.baseURL + kall + "?" + data;
-        var token = config.dev_token;
 
         console.log("API POST", url);
 
+        return new Promise((resolve,reject) =>{
 
-        fetch(
-            url,
-            {
-                method: "POST",
-                headers: {
-                    "Authorization": "Bearer "+this.token
+            fetch(
+                url,
+                {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer "+this.token
+                    }
                 }
-            }
-        ).then((response) => response.json())
-            .then((responseJson) => {
-                callback(responseJson);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+            ).then((response) => response.json())
+                .then((responseJson) => {
+                    resolve(responseJson);
+                })
+                .catch((error) => {
+                    reject(Error(error));
+                });
 
+        })
     }
-
 
     makeApiGetCall(kall, callback)
     {
-
         var url = this.baseURL + kall;
+
         console.log("API GET", url);
 
-
-
-        fetch(
+        return new Promise((resolve, reject) => {
+            fetch(
                 url,
                 {
                     method: "GET",
                     headers: {
-                    "Authorization": "Bearer "+this.token
+                        "Authorization": "Bearer "+this.token
                     }
                 }
-        ).then((response) => response.json())
-            .then((responseJson) => {
-                callback(responseJson);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+            ).then((response) => response.json())
+                .then((responseJson) => {
+                    resolve(responseJson);
+                })
+                .catch((error) => {
+                    reject(Error(error));
+                });
+        })
     }
-
 }
