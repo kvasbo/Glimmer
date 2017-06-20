@@ -24,11 +24,15 @@ global.auth = new GlimmerAuth();
 
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];
-const arbeidsMaur = new Workers();
+global.arbeidsMaur = new Workers();
 
 function init() {
-    registerScreens();
-    startApp();
+
+    global.arbeidsMaur.forumUpdater.initForums(false).then(()=>{
+        registerScreens();
+        startApp();
+    });
+
 }
 
 function startApp() {
@@ -63,6 +67,14 @@ function startApp() {
                 icon: require('./icons/chat.png'),
                 //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                 title: 'Meldinger'
+            }
+            ,
+            {
+                label: 'ForumListTest',
+                screen: 'glimmer.PageForumList',
+                icon: require('./icons/chat.png'),
+                //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                title: 'ForumListTest'
             }
         ],
         drawer: { // optional, add this if you want a side menu drawer in your app

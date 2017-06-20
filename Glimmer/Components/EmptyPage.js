@@ -18,10 +18,6 @@ export default class EmptyPage extends React.Component {
         super(props);
     }
 
-    static navigationOptions = ({navigation}) => ({
-        title: "Title",
-    });
-
     componentDidMount() {
 
     }

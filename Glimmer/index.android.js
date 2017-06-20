@@ -24,11 +24,12 @@ global.auth = new GlimmerAuth();
 
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];
-const arbeidsMaur = new Workers();
+global.arbeidsMaur = new Workers();
 
 function init() {
     registerScreens();
     startApp();
+    global.arbeidsMaur.forumUpdater.initForums(false);
 }
 
 function startApp() {

@@ -71,7 +71,7 @@ export default class glimmerAuth {
      * @param payload
      * @param callback
      */
-    makeApiPostCall(kall, payload, callback) {
+    makeApiPostCall(kall, payload) {
 
         var data = "";
         for (element in payload) {
@@ -81,7 +81,9 @@ export default class glimmerAuth {
 
         var url = this.baseURL + kall + "?" + data;
 
-        console.log("API POST", url);
+        if (__DEV__) {
+            console.log("API POST", url);
+        }
 
         return new Promise((resolve, reject) => {
 
@@ -98,16 +100,19 @@ export default class glimmerAuth {
                     resolve(responseJson);
                 })
                 .catch((error) => {
+                    console.log(error);
                     reject(Error(error));
                 });
 
         })
     }
 
-    makeApiGetCall(kall, callback) {
+    makeApiGetCall(kall) {
         var url = this.baseURL + kall;
 
-        console.log("API GET", url);
+        if (__DEV__) {
+            console.log("API GET", url);
+        }
 
         return new Promise((resolve, reject) => {
             fetch(
@@ -123,6 +128,7 @@ export default class glimmerAuth {
                     resolve(responseJson);
                 })
                 .catch((error) => {
+                    console.log(error);
                     reject(Error(error));
                 });
         })
