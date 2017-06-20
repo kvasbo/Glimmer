@@ -51,11 +51,11 @@ export default class ForumText extends React.Component {
         text = this.replaceAll(text, 'href="//images', 'href="https://images');
         text = this.replaceAll(text, 'src="//images', 'src="https://images');
 
-       // console.log(out);
+        // console.log(out);
 
         out = this.wrapper.start;
 
-        if(this.props.images === false) {
+        if (this.props.images === false) {
             out += this.wrapper.imageRemove;
         }
 
@@ -79,13 +79,13 @@ export default class ForumText extends React.Component {
 
         return (
 
-                <AutoHeightWebView
-                    enableAnimation={true}
-                    animationDuration={255}
-                    source={{ html: postBody}}
-                    //onHeightUpdated={height => console.log(height)}
-                    style={{marginBottom: 10, padding:0, borderWidth: 0 }}
-                    />
+            <AutoHeightWebView
+                enableAnimation={true}
+                animationDuration={255}
+                source={{html: postBody}}
+                //onHeightUpdated={height => console.log(height)}
+                style={{marginBottom: 10, padding: 0, borderWidth: 0}}
+            />
         );
     }
 

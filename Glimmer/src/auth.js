@@ -29,7 +29,7 @@ export default class glimmerAuth {
 
         Linking.addEventListener("url", handleUrl.bind(this))
 
-        function handleUrl (event) {
+        function handleUrl(event) {
             var [, query_string] = event.url.match(/\#(.*)/);
             var query = shittyQs(query_string);
             callback(null, query.access_token, this);
@@ -37,10 +37,10 @@ export default class glimmerAuth {
         }
     }
 
-    async handleAuthResponse(x, token, thiis){
+    async handleAuthResponse(x, token, thiis) {
 
         //thiis.setState({token:token});
-        console.log(x,token);
+        console.log(x, token);
 
         try {
             await AsyncStorage.setItem('@Glimmer:token', token);
@@ -48,13 +48,14 @@ export default class glimmerAuth {
             console.log(error);
         }
 
-        thiis.makeApiGetCall("/streams/posts", function(data){console.log(data)});
+        thiis.makeApiGetCall("/streams/posts", function (data) {
+            console.log(data)
+        });
     }
 
     /** Test if we are connected **/
-    testAuth(callBack)
-    {
-        this.makeApiGetCall("/users/current", function(data, status){
+    testAuth(callBack) {
+        this.makeApiGetCall("/users/current", function (data, status) {
 
             //TODO fikse om man ikke er logga inn
             console.log("Tester om bruker er innlogga", data, status);
@@ -70,12 +71,10 @@ export default class glimmerAuth {
      * @param payload
      * @param callback
      */
-    makeApiPostCall(kall, payload, callback)
-    {
+    makeApiPostCall(kall, payload, callback) {
 
         var data = "";
-        for(element in payload)
-        {
+        for (element in payload) {
             var tempStr = encodeURIComponent(element) + "=" + encodeURIComponent(payload[element]) + "&"
             data += tempStr;
         }
@@ -84,14 +83,14 @@ export default class glimmerAuth {
 
         console.log("API POST", url);
 
-        return new Promise((resolve,reject) =>{
+        return new Promise((resolve, reject) => {
 
             fetch(
                 url,
                 {
                     method: "POST",
                     headers: {
-                        "Authorization": "Bearer "+this.token
+                        "Authorization": "Bearer " + this.token
                     }
                 }
             ).then((response) => response.json())
@@ -105,8 +104,7 @@ export default class glimmerAuth {
         })
     }
 
-    makeApiGetCall(kall, callback)
-    {
+    makeApiGetCall(kall, callback) {
         var url = this.baseURL + kall;
 
         console.log("API GET", url);
@@ -117,7 +115,7 @@ export default class glimmerAuth {
                 {
                     method: "GET",
                     headers: {
-                        "Authorization": "Bearer "+this.token
+                        "Authorization": "Bearer " + this.token
                     }
                 }
             ).then((response) => response.json())

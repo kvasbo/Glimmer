@@ -160,7 +160,8 @@ export default class StreamForumPost extends React.Component {
                 <Card title={this.props.data.title} image={this.getFirstImage()}>
                     <Text>{this.props.data.creator.name}, {this.getTime()}. {this.props.data.forum.title}.</Text>
 
-                    <ForumText cut={this.props.cut} text={this.props.data.body} images={this.props.images} style={{marginBottom: 10}}/>
+                    <ForumText cut={this.props.cut} text={this.props.data.body} images={this.props.images}
+                               style={{marginBottom: 10}}/>
 
                     {this.getMetadataSection()}
 

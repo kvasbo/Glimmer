@@ -13,19 +13,20 @@ import {
 } from 'react-native';
 
 
-import { Navigation } from 'react-native-navigation';
+import {Navigation} from 'react-native-navigation';
 
-import { Button } from 'react-native-elements'
+import {Button} from 'react-native-elements'
 
 export default class HomeScreen extends React.Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
 
         this.state = {userName: null, loggedIn: false, frontpage: []}
 
-        auth.testAuth((data)=>{this.startApp(data)});
+        auth.testAuth((data) => {
+            this.startApp(data)
+        });
 
         this.saveWorkerDataToState = this.saveWorkerDataToState.bind(this);
     }
@@ -34,40 +35,32 @@ export default class HomeScreen extends React.Component {
         title: 'Glimmer',
     };
 
-    componentWillMount()
-    {
+    componentWillMount() {
 
     }
 
-    saveWorkerDataToState(data)
-    {
-        if(typeof(data.name) !== "undefined" && data.success === true)
-        {
+    saveWorkerDataToState(data) {
+        if (typeof(data.name) !== "undefined" && data.success === true) {
             console.log("saving data to state", data);
-            if(data.name === "forside")
-            {
-                this.setState({frontpage:data.data});
+            if (data.name === "forside") {
+                this.setState({frontpage: data.data});
             }
         }
-        else
-        {
+        else {
             console.log("Error in worker return data", data);
         }
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
         //debug
-       // arbeidsMaur.forumUpdater.update(this.saveWorkerDataToState);
-       // this.props.navigation.navigate('PageMessages');
+        // arbeidsMaur.forumUpdater.update(this.saveWorkerDataToState);
+        // this.props.navigation.navigate('PageMessages');
 
     }
 
-    startApp(userObject)
-    {
+    startApp(userObject) {
         console.log("startApp", userObject);
-        if(typeof(userObject.data.name !== "undefined"))
-        {
+        if (typeof(userObject.data.name !== "undefined")) {
             this.setState({userName: userObject.data.name, loggedIn: true});
 
             global.loggedInUserName = userObject.data.name;
@@ -76,21 +69,17 @@ export default class HomeScreen extends React.Component {
 
     }
 
-    getUserName()
-    {
-        if(this.state.userName !== null)
-        {
+    getUserName() {
+        if (this.state.userName !== null) {
             return "Velkommen, " + this.state.userName;
         }
-        else
-        {
+        else {
             return null;
         }
     }
 
-    getLoginScreen()
-    {
-        return(
+    getLoginScreen() {
+        return (
             <View style={styles.container}>
                 <Text style={styles.welcome}>Glimmer</Text>
 
@@ -106,22 +95,22 @@ export default class HomeScreen extends React.Component {
                     onPress={() => this.props.navigation.navigate('PageStream')}
                     large
                     icon={{name: 'view-agenda'}}
-                    title='Strøm' />
+                    title='Strøm'/>
                 <Button
                     onPress={() => this.props.navigation.navigate('PageCalendar')}
                     large
                     icon={{name: 'event'}}
-                    title='Kalender' />
+                    title='Kalender'/>
                 <Button
                     onPress={() => this.props.navigation.navigate('PageMessages')}
                     large
                     icon={{name: 'message'}}
-                    title='Meldinger' />
+                    title='Meldinger'/>
                 <Button
                     onPress={() => this.props.navigation.navigate('PageSettings')}
                     large
                     icon={{name: 'settings'}}
-                    title='Innstillinger' />
+                    title='Innstillinger'/>
             </View>
         )
     }

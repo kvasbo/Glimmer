@@ -6,14 +6,13 @@ export default class ForumUpdater {
 
     nextPage = null;
 
-    constructor()
-    {
+    constructor() {
 
     }
 
-    getFromCache(){
+    getFromCache() {
         AsyncStorage.getItem('@Cache:latestStream', (err, result) => {
-            if(!err && result !== null) {
+            if (!err && result !== null) {
                 var resultP = JSON.parse(result);
                 console.log(resultP);
                 //this.setState({posts: resultP.data, paging: resultP.paging})
@@ -25,28 +24,26 @@ export default class ForumUpdater {
         });
     }
 
-    getPosts(callback)
-    {
+    getPosts(callback) {
         var uri = "/streams/posts";
 
-        auth.makeApiGetCall("/streams/posts", (data)=>{
+        auth.makeApiGetCall("/streams/posts", (data) => {
 
-            console.log("data:",data);
+            console.log("data:", data);
 
             try {
                 AsyncStorage.setItem('@Cache:latestStream', JSON.stringify(data));
             } catch (error) {
-               console.log("error saving data to cache.")
+                console.log("error saving data to cache.")
             }
 
-            callback({success:true, name:"forside", data:data.data});
+            callback({success: true, name: "forside", data: data.data});
 
             // this.setState({posts:data.data,  paging: data.paging});
         })
     }
 
-    update(callback)
-    {
+    update(callback) {
         this.getPosts(callback);
     }
 

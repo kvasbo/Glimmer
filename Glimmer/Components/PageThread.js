@@ -2,7 +2,7 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -19,41 +19,36 @@ import AddCommentBlock from "./ForumAddComment";
 
 export default class PageThread extends React.Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
         this.state = {id: null, next: null, comments: []};
     }
 
-    static navigationOptions = ({ navigation }) => ({
+    static navigationOptions = ({navigation}) => ({
         title: `${navigation.state.params.post.title}`,
     });
 
-    componentDidMount()
-    {
-       this.refreshComments();
+    componentDidMount() {
+        this.refreshComments();
     }
 
 
-    refreshComments()
-    {
-        var uri = "/posts/"+this.props.navigation.state.params.post.id+"/comments";
+    refreshComments() {
+        var uri = "/posts/" + this.props.navigation.state.params.post.id + "/comments";
 
-        auth.makeApiGetCall(uri).then((data)=>{
+        auth.makeApiGetCall(uri).then((data) => {
             console.log(data);
-            this.setState({comments:data.data, next: data.paging.next});
+            this.setState({comments: data.data, next: data.paging.next});
         })
     }
 
-    getComments()
-    {
+    getComments() {
         var out = [];
 
-        for(var i = this.state.comments.length-1; i >= 0; i--)
-        {
+        for (var i = this.state.comments.length - 1; i >= 0; i--) {
             var c = this.state.comments[i];
             console.log("Comment", this.state.comments[i]);
-            out.push(<ForumComment key={c.id} data={c} />)
+            out.push(<ForumComment key={c.id} data={c}/>)
         }
 
         return out;
@@ -63,13 +58,14 @@ export default class PageThread extends React.Component {
 
         return (
 
-                <ScrollView style={pageStyles.container}>
-                   <StreamForumPost data={this.props.navigation.state.params.post} metaData={false} cut={false} touchable={true} />
-                    {this.getComments()}
-                    <AddCommentBlock postId={this.props.navigation.state.params.post.id}/>
-                    <KeyboardAvoidingView behavior="padding" />
-                    <View style={{height: 20}}/>
-                </ScrollView>
+            <ScrollView style={pageStyles.container}>
+                <StreamForumPost data={this.props.navigation.state.params.post} metaData={false} cut={false}
+                                 touchable={true}/>
+                {this.getComments()}
+                <AddCommentBlock postId={this.props.navigation.state.params.post.id}/>
+                <KeyboardAvoidingView behavior="padding"/>
+                <View style={{height: 20}}/>
+            </ScrollView>
 
         );
     }

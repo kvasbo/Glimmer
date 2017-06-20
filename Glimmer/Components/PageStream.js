@@ -2,7 +2,7 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -31,9 +31,9 @@ export default class PageStream extends React.Component {
         this.getPosts();
     }
 
-    getFromCache(){
+    getFromCache() {
         AsyncStorage.getItem('@Cache:latestStream', (err, result) => {
-            if(!err && result !== null) {
+            if (!err && result !== null) {
                 var resultP = JSON.parse(result);
                 //console.log(resultP);
                 this.setState({posts: resultP.data, paging: resultP.paging})
@@ -41,16 +41,15 @@ export default class PageStream extends React.Component {
         });
     }
 
-    getPosts()
-    {
+    getPosts() {
         var uri = "/streams/posts";
 
         return new Promise((resolve, reject) => {
-            auth.makeApiGetCall("/streams/posts").then((data)=>{
+            auth.makeApiGetCall("/streams/posts").then((data) => {
 
                 try {
                     AsyncStorage.setItem('@Cache:latestStream', JSON.stringify(data));
-                    this.setState({posts:data.data,  paging: data.paging});
+                    this.setState({posts: data.data, paging: data.paging});
                     resolve(data);
 
                 } catch (error) {
@@ -60,14 +59,13 @@ export default class PageStream extends React.Component {
         })
     }
 
-    createPostList()
-    {
+    createPostList() {
         out = [];
 
-        for(post in this.state.posts)
-        {
+        for (post in this.state.posts) {
             out.push(
-                <StreamForumPost touchable={true} navigator={this.props.navigator} key={this.state.posts[post].id} cut={true} images={false} data={this.state.posts[post]} />
+                <StreamForumPost touchable={true} navigator={this.props.navigator} key={this.state.posts[post].id}
+                                 cut={true} images={false} data={this.state.posts[post]}/>
             );
         }
         return out;
@@ -89,7 +87,7 @@ export default class PageStream extends React.Component {
                                 refreshing={this.state.refreshing}
                                 onRefresh={this._onRefresh.bind(this)}
                             />}
-                        >
+            >
                 {this.createPostList()}
             </ScrollView>
         );

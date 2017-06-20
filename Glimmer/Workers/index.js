@@ -14,8 +14,7 @@ const config = require("../config.js");
 
 export default class Workers {
 
-    constructor()
-    {
+    constructor() {
         this.forumUpdater = new ForumUpdater();
     }
 

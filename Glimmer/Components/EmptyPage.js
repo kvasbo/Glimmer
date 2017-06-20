@@ -2,7 +2,7 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -14,17 +14,15 @@ import {
 
 export default class EmptyPage extends React.Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
     }
 
-    static navigationOptions = ({ navigation }) => ({
-       title: "Title",
+    static navigationOptions = ({navigation}) => ({
+        title: "Title",
     });
 
-    componentDidMount()
-    {
+    componentDidMount() {
 
     }
 

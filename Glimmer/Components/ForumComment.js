@@ -2,7 +2,7 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -21,24 +21,22 @@ var s = require('./Styles');
 
 class CommentMetadata extends React.Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
     }
 
-    getTime()
-    {
+    getTime() {
         return new moment(this.props.data.created_at).calendar();
     }
 
-    styles =  StyleSheet.create({
+    styles = StyleSheet.create({
         element: {
             margin: 0,
             marginRight: 6,
         }
     })
 
-    render () {
+    render() {
 
         return (
             <View style={{flexDirection: "row", alignItems: "center", marginBottom: 3}}>
@@ -57,12 +55,11 @@ class CommentMetadata extends React.Component {
 
 export default class ForumComment extends React.Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
     }
 
-    render () {
+    render() {
 
         return (
             <Card>

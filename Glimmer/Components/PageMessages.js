@@ -93,35 +93,31 @@ class Conversation extends React.Component {
 
     iSentTheLastOne = false;
 
-    constructor(props){
+    constructor(props) {
 
         super(props);
 
-        if(this.props.data.last_message.from.name === global.loggedInUserName) //from global scope
+        if (this.props.data.last_message.from.name === global.loggedInUserName) //from global scope
         {
             this.iSentTheLastOne = true;
         }
 
     }
 
-    getTime()
-    {
+    getTime() {
 
         return new moment(this.props.data.last_message.sent_at).calendar();
 
     }
 
-    getMessageCount()
-    {
+    getMessageCount() {
         return (
             <Text>{this.props.data.message_count} meldinger, {this.props.data.unread_count} uleste.</Text>
         )
     }
 
-    getAvsender()
-    {
-        if(this.iSentTheLastOne)
-        {
+    getAvsender() {
+        if (this.iSentTheLastOne) {
             return (<Text>(siste melding sendt av deg)</Text>)
         }
         else {
@@ -132,14 +128,12 @@ class Conversation extends React.Component {
 
     render() {
 
-      //  console.log(this.props.data);
-
         return (
             <TouchableOpacity
                 onPress={ () => this.props.navigator.push({
                     screen: 'glimmer.PageConversation',
-                    title: 'Chat med '+this.props.data.user.name,
-                    passProps: {user:this.props.data.user}
+                    title: 'Chat med ' + this.props.data.user.name,
+                    passProps: {user: this.props.data.user}
                 })}
             >
                 <Card title={this.props.data.user.name}>

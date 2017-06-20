@@ -2,7 +2,7 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -10,13 +10,12 @@ import {
     View,
     ScrollView
 } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
+import {GiftedChat} from 'react-native-gifted-chat';
 
 
 export default class PageConversation extends React.Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
         this.state = {messages: []};
         this.onSend = this.onSend.bind(this);
@@ -25,32 +24,31 @@ export default class PageConversation extends React.Component {
 
     componentWillMount() {
 
-        var uri = "/messages/with/"+this.props.user.id;
+        var uri = "/messages/with/" + this.props.user.id;
 
-        auth.makeApiGetCall(uri).then((result)=> {
+        auth.makeApiGetCall(uri).then((result) => {
 
             console.log("Messages", result);
 
             var msg = [];
 
-            for (message in result.data)
-            {
+            for (message in result.data) {
                 var m = this.parseMessageForGiftedChat(result.data[message]);
                 msg.push(m);
             }
 
-           this.setState({messages:msg});
+            this.setState({messages: msg});
 
         })
     }
 
-    parseMessageForGiftedChat(mess)
-    {
+    parseMessageForGiftedChat(mess) {
         var userInfo = mess.from;
 
         out = {};
         out._id = mess.id;
-        out.text = mess.body.replace(/<(?:.|\n)*?>/gm, '');;
+        out.text = mess.body.replace(/<(?:.|\n)*?>/gm, '');
+        ;
         out.createdAt = mess.sent_at;
         out.user = {};
         out.user._id = userInfo.id;
@@ -61,20 +59,19 @@ export default class PageConversation extends React.Component {
 
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
 
     }
 
     onSend(messages = []) {
 
-        var payload = {user_id:this.props.user.id, body:messages[0].text};
+        var payload = {user_id: this.props.user.id, body: messages[0].text};
 
         console.log(payload);
 
         global.auth.makeApiPostCall("/messages", payload,).then((data) => {
             console.log(data);
-        } )
+        })
 
         this.setState((previousState) => {
             return {
@@ -82,6 +79,7 @@ export default class PageConversation extends React.Component {
             };
         });
     }
+
     render() {
         return (
             <GiftedChat

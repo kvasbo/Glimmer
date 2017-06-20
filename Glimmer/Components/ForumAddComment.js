@@ -2,7 +2,7 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -17,20 +17,19 @@ import {Card, Icon, Badge, Divider} from 'react-native-elements'
 
 export default class AddCommentBlock extends React.Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
-        this.state = { text: 'Useless Placeholder' };
+        this.state = {text: 'Useless Placeholder'};
     }
 
-    render () {
+    render() {
 
         return (
             <Card>
                 <Icon
                     reverse
                     color='#517fa4'
-                    name='comment' />
+                    name='comment'/>
             </Card>
         )
 
