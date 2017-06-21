@@ -1,6 +1,6 @@
 {
   "name": "Glimmer",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -17,11 +17,13 @@
     "react-native-html-parser": "0.0.4",
     "react-native-keyboard-space": "^1.0.1",
     "react-native-keychain": "^1.2.0",
+    "react-native-lightbox": "^0.6.0",
     "react-native-navigation": "^1.1.108",
     "react-native-vector-icons": "^4.2.0",
     "react-native-webview-autoheight": "^1.0.4",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
+    "react-timer-mixin": "^0.13.3",
     "redux": "^3.7.0",
     "shitty-qs": "^1.0.1"
   },
