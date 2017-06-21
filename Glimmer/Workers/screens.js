@@ -8,6 +8,7 @@ import PageMessages from "../Components/PageMessages";
 import PageSettings from "../Components/PageSettings";
 import PageConversation from "../Components/PageConversation";
 import PageForumList from "../Components/PageForumList";
+import PageNewForumPost from "../Components/PageNewForumPost";
 
 import MenuLeft from "../Components/MenuLeft";
 
@@ -21,6 +22,7 @@ export function registerScreens() {
     Navigation.registerComponent('glimmer.PageSettings', () => PageSettings);
     Navigation.registerComponent('glimmer.PageConversation', () => PageConversation);
     Navigation.registerComponent('glimmer.PageCalendar', () => PageCalendar);
+    Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost);
 
     //Helper pages
     Navigation.registerComponent('glimmer.PageForumList', () => PageForumList);

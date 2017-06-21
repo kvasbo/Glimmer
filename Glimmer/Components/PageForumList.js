@@ -11,7 +11,8 @@ import {
     TextInput,
     ScrollView,
     FlatList,
-    TouchableHighlight
+    TouchableHighlight,
+    TouchableOpacity
 } from 'react-native';
 
 export default class PageForumList extends React.Component {
@@ -21,11 +22,14 @@ export default class PageForumList extends React.Component {
 
         this.state = {filterText: "", forums: []};
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
     }
 
+    static navigatorStyle = {
+        navBarHidden: true,
+    };
+
     onNavigatorEvent(event) {
-        switch(event.id) {
+        switch (event.id) {
             case 'willAppear':
                 this.setState({filterText: "", forums: global.arbeidsMaur.forumUpdater.getForumArray()});
                 break;
@@ -38,19 +42,13 @@ export default class PageForumList extends React.Component {
         }
     }
 
-    componentDidMount() {
-
-    }
-
-    getFilteredForumList()
-    {
-        if(this.state.text === "")
-        {
+    getFilteredForumList() {
+        if (this.state.text === "") {
             return this.state.forums;
         }
         else {
             return this.state.forums.filter((forum) => {
-                return forum.title.indexOf(this.state.filterText) !== -1;
+                return forum.title.toLocaleLowerCase().indexOf(this.state.filterText.toLocaleLowerCase()) !== -1;
             })
         }
     }
@@ -58,7 +56,7 @@ export default class PageForumList extends React.Component {
     render() {
 
         return (
-            <View style={{flex:1}}>
+            <View style={{flex: 1}}>
 
                 <TextInput
                     style={{height: 40, borderColor: 'gray', borderWidth: 1}}
@@ -68,7 +66,7 @@ export default class PageForumList extends React.Component {
 
                 <FlatList style={pageStyles.container}
                           data={this.getFilteredForumList()}
-                          renderItem={({item}) => <Text key={item.id}>{item.title}</Text>}
+                          renderItem={({item}) => <Forum key={item.id} forum={item}></Forum>}
                 >
 
                 </FlatList>
@@ -77,10 +75,40 @@ export default class PageForumList extends React.Component {
     }
 }
 
+class Forum extends React.Component {
+
+    styles = new StyleSheet.create({
+
+        forumContainer: {
+            height: 20,
+            margin: 5,
+            padding: 5,
+
+        },
+
+        forumText: {
+            color: "#FFFFFF",
+        }
+
+    });
+
+    render() {
+
+        return (
+            <TouchableOpacity>
+                <View style={this.styles.forumContainer}>
+                    <Text style={this.styles.forumText}>{this.props.forum.title}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+
+    }
+}
+
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#CCCCCC',
+        backgroundColor: '#333333',
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

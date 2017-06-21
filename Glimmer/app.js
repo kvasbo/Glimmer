@@ -5,13 +5,11 @@
  */
 
 import React, {Component} from 'react';
-import {
-    Image,
-} from 'react-native';
 import {registerScreens} from './Workers/screens';
 import {Navigation} from 'react-native-navigation';
 import Workers from "./Workers/index.js";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 global.moment = require('moment');
 
@@ -26,6 +24,8 @@ console.ignoredYellowBox = ['[xmldom warning]'];
 global.arbeidsMaur = new Workers();
 
 registerScreens();
+
+
 
 export default class App {
 

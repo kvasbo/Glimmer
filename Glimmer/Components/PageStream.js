@@ -7,7 +7,8 @@ import {
     StyleSheet,
     ScrollView,
     RefreshControl,
-    TouchableOpacity
+    TouchableOpacity,
+    FlatList
 } from 'react-native';
 
 import StreamForumPost from "./StreamForumPost";

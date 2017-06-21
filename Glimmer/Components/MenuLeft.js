@@ -10,6 +10,7 @@ import {
     View,
     ScrollView
 } from 'react-native';
+import {Card, Icon, Button, Badge, Divider} from 'react-native-elements'
 
 
 export default class MenuLeft extends React.Component {
@@ -30,7 +31,26 @@ export default class MenuLeft extends React.Component {
 
         return (
             <ScrollView style={pageStyles.container}>
+                <Button
+                    textStyle={pageStyles.buttonText}
+                    style={pageStyles.button}
+                    icon={{name: 'cached'}}
+                    title='Nytt innlegg'
+                    onPress={() => {
 
+                        this.props.navigator.showModal({
+                            screen: 'glimmer.PageNewForumPost',
+                            title: "Nytt innlegg",
+                        });
+
+                        this.props.navigator.toggleDrawer();
+                    }
+                    }
+                />
+                <Button
+                    icon={{name: 'thumb-up'}}
+                    style={pageStyles.button}
+                    title='Min Kudos'/>
             </ScrollView>
         );
     }
@@ -40,9 +60,15 @@ const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#222222',
-        paddingLeft: 0,
-        paddingTop: 0,
-        paddingBottom: 0,
-        paddingRight: 0,
+        paddingLeft: 10,
+        paddingTop: 40,
+        paddingBottom: 40,
+        paddingRight: 10,
     },
+
+    button: {
+        marginBottom: 10,
+    },
+
+    buttonText: {}
 });
