@@ -10,21 +10,36 @@ import {
     View,
     TextInput,
     ScrollView,
-    FlatList
+    FlatList,
+    TouchableHighlight
 } from 'react-native';
-
 
 export default class PageForumList extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {filterText: "", forums: global.arbeidsMaur.forumUpdater.getForumArray()};
+        this.state = {filterText: "", forums: []};
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
 
+    onNavigatorEvent(event) {
+        switch(event.id) {
+            case 'willAppear':
+                this.setState({filterText: "", forums: global.arbeidsMaur.forumUpdater.getForumArray()});
+                break;
+            case 'didAppear':
+                break;
+            case 'willDisappear':
+                break;
+            case 'didDisappear':
+                break;
+        }
+    }
+
     componentDidMount() {
-       // console.log("mounted pageforumlust", this.state.forums);
+
     }
 
     getFilteredForumList()
@@ -44,11 +59,13 @@ export default class PageForumList extends React.Component {
 
         return (
             <View style={{flex:1}}>
+
                 <TextInput
                     style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                     onChangeText={(text) => this.setState({filterText: text})}
                     value={this.state.text}
                 />
+
                 <FlatList style={pageStyles.container}
                           data={this.getFilteredForumList()}
                           renderItem={({item}) => <Text key={item.id}>{item.title}</Text>}

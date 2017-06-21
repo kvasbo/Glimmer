@@ -55,7 +55,7 @@ export default class PageThread extends React.Component {
 
             <ScrollView style={pageStyles.container}>
                 <StreamForumPost data={this.props.post} metaData={false} cut={false}
-                                 touchable={true}/>
+                                 touchable={false}/>
                 {this.getComments()}
                 <AddCommentBlock postId={this.props.post.id}/>
                 <KeyboardAvoidingView behavior="padding"/>

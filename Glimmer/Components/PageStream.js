@@ -4,30 +4,28 @@
 
 import React, {Component} from 'react';
 import {
-    AppRegistry,
     StyleSheet,
-    Text,
-    View,
     ScrollView,
-    AsyncStorage,
-    RefreshControl
+    RefreshControl,
+    TouchableOpacity
 } from 'react-native';
 
 import StreamForumPost from "./StreamForumPost";
-
-import NavigatorStyle from "../src/NavigatorStyle";
 
 export default class PageStream extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {posts: [], next: null, paging: null, refreshing: false};
-        this.getFromCache();
+
+        this.createPostList = this.createPostList.bind(this);
+
     }
 
     static navigatorStyle = {
         drawUnderTabBar: true,
-        statusBarBlur: true,
+        statusBarBlur: false,
+        drawUnderStatusBar: false,
         navBarBlur: true,
         navBarHidden: true,
     };
@@ -37,35 +35,13 @@ export default class PageStream extends React.Component {
     };
 
     componentDidMount() {
-        this.getPosts();
-    }
 
-    getFromCache() {
-        AsyncStorage.getItem('@Cache:latestStream', (err, result) => {
-            if (!err && result !== null) {
-                var resultP = JSON.parse(result);
-                //console.log(resultP);
-                this.setState({posts: resultP.data, paging: resultP.paging})
-            }
-        });
-    }
-
-    getPosts() {
-        var uri = "/streams/posts";
-
-        return new Promise((resolve, reject) => {
-            auth.makeApiGetCall("/streams/posts").then((data) => {
-
-                try {
-                    AsyncStorage.setItem('@Cache:latestStream', JSON.stringify(data));
-                    this.setState({posts: data.data, paging: data.paging});
-                    resolve(data);
-
-                } catch (error) {
-                    reject(Error(error));
-                }
+        global.arbeidsMaur.forumUpdater.getFrontpageFromCache().then((data) => {
+            this.setState({posts:data});
+            global.arbeidsMaur.forumUpdater.getFrontPagePosts().then((data) => {
+                this.setState({posts:data.data});
             })
-        })
+        });
     }
 
     createPostList() {
@@ -73,8 +49,9 @@ export default class PageStream extends React.Component {
 
         for (post in this.state.posts) {
             out.push(
-                <StreamForumPost touchable={true} navigator={this.props.navigator} key={this.state.posts[post].id}
+                    <StreamForumPost showThreadButton={true} navigator={this.props.navigator} key={this.state.posts[post].id}
                                  cut={true} images={false} data={this.state.posts[post]}/>
+
             );
         }
         return out;
@@ -106,7 +83,7 @@ export default class PageStream extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#CCCCCC',
+        backgroundColor: '#CCCCC0',
         paddingLeft: 0,
         paddingTop: 30,
         paddingBottom: 0,

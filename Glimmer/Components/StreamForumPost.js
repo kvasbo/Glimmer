@@ -14,7 +14,7 @@ import {
 
 var DomParser = require('react-native-html-parser').DOMParser
 
-import {Card, Icon, Badge, Divider} from 'react-native-elements'
+import {Card, Icon, Button, Badge, Divider} from 'react-native-elements'
 
 import ForumText from './ForumText.js';
 
@@ -32,7 +32,7 @@ class MetaDataFirstPost extends React.Component {
 
         var comText = "kommentar";
 
-        if (this.props.comments !== 1) {
+        if (this.props.post.comment_count !== 1) {
             comText = "kommentarer";
         }
 
@@ -41,22 +41,25 @@ class MetaDataFirstPost extends React.Component {
             <View style={{flexDirection: "row"}}>
 
                 <Badge
-                    value={this.props.comments + " " + comText}
+                    value={"Gi kudos"}
                     textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: 'orange', marginRight: 5}}
+                    containerStyle={{backgroundColor: 'green', marginRight: 5}}
                 />
 
                 <Badge
-                    value={"Gi kudos"}
+                    value={this.props.post.comment_count + " " + comText}
                     textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: 'green'}}
+                    containerStyle={{backgroundColor: 'orange'}}
+                    onPress={() => this.props.navigator.push({
+                        screen: 'glimmer.PageThread',
+                        title: this.props.post.title,
+                        passProps: {post: this.props.post}
+                    })}
                 />
 
             </View>
         )
-
     }
-
 }
 
 export default class StreamForumPost extends React.Component {
@@ -135,8 +138,7 @@ export default class StreamForumPost extends React.Component {
 
                     <View style={{flexDirection: "row", marginTop: 10}}>
 
-                        <MetaDataFirstPost comments={this.props.data.comment_count}
-                                           forum={this.props.data.forum.title}/>
+                        <MetaDataFirstPost showThreadButton={this.props.showThreadButton} navigator={this.props.navigator} post={this.props.data}/>
 
                     </View>
                 </View>
@@ -149,25 +151,15 @@ export default class StreamForumPost extends React.Component {
 
         return (
 
-            <TouchableOpacity
-                onPress={ () => this.props.navigator.push({
-                    screen: 'glimmer.PageThread',
-                    title: this.props.data.title,
-                    passProps: {post: this.props.data}
-                })}
-            >
-                <Card title={this.props.data.title} image={this.getFirstImage()}>
-                    <Text>{this.props.data.creator.name}, {this.getTime()}. {this.props.data.forum.title}.</Text>
+            <Card title={this.props.data.title} image={this.getFirstImage()}>
+                <Text>{this.props.data.creator.name}, {this.getTime()}. {this.props.data.forum.title}.</Text>
 
-                    <ForumText cut={this.props.cut} text={this.props.data.body} images={this.props.images}
-                               style={{marginBottom: 10}}/>
+                <ForumText cut={this.props.cut} text={this.props.data.body} images={this.props.images}
+                           style={{marginBottom: 10}}/>
 
-                    {this.getMetadataSection()}
+                {this.getMetadataSection()}
 
-                </Card>
-
-            </TouchableOpacity>
-
+            </Card>
         );
     }
 

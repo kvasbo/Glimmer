@@ -11,36 +11,48 @@ export default class ForumUpdater {
 
     }
 
-    getFromCache() {
-        AsyncStorage.getItem('@Cache:latestStream', (err, result) => {
-            if (!err && result !== null) {
-                var resultP = JSON.parse(result);
-                console.log(resultP);
-                //this.setState({posts: resultP.data, paging: resultP.paging})
-                return resultP.data;
-            }
-            else {
-                console.log("no forum cache found");
-            }
-        });
+    getFrontpageFromCache() {
+
+        return new Promise((resolve,reject) => {
+
+            AsyncStorage.getItem('@Cache:latestStream', (err, result) => {
+                if (!err && result !== null) {
+                    var resultP = JSON.parse(result);
+                   // console.log(resultP);
+                    //this.setState({posts: resultP.data, paging: resultP.paging})
+                    resolve(resultP.data);
+                }
+                else {
+                    resolve([]);
+                   // reject("no forum cache found");
+                }
+            });
+
+        })
     }
 
-    getPosts(callback) {
+    getFrontPagePosts() {
+
         var uri = "/streams/posts";
 
-        auth.makeApiGetCall("/streams/posts").then((data) => {
+        return new Promise((resolve, reject) => {
 
-            console.log("data:", data);
+            auth.makeApiGetCall("/streams/posts").then((data) => {
 
-            try {
-                AsyncStorage.setItem('@Cache:latestStream', JSON.stringify(data));
-            } catch (error) {
-                console.log("error saving data to cache.")
-            }
+                //console.log("data:", data);
 
-            callback({success: true, name: "forside", data: data.data});
+                try {
+                    AsyncStorage.setItem('@Cache:latestStream', JSON.stringify(data));
+                } catch (error) {
+                    console.log("error saving data to cache.")
+                }
 
-            // this.setState({posts:data.data,  paging: data.paging});
+                out = {success: true, name: "forside", data: data.data}
+
+                resolve(out);
+
+            })
+
         })
     }
 
@@ -85,8 +97,18 @@ export default class ForumUpdater {
     }
 
     _addForumsToList(forumBatch) {
+
+        function addForum(forum) {
+            return {
+                type: ADD_FORUM,
+                forum
+            }
+        }
+
         for (forum in forumBatch) {
+
             this.tmpForums[forumBatch[forum].id] = forumBatch[forum];
+
         }
 
     }
