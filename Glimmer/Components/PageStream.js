@@ -59,7 +59,7 @@ export default class PageStream extends React.Component {
 
     _onRefresh() {
         this.setState({refreshing: true});
-        this.getPosts().then(() => {
+        global.arbeidsMaur.forumUpdater.getFrontPagePosts().then((data) => {
             this.setState({refreshing: false});
         });
     }
