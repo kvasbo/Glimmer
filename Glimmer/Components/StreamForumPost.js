@@ -6,15 +6,16 @@ import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
-    Text,
     View,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    Text
 } from 'react-native';
 
 var DomParser = require('react-native-html-parser').DOMParser
 
-import {Card, Icon, Button, Badge, Divider} from 'react-native-elements'
+import {Card, Icon, Badge, Divider} from 'react-native-elements'
+
 
 import ForumText from './ForumText.js';
 

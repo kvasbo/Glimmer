@@ -17,14 +17,11 @@ export default class ForumUpdater {
 
             AsyncStorage.getItem('@Cache:latestStream', (err, result) => {
                 if (!err && result !== null) {
-                    var resultP = JSON.parse(result);
-                   // console.log(resultP);
-                    //this.setState({posts: resultP.data, paging: resultP.paging})
-                    resolve(resultP.data);
+                    var resultParsed = JSON.parse(result);
+                    resolve(resultParsed.data);
                 }
                 else {
                     resolve([]);
-                   // reject("no forum cache found");
                 }
             });
 
@@ -56,13 +53,12 @@ export default class ForumUpdater {
         })
     }
 
-    getThreadPage(threadId, page) {
-        var uri = "/stream/"
 
-        return new Promise((resolve, reject) => {
+    getFavoritePostsRecursive(depth)
+    {
 
-        })
     }
+
 
     initForums(force) {
 

@@ -10,7 +10,6 @@ import {Navigation} from 'react-native-navigation';
 import Workers from "./Workers/index.js";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 global.moment = require('moment');
 
 import 'moment/locale/nb';

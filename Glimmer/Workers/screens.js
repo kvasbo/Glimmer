@@ -1,6 +1,5 @@
 import {Navigation} from 'react-native-navigation';
 
-import HomeScreen from "../Components/HomeScreen";
 import PageStream from "../Components/PageStream";
 import PageThread from "../Components/PageThread";
 import PageCalendar from "../Components/PageCalendar";
@@ -15,7 +14,6 @@ import MenuLeft from "../Components/MenuLeft";
 export function registerScreens() {
 
     //Proper pages
-    Navigation.registerComponent('glimmer.HomeScreen', () => HomeScreen);
     Navigation.registerComponent('glimmer.PageStream', () => PageStream);
     Navigation.registerComponent('glimmer.PageThread', () => PageThread);
     Navigation.registerComponent('glimmer.PageMessages', () => PageMessages);

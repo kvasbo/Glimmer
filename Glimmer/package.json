@@ -21,7 +21,6 @@
     "react-native-navigation": "^1.1.108",
     "react-native-vector-icons": "^4.2.0",
     "react-native-webview-autoheight": "^1.0.4",
-    "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
     "react-timer-mixin": "^0.13.3",
     "redux": "^3.7.0",
@@ -35,5 +34,6 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "false": {}
 }
