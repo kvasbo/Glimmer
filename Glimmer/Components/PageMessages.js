@@ -144,15 +144,13 @@ class Conversation extends React.Component {
                 </Card>
             </TouchableOpacity>
         )
-
     }
-
 }
 
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#CCCCCC',
+        backgroundColor: '#FAFAFA',
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

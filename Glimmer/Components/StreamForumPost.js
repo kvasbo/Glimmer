@@ -65,7 +65,7 @@ class MetaDataFirstPost extends React.Component {
 export default class StreamForumPost extends React.Component {
 
     images = [];
-    post = {};
+
 
     constructor(props) {
 
@@ -73,8 +73,6 @@ export default class StreamForumPost extends React.Component {
         this.state = {};
 
         this.images = this.getImages();
-
-        console.log("StreamForumPost",this.props, post);
 
     }
 

@@ -55,8 +55,8 @@ export default class ForumUpdater {
 
             fetchedPosts.sort(
                 function (x, y) {
-                    xd = new Date(x.updated_at);
-                    yd = new Date(y.updated_at);
+                    xd = new Date(x.bulletin.updated_at);
+                    yd = new Date(y.bulletin.updated_at);
                     return yd - xd;
                 }
             );

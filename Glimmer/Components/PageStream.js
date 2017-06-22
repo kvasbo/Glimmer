@@ -12,7 +12,7 @@ import {
     Text,
     View,
 } from 'react-native';
-
+import LoadingScreen from "./LoadingScreen";
 import StreamForumPost from "./StreamForumPost";
 
 export default class PageStream extends React.Component {
@@ -96,7 +96,7 @@ export default class PageStream extends React.Component {
     render() {
 
         if (this.state.loading) {
-            return <View style={pageStyles.container}><Text>Laster inn...</Text></View>
+            return <LoadingScreen text="Laster forsiden..."/>
         }
         else {
 
@@ -118,7 +118,7 @@ export default class PageStream extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#CCCCC0',
+        backgroundColor: '#FAFAFA',
         paddingLeft: 0,
         paddingTop: 60,
         paddingBottom: 0,

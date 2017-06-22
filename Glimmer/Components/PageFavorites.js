@@ -12,10 +12,8 @@ import {
     Text,
     View,
 } from 'react-native';
-
-import {Card, Icon, Badge, Divider, ListItem} from 'react-native-elements'
-
-import FavoriteForumPost from "./FavoriteForumPost";
+import LoadingScreen from "./LoadingScreen"
+import {ListItem, List, ListView} from 'react-native-elements'
 
 export default class PageFavorites extends React.Component {
 
@@ -95,23 +93,48 @@ export default class PageFavorites extends React.Component {
          });*/
     }
 
+    getSubtitle(data)
+    {
+        var date = new moment(data.updated_at).calendar()
+        return date;
+    }
+
     render() {
 
+        //console.log(this.state.posts);
+
         if (this.state.loading) {
-            return <View style={pageStyles.container}><Text>Laster inn...</Text></View>
+            return <LoadingScreen text="Laster trådene dine..."/>
         }
         else {
 
             return (
-                <ScrollView style={pageStyles.container}
-                            refreshControl={
-                                <RefreshControl
-                                    refreshing={this.state.refreshing}
-                                    onRefresh={this._onRefresh.bind(this)}
-                                />}
-                >
-                    {this.createPostList()}
+
+                <ScrollView style={pageStyles.container}>
+
+                    <List>
+                        {
+                            this.state.posts.map((l, i) => (
+                                <ListItem
+                                    key={i}
+                                    title={l.bulletin.title}
+                                    subtitleNumberOfLines={2}
+                                    titleNumberOfLines={2}
+                                    subtitle={this.getSubtitle(l.bulletin)}
+                                    onPress={() =>
+                                        this.props.navigator.push({
+                                            screen: 'glimmer.PageThread',
+                                            title: l.bulletin.title,
+                                            passProps: {post: l.bulletin}
+                                        })
+                                    }
+                                />
+                            ))
+                        }
+                    </List>
+
                 </ScrollView>
+
             );
         }
     }
@@ -120,10 +143,10 @@ export default class PageFavorites extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#CCCCC0',
+        backgroundColor: '#FFFFFF',
         paddingLeft: 0,
-        paddingTop: 60,
-        paddingBottom: 0,
+        paddingTop: 55,
+        marginBottom: 50,
         paddingRight: 0,
     },
 });
