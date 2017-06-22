@@ -13,9 +13,11 @@ import {
     View,
 } from 'react-native';
 
-import StreamForumPost from "./StreamForumPost";
+import {Card, Icon, Badge, Divider, ListItem} from 'react-native-elements'
 
-export default class PageStream extends React.Component {
+import FavoriteForumPost from "./FavoriteForumPost";
+
+export default class PageFavorites extends React.Component {
 
     constructor(props) {
         super(props);
@@ -49,19 +51,17 @@ export default class PageStream extends React.Component {
     };
 
     static navigationOptions = {
-        title: 'Strøm',
+        // title: 'Strøm',
     };
 
     componentDidMount() {
-       this.updatePostsFromStore();
+        this.updatePostsFromStore();
     }
 
-    updatePostsFromStore()
-    {
-        var posts = global.arbeidsMaur.forumUpdater.getStream();
+    updatePostsFromStore() {
+        var posts = global.arbeidsMaur.forumUpdater.getFavorites();
 
-        if(posts.length > 0)
-        {
+        if (posts.length > 0) {
             this.setState({posts: posts, loading: false});
         }
         else {
@@ -77,20 +77,22 @@ export default class PageStream extends React.Component {
         out = [];
 
         for (post in this.state.posts) {
+
             out.push(
-                <StreamForumPost showThreadButton={true} navigator={this.props.navigator}
-                                 key={this.state.posts[post].id}
-                                 cut={true} images={false} data={this.state.posts[post]}/>
+                <FavoriteForumPost showThreadButton={true} navigator={this.props.navigator}
+                                   key={this.state.posts[post].id}
+                                   cut={true} images={false} data={this.state.posts[post].bulletin}/>
             );
+
         }
         return out;
     }
 
     _onRefresh() {
-       /* this.setState({refreshing: true});
-        global.arbeidsMaur.forumUpdater.getFrontPagePosts().then((data) => {
-            this.setState({refreshing: false});
-        });*/
+        /* this.setState({refreshing: true});
+         global.arbeidsMaur.forumUpdater.getFrontPagePosts().then((data) => {
+         this.setState({refreshing: false});
+         });*/
     }
 
     render() {

@@ -1,6 +1,7 @@
 import {Navigation} from 'react-native-navigation';
 
 import PageStream from "../Components/PageStream";
+import PageFavorites from "../Components/PageFavorites";
 import PageThread from "../Components/PageThread";
 import PageCalendar from "../Components/PageCalendar";
 import PageMessages from "../Components/PageMessages";
@@ -15,6 +16,7 @@ export function registerScreens() {
 
     //Proper pages
     Navigation.registerComponent('glimmer.PageStream', () => PageStream);
+    Navigation.registerComponent('glimmer.PageFavorites', () => PageFavorites);
     Navigation.registerComponent('glimmer.PageThread', () => PageThread);
     Navigation.registerComponent('glimmer.PageMessages', () => PageMessages);
     Navigation.registerComponent('glimmer.PageSettings', () => PageSettings);

@@ -8,7 +8,6 @@ import React, {Component} from 'react';
 import {registerScreens} from './Workers/screens';
 import {Navigation} from 'react-native-navigation';
 import Workers from "./Workers/index.js";
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 global.moment = require('moment');
 
@@ -24,8 +23,6 @@ global.arbeidsMaur = new Workers();
 
 registerScreens();
 
-
-
 export default class App {
 
     constructor(){
@@ -35,6 +32,8 @@ export default class App {
     init() {
 
         global.arbeidsMaur.forumUpdater.initForums(false);
+        global.arbeidsMaur.forumUpdater.loadFavorites(1);
+        global.arbeidsMaur.forumUpdater.loadStream(1);
 
         this.startApp();
 
@@ -45,27 +44,27 @@ export default class App {
             tabs: [
                 {
                     label: 'Mine tråder',
-                    screen: 'glimmer.PageStream', // this is a registered name for a screen
+                    screen: 'glimmer.PageFavorites', // this is a registered name for a screen
                     icon: require('./icons/star.png'),
                     //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                    title: 'Strøm'
+                    title: 'Mine tråder'
                 },
                 {
                     label: 'Forsiden',
                     screen: 'glimmer.PageStream',
                     icon: require('./icons/front.png'),
                     //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                    title: 'Kalender'
+                    title: 'Forsiden'
                 }
                 ,
-                {
+                /*{
                     label: 'Kalender',
                     screen: 'glimmer.PageCalendar',
                     icon: require('./icons/calendar.png'),
                     //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Kalender'
                 }
-                ,
+                ,*/
                 {
                     label: 'Meldinger',
                     screen: 'glimmer.PageMessages',
@@ -74,13 +73,13 @@ export default class App {
                     title: 'Meldinger'
                 }
                 ,
-                {
+               /* {
                     label: 'Velg forum',
                     screen: 'glimmer.PageForumList',
                     icon: require('./icons/chat.png'),
                     //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Forum List Test'
-                }
+                } */
             ],
             drawer: { // optional, add this if you want a side menu drawer in your app
                 left: { // optional, define if you want a drawer from the left

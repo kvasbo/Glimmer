@@ -16,7 +16,6 @@ var DomParser = require('react-native-html-parser').DOMParser
 
 import {Card, Icon, Badge, Divider} from 'react-native-elements'
 
-
 import ForumText from './ForumText.js';
 
 var s = require('./Styles');
@@ -66,6 +65,7 @@ class MetaDataFirstPost extends React.Component {
 export default class StreamForumPost extends React.Component {
 
     images = [];
+    post = {};
 
     constructor(props) {
 
@@ -73,6 +73,8 @@ export default class StreamForumPost extends React.Component {
         this.state = {};
 
         this.images = this.getImages();
+
+        console.log("StreamForumPost",this.props, post);
 
     }
 
@@ -89,7 +91,14 @@ export default class StreamForumPost extends React.Component {
         var imgOut = [];
 
         try {
-            let doc = new DomParser().parseFromString(this.props.data.body, 'text/html');
+
+            var body = "<html></html>";
+
+            if(typeof(this.data.body) !== "undefined") {
+                body = this.data.body;
+            }
+
+            let doc = new DomParser().parseFromString(body, 'text/html');
 
             var images = doc.getElementsByTagName('img');
 
@@ -112,7 +121,7 @@ export default class StreamForumPost extends React.Component {
         }
 
         catch (err) {
-            //console.log(err);
+            console.log(err);
         }
 
         return imgOut;

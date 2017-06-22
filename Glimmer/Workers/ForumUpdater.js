@@ -7,55 +7,130 @@ export default class ForumUpdater {
     forums = {};
     tmpForums = {};
 
+    streamPosts = {loaded: false, posts: [], lastPage: 0};
+    favPosts = {loaded: false, posts: [], lastPage: 0};
+
     constructor() {
 
     }
 
-    getFrontpageFromCache() {
+    //Do the API lifting
+    loadPosts(favorites = false, page = 1) {
+        var uri = "/streams/posts?page=";
+        if (favorites) uri = "/streams/starred?page=";
 
-        return new Promise((resolve,reject) => {
-
-            AsyncStorage.getItem('@Cache:latestStream', (err, result) => {
-                if (!err && result !== null) {
-                    var resultParsed = JSON.parse(result);
-                    resolve(resultParsed.data);
-                }
-                else {
-                    resolve([]);
-                }
-            });
-
-        })
-    }
-
-    getFrontPagePosts() {
-
-        var uri = "/streams/posts";
+        uri += page;
 
         return new Promise((resolve, reject) => {
 
-            auth.makeApiGetCall("/streams/posts").then((data) => {
+            auth.makeApiGetCall(uri).then((data) => {
 
-                //console.log("data:", data);
+                resolve(data);
 
-                try {
-                    AsyncStorage.setItem('@Cache:latestStream', JSON.stringify(data));
-                } catch (error) {
-                    console.log("error saving data to cache.")
+            });
+
+        });
+    }
+
+    loadFavorites(depth = 5) {
+
+        var proms = [];
+
+        //Get promises for all
+        for (var i = 0; i < depth; i++) {
+            var p = this.loadPosts(true, i); //.then((data)=>{
+            proms.push(p);
+        }
+
+        //Resolve all the promises! This is nice. And needs some error handling I guess.
+        Promise.all(proms).then(values => {
+
+            var fetchedPosts = [];
+
+            for (key in values) {
+                fetchedPosts = fetchedPosts.concat(values[key].data);
+            }
+
+            fetchedPosts = this.arrayUnique(fetchedPosts);
+
+            fetchedPosts.sort(
+                function (x, y) {
+                    xd = new Date(x.updated_at);
+                    yd = new Date(y.updated_at);
+                    return yd - xd;
                 }
+            );
 
-                out = {success: true, name: "forside", data: data.data}
+            this.favPosts.posts = fetchedPosts;
+            this.favPosts.lastPage = depth;
 
-                resolve(out);
+            try {
+                AsyncStorage.setItem('@Cache:favoritesFirstStart', JSON.stringify(this.favPosts));
+            } catch (error) {
+                console.log("Error saving front page to cache.")
+            }
 
-            })
+            if (__DEV__) {
+                console.log("Favorites loaded", this.favPosts);
+            }
 
-        })
+        });
+
+    }
+
+    getStream() {
+        return this.streamPosts.posts;
+    }
+
+    getFavorites() {
+        return this.favPosts.posts;
     }
 
 
-    getFavoritePostsRecursive(depth)
-    {
+    loadStream(depth = 5) {
+
+        var proms = [];
+
+        //Get promises for all
+        for (var i = 1; i < depth + 1; i++) {
+            var p = this.loadPosts(false, i); //.then((data)=>{
+            proms.push(p);
+        }
+
+
+        //Resolve all the promises! This is nice. And needs some error handling I guess.
+        Promise.all(proms).then(values => {
+
+            var fetchedPosts = [];
+
+            for (key in values) {
+                fetchedPosts = fetchedPosts.concat(values[key].data);
+            }
+
+            fetchedPosts = this.arrayUnique(fetchedPosts);
+
+            fetchedPosts.sort(
+                function (x, y) {
+                    xd = new Date(x.created_at);
+                    yd = new Date(y.created_at);
+                    return yd - xd;
+                }
+            );
+
+            this.streamPosts.posts = fetchedPosts;
+            this.streamPosts.lastPage = depth;
+
+            try {
+                AsyncStorage.setItem('@Cache:frontPageFirstStart', JSON.stringify(this.streamPosts));
+            } catch (error) {
+                console.log("Error saving front page to cache.")
+            }
+
+            if (__DEV__) {
+                console.log("Stream loaded", this.streamPosts);
+            }
+
+        });
 
     }
 
@@ -93,13 +168,6 @@ export default class ForumUpdater {
     }
 
     _addForumsToList(forumBatch) {
-
-        function addForum(forum) {
-            return {
-                type: ADD_FORUM,
-                forum
-            }
-        }
 
         for (forum in forumBatch) {
 
@@ -150,8 +218,7 @@ export default class ForumUpdater {
         }
 
         out.sort(
-            function(x, y)
-            {
+            function (x, y) {
                 return x.title.localeCompare(y.title);
             }
         );
@@ -163,8 +230,17 @@ export default class ForumUpdater {
         return out;
     }
 
-    update(callback) {
-        this.getPosts(callback);
+    //Helpers
+    arrayUnique(array) {
+        var a = array.concat();
+        for (var i = 0; i < a.length; ++i) {
+            for (var j = i + 1; j < a.length; ++j) {
+                if (a[i] === a[j])
+                    a.splice(j--, 1);
+            }
+        }
+
+        return a;
     }
 
 }
