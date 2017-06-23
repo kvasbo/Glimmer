@@ -13,7 +13,7 @@ import {
     View,
 } from 'react-native';
 import LoadingScreen from "./LoadingScreen"
-import {ListItem, List, ListView} from 'react-native-elements'
+import {Icon} from 'react-native-elements'
 
 export default class PageFavorites extends React.Component {
 
@@ -99,6 +99,23 @@ export default class PageFavorites extends React.Component {
         return date;
     }
 
+    _renderItem =({item}) => (
+
+        <TouchableOpacity  onPress={() =>
+            this.props.navigator.push({
+                screen: 'glimmer.PageThread',
+                title: item.bulletin.title,
+                passProps: {post: item.bulletin}
+            })
+        }>
+        <View style={pageStyles.favoriteElement}>
+        <Text style={pageStyles.favoriteTitle}>{item.bulletin.title}</Text>
+        <Text>{this.getSubtitle(item.bulletin)}</Text>
+        </View>
+        </TouchableOpacity>
+
+    )
+
     render() {
 
         //console.log(this.state.posts);
@@ -110,30 +127,12 @@ export default class PageFavorites extends React.Component {
 
             return (
 
-                <ScrollView style={pageStyles.container}>
+                <FlatList
+                    style={pageStyles.container}
+                    data={this.state.posts}
+                    renderItem={this._renderItem}
 
-                    <List>
-                        {
-                            this.state.posts.map((l, i) => (
-                                <ListItem
-                                    key={i}
-                                    title={l.bulletin.title}
-                                    subtitleNumberOfLines={2}
-                                    titleNumberOfLines={2}
-                                    subtitle={this.getSubtitle(l.bulletin)}
-                                    onPress={() =>
-                                        this.props.navigator.push({
-                                            screen: 'glimmer.PageThread',
-                                            title: l.bulletin.title,
-                                            passProps: {post: l.bulletin}
-                                        })
-                                    }
-                                />
-                            ))
-                        }
-                    </List>
-
-                </ScrollView>
+                    />
 
             );
         }
@@ -143,10 +142,30 @@ export default class PageFavorites extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: "column",
         backgroundColor: '#FFFFFF',
         paddingLeft: 0,
-        paddingTop: 55,
+        marginTop: 70,
         marginBottom: 50,
         paddingRight: 0,
+
     },
+
+    favoriteElement: {
+        borderBottomWidth: 1,
+        borderBottomColor: "#CCCCCC",
+        padding: 5,
+        paddingLeft: 10,
+    },
+
+    favoriteTitle: {
+        fontSize: 16,
+        fontWeight: "300",
+    },
+
+    favoriteSubtitle: {
+        fontSize: 11,
+        fontWeight: "200",
+    }
+
 });
