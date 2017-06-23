@@ -19,6 +19,9 @@ moment.locale('nb')
 import GlimmerAuth from "./src/auth.js";
 global.auth = new GlimmerAuth();
 
+import Helpers from "./src/helpers";
+global.helpers = new Helpers();
+
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];
 global.arbeidsMaur = new Workers();
@@ -36,6 +39,19 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 global.store = createStore(glimmerReducers);
+
+if(__DEV__)
+{
+    console.log("Store init", global.store.getState());
+}
+
+if(true && __DEV__)
+{
+    let unsubscribe = global.store.subscribe(() => {
+        console.log("Store change", global.store.getState());
+    })
+
+}
 
 registerScreens();
 

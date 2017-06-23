@@ -1,7 +1,7 @@
 import {
     AsyncStorage
 } from 'react-native';
-import {addForumFavorite} from "../Redux/actions"
+import {addForumFavorite, replaceForumList} from "../Redux/actions"
 
 export default class ForumUpdater {
 
@@ -119,7 +119,7 @@ export default class ForumUpdater {
                 fetchedPosts = fetchedPosts.concat(values[key].data);
             }
 
-            fetchedPosts = this.arrayUnique(fetchedPosts);
+            fetchedPosts = global.helpers.arrayUnique(fetchedPosts);
 
             fetchedPosts.sort(
                 function (x, y) {
@@ -162,6 +162,8 @@ export default class ForumUpdater {
 
                     this.forums = resultP.forums;
 
+                    global.store.dispatch(replaceForumList(resultP.forums));
+
                     if (force || now - resultP.time < (1000 * 60 * 60 * 24 * 7)) {
                         console.log("Forum cache too old, loading from API");
                         this._getForumsPagesRecursive(1);
@@ -190,13 +192,16 @@ export default class ForumUpdater {
     }
 
     _storeForumList() {
+
         console.log("Storing forums to list");
 
         //Replace the old list.
         this.forums = this.tmpForums;
         this.tmpForums = {};
 
-        var data = {time: new Date(), forums: this.forums};
+        var data = {time: new Date(), forums: this.tmpForums};
+
+        global.store.dispatch(replaceForumList(this.tmpForums));
 
         try {
             AsyncStorage.setItem('@Cache:forumList', JSON.stringify(data));
@@ -242,17 +247,5 @@ export default class ForumUpdater {
         return out;
     }
 
-    //Helpers
-    arrayUnique(array) {
-        var a = array.concat();
-        for (var i = 0; i < a.length; ++i) {
-            for (var j = i + 1; j < a.length; ++j) {
-                if (a[i] === a[j])
-                    a.splice(j--, 1);
-            }
-        }
-
-        return a;
-    }
 
 }

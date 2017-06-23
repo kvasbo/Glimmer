@@ -1,16 +1,12 @@
-import {ADD_FORUM} from "./actions";
+import {FORUMLIST_ADD_FORUM, FORUMLIST_REPLACE} from "./constants";
 
-function Forums(state = [], forum) {
+function ForumList(state = {}, forum) {
     switch (forum.type) {
-        case ADD_TODO:
-            return [
-                ...state,
-                {
-                    forum: action.text,
-                    completed: false
-                }
-            ]
+        case FORUMLIST_REPLACE:
+            return forum.forumList;
         default:
-            return state
+            return state;
     }
 }
+
+export default ForumList
