@@ -13,7 +13,7 @@ import {
     View,
 } from 'react-native';
 import LoadingScreen from "./LoadingScreen"
-import {Icon} from 'react-native-elements'
+import {Icon, Divider} from 'react-native-elements'
 
 export default class PageFavorites extends React.Component {
 
@@ -93,30 +93,43 @@ export default class PageFavorites extends React.Component {
          });*/
     }
 
-    getSubtitle(data)
-    {
+    getSubtitle(data) {
         var date = new moment(data.updated_at).calendar()
         return date;
     }
 
-    _renderItem =({item}) => (
+    _renderItem = ({item}) => (
 
-        <TouchableOpacity  onPress={() =>
-            this.props.navigator.push({
-                screen: 'glimmer.PageThread',
-                title: item.bulletin.title,
-                passProps: {post: item.bulletin}
-            })
-        }>
-        <View style={pageStyles.favoriteElement}>
-        <Text style={pageStyles.favoriteTitle}>{item.bulletin.title}</Text>
-        <Text>{this.getSubtitle(item.bulletin)}</Text>
+        <View>
+            <TouchableOpacity onPress={() =>
+                this.props.navigator.push({
+                    screen: 'glimmer.PageThread',
+                    title: item.bulletin.title,
+                    passProps: {post: item.bulletin}
+                })
+            }>
+                <View style={pageStyles.favoriteElement}>
+                    <View style={pageStyles.favoriteText}>
+                        <Text style={pageStyles.favoriteTitle}>{item.bulletin.title}</Text>
+                        <Text style={pageStyles.favoriteSubtitle}>{this.getSubtitle(item.bulletin)}</Text>
+                    </View>
+                    <View style={pageStyles.favoriteIcon}>
+                        <Icon name="keyboard-arrow-right" color="#AAAAAA" size={30} />
+                    </View>
+                </View>
+
+            </TouchableOpacity>
+            <Divider style={{ backgroundColor: '#CCCCCC' }} />
         </View>
-        </TouchableOpacity>
 
     )
 
     _keyExtractor = (item, index) => item.bulletin.id;
+
+    _loadMoreItems(distance)
+    {
+        console.log("reachec end", distance)
+    }
 
     render() {
 
@@ -134,7 +147,10 @@ export default class PageFavorites extends React.Component {
                     data={this.state.posts}
                     renderItem={this._renderItem}
                     keyExtractor={this._keyExtractor}
-                    />
+                    onEndReached={this._loadMoreItems}
+                    onEndReachedThreshold={0.5}
+                    initialNumToRender={30}
+                />
 
             );
         }
@@ -154,20 +170,33 @@ const pageStyles = StyleSheet.create({
     },
 
     favoriteElement: {
-        borderBottomWidth: 1,
-        borderBottomColor: "#CCCCCC",
-        padding: 5,
-        paddingLeft: 10,
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+
+    favoriteText: {
+        padding: 10,
+        paddingLeft: 15,
+        flex: 8,
+    },
+
+    favoriteIcon: {
+        padding: 10,
+        paddingRight: 13,
+        flex: 1,
     },
 
     favoriteTitle: {
         fontSize: 16,
         fontWeight: "300",
+        marginBottom: 3,
     },
 
     favoriteSubtitle: {
-        fontSize: 11,
-        fontWeight: "200",
+        fontSize: 13,
+        fontWeight: "300",
+        color: "#444444"
     }
 
 });

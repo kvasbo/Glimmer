@@ -37,7 +37,7 @@ export default class ForumUpdater {
         var proms = [];
 
         //Get promises for all
-        for (var i = 0; i < depth; i++) {
+        for (var i = 1; i < depth + 1; i++) {
             var p = this.loadPosts(true, i); //.then((data)=>{
             proms.push(p);
         }

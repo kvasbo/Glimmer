@@ -44,8 +44,8 @@ export default class App {
     init() {
 
         global.arbeidsMaur.forumUpdater.initForums(false);
-        global.arbeidsMaur.forumUpdater.loadFavorites(1);
-        global.arbeidsMaur.forumUpdater.loadStream(1);
+        global.arbeidsMaur.forumUpdater.loadFavorites(2);
+        global.arbeidsMaur.forumUpdater.loadStream(2);
 
         this.startApp();
 
