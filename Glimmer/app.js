@@ -21,6 +21,18 @@ global.auth = new GlimmerAuth();
 console.ignoredYellowBox = ['[xmldom warning]'];
 global.arbeidsMaur = new Workers();
 
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyD9d9frvKtl8PEOPS5Y6Uc7HDoxyopEJrA",
+    authDomain: "glimmer-28101.firebaseapp.com",
+    databaseURL: "https://glimmer-28101.firebaseio.com",
+    projectId: "glimmer-28101",
+    storageBucket: "glimmer-28101.appspot.com",
+    messagingSenderId: "971596888536"
+};
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
 registerScreens();
 
 export default class App {
