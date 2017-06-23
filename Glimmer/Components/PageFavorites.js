@@ -116,6 +116,8 @@ export default class PageFavorites extends React.Component {
 
     )
 
+    _keyExtractor = (item, index) => item.bulletin.id;
+
     render() {
 
         //console.log(this.state.posts);
@@ -131,7 +133,7 @@ export default class PageFavorites extends React.Component {
                     style={pageStyles.container}
                     data={this.state.posts}
                     renderItem={this._renderItem}
-
+                    keyExtractor={this._keyExtractor}
                     />
 
             );
