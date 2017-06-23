@@ -18,25 +18,10 @@ import {Icon, Divider} from 'react-native-elements'
 export default class PageFavorites extends React.Component {
 
     constructor(props) {
-        super(props);
-        this.state = {posts: [], loading: true, refreshing: false};
-        this.createPostList = this.createPostList.bind(this);
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-        this.updatePostsFromStore = this.updatePostsFromStore.bind(this);
-    }
 
-    onNavigatorEvent(event) {
-        switch (event.id) {
-            case 'willAppear':
-                this.updatePostsFromStore();
-                break;
-            case 'didAppear':
-                break;
-            case 'willDisappear':
-                break;
-            case 'didDisappear':
-                break;
-        }
+        super(props);
+        this.state = {posts: this.props.store.getState().ForumFavorite.posts, loading: true, refreshing: false};
+
     }
 
     static navigatorStyle = {
@@ -48,42 +33,21 @@ export default class PageFavorites extends React.Component {
         navBarHidden: false,
     };
 
-    static navigationOptions = {
-        // title: 'Strøm',
-    };
-
-    componentDidMount() {
-        this.updatePostsFromStore();
-    }
-
-    updatePostsFromStore() {
-        var posts = global.arbeidsMaur.forumUpdater.getFavorites();
-
-        if (posts.length > 0) {
-            this.setState({posts: posts, loading: false});
-        }
-        else {
-            setTimeout(this.updatePostsFromStore, 200);
-        }
-    }
-
     componentDidMount() {
 
-    }
+        //Listen to state changes. This really needs to change at some later point.
+        reduxUnsubscribe = this.props.store.subscribe(() => {
 
-    createPostList() {
-        out = [];
+                var tmpPosts = this.props.store.getState().ForumFavorite.posts;
 
-        for (post in this.state.posts) {
+                if(tmpPosts.length > 0)
+                {
+                    this.setState({loading: false});
+                }
 
-            out.push(
-                <FavoriteForumPost showThreadButton={true} navigator={this.props.navigator}
-                                   key={this.state.posts[post].id}
-                                   cut={true} images={false} data={this.state.posts[post].bulletin}/>
-            );
-
-        }
-        return out;
+                this.setState({posts:tmpPosts});
+            }
+        )
     }
 
     _onRefresh() {
@@ -104,14 +68,14 @@ export default class PageFavorites extends React.Component {
             <TouchableOpacity onPress={() =>
                 this.props.navigator.push({
                     screen: 'glimmer.PageThread',
-                    title: item.bulletin.title,
-                    passProps: {post: item.bulletin}
+                    title: item.data.title,
+                    passProps: {post: item.data}
                 })
             }>
                 <View style={pageStyles.favoriteElement}>
                     <View style={pageStyles.favoriteText}>
-                        <Text style={pageStyles.favoriteTitle}>{item.bulletin.title}</Text>
-                        <Text style={pageStyles.favoriteSubtitle}>{this.getSubtitle(item.bulletin)}</Text>
+                        <Text style={pageStyles.favoriteTitle}>{item.data.title}</Text>
+                        <Text style={pageStyles.favoriteSubtitle}>{this.getSubtitle(item.data)}</Text>
                     </View>
                     <View style={pageStyles.favoriteIcon}>
                         <Icon name="keyboard-arrow-right" color="#AAAAAA" size={30} />
@@ -124,16 +88,12 @@ export default class PageFavorites extends React.Component {
 
     )
 
-    _keyExtractor = (item, index) => item.bulletin.id;
-
     _loadMoreItems(distance)
     {
-        console.log("reachec end", distance)
+        console.log("Reached end", distance)
     }
 
     render() {
-
-        //console.log(this.state.posts);
 
         if (this.state.loading) {
             return <LoadingScreen text="Laster trådene dine..."/>
@@ -146,12 +106,11 @@ export default class PageFavorites extends React.Component {
                     style={pageStyles.container}
                     data={this.state.posts}
                     renderItem={this._renderItem}
-                    keyExtractor={this._keyExtractor}
+                    keyExtractor={(item, index) => item.data.id}
                     onEndReached={this._loadMoreItems}
                     onEndReachedThreshold={0.5}
                     initialNumToRender={30}
                 />
-
             );
         }
     }

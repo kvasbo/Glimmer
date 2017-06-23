@@ -10,6 +10,8 @@ import {Navigation} from 'react-native-navigation';
 import Workers from "./Workers/index.js";
 import * as firebase from 'firebase';
 global.moment = require('moment');
+import { createStore } from 'redux'
+import glimmerReducers from './Redux/index';
 
 import 'moment/locale/nb';
 moment.locale('nb')
@@ -33,6 +35,8 @@ const firebaseConfig = {
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
+global.store = createStore(glimmerReducers);
+
 registerScreens();
 
 export default class App {
@@ -44,8 +48,8 @@ export default class App {
     init() {
 
         global.arbeidsMaur.forumUpdater.initForums(false);
-        global.arbeidsMaur.forumUpdater.loadFavorites(2);
-        global.arbeidsMaur.forumUpdater.loadStream(2);
+        global.arbeidsMaur.forumUpdater.loadFirstFavorites(1);
+        global.arbeidsMaur.forumUpdater.loadStream(1);
 
         this.startApp();
 
@@ -53,6 +57,7 @@ export default class App {
 
     startApp() {
         Navigation.startTabBasedApp({
+            passProps: {store: global.store}, //Pass the redux store.
             tabs: [
                 {
                     label: 'Mine tråder',

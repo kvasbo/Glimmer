@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux'
-import ForumList from './ForumList'
+import ForumFavorite from './ForumFavorite'
 
 const glimmerReducers = combineReducers({
-    todos,
-    visibilityFilter
+
+    ForumFavorite
+
 })
 
 export default glimmerReducers

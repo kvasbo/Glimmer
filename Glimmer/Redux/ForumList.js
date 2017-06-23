@@ -1,4 +1,4 @@
-import ADD_FORUM from "./actions";
+import {ADD_FORUM} from "./actions";
 
 function Forums(state = [], forum) {
     switch (forum.type) {

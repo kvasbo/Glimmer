@@ -1,5 +1,8 @@
-export const ADD_FORUM = 'ADD_FORUM'
+import {ADD_POST_FAVORITES} from "./constants";
 
-export function addForum(text) {
-    return { type: ADD_TODO, text }
+export function addForumFavorite(post) {
+    return {
+        type: ADD_POST_FAVORITES,
+        post
+    }
 }

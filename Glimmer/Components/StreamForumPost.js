@@ -90,17 +90,19 @@ export default class StreamForumPost extends React.Component {
 
         try {
 
+           // console.log("getImage", this.)
+
             var body = "<html></html>";
 
-            if(typeof(this.data.body) !== "undefined") {
-                body = this.data.body;
+            if(typeof(this.props.data.body) !== "undefined") {
+                body = this.props.data.body;
             }
 
             let doc = new DomParser().parseFromString(body, 'text/html');
 
             var images = doc.getElementsByTagName('img');
 
-            for (var i = 0; i < 1000; i++) {
+            for (var i = 0; i < 50; i++) {
                 if (typeof(images[i]) !== "undefined") {
                     for (attr in images[i].attributes) {
                         if (images[i].attributes[attr].name === "src") {
@@ -170,20 +172,5 @@ export default class StreamForumPost extends React.Component {
             </Card>
         );
     }
-
-}
-
-class Tag
-    extends Component {
-
-    render() {
-        return (
-            <View><Text>{this.props.tag}</Text></View>
-        )
-    }
-}
-
-class ViewUser extends Component {
-
 
 }

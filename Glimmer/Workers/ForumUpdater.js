@@ -1,6 +1,7 @@
 import {
     AsyncStorage
 } from 'react-native';
+import {addForumFavorite} from "../Redux/actions"
 
 export default class ForumUpdater {
 
@@ -32,7 +33,7 @@ export default class ForumUpdater {
         });
     }
 
-    loadFavorites(depth = 5) {
+    addFavorites(from = 1, depth = 5) {
 
         var proms = [];
 
@@ -51,30 +52,35 @@ export default class ForumUpdater {
                 fetchedPosts = fetchedPosts.concat(values[key].data);
             }
 
-            fetchedPosts = this.arrayUnique(fetchedPosts);
+            for(key in fetchedPosts)
+            {
+                global.store.dispatch(addForumFavorite(fetchedPosts[key].bulletin));
+            }
 
-            fetchedPosts.sort(
+
+            var tmpArr = this.favPosts.posts.concat(fetchedPosts);
+
+            /*For the record, how to sort
+            tmpArr.sort(
                 function (x, y) {
                     xd = new Date(x.bulletin.updated_at);
                     yd = new Date(y.bulletin.updated_at);
                     return yd - xd;
                 }
             );
-
-            this.favPosts.posts = fetchedPosts;
-            this.favPosts.lastPage = depth;
-
-            try {
-                AsyncStorage.setItem('@Cache:favoritesFirstStart', JSON.stringify(this.favPosts));
-            } catch (error) {
-                console.log("Error saving front page to cache.")
-            }
-
-            if (__DEV__) {
-                console.log("Favorites loaded", this.favPosts);
-            }
+            */
 
         });
+
+    }
+
+    loadFirstFavorites(depth = 5)
+    {
+        return this.addFavorites(1, depth);
+    }
+
+    addPagesToFavorites(numberOfPages)
+    {
 
     }
 
