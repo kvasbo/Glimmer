@@ -38,7 +38,7 @@ export default class ForumUpdater {
         var proms = [];
 
         //Get promises for all
-        for (var i = 1; i < depth + 1; i++) {
+        for (var i = from; i < depth + from; i++) {
             var p = this.loadPosts(true, i); //.then((data)=>{
             proms.push(p);
         }
@@ -57,7 +57,6 @@ export default class ForumUpdater {
                 global.store.dispatch(addForumFavorite(fetchedPosts[key].bulletin));
             }
 
-
             var tmpArr = this.favPosts.posts.concat(fetchedPosts);
 
             /*For the record, how to sort
@@ -70,6 +69,8 @@ export default class ForumUpdater {
             );
             */
 
+            this.favPosts.lastPage = from + depth - 1;
+
         });
 
     }
@@ -81,7 +82,12 @@ export default class ForumUpdater {
 
     addPagesToFavorites(numberOfPages)
     {
+        if(__DEV__)
+        {
+            console.log("Add pages to favorites", numberOfPages);
+        }
 
+        this.addFavorites(this.favPosts.lastPage + 1, numberOfPages);
     }
 
     getStream() {

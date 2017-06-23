@@ -90,7 +90,12 @@ export default class PageFavorites extends React.Component {
 
     _loadMoreItems(distance)
     {
-        console.log("Reached end", distance)
+        if(__DEV__)
+        {
+            console.log("Reached end", distance)
+        }
+        global.arbeidsMaur.forumUpdater.addPagesToFavorites(1);
+
     }
 
     render() {
