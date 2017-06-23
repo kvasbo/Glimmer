@@ -2,18 +2,12 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    AsyncStorage,
-    TouchableOpacity
-} from 'react-native';
-import {Card, Icon, Badge, Divider} from 'react-native-elements'
-import ForumText from "./ForumText";
+import React from "react";
+import {AsyncStorage, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Divider, Icon} from "react-native-elements";
+
+//Get common list styles
+const listStyles = require('../Styles/ListStyles');
 
 export default class PageMessages extends React.Component {
 
@@ -91,61 +85,66 @@ export default class PageMessages extends React.Component {
 
 class Conversation extends React.Component {
 
-    iSentTheLastOne = false;
-
     constructor(props) {
 
         super(props);
-
-        if (this.props.data.last_message.from.name === global.loggedInUserName) //from global scope
-        {
-            this.iSentTheLastOne = true;
-        }
 
     }
 
     getTime() {
 
-        return new moment(this.props.data.last_message.sent_at).calendar();
+        return global.helpers.getCalendarTime(this.props.data.last_message.sent_at);
 
     }
 
     getMessageCount() {
-        return (
-            <Text>{this.props.data.message_count} meldinger, {this.props.data.unread_count} uleste.</Text>
-        )
+
+        var uleste = "uleste";
+        if (this.props.data.unread_count == 1) uleste = "ulest";
+
+        var out = this.props.data.message_count + " meldinger, " + this.props.data.unread_count + " " + uleste;
+        return out;
     }
 
-    getAvsender() {
-        if (this.iSentTheLastOne) {
-            return (<Text>(siste melding sendt av deg)</Text>)
+    titleStyle() {
+        if (this.props.data.unread_count == 0) {
+            return listStyles.listTitle;
         }
         else {
-            return (<Text>(siste melding sendt av {this.props.data.user.name})</Text>)
+            return listStyles.listTitleHighlight;
         }
     }
-
 
     render() {
 
         return (
-            <TouchableOpacity
-                onPress={ () => this.props.navigator.push({
-                    screen: 'glimmer.PageConversation',
-                    title: 'Chat med ' + this.props.data.user.name,
-                    passProps: {user: this.props.data.user}
-                })}
-            >
-                <Card title={this.props.data.user.name}>
-                    <Text>{this.getTime()}</Text>
-                    {this.getAvsender()}
-                    {this.getMessageCount()}
-                    <ForumText text={this.props.data.last_message.body} cut={false} images={true}/>
-                </Card>
-            </TouchableOpacity>
+            <View>
+                <TouchableOpacity
+                    onPress={ () => this.props.navigator.push({
+                        screen: 'glimmer.PageConversation',
+                        title: 'Chat med ' + this.props.data.user.name,
+                        passProps: {user: this.props.data.user}
+                    })}
+                >
+                    <View style={listStyles.whiteBox}>
+                        <View style={listStyles.textBlock}>
+                            <Text style={this.titleStyle()}>{this.props.data.user.name}</Text>
+                            <Text style={listStyles.listSubtitle}>{this.getTime()}</Text>
+                            <Text style={listStyles.listSubtitle}>{this.getMessageCount()}</Text>
+
+                        </View>
+                        <View style={listStyles.iconBlock}>
+                            <Icon name="keyboard-arrow-right" color="#AAAAAA" size={30}/>
+                        </View>
+
+                    </View>
+                </TouchableOpacity>
+                <Divider style={listStyles.divider}/>
+            </View>
         )
     }
 }
+
 
 const pageStyles = StyleSheet.create({
     container: {
@@ -156,4 +155,5 @@ const pageStyles = StyleSheet.create({
         paddingBottom: 30,
         paddingRight: 0,
     },
+
 });

@@ -2,18 +2,13 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    ScrollView,
-    RefreshControl,
-    TouchableOpacity,
-    FlatList,
-    Text,
-    View,
-} from 'react-native';
-import LoadingScreen from "./LoadingScreen"
-import {Icon, Divider} from 'react-native-elements'
+import React from "react";
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import LoadingScreen from "./LoadingScreen";
+import {Divider, Icon} from "react-native-elements";
+
+//Get common list styles
+const listStyles = require('../Styles/ListStyles');
 
 export default class PageFavorites extends React.Component {
 
@@ -21,6 +16,9 @@ export default class PageFavorites extends React.Component {
 
         super(props);
         this.state = {posts: this.props.store.getState().ForumFavorite.posts, loading: true, refreshing: false};
+
+        console.log("listStykes", listStyles)
+        console.log("pageStyles", pageStyles)
 
     }
 
@@ -38,14 +36,15 @@ export default class PageFavorites extends React.Component {
         //Listen to state changes. This really needs to change at some later point.
         reduxUnsubscribe = this.props.store.subscribe(() => {
 
+
                 var tmpPosts = this.props.store.getState().ForumFavorite.posts;
 
-                if(tmpPosts.length > 0)
-                {
+                if (tmpPosts.length > 0) {
                     this.setState({loading: false});
                 }
 
-                this.setState({posts:tmpPosts});
+                this.setState({posts: tmpPosts});
+
             }
         )
     }
@@ -72,26 +71,24 @@ export default class PageFavorites extends React.Component {
                     passProps: {post: item.data}
                 })
             }>
-                <View style={pageStyles.favoriteElement}>
-                    <View style={pageStyles.favoriteText}>
-                        <Text style={pageStyles.favoriteTitle}>{item.data.title}</Text>
-                        <Text style={pageStyles.favoriteSubtitle}>{this.getSubtitle(item.data)}</Text>
+                <View style={listStyles.whiteBox}>
+                    <View style={listStyles.textBlock}>
+                        <Text style={listStyles.listTitle}>{item.data.title}</Text>
+                        <Text style={listStyles.listSubtitle}>{this.getSubtitle(item.data)}</Text>
                     </View>
-                    <View style={pageStyles.favoriteIcon}>
-                        <Icon name="keyboard-arrow-right" color="#AAAAAA" size={30} />
+                    <View style={listStyles.iconBlock}>
+                        <Icon name="keyboard-arrow-right" color="#AAAAAA" size={30}/>
                     </View>
                 </View>
 
             </TouchableOpacity>
-            <Divider style={{ backgroundColor: '#CCCCCC' }} />
+            <Divider style={listStyles.divider}/>
         </View>
 
     )
 
-    _loadMoreItems(distance)
-    {
-        if(__DEV__)
-        {
+    _loadMoreItems(distance) {
+        if (__DEV__) {
             console.log("Reached end", distance)
         }
         global.arbeidsMaur.forumUpdater.addPagesToFavorites(1);
@@ -132,35 +129,5 @@ const pageStyles = StyleSheet.create({
         paddingRight: 0,
 
     },
-
-    favoriteElement: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
-
-    favoriteText: {
-        padding: 10,
-        paddingLeft: 15,
-        flex: 8,
-    },
-
-    favoriteIcon: {
-        padding: 10,
-        paddingRight: 13,
-        flex: 1,
-    },
-
-    favoriteTitle: {
-        fontSize: 16,
-        fontWeight: "300",
-        marginBottom: 3,
-    },
-
-    favoriteSubtitle: {
-        fontSize: 13,
-        fontWeight: "300",
-        color: "#444444"
-    }
 
 });

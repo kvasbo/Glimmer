@@ -11,4 +11,10 @@ export default class Helpers {
 
         return a;
     }
+
+    getCalendarTime(time) {
+
+        return new moment(time).calendar();
+
+    }
 }
