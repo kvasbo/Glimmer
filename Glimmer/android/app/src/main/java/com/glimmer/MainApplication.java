@@ -3,8 +3,8 @@ package com.glimmer;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.oblador.keychain.KeychainPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.oblador.keychain.KeychainPackage;
 import com.dscj.autoheightwebview.AutoHeightWebViewPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;

@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import {registerScreens} from './Workers/screens';
 import {Navigation} from 'react-native-navigation';
 import Workers from "./Workers/index.js";
-
+import * as firebase from 'firebase';
 global.moment = require('moment');
 
 import 'moment/locale/nb';
