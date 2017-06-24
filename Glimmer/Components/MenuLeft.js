@@ -42,6 +42,22 @@ export default class MenuLeft extends React.Component {
                     }
                 />
                 <Button
+                    textStyle={pageStyles.buttonText}
+                    style={pageStyles.button}
+                    icon={{name: 'cached'}}
+                    title='Krets'
+                    onPress={() => {
+
+                        this.props.navigator.showModal({
+                            screen: 'glimmer.PageKretsVelger',
+                            title: "KretsTest",
+                        });
+
+                        this.props.navigator.toggleDrawer();
+                    }
+                    }
+                />
+                <Button
                     icon={{name: 'thumb-up'}}
                     style={pageStyles.button}
                     title='Min Kudos'/>

@@ -1,7 +1,7 @@
 import {KRETS_ADD_PERSON} from "./constants";
 
 const initialState = {
-   
+
 }
 
 function Krets(state = initialState, action) {
