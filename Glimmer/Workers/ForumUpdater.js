@@ -35,55 +35,55 @@ export default class ForumUpdater {
 
     addFavorites(from = 1, depth = 5) {
 
-        var proms = [];
+        return new Promise((resolve, reject) => {
 
-        //Get promises for all
-        for (var i = from; i < depth + from; i++) {
-            var p = this.loadPosts(true, i); //.then((data)=>{
-            proms.push(p);
-        }
+            var proms = [];
 
-        //Resolve all the promises! This is nice. And needs some error handling I guess.
-        Promise.all(proms).then(values => {
-
-            var fetchedPosts = [];
-
-            for (key in values) {
-                fetchedPosts = fetchedPosts.concat(values[key].data);
+            //Get promises for all
+            for (var i = from; i < depth + from; i++) {
+                var p = this.loadPosts(true, i); //.then((data)=>{
+                proms.push(p);
             }
 
-            for(key in fetchedPosts)
-            {
-                global.store.dispatch(addForumFavorite(fetchedPosts[key].bulletin));
-            }
+            //Resolve all the promises! This is nice. And needs some error handling I guess.
+            Promise.all(proms).then(values => {
 
-            var tmpArr = this.favPosts.posts.concat(fetchedPosts);
+                var fetchedPosts = [];
 
-            /*For the record, how to sort
-            tmpArr.sort(
-                function (x, y) {
-                    xd = new Date(x.bulletin.updated_at);
-                    yd = new Date(y.bulletin.updated_at);
-                    return yd - xd;
+                for (key in values) {
+                    fetchedPosts = fetchedPosts.concat(values[key].data);
                 }
-            );
-            */
 
-            this.favPosts.lastPage = from + depth - 1;
+                for (key in fetchedPosts) {
+                    global.store.dispatch(addForumFavorite(fetchedPosts[key].bulletin));
+                }
+
+                var tmpArr = this.favPosts.posts.concat(fetchedPosts);
+
+                /*For the record, how to sort
+                 tmpArr.sort(
+                 function (x, y) {
+                 xd = new Date(x.bulletin.updated_at);
+                 yd = new Date(y.bulletin.updated_at);
+                 return yd - xd;
+                 }
+                 );
+                 */
+
+                this.favPosts.lastPage = from + depth - 1;
+
+            });
 
         });
 
     }
 
-    loadFirstFavorites(depth = 5)
-    {
+    loadFirstFavorites(depth = 5) {
         return this.addFavorites(1, depth);
     }
 
-    addPagesToFavorites(numberOfPages)
-    {
-        if(__DEV__)
-        {
+    addPagesToFavorites(numberOfPages) {
+        if (__DEV__) {
             console.log("Add pages to favorites", numberOfPages);
         }
 
@@ -180,6 +180,7 @@ export default class ForumUpdater {
             });
         })
     }
+
 
     _addForumsToList(forumBatch) {
 

@@ -64,6 +64,8 @@ export default class App {
     init() {
 
         global.arbeidsMaur.forumUpdater.initForums(false);
+        global.arbeidsMaur.kretsUpdater.initKrets(true);
+
         global.arbeidsMaur.forumUpdater.loadFirstFavorites(1);
         global.arbeidsMaur.forumUpdater.loadStream(1);
 

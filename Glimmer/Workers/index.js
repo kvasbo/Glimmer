@@ -6,6 +6,7 @@ import {
     Linking, AsyncStorage
 } from 'react-native';
 import ForumUpdater from "./ForumUpdater";
+import KretsUpdater from "./KretsUpdater";
 
 const shittyQs = require("shitty-qs");
 
@@ -16,6 +17,7 @@ export default class Workers {
 
     constructor() {
         this.forumUpdater = new ForumUpdater();
+        this.kretsUpdater = new KretsUpdater();
     }
 
 }

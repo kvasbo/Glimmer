@@ -1,12 +1,10 @@
 import {ADD_POST_FAVORITES} from "./constants";
 
-
 const initialState = {
-   posts: []
+    posts: []
 }
 
-function ForumFavorite(state = initialState, action)
-{
+function ForumFavorite(state = initialState, action) {
     switch (action.type) {
         case ADD_POST_FAVORITES:
             return Object.assign({}, state, {
