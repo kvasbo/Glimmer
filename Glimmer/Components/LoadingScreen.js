@@ -2,17 +2,8 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    Image,
-    ActivityIndicator
-} from 'react-native';
-import {Icon} from 'react-native-elements'
+import React from "react";
+import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
 
 
 export default class LoadingScreen extends React.Component {
@@ -30,7 +21,7 @@ export default class LoadingScreen extends React.Component {
         return (
             <View style={pageStyles.container}>
                 <ActivityIndicator size="large"/>
-                <Text style={{marginTop: 20, color:"#888888"}}>{this.props.text}</Text>
+                <Text style={{marginTop: 20, color: "#888888"}}>{this.props.text}</Text>
             </View>
         );
     }

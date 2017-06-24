@@ -52,7 +52,7 @@ export default class PageFavorites extends React.Component {
     _onRefresh() {
 
         this.setState({refreshing: true});
-        global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then((data)=>{
+        global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then((data) => {
             this.setState({refreshing: false});
         });
 
@@ -109,7 +109,7 @@ export default class PageFavorites extends React.Component {
                 <FlatList
                     style={pageStyles.container}
                     data={this.state.posts}
-                    onRefresh={()=>this._onRefresh()}
+                    onRefresh={() => this._onRefresh()}
                     refreshing={this.state.refreshing}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => item.data.id}

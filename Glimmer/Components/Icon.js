@@ -2,13 +2,8 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    View,
-    Image
-} from 'react-native';
+import React from "react";
+import {Image, View} from "react-native";
 
 export default class Icon extends React.Component {
     render() {

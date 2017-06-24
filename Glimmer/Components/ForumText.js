@@ -2,16 +2,9 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    WebView
-} from 'react-native';
+import React from "react";
 
-import AutoHeightWebView from 'react-native-autoheight-webview';
+import AutoHeightWebView from "react-native-autoheight-webview";
 
 export default class ForumText extends React.Component {
 

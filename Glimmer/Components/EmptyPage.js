@@ -2,14 +2,8 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    ScrollView
-} from 'react-native';
+import React from "react";
+import {ScrollView, StyleSheet} from "react-native";
 
 
 export default class EmptyPage extends React.Component {

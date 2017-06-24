@@ -2,15 +2,9 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    ScrollView
-} from 'react-native';
-import {Card, Icon, Button, Badge, Divider} from 'react-native-elements'
+import React from "react";
+import {ScrollView, StyleSheet} from "react-native";
+import {Button} from "react-native-elements";
 
 
 export default class MenuLeft extends React.Component {

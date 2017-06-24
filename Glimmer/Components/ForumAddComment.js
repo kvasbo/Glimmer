@@ -2,18 +2,8 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    ScrollView,
-    TouchableOpacity,
-    TextInput
-} from 'react-native';
-import {Card, Icon, Badge, Divider} from 'react-native-elements'
+import React from "react";
+import {Card, Icon} from "react-native-elements";
 
 export default class AddCommentBlock extends React.Component {
 

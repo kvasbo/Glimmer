@@ -2,16 +2,8 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    ScrollView,
-    RefreshControl,
-    TouchableOpacity,
-    FlatList,
-    Text,
-    View,
-} from 'react-native';
+import React from "react";
+import {RefreshControl, ScrollView, StyleSheet} from "react-native";
 import LoadingScreen from "./LoadingScreen";
 import StreamForumPost from "./StreamForumPost";
 
@@ -53,15 +45,13 @@ export default class PageStream extends React.Component {
     };
 
     componentDidMount() {
-       this.updatePostsFromStore();
+        this.updatePostsFromStore();
     }
 
-    updatePostsFromStore()
-    {
+    updatePostsFromStore() {
         var posts = global.arbeidsMaur.forumUpdater.getStream();
 
-        if(posts.length > 0)
-        {
+        if (posts.length > 0) {
             this.setState({posts: posts, loading: false});
         }
         else {
@@ -87,10 +77,10 @@ export default class PageStream extends React.Component {
     }
 
     _onRefresh() {
-       /* this.setState({refreshing: true});
-        global.arbeidsMaur.forumUpdater.getFrontPagePosts().then((data) => {
-            this.setState({refreshing: false});
-        });*/
+        /* this.setState({refreshing: true});
+         global.arbeidsMaur.forumUpdater.getFrontPagePosts().then((data) => {
+         this.setState({refreshing: false});
+         });*/
     }
 
     render() {

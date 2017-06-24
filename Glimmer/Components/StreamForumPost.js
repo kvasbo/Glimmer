@@ -2,21 +2,13 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    View,
-    ScrollView,
-    TouchableOpacity,
-    Text
-} from 'react-native';
+import React from "react";
+import {Text, View} from "react-native";
+import {Badge, Card, Divider} from "react-native-elements";
+
+import ForumText from "./ForumText.js";
 
 var DomParser = require('react-native-html-parser').DOMParser
-
-import {Card, Icon, Badge, Divider} from 'react-native-elements'
-
-import ForumText from './ForumText.js';
 
 var s = require('./Styles');
 
@@ -90,11 +82,11 @@ export default class StreamForumPost extends React.Component {
 
         try {
 
-           // console.log("getImage", this.)
+            // console.log("getImage", this.)
 
             var body = "<html></html>";
 
-            if(typeof(this.props.data.body) !== "undefined") {
+            if (typeof(this.props.data.body) !== "undefined") {
                 body = this.props.data.body;
             }
 
@@ -148,7 +140,8 @@ export default class StreamForumPost extends React.Component {
 
                     <View style={{flexDirection: "row", marginTop: 10}}>
 
-                        <MetaDataFirstPost showThreadButton={this.props.showThreadButton} navigator={this.props.navigator} post={this.props.data}/>
+                        <MetaDataFirstPost showThreadButton={this.props.showThreadButton}
+                                           navigator={this.props.navigator} post={this.props.data}/>
 
                     </View>
                 </View>

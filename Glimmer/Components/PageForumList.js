@@ -2,18 +2,8 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    ScrollView,
-    FlatList,
-    TouchableHighlight,
-    TouchableOpacity
-} from 'react-native';
+import React from "react";
+import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 
 export default class PageForumList extends React.Component {
 

@@ -2,18 +2,10 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    ScrollView,
-    TouchableOpacity
-} from 'react-native';
-import ForumText from './ForumText.js';
-import {Card, Icon, Badge, Divider} from 'react-native-elements'
+import React from "react";
+import {Image, StyleSheet, Text, View} from "react-native";
+import ForumText from "./ForumText.js";
+import {Card, Divider} from "react-native-elements";
 
 var s = require('./Styles');
 

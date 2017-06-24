@@ -2,15 +2,9 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    ScrollView
-} from 'react-native';
-import {GiftedChat} from 'react-native-gifted-chat';
+import React from "react";
+import {StyleSheet} from "react-native";
+import {GiftedChat} from "react-native-gifted-chat";
 
 
 export default class PageConversation extends React.Component {

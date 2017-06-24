@@ -2,16 +2,8 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    KeyboardAvoidingView
-} from 'react-native';
-import KeyboardSpace from 'react-native-keyboard-space';
+import React from "react";
+import {KeyboardAvoidingView, ScrollView, StyleSheet, View} from "react-native";
 
 import StreamForumPost from "./StreamForumPost";
 import ForumComment from "./ForumComment";
