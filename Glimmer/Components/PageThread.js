@@ -24,7 +24,7 @@ export default class PageThread extends React.Component {
         var uri = "/posts/" + this.props.post.id + "/comments";
 
         auth.makeApiGetCall(uri).then((data) => {
-            console.log(data);
+            //console.log(data);
             this.setState({comments: data.data, next: data.paging.next});
         })
     }
@@ -34,7 +34,7 @@ export default class PageThread extends React.Component {
 
         for (var i = this.state.comments.length - 1; i >= 0; i--) {
             var c = this.state.comments[i];
-            console.log("Comment", this.state.comments[i]);
+            //console.log("Comment", this.state.comments[i]);
             out.push(<ForumComment key={c.id} data={c}/>)
         }
 

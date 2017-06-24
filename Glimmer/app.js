@@ -5,12 +5,14 @@
  */
 
 import React, {Component} from 'react';
+import {AsyncStorage} from 'react-native'
 import {registerScreens} from './Workers/screens';
 import {Navigation} from 'react-native-navigation';
 import Workers from "./Workers/index.js";
 import * as firebase from 'firebase';
 global.moment = require('moment');
-import { createStore } from 'redux'
+import {compose, applyMiddleware, createStore} from 'redux'
+import {persistStore, autoRehydrate} from 'redux-persist'
 import glimmerReducers from './Redux/index';
 
 import 'moment/locale/nb';
@@ -24,6 +26,8 @@ global.helpers = new Helpers();
 
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];
+
+//Create the API updater object
 global.arbeidsMaur = new Workers();
 
 // Initialize Firebase
@@ -38,14 +42,28 @@ const firebaseConfig = {
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-global.store = createStore(glimmerReducers);
+//Create the Redux Store
+global.store = createStore(glimmerReducers,
+    undefined,
+    compose(
+        autoRehydrate()
+    ));
+
+function saveStore()
+{
+    if(__DEV__)
+    {
+        console.log("Persisting store", global.store.getState());
+    }
+    persistStore(global.store, {storage: AsyncStorage});
+}
 
 if(__DEV__)
 {
     console.log("Store init", global.store.getState());
 }
 
-if(true && __DEV__)
+if(false && __DEV__)
 {
     let unsubscribe = global.store.subscribe(() => {
         console.log("Store change", global.store.getState());
@@ -64,10 +82,12 @@ export default class App {
     init() {
 
         global.arbeidsMaur.forumUpdater.initForums(false);
-        global.arbeidsMaur.kretsUpdater.initKrets(true);
+        global.arbeidsMaur.kretsUpdater.initKrets(false);
 
         global.arbeidsMaur.forumUpdater.loadFirstFavorites(1);
         global.arbeidsMaur.forumUpdater.loadStream(1);
+
+        setInterval(saveStore, 30000);
 
         this.startApp();
 
