@@ -1,10 +1,8 @@
 /**
  * Created by kvasbo on 31.05.2017.
  */
-import React, {Component} from 'react';
-import {
-    Linking, AsyncStorage
-} from 'react-native';
+import React from "react";
+import {AsyncStorage, Linking} from "react-native";
 
 const shittyQs = require("shitty-qs");
 

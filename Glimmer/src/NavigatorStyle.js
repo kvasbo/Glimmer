@@ -1,4 +1,4 @@
-export function NavigatorStyle () {
+export function NavigatorStyle() {
     return ({
         navBarHideOnScroll: true,
         navBarTranslucent: true,
