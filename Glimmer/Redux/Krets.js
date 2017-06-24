@@ -1,20 +1,22 @@
 import {KRETS_ADD_PERSON} from "./constants";
 
 const initialState = {
-    persons: []
+   
 }
 
 function Krets(state = initialState, action) {
+
     switch (action.type) {
         case KRETS_ADD_PERSON:
+
+            let id = action.person.id;
+
             return Object.assign({}, state, {
-                persons: [
-                    ...state.persons,
-                    {
-                        data: action.person.data
-                    }
-                ]
-            })
+                [id]: Object.assign({}, state[id], {
+                    person: action.person
+                })
+            });
+
         default:
             return state
     }

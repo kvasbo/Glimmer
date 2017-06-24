@@ -42,12 +42,16 @@ const firebaseConfig = {
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-//Create the Redux Store
+//Create the Redux Store. Saving disabled for now
+global.store = createStore(glimmerReducers);
+/*
 global.store = createStore(glimmerReducers,
     undefined,
     compose(
         autoRehydrate()
     ));
+    */
+
 
 function saveStore()
 {
@@ -55,8 +59,9 @@ function saveStore()
     {
         console.log("Persisting store", global.store.getState());
     }
-    persistStore(global.store, {storage: AsyncStorage});
+    //persistStore(global.store, {storage: AsyncStorage});
 }
+
 
 if(__DEV__)
 {
