@@ -10,12 +10,28 @@ const config = require("../config.js");
 
 export default class glimmerAuth {
 
-    baseURL = "https://underskog.no/api/v1";
+    doUnderskogOauth() {
+        var app_key = config.app_key;
 
-    token = config.dev_token;
+        return new Promise((resolve, reject) => {
 
-    loggedInUserName = "kvasbo"; //TODO TODOTDO
-    loggedInUserId = 6619; //TODO TODOTDO
+            Linking.openURL([
+                "https://underskog.no/oauth/authorize",
+                "?response_type=token",
+                "&client_id=" + app_key,
+                "&redirect_uri=glimmer://foo"
+            ].join(""));
+
+            Linking.addEventListener("url", handleUrl.bind(this))
+
+            function handleUrl(event) {
+                var [, query_string] = event.url.match(/\#(.*)/);
+                var query = shittyQs(query_string);
+                resolve(null, query.access_token);
+                Linking.removeEventListener("url", handleUrl);
+            }
+        })
+    }
 
     underskogOauth(app_key, callback) {
         Linking.openURL([
@@ -52,14 +68,18 @@ export default class glimmerAuth {
     }
 
     /** Test if we are connected **/
-    testAuth(callBack) {
-        this.makeApiGetCall("/users/current", function (data, status) {
+    checkAuth() {
 
-            //TODO fikse om man ikke er logga inn
-            console.log("Tester om bruker er innlogga", data, status);
-            global.loggedInUserName = data.name;
-            callBack(data);
+        return new Promise((resolve, reject) => {
+
+            api.makeApiGetCall("/users/current").then((data) => {
+                resolve(data);
+            }).catch((error) => {
+                this.doUnderskogOauth();
+            })
 
         })
     }
+
+
 }

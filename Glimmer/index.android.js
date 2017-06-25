@@ -1,3 +1,6 @@
-import App from './app';
+import {AppRegistry} from 'react-native'
+import GlimmerApp from './app';
 
-const app = new App();
+const Glimmer = new GlimmerApp();
+
+AppRegistry.registerComponent('Glimmer', () => Glimmer);

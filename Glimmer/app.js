@@ -5,7 +5,7 @@
  */
 
 import React, {Component} from 'react';
-import {AsyncStorage} from 'react-native'
+import {AsyncStorage, AppRegistry} from 'react-native'
 import {registerScreens} from './Workers/screens';
 import {Navigation} from 'react-native-navigation';
 import Workers from "./Workers/index.js";
@@ -32,6 +32,8 @@ console.ignoredYellowBox = ['[xmldom warning]'];
 
 //Create the API updater object
 global.arbeidsMaur = new Workers();
+
+global.currentUser = {id:null, name:null};
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -81,7 +83,7 @@ if(false && __DEV__)
 
 registerScreens();
 
-export default class App {
+export default class Glimmer {
 
     constructor(){
         this.init();
@@ -89,16 +91,21 @@ export default class App {
 
     init() {
 
-        global.arbeidsMaur.forumUpdater.initForums(false);
-        global.arbeidsMaur.kretsUpdater.initKrets(false);
+        global.auth.checkAuth().then((data)=>{
 
-        global.arbeidsMaur.forumUpdater.loadFirstFavorites(1);
-        global.arbeidsMaur.forumUpdater.loadStream(1);
+            console.log("checkAuth done, starting app");
 
-        setInterval(saveStore, 30000);
+            global.arbeidsMaur.forumUpdater.initForums(false);
+            global.arbeidsMaur.kretsUpdater.initKrets(false);
 
-        this.startApp();
+            global.arbeidsMaur.forumUpdater.loadFirstFavorites(1);
+            global.arbeidsMaur.forumUpdater.loadStream(1);
 
+            //setInterval(saveStore, 30000);
+
+            this.startApp();
+
+        });
     }
 
     startApp() {
@@ -169,3 +176,4 @@ export default class App {
     }
 
 }
+
