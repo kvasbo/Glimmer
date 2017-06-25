@@ -50,7 +50,7 @@ export default class KretsUpdater {
 
         var uri = "/users/current/circle?page=" + page;
 
-        auth.makeApiGetCall(uri).then((data) => {
+        api.makeApiGetCall(uri).then((data) => {
 
             for(key in data.data)
             {

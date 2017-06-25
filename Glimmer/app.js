@@ -19,7 +19,10 @@ import 'moment/locale/nb';
 moment.locale('nb')
 
 import GlimmerAuth from "./src/auth.js";
+import GlimmerAPI from "./src/api";
+
 global.auth = new GlimmerAuth();
+global.api = new GlimmerAPI();
 
 import Helpers from "./src/helpers";
 global.helpers = new Helpers();

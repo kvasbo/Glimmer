@@ -24,7 +24,7 @@ export default class ForumUpdater {
 
         return new Promise((resolve, reject) => {
 
-            auth.makeApiGetCall(uri).then((data) => {
+            api.makeApiGetCall(uri).then((data) => {
 
                 resolve(data);
 
@@ -213,9 +213,10 @@ export default class ForumUpdater {
     }
 
     _getForumsPagesRecursive(page) {
+
         var uri = "/forums?page=" + page;
 
-        auth.makeApiGetCall(uri).then((data) => {
+        api.makeApiGetCall(uri).then((data) => {
 
             this._addForumsToList(data.data);
 

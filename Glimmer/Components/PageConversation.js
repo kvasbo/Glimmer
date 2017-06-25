@@ -20,7 +20,7 @@ export default class PageConversation extends React.Component {
 
         var uri = "/messages/with/" + this.props.user.id;
 
-        auth.makeApiGetCall(uri).then((result) => {
+        api.makeApiGetCall(uri).then((result) => {
 
             console.log("Messages", result);
 
@@ -63,7 +63,7 @@ export default class PageConversation extends React.Component {
 
         console.log(payload);
 
-        global.auth.makeApiPostCall("/messages", payload,).then((data) => {
+        api.makeApiPostCall("/messages", payload,).then((data) => {
             console.log(data);
         })
 

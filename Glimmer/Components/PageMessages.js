@@ -44,7 +44,7 @@ export default class PageMessages extends React.Component {
 
         var uri = "/messages/conversations";
 
-        auth.makeApiGetCall(uri).then((data) => {
+        api.makeApiGetCall(uri).then((data) => {
 
             try {
                 AsyncStorage.setItem('@Cache:Conversations', JSON.stringify(data));
