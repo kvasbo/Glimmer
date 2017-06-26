@@ -2,25 +2,55 @@
  * Created by kvasbo on 31.05.2017.
  */
 import React from "react";
-import {AsyncStorage, Linking} from "react-native";
+import {Linking} from "react-native";
+import * as Keychain from "react-native-keychain";
 
 const shittyQs = require("shitty-qs");
 
 const config = require("../config.js");
 
+const server = 'http://underskog.no';
+const username = 'underskogbruker';
+
 export default class glimmerAuth {
+
+    token = "";
+
+    init() {
+
+        return new Promise((resolve, reject) => {
+            //Check token
+            this.getToken().then((data) => {
+
+                if (__DEV__) {
+                    console.log("Got a token!", data);
+                }
+
+                this.token = data;
+                resolve();
+
+
+            }).catch((error) => {
+                console.log("No token found");
+            })
+        })
+
+
+    }
 
     doUnderskogOauth() {
 
-        var app_key = config.app_key;
-        var state = Math.random() + '';
+        const app_key = config.app_key;
+        const state = Math.random() + '';
 
-        var oauthUrl = [
+        const callBack = this.storeToken;
+
+        const oauthUrl = [
             "https://underskog.no/oauth/authorize",
             "?response_type=token",
             "&client_id=" + app_key,
             "&redirect_uri=glimmer://foo",
-            "&state="+state,
+            "&state=" + state,
         ].join("");
 
         console.log("Oauth URL", oauthUrl);
@@ -28,10 +58,14 @@ export default class glimmerAuth {
         Linking.addEventListener("url", handleUrl);
 
         function handleUrl(event) {
-            var [, query_string] = event.url.match(/\#(.*)/);
-            var query = shittyQs(query_string);
-            console.log(query);
-            //resolve(null, query.access_token);
+            const [, query_string] = event.url.match(/\#(.*)/);
+            const query = shittyQs(query_string);
+
+            //Check that it's the same call as we made.
+            if (state === query.state) {
+                callBack(query)
+            }
+
             Linking.removeEventListener("url", handleUrl);
         }
 
@@ -39,51 +73,35 @@ export default class glimmerAuth {
 
     }
 
-    /*
-    underskogOauth(app_key, callback) {
+    getToken() {
 
-        var state = Math.random() + '';
+        return new Promise((resolve, reject) => {
 
-        var oauthUrl = [
-            "https://underskog.no/oauth/authorize",
-            "?response_type=token",
-            "&client_id=" + app_key,
-            "&redirect_uri=glimmer://foo",
-            "&state=${state}"
-        ].join("");
+            Keychain
+                .getInternetCredentials(server)
+                .then(function (credentials) {
+                    resolve(credentials.password);
+                }).catch((err) => {
+                reject("No password stored");
+            });
 
-        console.log("Oauth URL", oauthUrl);
+        })
 
-        Linking.openURL(oauthUrl);
-
-        Linking.addEventListener("url", handleUrl.bind(this))
-
-        function handleUrl(event) {
-            var [, query_string] = event.url.match(/\#(.*)/);
-            var query = shittyQs(query_string);
-
-            console.log(query);
-
-            callback(null, query.access_token, this);
-            Linking.removeEventListener("url", handleUrl);
-        }
     }
-    */
 
-    async handleAuthResponse(x, token, thiis) {
+    storeToken(query) {
 
-        //thiis.setState({token:token});
-        console.log(x, token);
-
-        try {
-            await AsyncStorage.setItem('@Glimmer:token', token);
-        } catch (error) {
-            console.log(error);
+        if (__DEV__) {
+            console.log("Storetoken", query);
         }
 
-        thiis.makeApiGetCall("/streams/posts", function (data) {
-            console.log(data)
-        });
+        let password = query.access_token;
+
+        Keychain
+            .setInternetCredentials(server, username, password)
+            .then(function () {
+                console.log("Token stored");
+            });
     }
 
     /** Test if we are connected **/
@@ -97,6 +115,7 @@ export default class glimmerAuth {
             }).catch((error) => {
                 console.log("Error, doing auth", error);
                 this.doUnderskogOauth();
+                reject("Key not valid");
             })
 
         })

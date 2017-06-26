@@ -86,27 +86,25 @@ export default class Glimmer {
 
     init() {
 
-        global.auth.checkAuth(); //.then((data)=>{
-
-            console.log("checkAuth done, starting app");
-
-           // global.arbeidsMaur.forumUpdater.initForums(false);
-           // global.arbeidsMaur.kretsUpdater.initKrets(false);
-
-           // global.arbeidsMaur.forumUpdater.loadFirstFavorites(1);
-           // global.arbeidsMaur.forumUpdater.loadStream(1);
-
-            //setInterval(saveStore, 30000);
-
-            this.startApp();
- /*
-        }).catch((err) => {
-            console.log("Error in app constructor", err);
+        auth.init().then(()=>{
+            global.auth.checkAuth().then(()=>{
+                console.log("checkAuth done, starting app");
+                this.startApp();
+            });
         });
-        */
+
     }
 
     startApp() {
+
+        global.arbeidsMaur.forumUpdater.initForums(false);
+        global.arbeidsMaur.kretsUpdater.initKrets(false);
+
+        global.arbeidsMaur.forumUpdater.loadFirstFavorites(1);
+        global.arbeidsMaur.forumUpdater.loadStream(1);
+
+        //setInterval(saveStore, 30000);
+
         Navigation.startTabBasedApp({
             passProps: {store: global.store}, //Pass the redux store.
             tabs: [

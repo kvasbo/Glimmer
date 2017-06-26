@@ -7,8 +7,6 @@ const config = require("../config.js");
 
 export default class glimmerAPI {
 
-    token = "";
-    token = config.dev_token;
 
     baseURL = "https://underskog.no/api/v1";
 
@@ -23,12 +21,17 @@ export default class glimmerAPI {
 
         return new Promise((resolve, reject) => {
 
+            if(auth.token === "")
+            {
+                reject("No token set");
+            }
+
             fetch(
                 url,
                 {
                     method: type,
                     headers: {
-                        "Authorization": "Bearer " + this.token
+                        "Authorization": "Bearer " + auth.token
                     }
                 }
             ).then((response) => {
