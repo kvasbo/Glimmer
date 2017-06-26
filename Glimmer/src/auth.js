@@ -11,45 +11,64 @@ const config = require("../config.js");
 export default class glimmerAuth {
 
     doUnderskogOauth() {
+
         var app_key = config.app_key;
+        var state = Math.random() + '';
 
-        return new Promise((resolve, reject) => {
-
-            Linking.openURL([
-                "https://underskog.no/oauth/authorize",
-                "?response_type=token",
-                "&client_id=" + app_key,
-                "&redirect_uri=glimmer://foo"
-            ].join(""));
-
-            Linking.addEventListener("url", handleUrl.bind(this))
-
-            function handleUrl(event) {
-                var [, query_string] = event.url.match(/\#(.*)/);
-                var query = shittyQs(query_string);
-                resolve(null, query.access_token);
-                Linking.removeEventListener("url", handleUrl);
-            }
-        })
-    }
-
-    underskogOauth(app_key, callback) {
-        Linking.openURL([
+        var oauthUrl = [
             "https://underskog.no/oauth/authorize",
             "?response_type=token",
             "&client_id=" + app_key,
-            "&redirect_uri=glimmer://foo"
-        ].join(""));
+            "&redirect_uri=glimmer://foo",
+            "&state="+state,
+        ].join("");
+
+        console.log("Oauth URL", oauthUrl);
+
+        Linking.addEventListener("url", handleUrl);
+
+        function handleUrl(event) {
+            var [, query_string] = event.url.match(/\#(.*)/);
+            var query = shittyQs(query_string);
+            console.log(query);
+            //resolve(null, query.access_token);
+            Linking.removeEventListener("url", handleUrl);
+        }
+
+        Linking.openURL(oauthUrl);
+
+    }
+
+    /*
+    underskogOauth(app_key, callback) {
+
+        var state = Math.random() + '';
+
+        var oauthUrl = [
+            "https://underskog.no/oauth/authorize",
+            "?response_type=token",
+            "&client_id=" + app_key,
+            "&redirect_uri=glimmer://foo",
+            "&state=${state}"
+        ].join("");
+
+        console.log("Oauth URL", oauthUrl);
+
+        Linking.openURL(oauthUrl);
 
         Linking.addEventListener("url", handleUrl.bind(this))
 
         function handleUrl(event) {
             var [, query_string] = event.url.match(/\#(.*)/);
             var query = shittyQs(query_string);
+
+            console.log(query);
+
             callback(null, query.access_token, this);
             Linking.removeEventListener("url", handleUrl);
         }
     }
+    */
 
     async handleAuthResponse(x, token, thiis) {
 
@@ -73,8 +92,10 @@ export default class glimmerAuth {
         return new Promise((resolve, reject) => {
 
             api.makeApiGetCall("/users/current").then((data) => {
+                console.log("CheckAuth Fine. Commencing startup");
                 resolve(data);
             }).catch((error) => {
+                console.log("Error, doing auth", error);
                 this.doUnderskogOauth();
             })
 

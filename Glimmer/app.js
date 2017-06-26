@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, {Component} from 'react';
 import {AsyncStorage, AppRegistry} from 'react-native'
 import {registerScreens} from './Workers/screens';
@@ -86,26 +80,30 @@ registerScreens();
 export default class Glimmer {
 
     constructor(){
+        console.log("Starting init");
         this.init();
     }
 
     init() {
 
-        global.auth.checkAuth().then((data)=>{
+        global.auth.checkAuth(); //.then((data)=>{
 
             console.log("checkAuth done, starting app");
 
-            global.arbeidsMaur.forumUpdater.initForums(false);
-            global.arbeidsMaur.kretsUpdater.initKrets(false);
+           // global.arbeidsMaur.forumUpdater.initForums(false);
+           // global.arbeidsMaur.kretsUpdater.initKrets(false);
 
-            global.arbeidsMaur.forumUpdater.loadFirstFavorites(1);
-            global.arbeidsMaur.forumUpdater.loadStream(1);
+           // global.arbeidsMaur.forumUpdater.loadFirstFavorites(1);
+           // global.arbeidsMaur.forumUpdater.loadStream(1);
 
             //setInterval(saveStore, 30000);
 
             this.startApp();
-
+ /*
+        }).catch((err) => {
+            console.log("Error in app constructor", err);
         });
+        */
     }
 
     startApp() {
