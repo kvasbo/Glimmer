@@ -10,24 +10,20 @@ export default class PageKretsVelger extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state={krets: global.store.getState().krets}
+        var tmpKrets = store.getState().Krets;
+        this.state = {krets: store.getState().Krets}
     }
 
     componentDidMount() {
 
-        console.log(this.state);
-        console.log()
-        this.setState({krets: global.store.getState().krets});
+        this.setState({krets: store.getState().Krets});
 
         //Listen to state changes. This really needs to change at some later point.
-        reduxUnsubscribe = global.store.subscribe(() => {
+        var reduxUnsubscribe = store.subscribe(() => {
 
-            console.log("Krets state get", global.store.getState());
+                var tmpKrets = store.getState().Krets;
 
-                var tmpKrets = global.store.getState().krets;
-
-                if(tmpKrets !== this.state.krets)
-                {
+                if (tmpKrets !== this.state.krets) {
                     this.setState({krets: tmpKrets});
                 }
             }
@@ -35,13 +31,11 @@ export default class PageKretsVelger extends React.Component {
 
     }
 
-    _getPeople()
-    {
+    _getPeople() {
         out = [];
-        for(person in this.state.krets)
-        {
+        for (person in this.state.krets) {
             console.log(this.state.krets[person]);
-            var tmp = <Text>this.state.krets[person].name</Text>
+            var tmp = <Text key={this.state.krets[person].person.id}>{this.state.krets[person].person.name}</Text>
             out.push(tmp);
         }
 

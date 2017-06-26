@@ -8,6 +8,7 @@ global.moment = require('moment');
 import {compose, applyMiddleware, createStore} from 'redux'
 import {persistStore, autoRehydrate} from 'redux-persist'
 import glimmerReducers from './Redux/index';
+import { Provider } from 'react-redux'
 
 import 'moment/locale/nb';
 moment.locale('nb')
@@ -72,27 +73,26 @@ if(false && __DEV__)
     let unsubscribe = global.store.subscribe(() => {
         console.log("Store change", global.store.getState());
     })
-
 }
 
-registerScreens();
 
-export default class Glimmer {
 
-    constructor(){
+export default class Glimmer extends React.Component{
+
+    constructor(props){
+        super(props);
         console.log("Starting init");
+        registerScreens(store, Provider);
         this.init();
     }
 
     init() {
-
         auth.init().then(()=>{
             global.auth.checkAuth().then(()=>{
                 console.log("checkAuth done, starting app");
                 this.startApp();
             });
         });
-
     }
 
     startApp() {

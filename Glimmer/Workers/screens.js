@@ -13,23 +13,29 @@ import PageKretsVelger from "../Components/PageKretsVelger";
 
 import MenuLeft from "../Components/MenuLeft";
 
-export function registerScreens() {
+export function registerScreens(store, Provider) {
+
+    if(__DEV__)
+    {
+        console.log("Init screens", store, Provider);
+    }
+
 
     //Proper pages
-    Navigation.registerComponent('glimmer.PageStream', () => PageStream);
-    Navigation.registerComponent('glimmer.PageFavorites', () => PageFavorites);
-    Navigation.registerComponent('glimmer.PageThread', () => PageThread);
-    Navigation.registerComponent('glimmer.PageMessages', () => PageMessages);
-    Navigation.registerComponent('glimmer.PageSettings', () => PageSettings);
-    Navigation.registerComponent('glimmer.PageConversation', () => PageConversation);
-    Navigation.registerComponent('glimmer.PageCalendar', () => PageCalendar);
-    Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost);
-    Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, global.store);
+    Navigation.registerComponent('glimmer.PageStream', () => PageStream, store, Provider);
+    Navigation.registerComponent('glimmer.PageFavorites', () => PageFavorites, store, Provider);
+    Navigation.registerComponent('glimmer.PageThread', () => PageThread, store, Provider);
+    Navigation.registerComponent('glimmer.PageMessages', () => PageMessages, store, Provider);
+    Navigation.registerComponent('glimmer.PageSettings', () => PageSettings, store, Provider);
+    Navigation.registerComponent('glimmer.PageConversation', () => PageConversation, store, Provider);
+    Navigation.registerComponent('glimmer.PageCalendar', () => PageCalendar, store, Provider);
+    Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
+    Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, store, Provider);
 
     //Helper pages
-    Navigation.registerComponent('glimmer.PageForumList', () => PageForumList);
+    Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
 
     //Menus etc.
-    Navigation.registerComponent('glimmer.MenuLeft', () => MenuLeft);
+    Navigation.registerComponent('glimmer.MenuLeft', () => MenuLeft, store, Provider);
 
 }
