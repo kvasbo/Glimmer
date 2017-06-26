@@ -15,6 +15,7 @@ const username = 'underskogbruker';
 export default class glimmerAuth {
 
     token = "";
+    currentUser = null;
 
     init() {
 
@@ -118,10 +119,17 @@ export default class glimmerAuth {
         return new Promise((resolve, reject) => {
 
             api.makeApiGetCall("/users/current").then((data) => {
-                console.log("CheckAuth Fine. Commencing startup");
+                this.currentUser = data.data;
+                if(__DEV__)
+                {
+                    console.log("Current User", this.currentUser);
+                }
                 resolve(data);
             }).catch((error) => {
-                console.log("Error, doing auth", error);
+                if(__DEV__)
+                {
+                    console.log("Error, doing auth", error);
+                }
                 reject("Key not valid");
             })
 

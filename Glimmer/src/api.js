@@ -9,24 +9,23 @@ export default class glimmerAPI {
 
     baseURL = "https://underskog.no/api/v1";
 
-    //loggedInUserName = "kvasbo"; //TODO TODOTDO
-    loggedInUserId = 6619; //TODO TODOTDO
-
-
     makeRawApiCall(url, type = "GET") {
 
         if (__DEV__) {
-            console.log("API Call", type, url);
+            var start = new Date();
+            //var startTime = start.getSeconds() +  ":" + start.getMilliseconds();
+            //console.log("API Call", type, url);
         }
 
         return new Promise((resolve, reject) => {
 
             auth.getToken().then((data) => {
                 this.makeRawApiCallWithToken(url, type, data).then((data) => {
+                    var end = new Date();
+                    console.log("API time", url, end-start);
                     resolve(data);
-                }).catch((err)=>{
-                    if(__DEV__)
-                    {
+                }).catch((err) => {
+                    if (__DEV__) {
                         console.log("makeRawApiCall error", err);
                     }
                     reject(err);
@@ -39,7 +38,9 @@ export default class glimmerAPI {
     makeRawApiCallWithToken(url, type, token) {
 
         if (__DEV__) {
-            console.log("Raw API Call", type, url, token);
+           // var start = new Date();
+           // var startTime = start.getSeconds() +  ":" + start.getMilliseconds();
+           // console.log("Raw API Call", startTime, type, url, token);
         }
 
         return new Promise((resolve, reject) => {
@@ -61,6 +62,7 @@ export default class glimmerAPI {
                     return response.json();
                 }
                 else if (response.status === 403) {
+
                     console.log("API Rejected, token not accepted");
                     reject(Error("Token not accepted"));
                 }

@@ -84,7 +84,7 @@ export default class Glimmer extends React.Component {
 
         Promise.all(starters).then(() => {
             global.auth.checkAuth().then(() => {
-                console.log("checkAuth done, starting app");
+                console.log("CheckAuth done, starting app");
                 global.arbeidsMaur.initData();
             }).catch((err)=>{
                 console.log("Error in CheckAuth", err);

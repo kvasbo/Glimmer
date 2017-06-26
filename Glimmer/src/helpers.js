@@ -17,4 +17,5 @@ export default class Helpers {
         return new moment(time).calendar();
 
     }
+
 }

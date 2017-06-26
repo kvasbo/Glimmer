@@ -81,7 +81,7 @@ export default class PageConversation extends React.Component {
                 messages={this.state.messages}
                 onSend={this.onSend}
                 user={{
-                    _id: global.auth.loggedInUserId,
+                    _id: global.auth.currentUser.id,
                 }}
             />
         );

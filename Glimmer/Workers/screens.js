@@ -18,7 +18,7 @@ import MenuLeft from "../Components/MenuLeft";
 export function registerScreens(store, Provider) {
 
     if (__DEV__) {
-        console.log("Init screens", store, Provider);
+        //console.log("Init screens", store, Provider);
     }
 
     //Proper pages
