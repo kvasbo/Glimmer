@@ -18,17 +18,28 @@ export default class PageMessages extends React.Component {
 
         this.readFromCache();
 
-        this.getMessageThreads();
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
 
-    static navigationOptions = ({navigation}) => ({
-        title: "Meldingstråder",
-    });
+    onNavigatorEvent(event) {
+        switch (event.id) {
+            case 'willAppear':
+                this.getMessageThreads();
+                break;
+            case 'didAppear':
+                break;
+            case 'willDisappear':
+                break;
+            case 'didDisappear':
+                break;
+        }
+    }
 
     componentDidMount() {
 
     }
+
 
     readFromCache() {
         AsyncStorage.getItem('@Cache:Conversations', (err, result) => {

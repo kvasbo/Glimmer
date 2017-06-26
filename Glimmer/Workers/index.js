@@ -20,4 +20,15 @@ export default class Workers {
         this.kretsUpdater = new KretsUpdater();
     }
 
+    initData() {
+
+        this.forumUpdater.initForums(false);
+        this.kretsUpdater.initKrets(false);
+
+        this.forumUpdater.loadFirstFavorites(1);
+        this.forumUpdater.loadStream(1);
+
+        //setInterval(saveStore, 30000);
+    }
+
 }

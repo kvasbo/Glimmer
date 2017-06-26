@@ -16,10 +16,6 @@ export default class PageFavorites extends React.Component {
 
         super(props);
         this.state = {posts: this.props.store.getState().ForumFavorite.posts, loading: true, refreshing: false};
-
-        console.log("listStykes", listStyles)
-        console.log("pageStyles", pageStyles)
-
     }
 
     static navigatorStyle = {

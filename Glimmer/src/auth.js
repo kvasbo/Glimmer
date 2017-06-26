@@ -18,12 +18,16 @@ export default class glimmerAuth {
 
     init() {
 
+        if (__DEV__) {
+            console.log("Auth.init: Start");
+        }
+
         return new Promise((resolve, reject) => {
             //Check token
             this.getToken().then((data) => {
 
                 if (__DEV__) {
-                    console.log("Got a token!", data);
+                    console.log("Auth.init: Got a token!", data);
                 }
 
                 this.token = data;
@@ -31,7 +35,8 @@ export default class glimmerAuth {
 
 
             }).catch((error) => {
-                console.log("No token found");
+                console.log("Auth.init: No token found");
+                reject("No token found")
             })
         })
 
@@ -40,36 +45,53 @@ export default class glimmerAuth {
 
     doUnderskogOauth() {
 
-        const app_key = config.app_key;
-        const state = Math.random() + '';
+        return new Promise((resolve, reject) => {
 
-        const callBack = this.storeToken;
+            const app_key = config.app_key;
+            const state = Math.random() + '';
 
-        const oauthUrl = [
-            "https://underskog.no/oauth/authorize",
-            "?response_type=token",
-            "&client_id=" + app_key,
-            "&redirect_uri=glimmer://foo",
-            "&state=" + state,
-        ].join("");
+            //const callBack = this.storeToken;
 
-        console.log("Oauth URL", oauthUrl);
+            const oauthUrl = [
+                "https://underskog.no/oauth/authorize",
+                "?response_type=token",
+                "&client_id=" + app_key,
+                "&redirect_uri=glimmer://foo",
+                "&state=" + state,
+            ].join("");
 
-        Linking.addEventListener("url", handleUrl);
+            console.log("Oauth URL", oauthUrl);
 
-        function handleUrl(event) {
-            const [, query_string] = event.url.match(/\#(.*)/);
-            const query = shittyQs(query_string);
+            Linking.addEventListener("url", handleUrl);
 
-            //Check that it's the same call as we made.
-            if (state === query.state) {
-                callBack(query)
+            function handleUrl(event) {
+                const [, query_string] = event.url.match(/\#(.*)/);
+                const query = shittyQs(query_string);
+
+                //Check that it's the same call as we made.
+                if (state === query.state) {
+
+                    if (__DEV__) {
+                        console.log("Storetoken", query);
+                    }
+
+                    let password = query.access_token;
+
+                    Keychain
+                        .setInternetCredentials(server, username, password)
+                        .then(() => {
+                            console.log("Token stored");
+                            resolve(password);
+                        });
+
+                }
+
+                Linking.removeEventListener("url", handleUrl);
             }
 
-            Linking.removeEventListener("url", handleUrl);
-        }
+            Linking.openURL(oauthUrl);
 
-        Linking.openURL(oauthUrl);
+        });
 
     }
 
@@ -79,7 +101,8 @@ export default class glimmerAuth {
 
             Keychain
                 .getInternetCredentials(server)
-                .then(function (credentials) {
+                .then((credentials) => {
+                    //console.log("GetToken", credentials.password);
                     resolve(credentials.password);
                 }).catch((err) => {
                 reject("No password stored");
@@ -87,21 +110,6 @@ export default class glimmerAuth {
 
         })
 
-    }
-
-    storeToken(query) {
-
-        if (__DEV__) {
-            console.log("Storetoken", query);
-        }
-
-        let password = query.access_token;
-
-        Keychain
-            .setInternetCredentials(server, username, password)
-            .then(function () {
-                console.log("Token stored");
-            });
     }
 
     /** Test if we are connected **/
@@ -114,7 +122,6 @@ export default class glimmerAuth {
                 resolve(data);
             }).catch((error) => {
                 console.log("Error, doing auth", error);
-                this.doUnderskogOauth();
                 reject("Key not valid");
             })
 

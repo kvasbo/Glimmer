@@ -7,11 +7,11 @@ const config = require("../config.js");
 
 export default class glimmerAPI {
 
-
     baseURL = "https://underskog.no/api/v1";
 
     //loggedInUserName = "kvasbo"; //TODO TODOTDO
     loggedInUserId = 6619; //TODO TODOTDO
+
 
     makeRawApiCall(url, type = "GET") {
 
@@ -21,31 +21,48 @@ export default class glimmerAPI {
 
         return new Promise((resolve, reject) => {
 
-            if(auth.token === "")
-            {
-                reject("No token set");
-            }
+            auth.getToken().then((data) => {
+                this.makeRawApiCallWithToken(url, type, data).then((data) => {
+                    resolve(data);
+                }).catch((err)=>{
+                    if(__DEV__)
+                    {
+                        console.log("makeRawApiCall error", err);
+                    }
+                    reject(err);
+                });
+            });
+        });
+
+    }
+
+    makeRawApiCallWithToken(url, type, token) {
+
+        if (__DEV__) {
+            console.log("Raw API Call", type, url, token);
+        }
+
+        return new Promise((resolve, reject) => {
 
             fetch(
                 url,
                 {
                     method: type,
                     headers: {
-                        "Authorization": "Bearer " + auth.token
+                        "Authorization": "Bearer " + token
                     }
                 }
             ).then((response) => {
 
                 if (response.ok === true) {
-                    if(__DEV__)
-                    {
-                        console.log("API OK", response);
+                    if (__DEV__) {
+                        //console.log("API OK", response);
                     }
                     return response.json();
                 }
                 else if (response.status === 403) {
-                    console.log("API Rejected, no token");
-                    reject(Error("No token"));
+                    console.log("API Rejected, token not accepted");
+                    reject(Error("Token not accepted"));
                 }
                 else {
                     console.log("API unhandled", response);

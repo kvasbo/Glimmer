@@ -1,4 +1,4 @@
-import {Navigation} from 'react-native-navigation';
+import {Navigation} from "react-native-navigation";
 
 import PageStream from "../Components/PageStream";
 import PageFavorites from "../Components/PageFavorites";
@@ -7,19 +7,19 @@ import PageCalendar from "../Components/PageCalendar";
 import PageMessages from "../Components/PageMessages";
 import PageSettings from "../Components/PageSettings";
 import PageConversation from "../Components/PageConversation";
-import PageForumList from "../Components/PageForumList";
 import PageNewForumPost from "../Components/PageNewForumPost";
 import PageKretsVelger from "../Components/PageKretsVelger";
+
+import PageLogin from "../Components/PageLogin";
+import PageForumList from "../Components/PageForumList";
 
 import MenuLeft from "../Components/MenuLeft";
 
 export function registerScreens(store, Provider) {
 
-    if(__DEV__)
-    {
+    if (__DEV__) {
         console.log("Init screens", store, Provider);
     }
-
 
     //Proper pages
     Navigation.registerComponent('glimmer.PageStream', () => PageStream, store, Provider);
@@ -34,6 +34,7 @@ export function registerScreens(store, Provider) {
 
     //Helper pages
     Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
+    Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
 
     //Menus etc.
     Navigation.registerComponent('glimmer.MenuLeft', () => MenuLeft, store, Provider);
