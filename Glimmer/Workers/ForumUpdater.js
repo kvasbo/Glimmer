@@ -88,7 +88,7 @@ export default class ForumUpdater {
             console.log("Add pages to favorites", numberOfPages);
         }
 
-        this.addFavorites(this.favPosts.lastPage + 1, numberOfPages);
+        this.addFavorites(lastpage_favs + 1, numberOfPages);
     }
 
     loadStream(depth = 5) {

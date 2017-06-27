@@ -2,6 +2,7 @@
  * Created by kvasbo on 31.05.2017.
  */
 import React from "react";
+var FormData = require('form-data');
 const config = require("../config.js");
 
 export default class glimmerAPI {
@@ -12,18 +13,21 @@ export default class glimmerAPI {
      * @param payload
      * @param callback
      */
-    makeApiPostCall(kall, payload) {
+    makeApiPostCall(kall, payload = null, body = null) {
 
         var data = "";
+
         for (element in payload) {
             var tempStr = encodeURIComponent(element) + "=" + encodeURIComponent(payload[element]) + "&"
             data += tempStr;
         }
 
+        var theContent = JSON.stringify(body);
+
         var url = config.base_url + kall + "?" + data;
 
         return new Promise((resolve, reject) => {
-            this.makeApiCall(url, "POST").then((data) => {
+            this.makeApiCall(url, "POST", theContent).then((data) => {
                 resolve(data);
             }).catch((error) => {
                 reject(error);
@@ -56,7 +60,7 @@ export default class glimmerAPI {
      * @param type
      * @returns {Promise}
      */
-    makeApiCall(url, type) {
+    makeApiCall(url, type, body=null) {
 
         return new Promise((resolve, reject) => {
 
@@ -64,7 +68,7 @@ export default class glimmerAPI {
 
             auth.getToken().then((token) => {
 
-                fetch(url, {method: type, headers: {"Authorization": "Bearer " + token}}).then((response) => {
+                fetch(url, {method: type, body: body, headers: {'Content-Type': 'application/json', 'Accept': 'application/json', "Authorization": "Bearer " + token}}).then((response) => {
 
                     //All is fine
                     if (response.ok === true) {
@@ -90,10 +94,19 @@ export default class glimmerAPI {
                         helpers.log("API Rejected, token not accepted", url);
                         reject(Error("Token not accepted"));
                     }
+                    else if (response.status === 400) {
+
+                        response.json().then((data)=>{
+                            console.log("API Rejected, validation error", data.error.body);
+                            reject(Error("API Rejected, validation, " + data.error.body));
+                        })
+
+                    }
                     else {
-                        console.log("API unhandled", response);
-                        helpers.log("API unhandled error", url)
-                        reject(Error("API Unhandled error"));
+                        response.json().then((data)=>{
+                            console.log("API unhandled", data.error.body);
+                            reject(Error("API Other, " + data.error.body));
+                        })
                     }
 
                 }).catch((error) => {

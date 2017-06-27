@@ -26,7 +26,7 @@ export default class AddCommentBlock extends React.Component {
                         this.props.navigator.showModal({
                             screen: 'glimmer.PageNewForumPost',
                             title: title,
-                            passProps: {navigator: this.props.navigator}
+                            passProps: {navigator: this.props.navigator, type: "comment", id: this.props.postId}
                         });
                     }}
                 />
