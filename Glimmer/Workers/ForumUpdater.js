@@ -1,7 +1,7 @@
 import {
     AsyncStorage
 } from 'react-native';
-import {addForumFavorite, replaceForumList} from "../Redux/actions"
+import {addFavoritesPost, replaceForumList} from "../Redux/actions"
 
 export default class ForumUpdater {
 
@@ -55,7 +55,7 @@ export default class ForumUpdater {
                 }
 
                 for (key in fetchedPosts) {
-                    global.store.dispatch(addForumFavorite(fetchedPosts[key].bulletin));
+                    global.store.dispatch(addFavoritesPost(fetchedPosts[key].bulletin));
                 }
 
                 var tmpArr = this.favPosts.posts.concat(fetchedPosts);

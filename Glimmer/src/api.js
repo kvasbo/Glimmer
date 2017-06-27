@@ -15,15 +15,11 @@ export default class glimmerAPI {
 
             auth.getToken().then((token) => {
 
-                helpers.log("makeApiCall Got token " + token);
-                console.log("makeApiCall Got token " + token);
-
                 fetch(url, {method: type, headers: {"Authorization": "Bearer " + token}}).then((response) => {
 
                     //All is fine
                     if (response.ok === true) {
                         response.json().then((data) => {
-                            console.log("Response json", data);
                             resolve(data);
                         }).catch((error) => {
                             console.log("JSON error", error);

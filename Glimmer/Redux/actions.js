@@ -1,11 +1,4 @@
-import {ADD_POST_FAVORITES, FORUMLIST_REPLACE, KRETS_ADD_PERSON} from "./constants";
-
-export function addForumFavorite(post) {
-    return {
-        type: ADD_POST_FAVORITES,
-        post
-    }
-}
+import {ADD_POST_FAVORITES, FORUMLIST_REPLACE, KRETS_ADD_PERSON, ADD_POST_STREAM} from "./constants";
 
 export function replaceForumList(forumList) {
     return {
@@ -18,5 +11,12 @@ export function addKretsPerson(person) {
     return {
         type: KRETS_ADD_PERSON,
         person
+    }
+}
+
+export function addFavoritesPost(post) {
+    return {
+        type: ADD_POST_FAVORITES,
+        post
     }
 }

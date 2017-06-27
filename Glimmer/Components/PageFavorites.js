@@ -31,16 +31,12 @@ export default class PageFavorites extends React.Component {
 
         //Listen to state changes. This really needs to change at some later point.
         reduxUnsubscribe = this.props.store.subscribe(() => {
-
-
+            
                 var tmpPosts = this.props.store.getState().ForumFavorite.posts;
 
-                if (tmpPosts.length > 0) {
-                    this.setState({loading: false});
+                if (tmpPosts !== this.state.posts) {
+                    this.setState({loading: false, posts: tmpPosts});
                 }
-
-                this.setState({posts: tmpPosts});
-
             }
         )
     }
