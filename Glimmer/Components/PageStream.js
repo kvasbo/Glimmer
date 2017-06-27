@@ -11,16 +11,16 @@ export default class PageStream extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {posts: [], loading: true, refreshing: false};
-        this.createPostList = this.createPostList.bind(this);
+        this.state = {posts: this.props.store.getState().ForumStream.posts, loading: true, refreshing: false};
+
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-        this.updatePostsFromStore = this.updatePostsFromStore.bind(this);
+
     }
 
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
-                this.updatePostsFromStore();
+                //this.updatePostsFromStore();
                 break;
             case 'didAppear':
                 break;
@@ -40,39 +40,29 @@ export default class PageStream extends React.Component {
         navBarHidden: false,
     };
 
-    static navigationOptions = {
-        title: 'Strøm',
-    };
 
     componentDidMount() {
-        this.updatePostsFromStore();
-    }
+        //Listen to state changes. This really needs to change at some later point.
+        reduxUnsubscribe = store.subscribe(() => {
 
-    updatePostsFromStore() {
+                var tmpPosts = store.getState().ForumStream.posts;
 
-        var posts = global.arbeidsMaur.forumUpdater.getStream();
-
-        if (posts.length > 0) {
-            this.setState({posts: posts, loading: false});
-        }
-        else {
-            setTimeout(this.updatePostsFromStore, 200);
-        }
-    }
-
-    componentDidMount() {
-
+                if (tmpPosts !== this.state.posts) {
+                    this.setState({loading: false, posts: tmpPosts});
+                    console.log("New Stream State", this.state.posts);
+                }
+            }
+        )
     }
 
     createPostList() {
         out = [];
 
         for (post in this.state.posts) {
-            out.push(
-                <StreamForumPost showThreadButton={true} navigator={this.props.navigator}
-                                 key={this.state.posts[post].id}
-                                 cut={true} images={false} data={this.state.posts[post]}/>
-            );
+
+            out.push(<StreamForumPost showThreadButton={true} navigator={this.props.navigator}
+                                      key={this.state.posts[post].data.id}
+                                      cut={true} images={false} data={this.state.posts[post].data}/>);
         }
         return out;
     }
@@ -88,8 +78,7 @@ export default class PageStream extends React.Component {
 
         if (this.state.loading) {
             return <LoadingScreen text="Laster forsiden..."/>
-        }
-        else {
+        } else {
 
             return (
                 <ScrollView style={pageStyles.container}
@@ -108,11 +97,6 @@ export default class PageStream extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#FAFAFA',
-        paddingLeft: 0,
-        paddingTop: 60,
-        paddingBottom: 0,
-        paddingRight: 0,
+        flex: 1, backgroundColor: '#FAFAFA', paddingLeft: 0, paddingTop: 60, paddingBottom: 0, paddingRight: 0,
     },
 });

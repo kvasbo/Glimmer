@@ -80,7 +80,7 @@ if (__DEV__) {
     console.log("Store init", global.store.getState());
 }
 
-if (true && __DEV__) {
+if (false && __DEV__) {
     let unsubscribe = global.store.subscribe(() => {
         console.log("Store change", global.store.getState());
     })
