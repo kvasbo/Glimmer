@@ -49,7 +49,7 @@ export default class PageThread extends React.Component {
                 <StreamForumPost data={this.props.post} metaData={false} cut={false}
                                  touchable={false}/>
                 {this.getComments()}
-                <AddCommentBlock postId={this.props.post.id}/>
+                <AddCommentBlock postId={this.props.post.id} navigator={this.props.navigator} title={this.props.post.title}/>
                 <KeyboardAvoidingView behavior="padding"/>
                 <View style={{height: 20}}/>
             </ScrollView>

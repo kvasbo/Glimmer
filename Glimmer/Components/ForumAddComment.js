@@ -14,12 +14,22 @@ export default class AddCommentBlock extends React.Component {
 
     render() {
 
+        var title = "Ny kommentar til "+ this.props.title;
+
         return (
             <Card>
                 <Icon
                     reverse
                     color='#517fa4'
-                    name='comment'/>
+                    name='comment'
+                    onPress={()=>{
+                        this.props.navigator.showModal({
+                            screen: 'glimmer.PageNewForumPost',
+                            title: title,
+                            passProps: {navigator: this.props.navigator}
+                        });
+                    }}
+                />
             </Card>
         )
 

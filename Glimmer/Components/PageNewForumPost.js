@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {ScrollView, StyleSheet} from "react-native";
+import {ScrollView, StyleSheet, Button} from "react-native";
 
 export default class PageNewForumPost extends React.Component {
 
@@ -19,7 +19,7 @@ export default class PageNewForumPost extends React.Component {
 
         return (
             <ScrollView style={pageStyles.container}>
-
+                <Button title="Lukk" onPress={() => this.props.navigator.dismissModal()}/>
             </ScrollView>
         );
     }
