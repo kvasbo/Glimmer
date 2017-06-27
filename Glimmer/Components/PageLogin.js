@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {ScrollView, View, StyleSheet, Text, Button} from "react-native";
+import {Button, ScrollView, StyleSheet, Text, View} from "react-native";
 
 export default class PageLogin extends React.Component {
 
@@ -15,15 +15,14 @@ export default class PageLogin extends React.Component {
         console.log("login screen", this.props);
     }
 
-    doTheLoginThing()
-    {
-        auth.doUnderskogOauth().then(()=>{
+    doTheLoginThing() {
+        auth.doUnderskogOauth().then(() => {
 
-           this.props.navigator.dismissAllModals({
+            this.props.navigator.dismissAllModals({
                 animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
             });
 
-           arbeidsMaur.initData();
+            arbeidsMaur.initData();
 
         });
     }
@@ -33,16 +32,25 @@ export default class PageLogin extends React.Component {
         return (
             <ScrollView style={pageStyles.container}>
 
-                <Text style={pageStyles.mainText}>For å bruke denne appen må du gi den tilgang til din Underskogkonto.</Text>
+                <View>
+                    <Text style={pageStyles.mainText}>For å bruke denne appen må du gi den tilgang til din
+                        Underskogkonto.</Text>
 
-                <Button style={pageStyles.theButton} title="Logg inn" onPress={()=>this.doTheLoginThing()} />
+                    <Button style={pageStyles.theButton} title="Logg inn" onPress={() => this.doTheLoginThing()}/>
 
-                <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen over og gi tilgang når Underskog åpner seg i din nettleser.</Text>
+                    <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen over og gi tillatelse når
+                        Underskog åpner seg i din nettleser.</Text>
+                </View>
 
-                <Text style={pageStyles.smallText}>Det med liten skrift:</Text>
-                <Text style={pageStyles.smallText}>Det er ikke farlig - vi stjeler ikke data og benytter ingen tredjepartstjenester utover anonymisert statistikk.</Text>
-                <Text style={pageStyles.smallText}>Innlogginga skjer ved hjelp av noe som heter Oauth som gjør at appen aldri får vite passordet ditt. Å lagre passord i apper er nemlig trist og uproft.</Text>
-                <Text style={pageStyles.smallText}>All kommunikasjon skjer direkte mellom din telefon og Underskog. Ingen slemminger står i midten og lytter.</Text>
+                <View>
+                    <Text style={pageStyles.smallText}>Det med liten skrift:</Text>
+                    <Text style={pageStyles.smallText}>Det er ikke farlig - vi stjeler ikke data og benytter ingen
+                        tredjepartstjenester utover anonymisert statistikk.</Text>
+                    <Text style={pageStyles.smallText}>Innlogginga skjer ved hjelp av noe som heter Oauth som gjør at
+                        appen aldri får vite passordet ditt. Å lagre passord i apper er nemlig trist og uproft.</Text>
+                    <Text style={pageStyles.smallText}>All kommunikasjon skjer direkte mellom din telefon og Underskog.
+                        Ingen slemminger står i midten og lytter.</Text>
+                </View>
 
             </ScrollView>
         );
@@ -50,29 +58,23 @@ export default class PageLogin extends React.Component {
 }
 
 const pageStyles = StyleSheet.create({
+
     container: {
         backgroundColor: '#FFFFFF',
-
+        flex: 1,
+        justifyContent: "space-around"
     },
 
-    theButton: {
+    theButton: {},
 
-    },
-    
     mainText: {
         paddingLeft: 30,
 
-        paddingRight: 30,
-        marginTop: 10,
+        paddingRight: 30, marginTop: 10,
     },
 
     smallText: {
-        paddingLeft: 30,
-        marginTop: 10,
-        marginBottom: 0,
-        paddingRight: 30,
-        fontSize: 12,
-        color: "#777777"
+        paddingLeft: 30, marginTop: 10, marginBottom: 0, paddingRight: 30, fontSize: 12, color: "#777777"
     }
-    
+
 });

@@ -2,7 +2,7 @@
  * Created by kvasbo on 31.05.2017.
  */
 import React from "react";
-import {Linking, AsyncStorage} from "react-native";
+import {Linking} from "react-native";
 import * as Keychain from "react-native-keychain";
 
 const shittyQs = require("shitty-qs");
@@ -20,10 +20,6 @@ export default class glimmerAuth {
 
     init() {
 
-        if (__DEV__) {
-            console.log("Auth.init: Start");
-        }
-
         return new Promise((resolve, reject) => {
             //Check token
             this.getToken().then((data) => {
@@ -34,13 +30,11 @@ export default class glimmerAuth {
 
                 resolve();
 
-
             }).catch((error) => {
                 console.log("Auth.init: No token found");
                 reject("No token found")
             })
         })
-
 
     }
 
@@ -53,13 +47,7 @@ export default class glimmerAuth {
 
             //const callBack = this.storeToken;
 
-            const oauthUrl = [
-                "https://underskog.no/oauth/authorize",
-                "?response_type=token",
-                "&client_id=" + app_key,
-                "&redirect_uri=glimmer://foo",
-                "&state=" + state,
-            ].join("");
+            const oauthUrl = ["https://underskog.no/oauth/authorize", "?response_type=token", "&client_id=" + app_key, "&redirect_uri=glimmer://foo", "&state=" + state,].join("");
 
             console.log("Oauth URL", oauthUrl);
 
@@ -79,18 +67,17 @@ export default class glimmerAuth {
                     let password = query.access_token;
 
                     /*
-                    AsyncStorage.setItem('token', password).then(()=>{
-                        resolve(password);
-                    });
-                    */
+                     AsyncStorage.setItem('token', password).then(()=>{
+                     resolve(password);
+                     });
+                     */
 
                     Keychain
-                        .setInternetCredentials(server, username, password)
-                        .then(() => {
-                            console.log("Token stored");
-                            resolve(password);
-                        });
-
+                    .setInternetCredentials(server, username, password)
+                    .then(() => {
+                        console.log("Token stored");
+                        resolve(password);
+                    });
 
                 }
 
@@ -108,11 +95,11 @@ export default class glimmerAuth {
         return new Promise((resolve, reject) => {
 
             Keychain
-                .getInternetCredentials(server)
-                .then((credentials) => {
-                    //console.log("GetToken", credentials.password);
-                    resolve(credentials.password);
-                }).catch((err) => {
+            .getInternetCredentials(server)
+            .then((credentials) => {
+                //console.log("GetToken", credentials.password);
+                resolve(credentials.password);
+            }).catch((err) => {
                 reject("No password stored");
             });
 
@@ -127,14 +114,12 @@ export default class glimmerAuth {
 
             api.makeApiGetCall("/users/current").then((data) => {
                 this.currentUser = data.data;
-                if(__DEV__)
-                {
+                if (__DEV__) {
                     console.log("Current User", this.currentUser);
                 }
                 resolve(data);
             }).catch((error) => {
-                if(__DEV__)
-                {
+                if (__DEV__) {
                     console.log("Error, doing auth", error);
                 }
                 reject("Key not valid");
@@ -142,6 +127,5 @@ export default class glimmerAuth {
 
         })
     }
-
 
 }
