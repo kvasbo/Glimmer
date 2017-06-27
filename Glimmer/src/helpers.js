@@ -18,4 +18,19 @@ export default class Helpers {
 
     }
 
+    logItems = [];
+
+    log() {
+
+        for (var i = 0; i < arguments.length; i++) {
+            var out = {};
+            out.key = Math.random();
+            out.time = new Date();
+            out.data = arguments[i];
+            this.logItems.push(out);
+        }
+
+        this.logItems = this.logItems.slice(0, 500);
+    }
+
 }

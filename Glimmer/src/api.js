@@ -9,77 +9,54 @@ export default class glimmerAPI {
 
     baseURL = "https://underskog.no/api/v1";
 
-    makeRawApiCall(url, type = "GET") {
-
-        if (__DEV__) {
-            var start = new Date();
-            //var startTime = start.getSeconds() +  ":" + start.getMilliseconds();
-            //console.log("API Call", type, url);
-        }
+    makeApiCall(url, type) {
 
         return new Promise((resolve, reject) => {
 
-            auth.getToken().then((data) => {
-                this.makeRawApiCallWithToken(url, type, data).then((data) => {
-                    var end = new Date();
-                    console.log("API time", url, end-start);
-                    resolve(data);
-                }).catch((err) => {
-                    if (__DEV__) {
-                        console.log("makeRawApiCall error", err);
+            auth.getToken().then((token) => {
+
+                helpers.log("makeApiCall Got token " + token);
+                console.log("makeApiCall Got token " + token);
+
+                fetch(url, {method: type, headers: {"Authorization": "Bearer " + token}}).then((response) => {
+
+                    //All is fine
+                    if (response.ok === true) {
+                        response.json().then((data) => {
+                            console.log("Response json", data);
+                            resolve(data);
+                        }).catch((error) => {
+                            console.log("JSON error", error);
+                            helpers.log("JSON error", error.toString());
+                            reject(error);
+                        })
+
                     }
-                    reject(err);
-                });
-            });
-        });
+                    else if (response.status === 403) {
 
-    }
-
-    makeRawApiCallWithToken(url, type, token) {
-
-        if (__DEV__) {
-           // var start = new Date();
-           // var startTime = start.getSeconds() +  ":" + start.getMilliseconds();
-           // console.log("Raw API Call", startTime, type, url, token);
-        }
-
-        return new Promise((resolve, reject) => {
-
-            fetch(
-                url,
-                {
-                    method: type,
-                    headers: {
-                        "Authorization": "Bearer " + token
+                        console.log("API Rejected, token not accepted");
+                        helpers.log("API Rejected, token not accepted", url);
+                        reject(Error("Token not accepted"));
                     }
-                }
-            ).then((response) => {
-
-                if (response.ok === true) {
-                    if (__DEV__) {
-                        //console.log("API OK", response);
+                    else {
+                        console.log("API unhandled", response);
+                        helpers.log("API unhandled error", url)
+                        reject(Error("API Unhandled error"));
                     }
-                    return response.json();
-                }
-                else if (response.status === 403) {
 
-                    console.log("API Rejected, token not accepted");
-                    reject(Error("Token not accepted"));
-                }
-                else {
-                    console.log("API unhandled", response);
-                    reject(Error("API Unhandled error"));
-                }
-            }).then((responseJson) => {
-                resolve(responseJson);
+                }).catch((error) => {
+                    console.log("Fetch error", error);
+                    helpers.log("Fetch error", error.toString());
+                    reject(error);
+                })
+
             }).catch((error) => {
-                if (__DEV__) {
-                    console.log("API error", error);
-                }
-                reject(Error(error));
-            });
+                console.log("Getkey error", error);
+                helpers.log("Getkey error", error.toString());
+                reject(error);
+            })
 
-        })
+        });
     }
 
     /**
@@ -98,7 +75,14 @@ export default class glimmerAPI {
 
         var url = this.baseURL + kall + "?" + data;
 
-        return this.makeRawApiCall(url, "POST");
+        return new Promise((resolve,reject) => {
+            this.makeApiCall(url, "POST").then((data) => {
+                resolve(data);
+            }).catch((error)=>{
+                reject(error);
+            })
+        })
+
 
     }
 
@@ -106,7 +90,16 @@ export default class glimmerAPI {
 
         var url = this.baseURL + kall;
 
-        return this.makeRawApiCall(url, "GET");
+        return new Promise((resolve,reject) => {
+            this.makeApiCall(url, "GET").then((data) => {
+                resolve(data);
+            }).catch((error)=>{
+                reject(error);
+            })
+        })
+
+
+        //return this.makeRawApiCall(url, "GET");
 
     }
 }

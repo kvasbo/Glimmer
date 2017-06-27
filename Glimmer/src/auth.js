@@ -2,7 +2,7 @@
  * Created by kvasbo on 31.05.2017.
  */
 import React from "react";
-import {Linking} from "react-native";
+import {Linking, AsyncStorage} from "react-native";
 import * as Keychain from "react-native-keychain";
 
 const shittyQs = require("shitty-qs");
@@ -12,9 +12,10 @@ const config = require("../config.js");
 const server = 'http://underskog.no';
 const username = 'underskogbruker';
 
+global.log = [];
+
 export default class glimmerAuth {
 
-    token = "";
     currentUser = null;
 
     init() {
@@ -31,7 +32,6 @@ export default class glimmerAuth {
                     console.log("Auth.init: Got a token!", data);
                 }
 
-                this.token = data;
                 resolve();
 
 
@@ -78,12 +78,19 @@ export default class glimmerAuth {
 
                     let password = query.access_token;
 
+                    /*
+                    AsyncStorage.setItem('token', password).then(()=>{
+                        resolve(password);
+                    });
+                    */
+
                     Keychain
                         .setInternetCredentials(server, username, password)
                         .then(() => {
                             console.log("Token stored");
                             resolve(password);
                         });
+
 
                 }
 

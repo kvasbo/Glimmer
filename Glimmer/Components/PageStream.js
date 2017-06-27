@@ -49,6 +49,7 @@ export default class PageStream extends React.Component {
     }
 
     updatePostsFromStore() {
+        
         var posts = global.arbeidsMaur.forumUpdater.getStream();
 
         if (posts.length > 0) {

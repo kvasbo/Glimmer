@@ -61,6 +61,7 @@ export default class MenuLeft extends React.Component {
                     icon={{name: 'thumb-up'}}
                     style={pageStyles.button}
                     title='Min Kudos'/>
+
             </ScrollView>
         );
     }

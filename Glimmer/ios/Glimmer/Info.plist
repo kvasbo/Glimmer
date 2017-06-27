@@ -26,7 +26,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.rettvendt.glimmer</string>
+			<string>com.rettvendt.Glimmer</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>glimmer</string>

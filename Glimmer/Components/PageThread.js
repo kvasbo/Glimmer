@@ -23,7 +23,7 @@ export default class PageThread extends React.Component {
     refreshComments() {
         var uri = "/posts/" + this.props.post.id + "/comments";
 
-        auth.makeApiGetCall(uri).then((data) => {
+        api.makeApiGetCall(uri).then((data) => {
             //console.log(data);
             this.setState({comments: data.data, next: data.paging.next});
         })

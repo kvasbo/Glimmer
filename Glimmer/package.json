@@ -20,6 +20,7 @@
     "react-native-keychain": "^1.2.0",
     "react-native-lightbox": "^0.6.0",
     "react-native-navigation": "^1.1.114",
+    "react-native-restart": "0.0.2",
     "react-native-vector-icons": "^4.2.0",
     "react-native-webview-autoheight": "^1.0.4",
     "react-redux": "^5.0.5",

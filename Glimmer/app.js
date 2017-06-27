@@ -1,4 +1,5 @@
 import React from "react";
+import {Alert} from "react-native";
 import {registerScreens} from "./Workers/screens";
 import {Navigation} from "react-native-navigation";
 import Workers from "./Workers/index.js";
@@ -6,7 +7,8 @@ import * as firebase from "firebase";
 import {createStore} from "redux";
 import glimmerReducers from "./Redux/index";
 import {Provider} from "react-redux";
-
+import {setJSExceptionHandler, getJSExceptionHandler} from 'react-native-exception-handler';
+import RNRestart from 'react-native-restart';
 import "moment/locale/nb";
 import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
@@ -26,6 +28,29 @@ console.ignoredYellowBox = ['[xmldom warning]'];
 global.arbeidsMaur = new Workers();
 
 global.currentUser = {id: null, name: null};
+
+const errorHandler = (e, isFatal) => {
+    if (isFatal) {
+        Alert.alert(
+            'Unexpected error occurred',
+            `
+        Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
+ 
+        We will need to restart the app.
+        `,
+            [{
+                text: 'Restart',
+                onPress: () => {
+                    RNRestart.Restart();
+                }
+            }]
+        );
+    } else {
+        console.log(e); // So that we can see it in the ADB logs in case of Android if needed
+    }
+};
+
+setJSExceptionHandler(errorHandler);
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -48,6 +73,7 @@ global.store = createStore(glimmerReducers);
  autoRehydrate()
  ));
  */
+
 
 
 function saveStore() {
@@ -80,18 +106,26 @@ export default class Glimmer extends React.Component {
 
     init() {
 
+        helpers.log("Init");
+
         var starters = [this.startApp(), auth.init()];
 
         Promise.all(starters).then(() => {
             global.auth.checkAuth().then(() => {
                 console.log("CheckAuth done, starting app");
+                helpers.log("CheckAuth done, starting app");
                 global.arbeidsMaur.initData();
             }).catch((err)=>{
+                helpers.log("Error in CheckAuth");
+                helpers.log(err);
                 console.log("Error in CheckAuth", err);
                 this.doLoginSequence();
             });
         }).catch((err) => {
             console.log("Error in starters", err);
+            Alert.alert("Error in starters", err);
+            helpers.log("Error in starters");
+            helpers.log(err);
             this.doLoginSequence();
         });
     }
@@ -159,6 +193,10 @@ export default class Glimmer extends React.Component {
                 drawer: { // optional, add this if you want a side menu drawer in your app
                     left: { // optional, define if you want a drawer from the left
                         screen: 'glimmer.MenuLeft', // unique ID registered with Navigation.registerScreen
+                        passProps: {} // simple serializable object that will pass as props to all top screens (optional)
+                    },
+                    right: { // optional, define if you want a drawer from the left
+                        screen: 'glimmer.PageLog', // unique ID registered with Navigation.registerScreen
                         passProps: {} // simple serializable object that will pass as props to all top screens (optional)
                     },
                     disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button

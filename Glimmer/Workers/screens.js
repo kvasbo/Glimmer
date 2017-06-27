@@ -12,6 +12,7 @@ import PageKretsVelger from "../Components/PageKretsVelger";
 
 import PageLogin from "../Components/PageLogin";
 import PageForumList from "../Components/PageForumList";
+import PageLog from "../Components/PageLog";
 
 import MenuLeft from "../Components/MenuLeft";
 
@@ -35,6 +36,7 @@ export function registerScreens(store, Provider) {
     //Helper pages
     Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
     Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
+    Navigation.registerComponent('glimmer.PageLog', () => PageLog, store, Provider);
 
     //Menus etc.
     Navigation.registerComponent('glimmer.MenuLeft', () => MenuLeft, store, Provider);
