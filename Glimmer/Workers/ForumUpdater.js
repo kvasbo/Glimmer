@@ -1,7 +1,7 @@
 import {
     AsyncStorage
 } from 'react-native';
-import {addFavoritesPost, replaceForumList} from "../Redux/actions"
+import {addFavoritesPost, replaceForumList, addStreamPost} from "../Redux/actions"
 
 export default class ForumUpdater {
 
@@ -131,6 +131,11 @@ export default class ForumUpdater {
 
             this.streamPosts.posts = fetchedPosts;
             this.streamPosts.lastPage = depth;
+
+            for(key in fetchedPosts)
+            {
+                store.dispatch(addStreamPost(fetchedPosts[key]));
+            }
 
             try {
                 AsyncStorage.setItem('@Cache:frontPageFirstStart', JSON.stringify(this.streamPosts));

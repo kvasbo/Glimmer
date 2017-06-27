@@ -3,12 +3,59 @@
  */
 import React from "react";
 const config = require("../config.js");
-//const token = config.dev_token;
 
 export default class glimmerAPI {
 
-    baseURL = "https://underskog.no/api/v1";
+    /**
+     * Payload is an object. Yes it is. key:value becomes &key=value; urlencoded.
+     * @param call
+     * @param payload
+     * @param callback
+     */
+    makeApiPostCall(kall, payload) {
 
+        var data = "";
+        for (element in payload) {
+            var tempStr = encodeURIComponent(element) + "=" + encodeURIComponent(payload[element]) + "&"
+            data += tempStr;
+        }
+
+        var url = config.base_url + kall + "?" + data;
+
+        return new Promise((resolve, reject) => {
+            this.makeApiCall(url, "POST").then((data) => {
+                resolve(data);
+            }).catch((error) => {
+                reject(error);
+            })
+        })
+
+    }
+
+    /**
+     * Make Get call to the API.
+     * @param kall
+     * @returns {Promise}
+     */
+    makeApiGetCall(kall) {
+
+        var url = config.base_url + kall;
+
+        return new Promise((resolve, reject) => {
+            this.makeApiCall(url, "GET").then((data) => {
+                resolve(data);
+            }).catch((error) => {
+                reject(error);
+            })
+        })
+    }
+
+    /**
+     * Perform an actual API call
+     * @param url
+     * @param type
+     * @returns {Promise}
+     */
     makeApiCall(url, type) {
 
         return new Promise((resolve, reject) => {
@@ -53,49 +100,5 @@ export default class glimmerAPI {
             })
 
         });
-    }
-
-    /**
-     * Payload is an object. Yes it is. key:value becomes &key=value; urlencoded.
-     * @param call
-     * @param payload
-     * @param callback
-     */
-    makeApiPostCall(kall, payload) {
-
-        var data = "";
-        for (element in payload) {
-            var tempStr = encodeURIComponent(element) + "=" + encodeURIComponent(payload[element]) + "&"
-            data += tempStr;
-        }
-
-        var url = this.baseURL + kall + "?" + data;
-
-        return new Promise((resolve,reject) => {
-            this.makeApiCall(url, "POST").then((data) => {
-                resolve(data);
-            }).catch((error)=>{
-                reject(error);
-            })
-        })
-
-
-    }
-
-    makeApiGetCall(kall) {
-
-        var url = this.baseURL + kall;
-
-        return new Promise((resolve,reject) => {
-            this.makeApiCall(url, "GET").then((data) => {
-                resolve(data);
-            }).catch((error)=>{
-                reject(error);
-            })
-        })
-
-
-        //return this.makeRawApiCall(url, "GET");
-
     }
 }

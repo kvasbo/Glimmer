@@ -20,3 +20,9 @@ export function addFavoritesPost(post) {
         post
     }
 }
+export function addStreamPost(post) {
+    return {
+        type: ADD_POST_STREAM,
+        post
+    }
+}

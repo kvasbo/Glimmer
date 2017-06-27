@@ -7,8 +7,8 @@ import * as firebase from "firebase";
 import {createStore} from "redux";
 import glimmerReducers from "./Redux/index";
 import {Provider} from "react-redux";
-import {setJSExceptionHandler, getJSExceptionHandler} from 'react-native-exception-handler';
-import RNRestart from 'react-native-restart';
+import {setJSExceptionHandler} from "react-native-exception-handler";
+import RNRestart from "react-native-restart";
 import "moment/locale/nb";
 import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
@@ -31,20 +31,15 @@ global.currentUser = {id: null, name: null};
 
 const errorHandler = (e, isFatal) => {
     if (isFatal) {
-        Alert.alert(
-            'Unexpected error occurred',
-            `
+        Alert.alert('Unexpected error occurred', `
         Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
  
         We will need to restart the app.
-        `,
-            [{
-                text: 'Restart',
-                onPress: () => {
-                    RNRestart.Restart();
-                }
-            }]
-        );
+        `, [{
+            text: 'Restart', onPress: () => {
+                RNRestart.Restart();
+            }
+        }]);
     } else {
         console.log(e); // So that we can see it in the ADB logs in case of Android if needed
     }
@@ -74,8 +69,6 @@ global.store = createStore(glimmerReducers);
  ));
  */
 
-
-
 function saveStore() {
     if (__DEV__) {
         console.log("Persisting store", global.store.getState());
@@ -83,17 +76,15 @@ function saveStore() {
     //persistStore(global.store, {storage: AsyncStorage});
 }
 
-
 if (__DEV__) {
     console.log("Store init", global.store.getState());
 }
 
-if (false && __DEV__) {
+if (true && __DEV__) {
     let unsubscribe = global.store.subscribe(() => {
         console.log("Store change", global.store.getState());
     })
 }
-
 
 export default class Glimmer extends React.Component {
 
@@ -112,37 +103,25 @@ export default class Glimmer extends React.Component {
 
         Promise.all(starters).then(() => {
             global.auth.checkAuth().then(() => {
-                console.log("CheckAuth done, starting app");
-                helpers.log("CheckAuth done, starting app");
                 global.arbeidsMaur.initData();
-            }).catch((err)=>{
-                helpers.log("Error in CheckAuth");
-                helpers.log(err);
+            }).catch((err) => {
+                helpers.log("Error in CheckAuth", err);
                 console.log("Error in CheckAuth", err);
                 this.doLoginSequence();
             });
         }).catch((err) => {
             console.log("Error in starters", err);
-            Alert.alert("Error in starters", err);
-            helpers.log("Error in starters");
-            helpers.log(err);
+            helpers.log("Error in starters", err);
             this.doLoginSequence();
         });
     }
 
-    doLoginSequence()
-    {
+    doLoginSequence() {
         Navigation.showModal({
-            title: "Velkommen til Glimmer",
-            screen: "glimmer.PageLogin", // unique ID registered with Navigation.registerScreen
+            title: "Velkommen til Glimmer", screen: "glimmer.PageLogin", // unique ID registered with Navigation.registerScreen
             passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
         });
-
-        //Navigation.dismissLightBox();
-
     }
-
-
 
     startApp() {
 
@@ -150,58 +129,43 @@ export default class Glimmer extends React.Component {
 
             Navigation.startTabBasedApp({
                 passProps: {store: global.store}, //Pass the redux store.
-                tabs: [
-                    {
-                        label: 'Mine tråder',
-                        screen: 'glimmer.PageFavorites', // this is a registered name for a screen
-                        icon: require('./icons/star.png'),
-                        //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                        title: 'Mine tråder'
-                    },
-                    {
-                        label: 'Forsiden',
-                        screen: 'glimmer.PageStream',
-                        icon: require('./icons/front.png'),
-                        //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                        title: 'Forsiden'
-                    }
-                    ,
-                    /*{
-                     label: 'Kalender',
-                     screen: 'glimmer.PageCalendar',
-                     icon: require('./icons/calendar.png'),
-                     //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                     title: 'Kalender'
-                     }
-                     ,*/
+                tabs: [{
+                    label: 'Mine tråder', screen: 'glimmer.PageFavorites', // this is a registered name for a screen
+                    icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                    title: 'Mine tråder'
+                }, {
+                    label: 'Forsiden',
+                    screen: 'glimmer.PageStream',
+                    icon: require('./icons/front.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                    title: 'Forsiden'
+                }, /*{
+                 label: 'Kalender',
+                 screen: 'glimmer.PageCalendar',
+                 icon: require('./icons/calendar.png'),
+                 //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                 title: 'Kalender'
+                 }
+                 ,*/
                     {
                         label: 'Meldinger',
                         screen: 'glimmer.PageMessages',
-                        icon: require('./icons/chat.png'),
-                        //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                        icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                         title: 'Meldinger'
-                    }
-                    ,
-                    /* {
+                    }, /* {
                      label: 'Velg forum',
                      screen: 'glimmer.PageForumList',
                      icon: require('./icons/chat.png'),
                      //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                      title: 'Forum List Test'
-                     } */
-                ],
-                drawer: { // optional, add this if you want a side menu drawer in your app
+                     } */], drawer: { // optional, add this if you want a side menu drawer in your app
                     left: { // optional, define if you want a drawer from the left
                         screen: 'glimmer.MenuLeft', // unique ID registered with Navigation.registerScreen
                         passProps: {} // simple serializable object that will pass as props to all top screens (optional)
-                    },
-                    right: { // optional, define if you want a drawer from the left
+                    }, right: { // optional, define if you want a drawer from the left
                         screen: 'glimmer.PageLog', // unique ID registered with Navigation.registerScreen
                         passProps: {} // simple serializable object that will pass as props to all top screens (optional)
-                    },
-                    disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
-                },
-                tabsStyle: { // optional, **iOS Only** add this if you want to style the tab bar beyond the defaults
+                    }, disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
+                }, tabsStyle: { // optional, **iOS Only** add this if you want to style the tab bar beyond the defaults
                     //tabBarHidden: false, // make the tab bar hidden
                     //tabBarButtonColor: '#ffff00', // change the color of the tab icons and text (also unselected)
                     //tabBarSelectedButtonColor: '#ff9900', // change the color of the selected tab icon and text (only selected)
@@ -220,7 +184,6 @@ export default class Glimmer extends React.Component {
             resolve();
 
         });
-
 
     }
 
