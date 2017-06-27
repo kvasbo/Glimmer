@@ -39,7 +39,10 @@ export default class PageNewForumPost extends React.Component {
         var url = "/posts/"+202176+"/comments";
 
         api.makeApiPostCall(url, {}, postBody).then((data) => {
+            this.setState({text: ""});
             console.log("Post success", data);
+            AsyncStorage.removeItem(itemKey);
+            this.props.navigator.dismissModal();
         }).catch((err)=>{
             console.log("Post error", err)
         });
