@@ -1,15 +1,12 @@
 import {
     AsyncStorage
 } from 'react-native';
-import {addFavoritesPost, replaceForumList, addStreamPost} from "../Redux/actions"
+import {addFavoritesPost, addStreamPost, addForumToList} from "../Redux/actions"
 
 export default class ForumUpdater {
 
-    forums = {};
-    tmpForums = {};
-
-    streamPosts = {loaded: false, posts: [], lastPage: 0};
-    favPosts = {loaded: false, posts: [], lastPage: 0};
+    lastpage_favs = 0;
+    lastpage_stream = 0;
 
     constructor() {
 
@@ -28,6 +25,8 @@ export default class ForumUpdater {
 
                 resolve(data);
 
+            }).catch((error)=>{
+                reject(error);
             });
 
         });
@@ -58,7 +57,7 @@ export default class ForumUpdater {
                     global.store.dispatch(addFavoritesPost(fetchedPosts[key].bulletin));
                 }
 
-                var tmpArr = this.favPosts.posts.concat(fetchedPosts);
+                //var tmpArr = this.favPosts.posts.concat(fetchedPosts);
 
                 /*For the record, how to sort
                  tmpArr.sort(
@@ -70,7 +69,9 @@ export default class ForumUpdater {
                  );
                  */
 
-                this.favPosts.lastPage = from + depth - 1;
+                lastpage_favs = from + depth - 1;
+
+                resolve();
 
             });
 
@@ -90,15 +91,6 @@ export default class ForumUpdater {
         this.addFavorites(this.favPosts.lastPage + 1, numberOfPages);
     }
 
-    getStream() {
-        return this.streamPosts.posts;
-    }
-
-    getFavorites() {
-        return this.favPosts.posts;
-    }
-
-
     loadStream(depth = 5) {
 
         var proms = [];
@@ -108,7 +100,6 @@ export default class ForumUpdater {
             var p = this.loadPosts(false, i); //.then((data)=>{
             proms.push(p);
         }
-
 
         //Resolve all the promises! This is nice. And needs some error handling I guess.
         Promise.all(proms).then(values => {
@@ -129,28 +120,14 @@ export default class ForumUpdater {
                 }
             );
 
-            this.streamPosts.posts = fetchedPosts;
-            this.streamPosts.lastPage = depth;
-
             for(key in fetchedPosts)
             {
                 store.dispatch(addStreamPost(fetchedPosts[key]));
             }
 
-            try {
-                AsyncStorage.setItem('@Cache:frontPageFirstStart', JSON.stringify(this.streamPosts));
-            } catch (error) {
-                console.log("Error saving front page to cache.")
-            }
-
-            if (__DEV__) {
-                console.log("Stream loaded", this.streamPosts);
-            }
-
         });
 
     }
-
 
     initForums(force) {
 
@@ -164,10 +141,6 @@ export default class ForumUpdater {
                     console.log("forums read from cache", resultP);
 
                     var now = new Date();
-
-                    this.forums = resultP.forums;
-
-                    global.store.dispatch(replaceForumList(resultP.forums));
 
                     if (force || now - resultP.time < (1000 * 60 * 60 * 24 * 7)) {
                         console.log("Forum cache too old, loading from API");
@@ -191,28 +164,8 @@ export default class ForumUpdater {
 
         for (forum in forumBatch) {
 
-            this.tmpForums[forumBatch[forum].id] = forumBatch[forum];
+            store.dispatch(addForumToList(forumBatch[forum]));
 
-        }
-
-    }
-
-    _storeForumList() {
-
-        console.log("Storing forums to list");
-
-        //Replace the old list.
-        this.forums = this.tmpForums;
-        this.tmpForums = {};
-
-        var data = {time: new Date(), forums: this.tmpForums};
-
-        global.store.dispatch(replaceForumList(this.tmpForums));
-
-        try {
-            AsyncStorage.setItem('@Cache:forumList', JSON.stringify(data));
-        } catch (error) {
-            console.log("error saving forum list to cache.")
         }
 
     }
@@ -226,7 +179,7 @@ export default class ForumUpdater {
             this._addForumsToList(data.data);
 
             if (data.data.length == 0) {
-                this._storeForumList();
+
             }
             else {
                 this._getForumsPagesRecursive(page + 1);

@@ -60,6 +60,8 @@ export default class glimmerAPI {
 
         return new Promise((resolve, reject) => {
 
+            const start = new Date();
+
             auth.getToken().then((token) => {
 
                 fetch(url, {method: type, headers: {"Authorization": "Bearer " + token}}).then((response) => {
@@ -67,7 +69,14 @@ export default class glimmerAPI {
                     //All is fine
                     if (response.ok === true) {
                         response.json().then((data) => {
+
+                            if(__DEV__)
+                            {
+                                const end = new Date();
+                                console.log("API OK", type, url, end-start);
+                            }
                             resolve(data);
+
                         }).catch((error) => {
                             console.log("JSON error", error);
                             helpers.log("JSON error", error.toString());

@@ -62,7 +62,6 @@ const pageStyles = StyleSheet.create({
     container: {
         backgroundColor: '#FFFFFF',
         flex: 1,
-        justifyContent: "space-around"
     },
 
     theButton: {},

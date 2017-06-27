@@ -22,9 +22,8 @@ export default class Workers {
 
     initData() {
 
-        this.forumUpdater.initForums(false);
         this.kretsUpdater.initKrets(false);
-
+        this.forumUpdater.initForums(true);
         this.forumUpdater.loadFirstFavorites(1);
         this.forumUpdater.loadStream(1);
 

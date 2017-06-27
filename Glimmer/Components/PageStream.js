@@ -49,7 +49,6 @@ export default class PageStream extends React.Component {
 
                 if (tmpPosts !== this.state.posts) {
                     this.setState({loading: false, posts: tmpPosts});
-                    console.log("New Stream State", this.state.posts);
                 }
             }
         )
