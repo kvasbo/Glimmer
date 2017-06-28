@@ -19,7 +19,7 @@ export default class PersonPopup extends React.Component {
 
         return (
             <View style={pageStyles.container}>
-                <View style={{flexDirection: "row", alignItems: "center", padding: 5}}>
+                <View style={{flexDirection: "column", alignItems: "center", padding: 5}}>
                     <Image style={pageStyles.image} source={{uri: this.props.person.image_url}}/>
                     <Text style={pageStyles.title}>{this.props.person.realname}</Text>
                 </View>
@@ -32,9 +32,9 @@ export default class PersonPopup extends React.Component {
 const pageStyles = StyleSheet.create({
 
     container: {
-        backgroundColor: "#CCCCCC",
-        borderRadius: 8,
-        padding: 10,
+
+        borderRadius: 5,
+        padding: 5,
         width: 250,
         borderColor: "#CCCCCC",
     },
@@ -45,8 +45,9 @@ const pageStyles = StyleSheet.create({
     },
 
     image: {
-        height: 60,
-        width: 60,
+        borderRadius: 5,
+        height: 80,
+        width: 80,
         padding: 10
     }
 
