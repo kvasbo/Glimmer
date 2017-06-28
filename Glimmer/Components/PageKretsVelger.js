@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {ScrollView, FlatList, StyleSheet, Text, View} from "react-native";
+import {FlatList, StyleSheet, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 
 //TODO sort by status and then name
@@ -15,6 +15,7 @@ export default class PageKretsVelger extends React.Component {
         var tmpKrets = store.getState().Krets;
         this.state = {krets: store.getState().Krets}
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+
     }
 
     static navigatorButtons = {
@@ -28,9 +29,32 @@ export default class PageKretsVelger extends React.Component {
     };
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+
+        switch (event.id) {
+            case 'willAppear':
+                if (__DEV__) {
+                    console.log("Velgerprops", this.props);
+                }
+                break;
+            case 'didAppear':
+                break;
+            case 'willDisappear':
+                break;
+            case 'didDisappear':
+                break;
+        }
+
         if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
             if (event.id == 'close') { // this is the same id field from the static navigatorButtons definition
                 this.props.navigator.dismissAllModals();
+            }
+            if(event.id == "writeNewMessage") {
+                this.props.navigator.push({
+                    screen: 'glimmer.PageNewMessage', // unique ID registered with Navigation.registerScreen
+                    title: "Skriv melding", // navigation bar title of the pushed screen (optional)
+                    passProps: {}, // Object that will be passed as props to the pushed screen (optional)
+                    animated: true, // does the push have transition animation or does it happen immediately (optional)
+                });
             }
         }
     }
@@ -54,14 +78,15 @@ export default class PageKretsVelger extends React.Component {
 
     _renderItem = ({item}) => (
 
-       <PersonFace key={item.person.id} person={item.person} navigator={this.props.navigator} />
+        <PersonFace key={item.person.id} person={item.person} navigator={this.props.navigator}/>
 
     )
 
-
     _getDataArray() {
-       
-        var krets = Object.values(this.state.krets);
+
+        var krets = Object.values(this.state.krets).sort((x,y) => {
+            return x.person.name.toLowerCase().localeCompare(y.person.name.toLowerCase());
+        });
 
         return krets;
     }

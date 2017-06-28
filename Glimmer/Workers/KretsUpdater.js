@@ -23,17 +23,6 @@ export default class KretsUpdater {
 
                     var now = new Date();
 
-                    //this.krets = resultP.forums;
-
-                    //global.store.dispatch(replaceForumList(resultP.forums));
-
-                    /*
-                    if (force || now - resultP.time < (1000 * 60 * 60 * 24 * 7)) {
-                        console.log("Forum cache too old, loading from API");
-                        this._getForumsPagesRecursive(1);
-                    }
-                    */
-
                 }
                 else {
                     console.log("No krets cache found, loading from API");
@@ -55,7 +44,6 @@ export default class KretsUpdater {
             for(key in data.data)
             {
                 global.store.dispatch(addKretsPerson(data.data[key]));
-               // console.log("Person", data.data[key]);
             }
 
             if (data.data.length == 0) {

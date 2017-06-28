@@ -1,4 +1,4 @@
-import {ADD_POST_FAVORITES, FORUMLIST_REPLACE, KRETS_ADD_PERSON, ADD_POST_STREAM, FORUMLIST_ADD_FORUM} from "./constants";
+import {ADD_POST_FAVORITES, FORUMLIST_REPLACE, KRETS_ADD_PERSON, ADD_POST_STREAM, FORUMLIST_ADD_FORUM, MESSAGE_RECIPIENTS_ADD_PERSON, MESSAGE_RECIPIENTS_CLEAR, MESSAGE_RECIPIENTS_REMOVE_PERSON} from "./constants";
 
 export function replaceForumList(forums) {
     return {
@@ -32,5 +32,24 @@ export function addStreamPost(post) {
     return {
         type: ADD_POST_STREAM,
         post
+    }
+}
+
+export function addNewMessageRecipient(id) {
+    return {
+        type: MESSAGE_RECIPIENTS_ADD_PERSON,
+        id
+    }
+}
+export function removeNewMessageRecipient(id) {
+    return {
+        type: MESSAGE_RECIPIENTS_REMOVE_PERSON,
+        id
+    }
+}
+
+export function clearNewMessageRecipient() {
+    return {
+        type: MESSAGE_RECIPIENTS_CLEAR
     }
 }

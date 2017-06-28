@@ -9,6 +9,7 @@ import PageSettings from "../Components/PageSettings";
 import PageConversation from "../Components/PageConversation";
 import PageNewForumPost from "../Components/PageNewForumPost";
 import PageKretsVelger from "../Components/PageKretsVelger";
+import PageNewMessage from "../Components/PageNewMessage";
 
 import PageLogin from "../Components/PageLogin";
 import PageForumList from "../Components/PageForumList";
@@ -30,12 +31,13 @@ export function registerScreens(store, Provider) {
         Navigation.registerComponent('glimmer.PageConversation', () => PageConversation, store, Provider);
         Navigation.registerComponent('glimmer.PageCalendar', () => PageCalendar, store, Provider);
         Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
-        Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, store, Provider);
+        Navigation.registerComponent('glimmer.PageNewMessage', () => PageNewMessage, store, Provider);
 
         //Helper pages
         Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
         Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
         Navigation.registerComponent('glimmer.PageLog', () => PageLog, store, Provider);
+        Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, store, Provider);
 
         //Menus etc.
         Navigation.registerComponent('glimmer.MenuLeft', () => MenuLeft, store, Provider);

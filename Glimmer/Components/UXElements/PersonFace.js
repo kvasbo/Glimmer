@@ -4,6 +4,7 @@
 
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {addNewMessageRecipient, removeNewMessageRecipient, clearNewMessageRecipient} from "../../Redux/actions"
 
 export default class PersonFace extends React.Component {
 
@@ -27,9 +28,25 @@ export default class PersonFace extends React.Component {
     }
 
     toggleState() {
-        var newState = !this.state.selected;
-        console.log("Setstate", newState, this.props.person.name);
-        this.setState({selected: newState});
+
+
+
+        if(__DEV__)
+        {
+            console.log("Setstate", !this.state.selected, this.props.person.name);
+        }
+
+        if(this.state.selected)
+        {
+            store.dispatch(removeNewMessageRecipient(this.props.person.id));
+        }
+        else
+        {
+            store.dispatch(addNewMessageRecipient(this.props.person.id));
+        }
+
+        this.setState({selected: !this.state.selected});
+
     }
 
     showInfo() {

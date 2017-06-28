@@ -61,8 +61,6 @@ export default class PageConversation extends React.Component {
 
         var payload = {user_id: this.props.user.id, body: messages[0].text};
 
-        console.log(payload);
-
         api.makeApiPostCall("/messages", payload,).then((data) => {
             console.log(data);
         })
