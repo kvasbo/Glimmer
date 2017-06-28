@@ -1,12 +1,12 @@
-import {
-    AsyncStorage
-} from 'react-native';
-import {addFavoritesPost, addStreamPost, addForumToList} from "../Redux/actions"
+import {AsyncStorage} from "react-native";
+import {addFavoritesPost, addStreamPost, replaceForumList} from "../Redux/actions";
 
 export default class ForumUpdater {
 
     lastpage_favs = 0;
     lastpage_stream = 0;
+
+    tmpForums = [];
 
     constructor() {
 
@@ -25,7 +25,7 @@ export default class ForumUpdater {
 
                 resolve(data);
 
-            }).catch((error)=>{
+            }).catch((error) => {
                 reject(error);
             });
 
@@ -120,8 +120,7 @@ export default class ForumUpdater {
                 }
             );
 
-            for(key in fetchedPosts)
-            {
+            for (key in fetchedPosts) {
                 store.dispatch(addStreamPost(fetchedPosts[key]));
             }
 
@@ -129,6 +128,11 @@ export default class ForumUpdater {
 
     }
 
+    /**
+     * Init forums from storage and trigger a reload if they are too old (or we force it).
+     * @param force
+     * @returns {Promise}
+     */
     initForums(force) {
 
         return new Promise((resolve, reject) => {
@@ -138,11 +142,16 @@ export default class ForumUpdater {
 
                     var resultP = JSON.parse(result);
 
-                    console.log("forums read from cache", resultP);
+                    //Full replace in store
+                    if (typeof resultP.data.forums === "object") {
+                        console.log("Replacing forum list in Redux store with cached data");
+                        store.dispatch(replaceForumList(resultP.data.forums));
+                        console.log("Restored store", store.getState());
+                    }
 
                     var now = new Date();
 
-                    if (force || now - resultP.time < (1000 * 60 * 60 * 24 * 7)) {
+                    if (force || now - resultP.time < (1000 * 60 * 60 * 24 * 14)) {
                         console.log("Forum cache too old, loading from API");
                         this._getForumsPagesRecursive(1);
                     }
@@ -159,27 +168,52 @@ export default class ForumUpdater {
         })
     }
 
-
-    _addForumsToList(forumBatch) {
-
+    /**
+     * Add a set of API returns to the temp forum list in anticipation of the atomic rewrite of the entire thing.
+     * @param forumBatch
+     * @private
+     */
+    _addAPIForumsToList(forumBatch) {
         for (forum in forumBatch) {
 
-            store.dispatch(addForumToList(forumBatch[forum]));
-
+            this.tmpForums.push(forumBatch[forum]);
         }
-
     }
 
-    _getForumsPagesRecursive(page) {
+    /**
+     * Persist forum list to cache and replace the Redux store version with the new list.
+     * @private
+     */
+    _persistForums() {
+        console.log("Persisting forums");
+
+        store.dispatch(replaceForumList(this.tmpForums));
+
+        this.tmpForums = [];
+
+        var data = {time: new Date(), data: store.getState().ForumList};
+
+        AsyncStorage.setItem('@Cache:forumList', JSON.stringify(data)).then((error, result) => {
+
+            console.log("Current redux list", store.getState().ForumList);
+
+            AsyncStorage.getItem('@Cache:forumList', (err, result) => {
+                console.log("Current store list", JSON.parse(result).data);
+            })
+
+        });
+    }
+
+    _getForumsPagesRecursive(page, maxPages = 999) {
 
         var uri = "/forums?page=" + page;
 
         api.makeApiGetCall(uri).then((data) => {
 
-            this._addForumsToList(data.data);
+            this._addAPIForumsToList(data.data);
 
-            if (data.data.length == 0) {
-
+            if (data.data.length == 0 || page >= maxPages) {
+                this._persistForums();
             }
             else {
                 this._getForumsPagesRecursive(page + 1);
@@ -187,25 +221,30 @@ export default class ForumUpdater {
         })
     }
 
-    getForumArray() {
-        var out = [];
+    /**
+     * Post a new comment in a thread
+     * @param comment
+     * @param thread
+     * @returns {Promise}
+     */
+    postCommentInThread(comment, thread) {
 
-        for (key in this.forums) {
-            out.push(this.forums[key]);
-        }
+        console.log("Posting comment in thread", this.props.id, this.state.text);
 
-        out.sort(
-            function (x, y) {
-                return x.title.localeCompare(y.title);
-            }
-        );
+        return new Promise((resolve, reject) => {
+            var postBody = {"comment": {"body": this.state.text}};
+            var url = "/posts/" + this.props.id + "/comments";
 
-        if (__DEV__) {
-            // console.log("getForumArray", out);
-        }
+            api.makeApiPostCall(url, {}, postBody).then((data) => {
+                console.log("Post success", data);
+                resolve(data);
+            }).catch((err) => {
+                console.log("Post error", err);
+                reject(err);
+            });
 
-        return out;
+        })
+
     }
-
 
 }

@@ -1,16 +1,20 @@
-import {FORUMLIST_ADD_FORUM} from "./constants";
+import {FORUMLIST_ADD_FORUM, FORUMLIST_REPLACE} from "./constants";
 
-function ForumList(state = {}, action) {
+function ForumList(state = {forums:[]}, action) {
     switch (action.type) {
         case FORUMLIST_ADD_FORUM:
 
-            let id = action.forum.id;
+            return {
+                ...state,
+                forums: [...state.forums, action.forum]
+            }
 
-            return Object.assign({}, state, {
-                [id]: Object.assign({}, state[id], {
-                    forum: action.forum
-                })
-            });
+        case FORUMLIST_REPLACE:
+
+            return {
+                ...state,
+                forums: action.forums
+            }
 
 
         default:

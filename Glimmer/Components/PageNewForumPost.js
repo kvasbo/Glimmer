@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {AsyncStorage, Button, ScrollView, StyleSheet, TextInput, View} from "react-native";
+import {Alert, AsyncStorage, Button, ScrollView, StyleSheet, TextInput, View} from "react-native";
 
 export default class PageNewForumPost extends React.Component {
 
@@ -28,32 +28,25 @@ export default class PageNewForumPost extends React.Component {
 
     postMessage() {
 
-        if(this.props.type = "comment")
-        {
-            console.log("Posting comment in thread", this.props.id, this.state.text);
+        if (this.props.type = "comment" && this.state.text != "") {
+            arbeidsMaur.forumUpdater.postCommentInThread(this.state.text, this.props.id).then((data) => {
+
+                this.setState({text: ""});
+                AsyncStorage.removeItem(itemKey);
+                this.props.navigator.dismissModal();
+
+            }).catch((error) => {
+                Alert.alert("Noe gikk galt :(");
+            });
+
         }
-
-        var postBody = {"comment": {"body": this.state.text}};
-
-        //TODO Fix!
-        var url = "/posts/"+202176+"/comments";
-
-        api.makeApiPostCall(url, {}, postBody).then((data) => {
-            this.setState({text: ""});
-            console.log("Post success", data);
-            AsyncStorage.removeItem(itemKey);
-            this.props.navigator.dismissModal();
-        }).catch((err)=>{
-            console.log("Post error", err)
-        });
-
     }
 
     textChanged(text) {
 
         this.setState({text: text});
 
-       // console.log(itemKey, text);
+        // console.log(itemKey, text);
 
         AsyncStorage.setItem(itemKey, text);
 

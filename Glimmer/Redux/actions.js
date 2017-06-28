@@ -1,9 +1,9 @@
 import {ADD_POST_FAVORITES, FORUMLIST_REPLACE, KRETS_ADD_PERSON, ADD_POST_STREAM, FORUMLIST_ADD_FORUM} from "./constants";
 
-export function replaceForumList(forumList) {
+export function replaceForumList(forums) {
     return {
         type: FORUMLIST_REPLACE,
-        forumList
+        forums
     }
 }
 

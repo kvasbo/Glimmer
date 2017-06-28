@@ -12,7 +12,6 @@ const shittyQs = require("shitty-qs");
 
 const config = require("../config.js");
 
-
 export default class Workers {
 
     constructor() {
@@ -22,10 +21,12 @@ export default class Workers {
 
     initData() {
 
-        this.kretsUpdater.initKrets(false);
-        this.forumUpdater.initForums(false);
-        this.forumUpdater.loadFirstFavorites(1);
-        this.forumUpdater.loadStream(1);
+        var first = [this.forumUpdater.loadFirstFavorites(1), this.forumUpdater.loadStream(1)];
+
+        Promise.all(first).then(()=>{
+            this.kretsUpdater.initKrets(false);
+            this.forumUpdater.initForums(false);
+        })
 
         //setInterval(saveStore, 30000);
     }

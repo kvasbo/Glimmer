@@ -13,21 +13,19 @@ import "moment/locale/nb";
 import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
 import Helpers from "./src/helpers";
+
+const Icon = require('react-native-vector-icons/Ionicons');
+
 global.moment = require('moment');
 moment.locale('nb')
 
 global.auth = new GlimmerAuth();
 global.api = new GlimmerAPI();
-
 global.helpers = new Helpers();
+global.arbeidsMaur = new Workers();
 
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];
-
-//Create the API updater object
-global.arbeidsMaur = new Workers();
-
-global.currentUser = {id: null, name: null};
 
 const errorHandler = (e, isFatal) => {
     if (isFatal) {
@@ -91,7 +89,7 @@ export default class Glimmer extends React.Component {
     constructor(props) {
         super(props);
         console.log("Starting init");
-        registerScreens(store, Provider);
+
         this.init();
     }
 
@@ -99,21 +97,25 @@ export default class Glimmer extends React.Component {
 
         helpers.log("Init");
 
-        var starters = [this.startApp(), auth.init()];
+        var prep = [registerScreens(store, Provider)];
+        var start = [this.startApp(), auth.init()];
 
-        Promise.all(starters).then(() => {
-            global.auth.checkAuth().then(() => {
-                global.arbeidsMaur.initData();
-            }).catch((err) => {
-                helpers.log("Error in CheckAuth", err);
-                console.log("Error in CheckAuth", err);
-                this.doLoginSequence();
-            });
-        }).catch((err) => {
-            console.log("Error in starters", err);
-            helpers.log("Error in starters", err);
-            this.doLoginSequence();
-        });
+        Promise.all(prep).then(() => {
+                Promise.all(start).then(() => {
+                    global.auth.checkAuth().then(() => {
+                        global.arbeidsMaur.initData();
+                    }).catch((err) => {
+                        helpers.log("Error in CheckAuth", err);
+                        console.log("Error in CheckAuth", err);
+                        this.doLoginSequence();
+                    });
+                }).catch((err) => {
+                    console.log("Error in starters", err);
+                    helpers.log("Error in starters", err);
+                    this.doLoginSequence();
+                });
+            }
+        )
     }
 
     doLoginSequence() {
@@ -151,13 +153,13 @@ export default class Glimmer extends React.Component {
                         screen: 'glimmer.PageMessages',
                         icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                         title: 'Meldinger'
-                    }, /* {
+                    },  {
                      label: 'Velg forum',
                      screen: 'glimmer.PageForumList',
                      icon: require('./icons/chat.png'),
                      //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                      title: 'Forum List Test'
-                     } */], drawer: { // optional, add this if you want a side menu drawer in your app
+                     } ], drawer: { // optional, add this if you want a side menu drawer in your app
                     left: { // optional, define if you want a drawer from the left
                         screen: 'glimmer.MenuLeft', // unique ID registered with Navigation.registerScreen
                         passProps: {} // simple serializable object that will pass as props to all top screens (optional)
@@ -188,4 +190,5 @@ export default class Glimmer extends React.Component {
     }
 
 }
+
 
