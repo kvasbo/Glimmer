@@ -153,12 +153,6 @@ export default class Glimmer extends React.Component {
                         screen: 'glimmer.PageMessages',
                         icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                         title: 'Meldinger'
-                    },  {
-                     label: 'Velg forum',
-                     screen: 'glimmer.PageForumList',
-                     icon: require('./icons/chat.png'),
-                     //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                     title: 'Forum List Test'
                      } ], drawer: { // optional, add this if you want a side menu drawer in your app
                     left: { // optional, define if you want a drawer from the left
                         screen: 'glimmer.MenuLeft', // unique ID registered with Navigation.registerScreen

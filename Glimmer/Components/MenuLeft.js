@@ -50,7 +50,23 @@ export default class MenuLeft extends React.Component {
 
                         this.props.navigator.showModal({
                             screen: 'glimmer.PageKretsVelger',
-                            title: "KretsTest",
+                            title: "Krets Test",
+                        });
+
+                        this.props.navigator.toggleDrawer();
+                    }
+                    }
+                />
+                <Button
+                    textStyle={pageStyles.buttonText}
+                    style={pageStyles.button}
+                    icon={{name: 'cached'}}
+                    title='Fora'
+                    onPress={() => {
+
+                        this.props.navigator.showModal({
+                            screen: 'glimmer.PageForumList',
+                            title: "Forum List Test",
                         });
 
                         this.props.navigator.toggleDrawer();
