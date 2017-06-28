@@ -70,7 +70,7 @@ export default class PageForumList extends React.Component {
     render() {
 
         return (
-            <View style={{flex: 1, paddingTop: 30}}>
+            <View style={{flex: 1, paddingTop: 0}}>
 
                 <TextInput
                     style={{height: 40, borderColor: 'gray', borderWidth: 1, padding: 5, paddingLeft: 10, paddingRight: 10}}

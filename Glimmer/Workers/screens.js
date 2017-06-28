@@ -15,6 +15,7 @@ import PageForumList from "../Components/PageForumList";
 import PageLog from "../Components/PageLog";
 
 import MenuLeft from "../Components/MenuLeft";
+import PersonPopup from "../Components/UXElements/PersonPopup";
 
 export function registerScreens(store, Provider) {
 
@@ -38,6 +39,7 @@ export function registerScreens(store, Provider) {
 
         //Menus etc.
         Navigation.registerComponent('glimmer.MenuLeft', () => MenuLeft, store, Provider);
+        Navigation.registerComponent('glimmer.PersonPopup', () => PersonPopup, store, Provider);
 
         resolve();
 

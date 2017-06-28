@@ -32,12 +32,25 @@ export default class PersonFace extends React.Component {
         this.setState({selected: newState});
     }
 
+    showInfo() {
+
+        this.props.navigator.showLightBox({
+            screen: "glimmer.PersonPopup", // unique ID registered with Navigation.registerScreen
+            passProps: {person: this.props.person}, // simple serializable object that will pass as props to the lightbox (optional)
+            style: {
+                backgroundBlur: "light", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
+                backgroundColor: "#ffffff30" // tint color for the background, you can specify alpha here (optional)
+            }
+        });
+
+    }
+
     render() {
 
         return (
-            <TouchableOpacity onPress={() => this.toggleState()}>
+            <TouchableOpacity onPress={() => this.toggleState()} onLongPress={() => this.showInfo()}>
                 <View style={pageStyles.container}>
-                    <Image style={this.getSelectedStyle()} source={{uri: this.getImageUrl()}}/>
+                    <Image style={this.getSelectedStyle()} source={{uri: this.props.person.image_url}}/>
                     <Text style={pageStyles.name}>{this.props.person.name}</Text>
                 </View>
             </TouchableOpacity>
@@ -60,7 +73,7 @@ const pageStyles = StyleSheet.create({
         height: 48,
         borderRadius: 24,
         borderWidth: 5,
-        borderColor: "#F2F0D5FF"
+        borderColor: "#A3D9B0FF"
     },
 
     faceNotSelected: {
@@ -68,7 +81,7 @@ const pageStyles = StyleSheet.create({
         height: 48,
         borderRadius: 24,
         borderWidth: 5,
-        borderColor: "#F2F0D500"
+        borderColor: "#A3D9B000"
     },
 
     name: {
