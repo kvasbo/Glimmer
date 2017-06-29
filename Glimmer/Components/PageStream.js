@@ -10,9 +10,9 @@ import StreamForumPost from "./StreamForumPost";
 export default class PageStream extends React.Component {
 
     constructor(props) {
-        super(props);
-        this.state = {posts: this.props.store.getState().ForumStream.posts, loading: true, refreshing: false};
 
+        super(props);
+        this.state = {posts: [], loading: true, refreshing: false};
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
@@ -20,7 +20,6 @@ export default class PageStream extends React.Component {
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
-                //this.updatePostsFromStore();
                 break;
             case 'didAppear':
                 break;
@@ -42,6 +41,9 @@ export default class PageStream extends React.Component {
 
 
     componentDidMount() {
+
+        this.setState({posts:this.props.store.getState().ForumStream.posts});
+
         //Listen to state changes. This really needs to change at some later point.
         reduxUnsubscribe = store.subscribe(() => {
 
