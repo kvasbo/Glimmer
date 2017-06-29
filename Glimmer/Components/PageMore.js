@@ -7,7 +7,7 @@ import {ScrollView, StyleSheet} from "react-native";
 import {Button} from "react-native-elements";
 
 
-export default class MenuLeft extends React.Component {
+export default class PageMore extends React.Component {
 
     constructor(props) {
         super(props);
@@ -77,6 +77,20 @@ export default class MenuLeft extends React.Component {
                     icon={{name: 'thumb-up'}}
                     style={pageStyles.button}
                     title='Min Kudos'/>
+                <Button
+                    icon={{name: 'thumb-up'}}
+                    style={pageStyles.button}
+                    title='Om Glimmer'
+                    onPress={() => {
+
+                    this.props.navigator.showModal({
+                        screen: 'glimmer.PageAbout',
+                        title: "Om Glimmer",
+                    });
+
+                }
+                }/>
+
 
             </ScrollView>
         );

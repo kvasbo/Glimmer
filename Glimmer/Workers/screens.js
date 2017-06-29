@@ -10,12 +10,13 @@ import PageConversation from "../Components/PageConversation";
 import PageNewForumPost from "../Components/PageNewForumPost";
 import PageKretsVelger from "../Components/PageKretsVelger";
 import PageNewMessage from "../Components/PageNewMessage";
+import PageAbout from "../Components/PageAbout";
 
 import PageLogin from "../Components/PageLogin";
 import PageForumList from "../Components/PageForumList";
 import PageLog from "../Components/PageLog";
 
-import MenuLeft from "../Components/MenuLeft";
+import PageMore from "../Components/PageMore";
 import PersonPopup from "../Components/UXElements/PersonPopup";
 
 export function registerScreens(store, Provider) {
@@ -32,6 +33,7 @@ export function registerScreens(store, Provider) {
         Navigation.registerComponent('glimmer.PageCalendar', () => PageCalendar, store, Provider);
         Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
         Navigation.registerComponent('glimmer.PageNewMessage', () => PageNewMessage, store, Provider);
+        Navigation.registerComponent('glimmer.PageAbout', () => PageAbout, store, Provider);
 
         //Helper pages
         Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
@@ -40,7 +42,7 @@ export function registerScreens(store, Provider) {
         Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, store, Provider);
 
         //Menus etc.
-        Navigation.registerComponent('glimmer.MenuLeft', () => MenuLeft, store, Provider);
+        Navigation.registerComponent('glimmer.MenuLeft', () => PageMore, store, Provider);
         Navigation.registerComponent('glimmer.PersonPopup', () => PersonPopup, store, Provider);
 
         resolve();
