@@ -28,7 +28,17 @@ export default class Workers {
             this.forumUpdater.initForums(false);
         })
 
-        //setInterval(saveStore, 30000);
+        //setInterval(this.refreshForumData(), config.interval_forumrefresh * 1000);
+
+    }
+
+    refreshForumData() {
+        if(__DEV__)
+        {
+            console.log("Refreshing forum data");
+        }
+        this.forumUpdater.loadFirstFavorites(1);
+        this.forumUpdater.loadStream(1);
     }
 
 }

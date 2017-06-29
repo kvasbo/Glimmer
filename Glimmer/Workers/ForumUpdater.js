@@ -1,5 +1,6 @@
 import {AsyncStorage} from "react-native";
 import {addFavoritesPost, addStreamPost, replaceForumList} from "../Redux/actions";
+const config = require("../config.js");
 
 export default class ForumUpdater {
 
@@ -229,11 +230,11 @@ export default class ForumUpdater {
      */
     postCommentInThread(comment, thread) {
 
-        console.log("Posting comment in thread", this.props.id, this.state.text);
+        console.log("Posting comment in thread", thread, comment);
 
         return new Promise((resolve, reject) => {
-            var postBody = {"comment": {"body": this.state.text}};
-            var url = "/posts/" + this.props.id + "/comments";
+            var postBody = {"comment": {"body": comment}};
+            var url = "/posts/" + thread + "/comments";
 
             api.makeApiPostCall(url, {}, postBody).then((data) => {
                 console.log("Post success", data);

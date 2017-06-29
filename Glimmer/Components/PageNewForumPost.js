@@ -28,7 +28,8 @@ export default class PageNewForumPost extends React.Component {
 
     postMessage() {
 
-        if (this.props.type = "comment" && this.state.text != "") {
+        if (this.props.type == "comment" && this.state.text !== "") {
+
             arbeidsMaur.forumUpdater.postCommentInThread(this.state.text, this.props.id).then((data) => {
 
                 this.setState({text: ""});
@@ -45,8 +46,6 @@ export default class PageNewForumPost extends React.Component {
     textChanged(text) {
 
         this.setState({text: text});
-
-        // console.log(itemKey, text);
 
         AsyncStorage.setItem(itemKey, text);
 
