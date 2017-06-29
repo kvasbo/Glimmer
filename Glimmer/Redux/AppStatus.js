@@ -7,11 +7,14 @@ const initialState = {
 function AppStatus(state = initialState, action) {
 
     switch (action.type) {
+
         case APPCONTROL_USER_LOGIN:
 
             var s = Object.assign(state);
 
             s.loggedIn = action.status;
+
+            console.log("Set login status", s);
 
             return s;
 

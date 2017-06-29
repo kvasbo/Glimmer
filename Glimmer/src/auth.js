@@ -27,11 +27,17 @@ export default class glimmerAuth {
 
                 console.log("Auth.init: Got a token!", data);
 
+                store.dispatch(setLoginStatus(true));
+
                 resolve();
 
             }).catch((error) => {
+
+                store.dispatch(setLoginStatus(false));
+
                 console.log("Auth.init: No token found");
                 reject("No token found")
+
             })
         })
 
@@ -129,14 +135,17 @@ export default class glimmerAuth {
 
             api.makeApiGetCall("/users/current").then((data) => {
                 this.currentUser = data.data;
+
                 if (__DEV__) {
                     console.log("Current User", this.currentUser);
                 }
+                store.dispatch(setLoginStatus(true));
                 resolve(data);
             }).catch((error) => {
                 if (__DEV__) {
                     console.log("Error, doing auth", error);
                 }
+                store.dispatch(setLoginStatus(false));
                 reject("Key not valid");
             })
 

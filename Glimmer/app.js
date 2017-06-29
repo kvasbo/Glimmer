@@ -24,8 +24,6 @@ global.api = new GlimmerAPI();
 global.helpers = new Helpers();
 global.arbeidsMaur = new Workers();
 
-global.loggedIn = false;
-
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];
 
@@ -89,33 +87,27 @@ if (false && __DEV__) {
     })
 }
 
-export default class Glimmer extends React.Component {
+export default class Glimmer {
 
-    //Just to see if it changes
-    loggedIn = null;
-
-    constructor(props) {
-        super(props);
-        console.log("Starting init");
-
+    constructor()
+    {
         this.init();
-
-        this.loggedIn = store.getState().AppStatus.loggedIn;
-
-        this.attachStoreListener();
-
     }
+
+    //To keep track of changes in state, should be done with react
+    loggedIn = store.getState().AppStatus.loggedIn;
 
     attachStoreListener() {
 
         //Listen to state changes. This really needs to change at some later point.
         reduxUnsubscribe = store.subscribe(() => {
 
-                //Login state has changed, switch context.
+                //Login state has changed, switch context (and start app, if first time)
                 if (store.getState().AppStatus.loggedIn !== this.loggedIn) {
                     this.loggedIn = store.getState().AppStatus.loggedIn;
                     this.startAppBasedOnLoginStatus();
                 }
+
             }
         )
 
@@ -125,20 +117,24 @@ export default class Glimmer extends React.Component {
 
         helpers.log("Init started");
 
+        this.attachStoreListener();
+
         var first = [auth.checkAuth(), registerScreens(store, Provider)];
 
         //Perform the two first actions (register all screens, check login status
         Promise.all(first).then(() => {
-            console.log("Logged in already, running StartApp");
-            this.startMainApp();
+            this.startAppBasedOnLoginStatus();
+
         }).catch(() => {
-            this.startLoginApp();
+            this.startAppBasedOnLoginStatus();
+
         });
-        
+
     }
 
     startAppBasedOnLoginStatus() {
-        if (store.getState().AppStatus.loggedIn === true) {
+        if (this.loggedIn) {
+            global.arbeidsMaur.initData();
             this.startMainApp();
         }
         else {
@@ -152,7 +148,7 @@ export default class Glimmer extends React.Component {
             screen: {
                 screen: 'glimmer.PageLogin', // unique ID registered with Navigation.registerScreen
                 title: 'Velkommen til Glimmer', // title of the screen as appears in the nav bar (optional)
-                navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+                navigatorStyle: {navigatorHidden: true}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
                 navigatorButtons: {} // override the nav buttons for the screen, see "Adding buttons to the navigator" below (optional)
             },
             passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
@@ -162,9 +158,6 @@ export default class Glimmer extends React.Component {
     }
 
     startMainApp() {
-
-        //Load data sets
-        global.arbeidsMaur.initData();
 
         //Start the actual app
         Navigation.startTabBasedApp({
