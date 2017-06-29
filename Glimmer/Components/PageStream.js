@@ -6,6 +6,7 @@ import React from "react";
 import {RefreshControl, ScrollView, StyleSheet} from "react-native";
 import LoadingScreen from "./LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";
+import Divider from "./UXElements/Divider";
 
 export default class PageStream extends React.Component {
 
@@ -69,10 +70,10 @@ export default class PageStream extends React.Component {
     }
 
     _onRefresh() {
-        /* this.setState({refreshing: true});
-         global.arbeidsMaur.forumUpdater.getFrontPagePosts().then((data) => {
-         this.setState({refreshing: false});
-         });*/
+         this.setState({refreshing: true});
+         global.arbeidsMaur.forumUpdater.loadStream(1).then((data) => {
+            this.setState({refreshing: false});
+         });
     }
 
     render() {

@@ -154,7 +154,9 @@ export default class StreamForumPost extends React.Component {
 
             <View style={pageStyles.container}>
 
-                <Text style={pageStyles.title}>{this.props.data.title}</Text>
+                <View style={pageStyles.title}>
+                <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
+                </View>
 
                 {this.getFirstImage()}
 
@@ -177,18 +179,28 @@ export default class StreamForumPost extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        backgroundColor: '#FAFAFA', padding: 0, marginBottom: 10, marginTop: 10, flex: 1
+        backgroundColor: '#FFFFFF', padding: 0, marginBottom: 10, marginTop: 10, flex: 1
     },
     title: {
+        marginTop: 10,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        paddingTop: 5,
+        paddingBottom: 5,
+        backgroundColor: "#2C3E50"
+    },
+    titleText: {
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 20,
         marginRight: 20,
         fontSize: 20,
-        fontWeight: "600",
+        fontWeight: "400",
+        color: "#ECF0F1"
     },
     image: {
-        marginTop: 10,
+        marginTop: 0,
         marginBottom: 10,
         marginLeft: 0,
         marginRight: 0,

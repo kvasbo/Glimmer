@@ -94,38 +94,48 @@ export default class ForumUpdater {
 
     loadStream(depth = 5) {
 
-        var proms = [];
+        return new Promise((resolve, reject) => {
 
-        //Get promises for all
-        for (var i = 1; i < depth + 1; i++) {
-            var p = this.loadPosts(false, i); //.then((data)=>{
-            proms.push(p);
-        }
+            var proms = [];
 
-        //Resolve all the promises! This is nice. And needs some error handling I guess.
-        Promise.all(proms).then(values => {
-
-            var fetchedPosts = [];
-
-            for (key in values) {
-                fetchedPosts = fetchedPosts.concat(values[key].data);
+            //Get promises for all
+            for (var i = 1; i < depth + 1; i++) {
+                var p = this.loadPosts(false, i); //.then((data)=>{
+                proms.push(p);
             }
 
-            fetchedPosts = global.helpers.arrayUnique(fetchedPosts);
+            //Resolve all the promises! This is nice. And needs some error handling I guess.
+            Promise.all(proms).then(values => {
 
-            fetchedPosts.sort(
-                function (x, y) {
-                    xd = new Date(x.created_at);
-                    yd = new Date(y.created_at);
-                    return yd - xd;
+                var fetchedPosts = [];
+
+                for (key in values) {
+                    fetchedPosts = fetchedPosts.concat(values[key].data);
                 }
-            );
 
-            for (key in fetchedPosts) {
-                store.dispatch(addStreamPost(fetchedPosts[key]));
-            }
+                fetchedPosts = global.helpers.arrayUnique(fetchedPosts);
 
+                fetchedPosts.sort(
+                    function (x, y) {
+                        xd = new Date(x.created_at);
+                        yd = new Date(y.created_at);
+                        return yd - xd;
+                    }
+                );
+
+                for (key in fetchedPosts) {
+                    store.dispatch(addStreamPost(fetchedPosts[key]));
+                }
+                
+                resolve()
+
+            }).catch((err) => {
+                reject(err);
+            });
+            
         });
+
+
 
     }
 

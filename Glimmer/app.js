@@ -89,8 +89,7 @@ if (false && __DEV__) {
 
 export default class Glimmer {
 
-    constructor()
-    {
+    constructor() {
         this.init();
     }
 
@@ -123,10 +122,10 @@ export default class Glimmer {
 
         //Perform the two first actions (register all screens, check login status
         Promise.all(first).then(() => {
-           // this.startAppBasedOnLoginStatus();
+            // this.startAppBasedOnLoginStatus();
 
         }).catch(() => {
-           // this.startAppBasedOnLoginStatus();
+            // this.startAppBasedOnLoginStatus();
 
         });
 
@@ -137,7 +136,7 @@ export default class Glimmer {
             global.arbeidsMaur.initData();
             this.startMainApp();
         }
-        else if(this.loggedIn === false) {
+        else if (this.loggedIn === false) {
             this.startLoginApp();
         }
     }
@@ -184,24 +183,15 @@ export default class Glimmer {
                     screen: 'glimmer.PageMessages',
                     icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Meldinger'
-                }], drawer: { // optional, add this if you want a side menu drawer in your app
-                left: { // optional, define if you want a drawer from the left
-                    screen: 'glimmer.MenuLeft', // unique ID registered with Navigation.registerScreen
-                    passProps: {} // simple serializable object that will pass as props to all top screens (optional)
-                }, disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
-            }, tabsStyle: { // optional, **iOS Only** add this if you want to style the tab bar beyond the defaults
-                //tabBarHidden: false, // make the tab bar hidden
-                //tabBarButtonColor: '#ffff00', // change the color of the tab icons and text (also unselected)
-                //tabBarSelectedButtonColor: '#ff9900', // change the color of the selected tab icon and text (only selected)
-                //tabBarBackgroundColor: '#551A8B', // change the background color of the tab bar
-                //tabBarTranslucent: true, // change the translucent of the tab bar to false
-                //tabBarTextFontFamily: 'Avenir-Medium', //change the tab font family
-                //tabBarLabelColor: '#ffb700', // iOS only. change the color of tab text
-                //tabBarSelectedLabelColor: 'red', // iOS only. change the color of the selected tab text
-                //forceTitlesDisplay: true, // Android only. If true - Show all bottom tab labels. If false - only the selected tab's label is visible.
-                //tabBarHideShadow: true, // iOS only. Remove default tab bar top shadow (hairline)
-                //forceTitlesDisplay: true // Android only. If true - Show all bottom tab labels. If false - only the selected tab's label is visible.
-            }
+                }, {
+                    label: 'Mer',
+                    screen: 'glimmer.MenuLeft',
+                    icon: require('./icons/front.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                    title: 'Mer'
+                }],
+            tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
+                tabBarSelectedButtonColor: '#3499DB', // optional, change the color of the selected tab icon and text (only selected)
+            },
 
         });
 
