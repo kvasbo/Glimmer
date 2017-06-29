@@ -6,8 +6,8 @@ import React from "react";
 import {KeyboardAvoidingView, ScrollView, StyleSheet, View} from "react-native";
 
 import ThreadForumPost from "./UXElements/ThreadForumPost";
-import ForumComment from "./ForumComment";
-import AddCommentBlock from "./ForumAddComment";
+import ForumComment from "./UXElements/ForumComment";
+import AddCommentBlock from "./UXElements/ForumAddComment";
 
 export default class PageThread extends React.Component {
 
@@ -61,7 +61,7 @@ export default class PageThread extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#AAAAAA',
+        backgroundColor: '#ECF0F1',
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

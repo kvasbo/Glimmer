@@ -179,7 +179,11 @@ export default class StreamForumPost extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFFFFF', padding: 0, marginBottom: 10, marginTop: 10, flex: 1
+        backgroundColor: '#FFFFFF',
+        padding: 0,
+        marginBottom: 10,
+        marginTop: 10,
+        flex: 1
     },
     title: {
         marginTop: 10,
@@ -208,19 +212,19 @@ const pageStyles = StyleSheet.create({
     },
     creatorInfo: {
         marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 5,
         marginLeft: 20,
         marginRight: 20,
     },
     thePost: {
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: 5,
+        marginBottom: 5,
         marginLeft: 20,
         marginRight: 20,
     },
     metaData: {
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: 5,
+        marginBottom: 5,
         marginLeft: 20,
         marginRight: 20,
     }

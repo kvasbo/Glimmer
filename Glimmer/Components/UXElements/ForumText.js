@@ -11,10 +11,10 @@ export default class ForumText extends React.Component {
     wrapper = {
 
         start: "<html><head><style>" +
-        ".skogspost {font-family: -apple-system, Roboto, sans-serif; padding-left: 0px; margin: 0px;}" +
-        "img, iframe {max-width:100% !important; height: auto !important;}" +
-        "div {max-width:90% !important; height: auto !important; padding-left: 0px !important;}" +
-        "body {max-width:100% !important; height: auto !important; margin-left: 0px !important; padding-left: 0px !important;}" +
+        ".skogspost {font-family: -apple-system, Roboto, sans-serif; padding-left: 0px !important; margin: 0px !important;}" +
+        "img, iframe {max-width:100% !important; height: auto !important; clear: both !important}" +
+        "div {max-width:100% !important; height: auto !important; padding-left: 0px !important;}" +
+        "body {max-width:91% !important; height: auto !important; margin-left: 0px !important; padding: 0px !important;}" +
         "</style></head><body><div class='skogspost'>",
         end: "</div></body></html>",
 

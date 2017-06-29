@@ -27,12 +27,12 @@ console.ignoredYellowBox = ['[xmldom warning]'];
 
 const errorHandler = (e, isFatal) => {
     if (isFatal) {
-        Alert.alert('Unexpected error occurred', `
+        Alert.alert('Pokker.', `
         Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
  
-        We will need to restart the app.
+        Vi må starte på nytt.
         `, [{
-            text: 'Restart', onPress: () => {
+            text: 'Omstart', onPress: () => {
                 RNRestart.Restart();
             }
         }]);
@@ -178,7 +178,7 @@ export default class Glimmer {
                     icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Meldinger'
                 }, {
-                    label: 'Mer',
+                    label: 'Andre greier',
                     screen: 'glimmer.MenuLeft',
                     icon: require('./icons/more.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Mer'

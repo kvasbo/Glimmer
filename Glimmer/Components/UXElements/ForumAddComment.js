@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import {View, Text, StyleSheet} from "react-native";
 import {Card, Icon} from "react-native-elements";
 
 export default class AddCommentBlock extends React.Component {
@@ -17,7 +18,7 @@ export default class AddCommentBlock extends React.Component {
         var title = "Ny kommentar til "+ this.props.title;
 
         return (
-            <Card>
+            <View style={pageStyles.container}>
                 <Icon
                     reverse
                     color='#517fa4'
@@ -30,9 +31,20 @@ export default class AddCommentBlock extends React.Component {
                         });
                     }}
                 />
-            </Card>
+            </View>
         )
 
     }
 
 }
+
+const pageStyles = StyleSheet.create({
+    container: {
+        backgroundColor: '#FFFFFF',
+        padding: 10,
+        marginBottom: 2,
+        alignContent: "flex-end",
+        flexDirection: "row"
+    },
+
+});
