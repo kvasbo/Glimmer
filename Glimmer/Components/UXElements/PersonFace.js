@@ -55,8 +55,8 @@ export default class PersonFace extends React.Component {
             screen: "glimmer.PersonPopup", // unique ID registered with Navigation.registerScreen
             passProps: {person: this.props.person}, // simple serializable object that will pass as props to the lightbox (optional)
             style: {
-                backgroundBlur: "light", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
-                backgroundColor: "#ffffff30" // tint color for the background, you can specify alpha here (optional)
+                backgroundBlur: "dark", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
+                //backgroundColor: "#ffffff20" // tint color for the background, you can specify alpha here (optional)
             }
         });
 
