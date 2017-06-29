@@ -35,12 +35,14 @@ module.exports = StyleSheet.create({
         fontSize: 16,
         fontWeight: "600",
         marginBottom: 3,
+        color: "#E74C3C",
     },
 
     listSubtitle: {
         fontSize: 13,
         fontWeight: "300",
-        color: "#444444"
+        color: "#444444",
+        marginBottom: 2,
     },
 
     divider : {

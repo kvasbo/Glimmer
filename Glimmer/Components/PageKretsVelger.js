@@ -115,9 +115,9 @@ export default class PageKretsVelger extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#444444',
+        backgroundColor: '#2C3E50',
         paddingLeft: 0,
-        paddingTop: 0,
+        paddingTop: 15,
         paddingBottom: 30,
         paddingRight: 0,
     },

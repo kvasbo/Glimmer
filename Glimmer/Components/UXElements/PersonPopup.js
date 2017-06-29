@@ -32,9 +32,9 @@ export default class PersonPopup extends React.Component {
 const pageStyles = StyleSheet.create({
 
     container: {
-
+        backgroundColor: "#ECF0F1",
         borderRadius: 5,
-        padding: 5,
+        padding: 10,
         width: 250,
         borderColor: "#CCCCCC",
     },

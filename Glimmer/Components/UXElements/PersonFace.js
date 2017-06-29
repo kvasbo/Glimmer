@@ -89,21 +89,21 @@ const pageStyles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 24,
-        borderWidth: 5,
-        borderColor: "#A3D9B0FF"
+        borderWidth: 3,
+        borderColor: "#E74C3CFF"
     },
 
     faceNotSelected: {
         width: 48,
         height: 48,
         borderRadius: 24,
-        borderWidth: 5,
-        borderColor: "#A3D9B000"
+        borderWidth: 3,
+        borderColor:  "#E74C3C00"
     },
 
     name: {
         fontSize: 12,
-        color: "#cccccc"
+        color: "#ECF0F1"
     }
 
 });

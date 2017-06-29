@@ -177,12 +177,18 @@ export default class Glimmer {
                     screen: 'glimmer.PageMessages',
                     icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Meldinger'
-                }, {
-                    label: 'Andre greier',
+                },
+                {
+                    label: 'Mer',
                     screen: 'glimmer.MenuLeft',
                     icon: require('./icons/more.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                    title: 'Mer'
-                }],
+                    title: 'Andre greier',
+                    iconInsets: { // add this to change icon position (optional, iOS only).
+                        right: 1, // optional, default is 0.
+                        left: -1
+                    },
+                }
+                ],
             tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
                 tabBarSelectedButtonColor: '#3499DB', // optional, change the color of the selected tab icon and text (only selected)
             },
