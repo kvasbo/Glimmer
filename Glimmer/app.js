@@ -24,6 +24,8 @@ global.api = new GlimmerAPI();
 global.helpers = new Helpers();
 global.arbeidsMaur = new Workers();
 
+global.loggedIn = false;
+
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];
 
@@ -67,6 +69,9 @@ global.store = createStore(glimmerReducers);
  ));
  */
 
+//Make root navigation callable from anywhere. Should be cleaned up and done via store!
+global.rootNavigation = Navigation;
+
 function saveStore() {
     if (__DEV__) {
         console.log("Persisting store", global.store.getState());
@@ -86,112 +91,127 @@ if (false && __DEV__) {
 
 export default class Glimmer extends React.Component {
 
+    //Just to see if it changes
+    loggedIn = null;
+
     constructor(props) {
         super(props);
         console.log("Starting init");
 
         this.init();
+
+        this.loggedIn = store.getState().AppStatus.loggedIn;
+
+        this.attachStoreListener();
+
+    }
+
+    attachStoreListener() {
+
+        //Listen to state changes. This really needs to change at some later point.
+        reduxUnsubscribe = store.subscribe(() => {
+
+                //Login state has changed, switch context.
+                if (store.getState().AppStatus.loggedIn !== this.loggedIn) {
+                    this.loggedIn = store.getState().AppStatus.loggedIn;
+                    this.startAppBasedOnLoginStatus();
+                }
+            }
+        )
+
     }
 
     init() {
 
-        helpers.log("Init");
+        helpers.log("Init started");
 
-        var prep = [registerScreens(store, Provider)];
-        var start = [this.startApp(), auth.init()];
+        var first = [auth.checkAuth(), registerScreens(store, Provider)];
 
-        Promise.all(prep).then(() => {
-                Promise.all(start).then(() => {
-                    global.auth.checkAuth().then(() => {
-                        global.arbeidsMaur.initData();
-                    }).catch((err) => {
-                        helpers.log("Error in CheckAuth", err);
-                        console.log("Error in CheckAuth", err);
-                        this.doLoginSequence();
-                    });
-                }).catch((err) => {
-                    console.log("Error in starters", err);
-                    helpers.log("Error in starters", err);
-                    this.doLoginSequence();
-                });
-            }
-        )
+        //Perform the two first actions (register all screens, check login status
+        Promise.all(first).then(() => {
+            console.log("Logged in already, running StartApp");
+            this.startMainApp();
+        }).catch(() => {
+            this.startLoginApp();
+        });
+        
     }
 
-    doLoginSequence() {
+    startAppBasedOnLoginStatus() {
+        if (store.getState().AppStatus.loggedIn === true) {
+            this.startMainApp();
+        }
+        else {
+            this.startLoginApp();
+        }
+    }
 
-        console.log("Starting Underskog oAuth sequence");
+    startLoginApp() {
 
-
-        try {
-
-        Navigation.showModal({
-            title: "Velkommen til Glimmer", screen: "glimmer.PageLogin", // unique ID registered with Navigation.registerScreen
-            passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'glimmer.PageLogin', // unique ID registered with Navigation.registerScreen
+                title: 'Velkommen til Glimmer', // title of the screen as appears in the nav bar (optional)
+                navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+                navigatorButtons: {} // override the nav buttons for the screen, see "Adding buttons to the navigator" below (optional)
+            },
+            passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
+            animationType: 'slide-down' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
         });
 
-        }
-        catch (err)
-        {
-            console.log("Error showing startup modal",  err);
-        }
-
-
     }
 
-    startApp() {
+    startMainApp() {
 
-        return new Promise((resolve, reject) => {
+        //Load data sets
+        global.arbeidsMaur.initData();
 
-            Navigation.startTabBasedApp({
-                passProps: {store: global.store}, //Pass the redux store.
-                tabs: [{
-                    label: 'Mine tråder', screen: 'glimmer.PageFavorites', // this is a registered name for a screen
-                    icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                    title: 'Mine tråder'
-                }, {
-                    label: 'Forsiden',
-                    screen: 'glimmer.PageStream',
-                    icon: require('./icons/front.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                    title: 'Forsiden'
-                }, /*{
-                 label: 'Kalender',
-                 screen: 'glimmer.PageCalendar',
-                 icon: require('./icons/calendar.png'),
-                 //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                 title: 'Kalender'
-                 }
-                 ,*/
-                    {
-                        label: 'Meldinger',
-                        screen: 'glimmer.PageMessages',
-                        icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                        title: 'Meldinger'
-                     } ], drawer: { // optional, add this if you want a side menu drawer in your app
-                    left: { // optional, define if you want a drawer from the left
-                        screen: 'glimmer.MenuLeft', // unique ID registered with Navigation.registerScreen
-                        passProps: {} // simple serializable object that will pass as props to all top screens (optional)
-                    }, right: { // optional, define if you want a drawer from the left
-                        screen: 'glimmer.PageLog', // unique ID registered with Navigation.registerScreen
-                        passProps: {} // simple serializable object that will pass as props to all top screens (optional)
-                    }, disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
-                }, tabsStyle: { // optional, **iOS Only** add this if you want to style the tab bar beyond the defaults
-                    //tabBarHidden: false, // make the tab bar hidden
-                    //tabBarButtonColor: '#ffff00', // change the color of the tab icons and text (also unselected)
-                    //tabBarSelectedButtonColor: '#ff9900', // change the color of the selected tab icon and text (only selected)
-                    //tabBarBackgroundColor: '#551A8B', // change the background color of the tab bar
-                    //tabBarTranslucent: true, // change the translucent of the tab bar to false
-                    //tabBarTextFontFamily: 'Avenir-Medium', //change the tab font family
-                    //tabBarLabelColor: '#ffb700', // iOS only. change the color of tab text
-                    //tabBarSelectedLabelColor: 'red', // iOS only. change the color of the selected tab text
-                    //forceTitlesDisplay: true, // Android only. If true - Show all bottom tab labels. If false - only the selected tab's label is visible.
-                    //tabBarHideShadow: true, // iOS only. Remove default tab bar top shadow (hairline)
-                    //forceTitlesDisplay: true // Android only. If true - Show all bottom tab labels. If false - only the selected tab's label is visible.
-                }
-
-            });
-
-            resolve();
+        //Start the actual app
+        Navigation.startTabBasedApp({
+            passProps: {store: global.store}, //Pass the redux store.
+            tabs: [{
+                label: 'Mine tråder', screen: 'glimmer.PageFavorites', // this is a registered name for a screen
+                icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                title: 'Mine tråder'
+            }, {
+                label: 'Forsiden',
+                screen: 'glimmer.PageStream',
+                icon: require('./icons/front.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                title: 'Forsiden'
+            }, /*{
+             label: 'Kalender',
+             screen: 'glimmer.PageCalendar',
+             icon: require('./icons/calendar.png'),
+             //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+             title: 'Kalender'
+             }
+             ,*/
+                {
+                    label: 'Meldinger',
+                    screen: 'glimmer.PageMessages',
+                    icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                    title: 'Meldinger'
+                }], drawer: { // optional, add this if you want a side menu drawer in your app
+                left: { // optional, define if you want a drawer from the left
+                    screen: 'glimmer.MenuLeft', // unique ID registered with Navigation.registerScreen
+                    passProps: {} // simple serializable object that will pass as props to all top screens (optional)
+                }, right: { // optional, define if you want a drawer from the left
+                    screen: 'glimmer.PageLog', // unique ID registered with Navigation.registerScreen
+                    passProps: {} // simple serializable object that will pass as props to all top screens (optional)
+                }, disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
+            }, tabsStyle: { // optional, **iOS Only** add this if you want to style the tab bar beyond the defaults
+                //tabBarHidden: false, // make the tab bar hidden
+                //tabBarButtonColor: '#ffff00', // change the color of the tab icons and text (also unselected)
+                //tabBarSelectedButtonColor: '#ff9900', // change the color of the selected tab icon and text (only selected)
+                //tabBarBackgroundColor: '#551A8B', // change the background color of the tab bar
+                //tabBarTranslucent: true, // change the translucent of the tab bar to false
+                //tabBarTextFontFamily: 'Avenir-Medium', //change the tab font family
+                //tabBarLabelColor: '#ffb700', // iOS only. change the color of tab text
+                //tabBarSelectedLabelColor: 'red', // iOS only. change the color of the selected tab text
+                //forceTitlesDisplay: true, // Android only. If true - Show all bottom tab labels. If false - only the selected tab's label is visible.
+                //tabBarHideShadow: true, // iOS only. Remove default tab bar top shadow (hairline)
+                //forceTitlesDisplay: true // Android only. If true - Show all bottom tab labels. If false - only the selected tab's label is visible.
+            }
 
         });
 

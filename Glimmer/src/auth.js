@@ -4,6 +4,7 @@
 import React from "react";
 import {Linking} from "react-native";
 import * as Keychain from "react-native-keychain";
+import {setLoginStatus} from "../Redux/actions";
 
 const shittyQs = require("shitty-qs");
 
@@ -24,9 +25,7 @@ export default class glimmerAuth {
             //Check token
             this.getToken().then((data) => {
 
-                if (__DEV__) {
-                    console.log("Auth.init: Got a token!", data);
-                }
+                console.log("Auth.init: Got a token!", data);
 
                 resolve();
 
@@ -51,11 +50,15 @@ export default class glimmerAuth {
 
             console.log("Oauth URL", oauthUrl);
 
+            helpers.log("Oauth URL", oauthUrl);
+
             Linking.addEventListener("url", handleUrl);
 
             function handleUrl(event) {
                 const [, query_string] = event.url.match(/\#(.*)/);
                 const query = shittyQs(query_string);
+
+                helpers.log("Mottatt handleurl event")
 
                 //Check that it's the same call as we made.
                 if (state === query.state) {
@@ -76,6 +79,9 @@ export default class glimmerAuth {
                     .setInternetCredentials(server, username, password)
                     .then(() => {
                         console.log("Token stored");
+
+                        global.store.dispatch(setLoginStatus(true));
+
                         resolve(password);
                     });
 
@@ -97,10 +103,19 @@ export default class glimmerAuth {
             Keychain
             .getInternetCredentials(server)
             .then((credentials) => {
-                //console.log("GetToken", credentials.password);
-                resolve(credentials.password);
+                if (credentials) {
+                    if (__DEV__) {
+                        console.log("Credentials found", credentials.server, credentials.username, credentials.password.substring(0, 5));
+                    }
+                    resolve(credentials.password);
+                }
+                else {
+                    console.log("Credentials not found");
+                    reject("No token found");
+                }
+
             }).catch((err) => {
-                reject("No password stored");
+                reject("Unknown error retreiving token");
             });
 
         })

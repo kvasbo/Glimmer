@@ -9,6 +9,7 @@ export default class PageLogin extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log("Pagelogin loading");
     }
 
     componentDidMount() {

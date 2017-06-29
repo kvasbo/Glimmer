@@ -37,7 +37,9 @@ public class MainApplication extends NavigationApplication {
          return Arrays.<ReactPackage>asList(
              // eg. new VectorIconsPackage()
                new VectorIconsPackage(),
-               new AutoHeightWebViewPackage()
+               new AutoHeightWebViewPackage(),
+               new KeychainPackage()
+
          );
      }
 

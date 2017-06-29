@@ -1,4 +1,14 @@
-import {ADD_POST_FAVORITES, FORUMLIST_REPLACE, KRETS_ADD_PERSON, ADD_POST_STREAM, FORUMLIST_ADD_FORUM, MESSAGE_RECIPIENTS_ADD_PERSON, MESSAGE_RECIPIENTS_CLEAR, MESSAGE_RECIPIENTS_REMOVE_PERSON} from "./constants";
+import {
+    ADD_POST_FAVORITES,
+    ADD_POST_STREAM,
+    APPCONTROL_USER_LOGIN,
+    FORUMLIST_ADD_FORUM,
+    FORUMLIST_REPLACE,
+    KRETS_ADD_PERSON,
+    MESSAGE_RECIPIENTS_ADD_PERSON,
+    MESSAGE_RECIPIENTS_CLEAR,
+    MESSAGE_RECIPIENTS_REMOVE_PERSON
+} from "./constants";
 
 export function replaceForumList(forums) {
     return {
@@ -7,8 +17,7 @@ export function replaceForumList(forums) {
     }
 }
 
-export function addForumToList(forum)
-{
+export function addForumToList(forum) {
     return {
         type: FORUMLIST_ADD_FORUM,
         forum
@@ -51,5 +60,12 @@ export function removeNewMessageRecipient(id) {
 export function clearNewMessageRecipient() {
     return {
         type: MESSAGE_RECIPIENTS_CLEAR
+    }
+}
+
+export function setLoginStatus(status) {
+    return {
+        type: APPCONTROL_USER_LOGIN,
+        status
     }
 }
