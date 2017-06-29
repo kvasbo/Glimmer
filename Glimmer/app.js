@@ -95,7 +95,7 @@ export default class Glimmer {
     }
 
     //To keep track of changes in state, should be done with react
-    loggedIn = store.getState().AppStatus.loggedIn;
+    loggedIn = null;
 
     attachStoreListener() {
 
@@ -123,21 +123,21 @@ export default class Glimmer {
 
         //Perform the two first actions (register all screens, check login status
         Promise.all(first).then(() => {
-            this.startAppBasedOnLoginStatus();
+           // this.startAppBasedOnLoginStatus();
 
         }).catch(() => {
-            this.startAppBasedOnLoginStatus();
+           // this.startAppBasedOnLoginStatus();
 
         });
 
     }
 
     startAppBasedOnLoginStatus() {
-        if (this.loggedIn) {
+        if (this.loggedIn === true) {
             global.arbeidsMaur.initData();
             this.startMainApp();
         }
-        else {
+        else if(this.loggedIn === false) {
             this.startLoginApp();
         }
     }

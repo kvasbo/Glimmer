@@ -1,7 +1,7 @@
 import {APPCONTROL_USER_LOGIN} from "./constants";
 
 const initialState = {
-    loggedIn: false
+    loggedIn: null
 }
 
 function AppStatus(state = initialState, action) {
