@@ -14,8 +14,6 @@ import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
 import Helpers from "./src/helpers";
 
-const Icon = require('react-native-vector-icons/Ionicons');
-
 global.moment = require('moment');
 moment.locale('nb')
 
@@ -89,6 +87,8 @@ if (false && __DEV__) {
 
 export default class Glimmer {
 
+    tabIcons = {};
+
     constructor() {
         this.init();
     }
@@ -118,17 +118,11 @@ export default class Glimmer {
 
         this.attachStoreListener();
 
-        var first = [auth.checkAuth(), registerScreens(store, Provider)];
+        registerScreens(store, Provider);
 
-        //Perform the two first actions (register all screens, check login status
-        Promise.all(first).then(() => {
-            // this.startAppBasedOnLoginStatus();
-
-        }).catch(() => {
-            // this.startAppBasedOnLoginStatus();
-
-        });
-
+        //This function will set the loggedin state to true or false in the store, which in term will trigger the store subscription.
+        //Then the app starts. I know.
+        auth.checkAuth();
     }
 
     startAppBasedOnLoginStatus() {
@@ -186,7 +180,7 @@ export default class Glimmer {
                 }, {
                     label: 'Mer',
                     screen: 'glimmer.MenuLeft',
-                    icon: require('./icons/front.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                    icon: require('./icons/more.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Mer'
                 }],
             tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
