@@ -35,9 +35,9 @@ export default class PageStream extends React.Component {
         drawUnderTabBar: true,
         statusBarBlur: true,
         drawUnderStatusBar: false,
-        drawUnderNavBar: false,
+        drawUnderNavBar: true,
         navBarBlur: true,
-        navBarHidden: true,
+        navBarHidden: false,
     };
 
 
@@ -99,6 +99,11 @@ export default class PageStream extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        flex: 1, backgroundColor: '#FAFAFA', paddingLeft: 0, marginTop: 20, paddingBottom: 0, paddingRight: 0,
+        flex: 1,
+        backgroundColor: '#FAFAFA',
+        paddingLeft: 0,
+        marginTop: 60,
+        paddingBottom: 0,
+        paddingRight: 0,
     },
 });

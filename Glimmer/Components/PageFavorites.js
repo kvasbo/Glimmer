@@ -24,7 +24,7 @@ export default class PageFavorites extends React.Component {
         drawUnderStatusBar: false,
         drawUnderNavBar: true,
         navBarBlur: true,
-        navBarHidden: true,
+        navBarHidden: false,
     };
 
     componentDidMount() {
@@ -120,7 +120,7 @@ const pageStyles = StyleSheet.create({
         flexDirection: "column",
         backgroundColor: '#FFFFFF',
         paddingLeft: 0,
-        marginTop: 20,
+        marginTop: 60,
         marginBottom: 50,
         paddingRight: 0,
 
