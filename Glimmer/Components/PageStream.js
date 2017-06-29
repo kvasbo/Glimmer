@@ -5,7 +5,7 @@
 import React from "react";
 import {RefreshControl, ScrollView, StyleSheet} from "react-native";
 import LoadingScreen from "./LoadingScreen";
-import StreamForumPost from "./StreamForumPost";
+import StreamForumPost from "./UXElements/StreamForumPost";
 
 export default class PageStream extends React.Component {
 
@@ -32,11 +32,11 @@ export default class PageStream extends React.Component {
 
     static navigatorStyle = {
         drawUnderTabBar: true,
-        statusBarBlur: false,
-        drawUnderStatusBar: true,
-        drawUnderNavBar: true,
+        statusBarBlur: true,
+        drawUnderStatusBar: false,
+        drawUnderNavBar: false,
         navBarBlur: true,
-        navBarHidden: false,
+        navBarHidden: true,
     };
 
 
@@ -98,6 +98,6 @@ export default class PageStream extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        flex: 1, backgroundColor: '#FAFAFA', paddingLeft: 0, paddingTop: 60, paddingBottom: 0, paddingRight: 0,
+        flex: 1, backgroundColor: '#FAFAFA', paddingLeft: 0, marginTop: 20, paddingBottom: 0, paddingRight: 0,
     },
 });

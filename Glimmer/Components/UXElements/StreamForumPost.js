@@ -3,14 +3,14 @@
  */
 
 import React from "react";
-import {Text, View} from "react-native";
-import {Badge, Card, Divider} from "react-native-elements";
+import {StyleSheet, Text, View} from "react-native";
+import {Badge} from "react-native-elements";
 
-import ForumText from "./ForumText.js";
+import ForumText from "../ForumText.js";
 
 var DomParser = require('react-native-html-parser').DOMParser
 
-var s = require('./Styles');
+var s = require('../Styles');
 
 //https://github.com/jsdf/react-native-htmlview
 
@@ -57,7 +57,6 @@ class MetaDataFirstPost extends React.Component {
 export default class StreamForumPost extends React.Component {
 
     images = [];
-
 
     constructor(props) {
 
@@ -135,16 +134,14 @@ export default class StreamForumPost extends React.Component {
         }
         else {
             return (
-                <View>
-                    <Divider/>
 
-                    <View style={{flexDirection: "row", marginTop: 10}}>
+                <View style={{flexDirection: "row"}}>
 
-                        <MetaDataFirstPost showThreadButton={this.props.showThreadButton}
-                                           navigator={this.props.navigator} post={this.props.data}/>
+                    <MetaDataFirstPost showThreadButton={this.props.showThreadButton}
+                                       navigator={this.props.navigator} post={this.props.data}/>
 
-                    </View>
                 </View>
+
             )
         }
     }
@@ -152,23 +149,71 @@ export default class StreamForumPost extends React.Component {
     render() {
 
         var creator = null;
-        if(typeof this.props.data.creator !== "undefined")
-        {
+        if (typeof this.props.data.creator !== "undefined") {
             creator = this.props.data.creator.name;
         }
 
         return (
 
-            <Card title={this.props.data.title} image={this.getFirstImage()}>
-                <Text>{creator}, {this.getTime()}. {this.props.data.forum.title}.</Text>
+            <View style={pageStyles.container}>
 
-                <ForumText cut={this.props.cut} text={this.props.data.body} images={this.props.images}
-                           style={{marginBottom: 10}}/>
+                <Text style={pageStyles.title}>{this.props.data.title}</Text>
+                <Text style={pageStyles.creatorInfo}>{creator}, {this.getTime()}. {this.props.data.forum.title}.</Text>
 
-                {this.getMetadataSection()}
+                <View style={pageStyles.thePost}>
+                    <ForumText cut={this.props.cut} text={this.props.data.body} images={this.props.images}
+                               style={{marginBottom: 10}}/>
+                </View>
 
-            </Card>
+                <View style={this.metaData}>
+                    {this.getMetadataSection()}
+                </View>
+
+            </View>
         );
     }
 
 }
+
+const pageStyles = StyleSheet.create({
+    container: {
+        backgroundColor: '#FAFAFA', padding: 0, marginBottom: 20,
+    },
+    title: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 20,
+        marginRight: 20,
+    },
+    creatorInfo: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 20,
+        marginRight: 20,
+    },
+    thePost: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 20,
+        marginRight: 20,
+    },
+    metaData: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 20,
+        marginRight: 20,
+    }
+
+});
+
+/*
+ <Card title={this.props.data.title} image={this.getFirstImage()}>
+ <Text>{creator}, {this.getTime()}. {this.props.data.forum.title}.</Text>
+
+ <ForumText cut={this.props.cut} text={this.props.data.body} images={this.props.images}
+ style={{marginBottom: 10}}/>
+
+ {this.getMetadataSection()}
+
+ </Card>
+ */

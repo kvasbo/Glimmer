@@ -5,7 +5,7 @@
 import React from "react";
 import {KeyboardAvoidingView, ScrollView, StyleSheet, View} from "react-native";
 
-import StreamForumPost from "./StreamForumPost";
+import StreamForumPost from "./UXElements/StreamForumPost";
 import ForumComment from "./ForumComment";
 import AddCommentBlock from "./ForumAddComment";
 

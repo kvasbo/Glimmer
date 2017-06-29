@@ -188,9 +188,6 @@ export default class Glimmer {
                 left: { // optional, define if you want a drawer from the left
                     screen: 'glimmer.MenuLeft', // unique ID registered with Navigation.registerScreen
                     passProps: {} // simple serializable object that will pass as props to all top screens (optional)
-                }, right: { // optional, define if you want a drawer from the left
-                    screen: 'glimmer.PageLog', // unique ID registered with Navigation.registerScreen
-                    passProps: {} // simple serializable object that will pass as props to all top screens (optional)
                 }, disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
             }, tabsStyle: { // optional, **iOS Only** add this if you want to style the tab bar beyond the defaults
                 //tabBarHidden: false, // make the tab bar hidden

@@ -69,11 +69,6 @@ export default class PageMessages extends React.Component {
         }
     }
 
-    newMessageRecipientChosen(person)
-    {
-        console.log("New message recipient chosen", person);
-    }
-
     componentDidMount() {
 
     }
