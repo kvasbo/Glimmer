@@ -6,7 +6,7 @@ import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import {Badge} from "react-native-elements";
 
-import ForumText from "../ForumText.js";
+import ForumText from "./ForumText.js";
 
 var s = require('../Styles');
 

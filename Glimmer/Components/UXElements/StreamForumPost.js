@@ -3,10 +3,10 @@
  */
 
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View, Image} from "react-native";
 import {Badge} from "react-native-elements";
 
-import ForumText from "../ForumText.js";
+import ForumText from "./ForumText.js";
 
 var DomParser = require('react-native-html-parser').DOMParser
 
@@ -91,7 +91,7 @@ export default class StreamForumPost extends React.Component {
 
             var images = doc.getElementsByTagName('img');
 
-            for (var i = 0; i < 50; i++) {
+            for (var i = 0; i <= 1; i++) {
                 if (typeof(images[i]) !== "undefined") {
                     for (attr in images[i].attributes) {
                         if (images[i].attributes[attr].name === "src") {
@@ -107,9 +107,7 @@ export default class StreamForumPost extends React.Component {
                 }
             }
 
-        }
-
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
 
@@ -118,10 +116,11 @@ export default class StreamForumPost extends React.Component {
     }
 
     getFirstImage() {
+
         if (this.images.length === 0) return null;
 
         else {
-            return {uri: this.images[0].src};
+            return <View style={pageStyles.image}><Image style={{flex:1}} source={{uri: this.images[0].src}} /></View>;
         }
 
     }
@@ -156,6 +155,9 @@ export default class StreamForumPost extends React.Component {
             <View style={pageStyles.container}>
 
                 <Text style={pageStyles.title}>{this.props.data.title}</Text>
+
+                {this.getFirstImage()}
+
                 <Text style={pageStyles.creatorInfo}>{creator}, {this.getTime()}. {this.props.data.forum.title}.</Text>
 
                 <View style={pageStyles.thePost}>
@@ -163,7 +165,7 @@ export default class StreamForumPost extends React.Component {
                                style={{marginBottom: 10}}/>
                 </View>
 
-                <View style={this.metaData}>
+                <View style={pageStyles.metaData}>
                     {this.getMetadataSection()}
                 </View>
 
@@ -175,13 +177,22 @@ export default class StreamForumPost extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        backgroundColor: '#FAFAFA', padding: 0, marginBottom: 20,
+        backgroundColor: '#FAFAFA', padding: 0, marginBottom: 10, marginTop: 10, flex: 1
     },
     title: {
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 20,
         marginRight: 20,
+        fontSize: 20,
+        fontWeight: "600",
+    },
+    image: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 0,
+        marginRight: 0,
+        height: 120,
     },
     creatorInfo: {
         marginTop: 10,

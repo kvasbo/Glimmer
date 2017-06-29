@@ -4,7 +4,7 @@
 
 import React from "react";
 import {Image, StyleSheet, Text, View} from "react-native";
-import ForumText from "./ForumText.js";
+import ForumText from "./UXElements/ForumText.js";
 import {Card, Divider} from "react-native-elements";
 
 var s = require('./Styles');

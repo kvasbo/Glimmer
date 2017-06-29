@@ -71,13 +71,12 @@ export default class ForumText extends React.Component {
         var postBody = this.fixBody();
 
         return (
-
             <AutoHeightWebView
-                enableAnimation={true}
+                enableAnimation={false}
                 animationDuration={255}
                 source={{html: postBody}}
                 //onHeightUpdated={height => console.log(height)}
-                style={{marginBottom: 10, padding: 0, borderWidth: 0}}
+                style={{margin: 0, padding: 0, borderWidth: 0, flex: 1}}
             />
         );
     }
