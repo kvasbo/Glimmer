@@ -5,7 +5,7 @@
 import React from "react";
 import {KeyboardAvoidingView, ScrollView, StyleSheet, View} from "react-native";
 
-import StreamForumPost from "./UXElements/StreamForumPost";
+import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./ForumComment";
 import AddCommentBlock from "./ForumAddComment";
 
@@ -46,7 +46,7 @@ export default class PageThread extends React.Component {
         return (
 
             <ScrollView style={pageStyles.container}>
-                <StreamForumPost data={this.props.post} metaData={false} cut={false}
+                <ThreadForumPost data={this.props.post} metaData={false} cut={false}
                                  touchable={false}/>
                 {this.getComments()}
                 <AddCommentBlock postId={this.props.post.id} navigator={this.props.navigator} title={this.props.post.title}/>
