@@ -43,7 +43,7 @@ const errorHandler = (e, isFatal) => {
     }
 };
 
-setJSExceptionHandler(errorHandler);
+setJSExceptionHandler(errorHandler, true);
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -119,10 +119,24 @@ export default class Glimmer extends React.Component {
     }
 
     doLoginSequence() {
+
+        console.log("Starting Underskog oAuth sequence");
+
+
+        try {
+
         Navigation.showModal({
             title: "Velkommen til Glimmer", screen: "glimmer.PageLogin", // unique ID registered with Navigation.registerScreen
             passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
         });
+
+        }
+        catch (err)
+        {
+            console.log("Error showing startup modal",  err);
+        }
+
+
     }
 
     startApp() {

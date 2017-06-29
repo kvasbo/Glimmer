@@ -33,4 +33,10 @@ export default class Helpers {
         this.logItems = this.logItems.slice(0, 500);
     }
 
+    getPersonById(id)
+    {
+        var tmp = global.store.getState().Krets;
+        return tmp.filter((item) => id == item.person.id)
+    }
+
 }

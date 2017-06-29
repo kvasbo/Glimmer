@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {ScrollView, StyleSheet} from "react-native";
+import {ScrollView, StyleSheet, View, TextInput, TouchableOpacity} from "react-native";
 
 export default class PageNewMessage extends React.Component {
 
@@ -19,6 +19,12 @@ export default class PageNewMessage extends React.Component {
 
         return (
             <ScrollView style={pageStyles.container}>
+
+                <View>
+
+                </View>
+
+                <TextInput/>
 
             </ScrollView>
         );
