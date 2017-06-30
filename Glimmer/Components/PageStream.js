@@ -4,7 +4,7 @@
 
 import React from "react";
 import {RefreshControl, ScrollView, StyleSheet} from "react-native";
-import LoadingScreen from "./LoadingScreen";
+import LoadingScreen from "./UXElements/LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";
 
 export default class PageStream extends React.Component {

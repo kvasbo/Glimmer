@@ -4,7 +4,7 @@
 
 import React from "react";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import LoadingScreen from "./LoadingScreen";
+import LoadingScreen from "./UXElements/LoadingScreen";
 import {Divider, Icon} from "react-native-elements";
 
 //Get common list styles

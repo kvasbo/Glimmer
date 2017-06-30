@@ -5,6 +5,7 @@ import Krets from "./Krets";
 import ForumStream from "./ForumStream";
 import MessageRecipients from "./MessageRecipients";
 import AppStatus from "./AppStatus";
+import ForumPostComment from "./ForumPostComment"
 
 const glimmerReducers = combineReducers({
 
@@ -13,7 +14,8 @@ const glimmerReducers = combineReducers({
     ForumList,
     Krets,
     MessageRecipients,
-    AppStatus
+    AppStatus,
+    ForumPostComment
 
 })
 

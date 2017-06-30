@@ -20,8 +20,8 @@ export default class LoadingScreen extends React.Component {
 
         return (
             <View style={pageStyles.container}>
-                <ActivityIndicator size="large"/>
-                <Text style={{marginTop: 20, color: "#888888"}}>{this.props.text}</Text>
+                <ActivityIndicator size="large" color="#555555"/>
+                <Text style={{marginTop: 20, color: "#555555"}}>{this.props.text}</Text>
             </View>
         );
     }

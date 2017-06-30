@@ -21,12 +21,16 @@ export default class PageThread extends React.Component {
     }
 
     refreshComments() {
+
+        arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, 1);
+
+        /*
         var uri = "/posts/" + this.props.post.id + "/comments";
 
         api.makeApiGetCall(uri).then((data) => {
             //console.log(data);
             this.setState({comments: data.data, next: data.paging.next});
-        })
+        })*/
     }
 
     getComments() {

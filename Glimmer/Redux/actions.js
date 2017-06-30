@@ -7,7 +7,8 @@ import {
     KRETS_ADD_PERSON,
     MESSAGE_RECIPIENTS_ADD_PERSON,
     MESSAGE_RECIPIENTS_CLEAR,
-    MESSAGE_RECIPIENTS_REMOVE_PERSON
+    MESSAGE_RECIPIENTS_REMOVE_PERSON,
+    FORUMPOST_COMMENT_ADD
 } from "./constants";
 
 export function replaceForumList(forums) {
@@ -67,5 +68,13 @@ export function setLoginStatus(status) {
     return {
         type: APPCONTROL_USER_LOGIN,
         status
+    }
+}
+
+export function addForumPostComment(postId, comment) {
+    return {
+        type: FORUMPOST_COMMENT_ADD,
+        postId,
+        comment
     }
 }

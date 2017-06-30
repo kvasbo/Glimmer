@@ -1,5 +1,5 @@
 import {AsyncStorage} from "react-native";
-import {addFavoritesPost, addStreamPost, replaceForumList} from "../Redux/actions";
+import {addFavoritesPost, addStreamPost, replaceForumList, addForumPostComment} from "../Redux/actions";
 const config = require("../config.js");
 
 export default class ForumUpdater {
@@ -106,16 +106,14 @@ export default class ForumUpdater {
                 for (key in fetchedPosts) {
                     store.dispatch(addStreamPost(fetchedPosts[key]));
                 }
-                
+
                 resolve()
 
             }).catch((err) => {
                 reject(err);
             });
-            
+
         });
-
-
 
     }
 
@@ -210,6 +208,39 @@ export default class ForumUpdater {
                 this._getForumsPagesRecursive(page + 1);
             }
         })
+    }
+
+    loadCommentsForPost(postId, page = 1) {
+        return new Promise((resolve, reject) => {
+
+            var uri = "/posts/" + postId + "/comments";
+
+            api.makeApiGetCall(uri).then((data) => {
+
+               // console.log("Comment data", data)
+
+                for(key in data.data)
+                {
+                    //console.log(data.data[key]);
+                    global.store.dispatch(addForumPostComment(postId, data.data[key]));
+                }
+
+
+                resolve(true);
+
+
+            }).catch((err) => {reject(err)});
+
+        })
+
+        /*
+         var uri = "/posts/" + this.props.post.id + "/comments";
+
+         api.makeApiGetCall(uri).then((data) => {
+         //console.log(data);
+         this.setState({comments: data.data, next: data.paging.next});
+         })
+         */
     }
 
     /**
