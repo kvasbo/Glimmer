@@ -20,14 +20,14 @@
     "react-native-keyboard-space": "^1.0.1",
     "react-native-keychain": "^1.2.0",
     "react-native-lightbox": "^0.6.0",
-    "react-native-navigation": "^1.1.114",
+    "react-native-navigation": "^1.1.125",
     "react-native-restart": "0.0.2",
     "react-native-vector-icons": "^4.2.0",
     "react-redux": "^5.0.5",
     "react-timer-mixin": "^0.13.3",
     "redux": "^3.7.1",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^4.8.1",
+    "redux-persist": "^4.8.2",
     "shitty-qs": "^1.0.1"
   },
   "devDependencies": {

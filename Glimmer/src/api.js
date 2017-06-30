@@ -104,8 +104,8 @@ export default class glimmerAPI {
                     }
                     else {
                         response.json().then((data)=>{
-                            console.log("API unhandled", data.error.body);
-                            reject(Error("API Other, " + data.error.body));
+                            console.log("API unhandled", data);
+                            reject(data);
                         })
                     }
 
