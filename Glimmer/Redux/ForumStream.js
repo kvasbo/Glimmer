@@ -19,7 +19,7 @@ function ForumStream(state = initialState, action) {
             });
 
             //Create return object
-            return Object.assign({}, state, {
+            newState =  Object.assign({}, state, {
                 posts: [
                     ...newPosts,
                     {
@@ -27,6 +27,15 @@ function ForumStream(state = initialState, action) {
                     }
                 ]
             })
+
+            //Sort
+            newState.posts.sort((x,y) => {
+                xd = new Date(x.data.created_at);
+                yd = new Date(y.data.created_at);
+                return yd - xd;
+            })
+
+            return newState
 
         default:
             return state

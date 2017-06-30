@@ -58,18 +58,6 @@ export default class ForumUpdater {
                     global.store.dispatch(addFavoritesPost(fetchedPosts[key].bulletin));
                 }
 
-                //var tmpArr = this.favPosts.posts.concat(fetchedPosts);
-
-                /*For the record, how to sort
-                 tmpArr.sort(
-                 function (x, y) {
-                 xd = new Date(x.bulletin.updated_at);
-                 yd = new Date(y.bulletin.updated_at);
-                 return yd - xd;
-                 }
-                 );
-                 */
-
                 lastpage_favs = from + depth - 1;
 
                 resolve();
@@ -114,14 +102,6 @@ export default class ForumUpdater {
                 }
 
                 fetchedPosts = global.helpers.arrayUnique(fetchedPosts);
-
-                fetchedPosts.sort(
-                    function (x, y) {
-                        xd = new Date(x.created_at);
-                        yd = new Date(y.created_at);
-                        return yd - xd;
-                    }
-                );
 
                 for (key in fetchedPosts) {
                     store.dispatch(addStreamPost(fetchedPosts[key]));

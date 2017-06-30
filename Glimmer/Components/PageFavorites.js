@@ -27,6 +27,8 @@ export default class PageFavorites extends React.Component {
         navBarHidden: false,
     };
 
+
+
     componentDidMount() {
 
         //Listen to state changes. This really needs to change at some later point.

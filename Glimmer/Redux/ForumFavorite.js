@@ -19,7 +19,7 @@ function ForumFavorite(state = initialState, action) {
             });
 
             //Create return object
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 posts: [
                     ...newPosts,
                     {
@@ -27,6 +27,15 @@ function ForumFavorite(state = initialState, action) {
                     }
                 ]
             })
+
+            //Sort
+            newState.posts.sort((x,y) => {
+                    xd = new Date(x.data.updated_at);
+                    yd = new Date(y.data.updated_at);
+                    return yd - xd;
+            })
+
+            return newState;
 
         default:
             return state
