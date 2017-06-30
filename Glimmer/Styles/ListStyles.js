@@ -18,6 +18,12 @@ module.exports = StyleSheet.create({
 
     },
 
+    imageBlock: {
+        padding: 10,
+        paddingTop: 21,
+        flex: 1,
+    },
+
     iconBlock: {
         padding: 10,
         paddingRight: 13,

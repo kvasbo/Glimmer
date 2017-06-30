@@ -10,6 +10,8 @@ import PersonFace from "./UXElements/PersonFace";
 
 export default class PageKretsVelger extends React.Component {
 
+    reduxUnsubscribe = null;
+
     constructor(props) {
         super(props);
         var tmpKrets = store.getState().Krets;
@@ -54,7 +56,7 @@ export default class PageKretsVelger extends React.Component {
         this.setState({krets: store.getState().Krets});
 
         //Listen to state changes. This really needs to change at some later point.
-        var reduxUnsubscribe = store.subscribe(() => {
+        this.reduxUnsubscribe = store.subscribe(() => {
 
                 var tmpKrets = store.getState().Krets;
 
@@ -64,6 +66,10 @@ export default class PageKretsVelger extends React.Component {
             }
         )
 
+    }
+
+    componentWillUnmount() {
+        this.reduxUnsubscribe();
     }
 
     _renderItem = ({item}) => (

@@ -7,7 +7,7 @@ import {StyleSheet, Text, View, Image} from "react-native";
 import {Badge} from "react-native-elements";
 
 import ForumText from "./ForumText.js";
-
+const CachedImage = require('react-native-cached-image');
 var DomParser = require('react-native-html-parser').DOMParser
 
 var s = require('../Styles');
@@ -120,7 +120,7 @@ export default class StreamForumPost extends React.Component {
         if (this.images.length === 0) return null;
 
         else {
-            return <View style={pageStyles.image}><Image style={{flex:1}} source={{uri: this.images[0].src}} /></View>;
+            return <View style={pageStyles.image}><CachedImage style={{flex:1}} source={{uri: this.images[0].src}} /></View>;
         }
 
     }

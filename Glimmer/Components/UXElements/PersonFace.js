@@ -5,6 +5,8 @@
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {addNewMessageRecipient, removeNewMessageRecipient, clearNewMessageRecipient} from "../../Redux/actions"
+const CachedImage = require('react-native-cached-image');
+
 
 export default class PersonFace extends React.Component {
 
@@ -67,7 +69,7 @@ export default class PersonFace extends React.Component {
         return (
             <TouchableOpacity onPress={() => this.toggleState()} onLongPress={() => this.showInfo()}>
                 <View style={pageStyles.container}>
-                    <Image style={this.getSelectedStyle()} source={{uri: this.props.person.image_url}}/>
+                    <CachedImage style={this.getSelectedStyle()} source={{uri: this.props.person.image_url}}/>
                     <Text style={pageStyles.name}>{this.props.person.name}</Text>
                 </View>
             </TouchableOpacity>

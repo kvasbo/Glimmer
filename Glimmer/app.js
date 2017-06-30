@@ -60,10 +60,19 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 //Create the Redux Store. Saving disabled for now
 const loggerMiddleware = createLogger();
 
-global.store = createStore(glimmerReducers, applyMiddleware(
-    //thunkMiddleware, // lets us dispatch() functions
-    loggerMiddleware // neat middleware that logs actions
-));
+if(__DEV__)
+{
+    global.store = createStore(glimmerReducers, applyMiddleware(
+        //thunkMiddleware, // lets us dispatch() functions
+        loggerMiddleware // neat middleware that logs actions
+    ));
+}
+else {
+    global.store = createStore(glimmerReducers, applyMiddleware(
+        //thunkMiddleware, // lets us dispatch() functions
+        //loggerMiddleware // neat middleware that logs actions
+    ));
+}
 /*
  global.store = createStore(glimmerReducers,
  undefined,
@@ -180,10 +189,10 @@ export default class Glimmer {
              }
              ,*/
                 {
-                    label: 'Meldinger',
+                    label: 'Samtaler',
                     screen: 'glimmer.PageMessages',
                     icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                    title: 'Meldinger'
+                    title: 'Samtaler'
                 },
                 {
                     label: 'Mer',
