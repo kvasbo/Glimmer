@@ -4,9 +4,11 @@ import {registerScreens} from "./src/screens";
 import {Navigation} from "react-native-navigation";
 import Workers from "./Workers/index.js";
 import * as firebase from "firebase";
-import {createStore} from "redux";
-import glimmerReducers from "./Redux/index";
+import { createStore, applyMiddleware } from 'redux'
+import { createLogger } from 'redux-logger'
 import {Provider} from "react-redux";
+import glimmerReducers from "./Redux/index";
+
 import {setJSExceptionHandler} from "react-native-exception-handler";
 import RNRestart from "react-native-restart";
 import "moment/locale/nb";
@@ -56,7 +58,12 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 //Create the Redux Store. Saving disabled for now
-global.store = createStore(glimmerReducers);
+const loggerMiddleware = createLogger();
+
+global.store = createStore(glimmerReducers, applyMiddleware(
+    //thunkMiddleware, // lets us dispatch() functions
+    loggerMiddleware // neat middleware that logs actions
+));
 /*
  global.store = createStore(glimmerReducers,
  undefined,

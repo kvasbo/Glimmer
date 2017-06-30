@@ -29,22 +29,6 @@ export default class PageMore extends React.Component {
                     textStyle={pageStyles.buttonText}
                     style={pageStyles.button}
                     icon={{name: 'cached'}}
-                    title='Krets'
-                    onPress={() => {
-
-                        this.props.navigator.showModal({
-                            screen: 'glimmer.PageKretsVelger',
-                            title: "Krets Test",
-                        });
-
-                        this.props.navigator.toggleDrawer();
-                    }
-                    }
-                />
-                <Button
-                    textStyle={pageStyles.buttonText}
-                    style={pageStyles.button}
-                    icon={{name: 'cached'}}
                     title='Fora'
                     onPress={() => {
 
@@ -57,10 +41,6 @@ export default class PageMore extends React.Component {
                     }
                     }
                 />
-                <Button
-                    icon={{name: 'thumb-up'}}
-                    style={pageStyles.button}
-                    title='Min Kudos'/>
                 <Button
                     icon={{name: 'thumb-up'}}
                     style={pageStyles.button}

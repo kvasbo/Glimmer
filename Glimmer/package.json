@@ -25,6 +25,7 @@
     "react-redux": "^5.0.5",
     "react-timer-mixin": "^0.13.3",
     "redux": "^3.7.1",
+    "redux-logger": "^3.0.6",
     "redux-persist": "^4.8.1",
     "shitty-qs": "^1.0.1"
   },
