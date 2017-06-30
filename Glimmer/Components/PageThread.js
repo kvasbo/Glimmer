@@ -9,40 +9,93 @@ import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
 import AddCommentBlock from "./UXElements/ForumAddComment";
 
+const commentsInPage = 30;
+
+
 export default class PageThread extends React.Component {
+
+    lastPage = null;
+    reduxUnsubscribe = null;
 
     constructor(props) {
         super(props);
-        this.state = {id: null, next: null, comments: []};
+
+        if(typeof store.getState().ForumPostComment.posts[this.props.post.id] !== "undefined")
+        {
+            this.state = {loading: true, comments: store.getState().ForumPostComment.posts[this.props.post.id].comments};
+        }
+        else
+        {
+            this.state = {loading: true, comments: []};
+        }
+
+        this.lastPage = this.findLastPageOfComments();
+
+        this.loadInitComments();
+
     }
 
-    componentDidMount() {
-        this.refreshComments();
+    componentWillMount() {
+        //Listen to state changes. This really needs to change at some later point.
+        this.reduxUnsubscribe = store.subscribe(() => {
+
+            var state = store.getState();
+
+            if(typeof state.ForumPostComment.posts[this.props.post.id] !== "undefined")
+            {
+
+                var tmpComments = state.ForumPostComment.posts[this.props.post.id].comments;
+
+                if (tmpComments !== this.state.comments) {
+                    this.setState({loading: false, comments: tmpComments});
+                }
+
+            }
+            }
+        )
     }
 
-    refreshComments() {
+    componentWillUnmount() {
+        this.reduxUnsubscribe();
+    }
 
+    loadInitComments() {
+
+        //Get last comments
         arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, 1);
 
-        /*
-        var uri = "/posts/" + this.props.post.id + "/comments";
+        //...and the page before if possible.
+        if(this.lastPage > 1)
+        {
+            arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, 2);
+        }
 
-        api.makeApiGetCall(uri).then((data) => {
-            //console.log(data);
-            this.setState({comments: data.data, next: data.paging.next});
-        })*/
     }
 
+    findLastPageOfComments()
+    {
+
+
+        var cCount = parseInt(this.props.post.comment_count);
+
+       // console.log("findLastPageOfComments", this.props, cCount);
+
+        return parseInt((Math.floor(cCount / commentsInPage) + 1));
+    }
+
+
     getComments() {
+
         var out = [];
 
-        for (var i = this.state.comments.length - 1; i >= 0; i--) {
-            var c = this.state.comments[i];
+        for (key in this.state.comments) {
+            var c = this.state.comments[key];
             //console.log("Comment", this.state.comments[i]);
             out.push(<ForumComment key={c.id} data={c}/>)
         }
 
         return out;
+
     }
 
     render() {

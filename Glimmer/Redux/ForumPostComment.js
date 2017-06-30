@@ -17,11 +17,11 @@ function ForumPostComment(state = initialState, action) {
             //Ensure that we have the post id defined as an array
             if(typeof newState.posts[action.postId] === "undefined")
             {
-                newState.posts[action.postId] = [];
+                newState.posts[action.postId] = {comments:[]};
             }
 
             //Ensure unique IDs by removing any old posts with this id.
-            const newPosts = newState.posts[action.postId].filter((comment) => {
+            const newPosts = newState.posts[action.postId].comments.filter((comment) => {
                 if (comment.id === action.comment.id) {
                     return false;
                 }
@@ -31,13 +31,13 @@ function ForumPostComment(state = initialState, action) {
             });
 
             //Add the post to the list
-            newState.posts[action.postId] = [...newPosts, action.comment];
+            newState.posts[action.postId].comments = [...newPosts, action.comment];
 
             //Sort by created date desc
-            newState.posts[action.postId].sort((x, y) => {
+            newState.posts[action.postId].comments.sort((x, y) => {
                 xd = new Date(x.created_at);
                 yd = new Date(y.created_at);
-                return yd - xd;
+                return xd - yd;
             })
 
             //Return

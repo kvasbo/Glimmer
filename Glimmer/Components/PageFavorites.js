@@ -12,6 +12,8 @@ const listStyles = require('../Styles/ListStyles');
 
 export default class PageFavorites extends React.Component {
 
+    reduxUnsubscribe = null;
+
     constructor(props) {
 
         super(props);
@@ -29,10 +31,10 @@ export default class PageFavorites extends React.Component {
 
 
 
-    componentDidMount() {
+    componentWillMount() {
 
         //Listen to state changes. This really needs to change at some later point.
-        reduxUnsubscribe = store.subscribe(() => {
+        this.reduxUnsubscribe = store.subscribe(() => {
             
                 var tmpPosts = store.getState().ForumFavorite.posts;
 
@@ -41,6 +43,10 @@ export default class PageFavorites extends React.Component {
                 }
             }
         )
+    }
+
+    componentWillUnmount() {
+        this.reduxUnsubscribe();
     }
 
     _onRefresh() {

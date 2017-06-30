@@ -213,7 +213,7 @@ export default class ForumUpdater {
     loadCommentsForPost(postId, page = 1) {
         return new Promise((resolve, reject) => {
 
-            var uri = "/posts/" + postId + "/comments";
+            var uri = "/posts/" + postId + "/comments?page=" + page;
 
             api.makeApiGetCall(uri).then((data) => {
 

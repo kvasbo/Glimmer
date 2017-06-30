@@ -73,6 +73,10 @@ export default class PageMessages extends React.Component {
 
     }
 
+    componentWillUnmount() {
+
+    }
+
 
     readFromCache() {
         AsyncStorage.getItem('@Cache:Conversations', (err, result) => {
