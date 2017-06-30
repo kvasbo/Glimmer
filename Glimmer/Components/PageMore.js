@@ -29,22 +29,6 @@ export default class PageMore extends React.Component {
                     textStyle={pageStyles.buttonText}
                     style={pageStyles.button}
                     icon={{name: 'cached'}}
-                    title='Nytt innlegg'
-                    onPress={() => {
-
-                        this.props.navigator.showModal({
-                            screen: 'glimmer.PageNewForumPost',
-                            title: "Nytt innlegg",
-                        });
-
-                        this.props.navigator.toggleDrawer();
-                    }
-                    }
-                />
-                <Button
-                    textStyle={pageStyles.buttonText}
-                    style={pageStyles.button}
-                    icon={{name: 'cached'}}
                     title='Krets'
                     onPress={() => {
 

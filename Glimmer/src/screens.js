@@ -8,7 +8,7 @@ import PageMessages from "../Components/PageMessages";
 import PageSettings from "../Components/PageSettings";
 import PageConversation from "../Components/PageConversation";
 import PageNewForumPost from "../Components/PageNewForumPost";
-import PageKretsVelger from "../Components/PageKretsVelger";
+import PageKretsVelger from "../Components/PageKretsVelgerNewMessage";
 import PageNewMessage from "../Components/PageNewMessage";
 import PageAbout from "../Components/PageAbout";
 
