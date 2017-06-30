@@ -56,6 +56,7 @@ export default class PageMessages extends React.Component {
                     title: "Velg mottakere", // navigation bar title of the pushed screen (optional)
                     passProps: {mode: "multiple", context: "message"}, // Object that will be passed as props to the pushed screen (optional)
                     animated: true, // does the push have transition animation or does it happen immediately (optional)
+                    backButtonTitle: "Samtaler",
                     navigatorButtons: {
                         rightButtons: [
                             {

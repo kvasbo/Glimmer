@@ -15,7 +15,7 @@ export default class PageKretsVelger extends React.Component {
     constructor(props) {
         super(props);
         var tmpKrets = store.getState().Krets;
-        this.state = {krets: store.getState().Krets, searchText: "", searchHits: [], performedSearches: []}
+        this.state = {krets: store.getState().Krets, searchText: "", searchHits: [], performedSearches: [], searching: false}
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
@@ -45,7 +45,8 @@ export default class PageKretsVelger extends React.Component {
                     screen: 'glimmer.PageNewMessage', // unique ID registered with Navigation.registerScreen
                     title: "Skriv melding", // navigation bar title of the pushed screen (optional)
                     passProps: {}, // Object that will be passed as props to the pushed screen (optional)
-                    animated: true, // does the push have transition animation or does it happen immediately (optional)
+                    animated: true, // does the push have transition animation or does it happen immediately (optional),
+                    backButtonTitle: "Mottakere",
                 });
             }
         }
@@ -105,24 +106,23 @@ export default class PageKretsVelger extends React.Component {
 
             if (text.length > 0 && !this.state.performedSearches.includes(text)) {
 
+                this.setState({searching: true});
+
+                var tmpTerms = this.state.performedSearches;
+                tmpTerms.push(text);
+                this.setState({performedSearches: tmpTerms});
+
                 api.makeApiGetCall("/users/" + text.toLowerCase()).then((data) => {
-                    console.log("API ok", data);
 
                     var tmpHits = this.state.searchHits;
-
                     tmpHits.push(data.data);
 
-                    this.setState({searchHits: tmpHits});
+                    this.setState({searchHits: tmpHits, searching: false});
 
                     console.log("new state", this.state.searchHits);
 
-                    var tmpTerms = this.state.performedSearches;
-                    tmpTerms.push(text);
-                    this.setState({performedSearches: tmpTerms});
-
-
                 }).catch((err) => {
-                    console.log("API fuck", err);
+                    this.setState({searching: false});
                 });
             }
 
@@ -133,7 +133,7 @@ export default class PageKretsVelger extends React.Component {
 
     _getSearchHeight()
     {
-        return Math.ceil(this.state.searchHits.length / 4) * 95;
+        return Math.ceil(this.state.searchHits.length / 4) * 85;
     }
 
     render() {
@@ -142,7 +142,7 @@ export default class PageKretsVelger extends React.Component {
 
             <View style={pageStyles.container}>
 
-                <View>
+                <Animated.View>
                     <Text style={pageStyles.selectorHeader}>Søk</Text>
                     <TextInput style={{
                         margin: 10,
@@ -163,7 +163,7 @@ export default class PageKretsVelger extends React.Component {
                         contentContainerStyle={pageStyles.list}
 
                     />
-                </View>
+                </Animated.View>
                 <View>
                     <Text style={pageStyles.selectorHeader}>Krets</Text>
                     <FlatList
@@ -194,6 +194,7 @@ const pageStyles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
+        alignItems: 'flex-start',
     },
     selectorHeader: {
         marginLeft: 10,
