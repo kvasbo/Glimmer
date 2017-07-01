@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {StyleSheet, Text, View, Image} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Badge} from "react-native-elements";
 
 import ForumText from "./ForumText.js";
@@ -20,6 +20,20 @@ class MetaDataFirstPost extends React.Component {
         super(props);
     }
 
+    giKudos() {
+
+        arbeidsMaur.forumUpdater.giveKudosToPost(this.props.post.id).then(()=>{
+
+            //Håndtere at vi har gitt kudos!
+            console.log("Kudos gitt!");
+
+        }).catch((err) =>{
+            console.log(err);
+        })
+
+
+    }
+
     render() {
 
         var comText = "kommentar";
@@ -32,11 +46,15 @@ class MetaDataFirstPost extends React.Component {
 
             <View style={{flexDirection: "row"}}>
 
-                <Badge
-                    value={"Gi kudos"}
-                    textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: 'green', marginRight: 5}}
-                />
+                <TouchableOpacity
+                    onLongPress={() => this.giKudos()}
+                >
+                    <Badge
+                        value={"Gi kudos"}
+                        textStyle={{color: 'white'}}
+                        containerStyle={{backgroundColor: 'green', marginRight: 5}}
+                    />
+                </TouchableOpacity>
 
                 <Badge
                     value={this.props.post.comment_count + " " + comText}
@@ -120,7 +138,7 @@ export default class StreamForumPost extends React.Component {
         if (this.images.length === 0) return null;
 
         else {
-            return <View style={pageStyles.image}><Image style={{flex:1}} source={{uri: this.images[0].src}} /></View>;
+            return <View style={pageStyles.image}><Image style={{flex: 1}} source={{uri: this.images[0].src}}/></View>;
         }
 
     }
@@ -155,7 +173,7 @@ export default class StreamForumPost extends React.Component {
             <View style={pageStyles.container}>
 
                 <View style={pageStyles.title}>
-                <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
+                    <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
                 </View>
 
                 {this.getFirstImage()}

@@ -44,7 +44,6 @@ export default class PageForumList extends React.Component {
         }
     }
 
-
     componentWillMount() {
         this.listenForForums(this.forumsRef);
     }

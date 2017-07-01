@@ -1,5 +1,5 @@
 import {AsyncStorage} from "react-native";
-import {addFavoritesPost, addForumPostComment, addStreamPost, replaceForumList} from "../Redux/actions";
+import {addFavoritesPost, addStreamPost, replaceForumList} from "../Redux/actions";
 
 const Forum = require('../DataClasses/forum.js').default;
 
@@ -14,10 +14,8 @@ export default class ForumUpdater {
     tmpForums = [];
 
     constructor() {
-       this.database = firebaseApp.database;
+        this.database = firebaseApp.database;
     }
-
-
 
     //Do the API lifting
     loadPosts(favorites = false, page = 1) {
@@ -123,7 +121,6 @@ export default class ForumUpdater {
 
     }
 
-
     /**
      * Init forums from storage and trigger a reload if they are too old (or we force it).
      * @param force
@@ -135,51 +132,51 @@ export default class ForumUpdater {
 
             /*
 
-            AsyncStorage.getItem('@Cache:forumList', (err, result) => {
-                if (!err && result !== null) {
+             AsyncStorage.getItem('@Cache:forumList', (err, result) => {
+             if (!err && result !== null) {
 
-                    var resultP = JSON.parse(result);
+             var resultP = JSON.parse(result);
 
-                    //Full replace in store
-                    if (typeof resultP.data.forums === "object") {
-                        console.log("Replacing forum list in Redux store with cached data");
-                        store.dispatch(replaceForumList(resultP.data.forums));
-                        console.log("Restored store", store.getState());
-                    }
+             //Full replace in store
+             if (typeof resultP.data.forums === "object") {
+             console.log("Replacing forum list in Redux store with cached data");
+             store.dispatch(replaceForumList(resultP.data.forums));
+             console.log("Restored store", store.getState());
+             }
 
-                    for (key in resultP.data.forums) {
+             for (key in resultP.data.forums) {
 
-                        var forumId = resultP.data.forums[key].id;
+             var forumId = resultP.data.forums[key].id;
 
-                        var tmpForum = new Forum(forumId, resultP.data.forums[key].title, resultP.data.forums[key].body);
+             var tmpForum = new Forum(forumId, resultP.data.forums[key].title, resultP.data.forums[key].body);
 
-                        firebaseApp.database().ref('forums/list/' + forumId).set(tmpForum);
-                        firebaseApp.database().ref('forums/meta').set({lastFullUpdate:new Date().toISOString()});
+             firebaseApp.database().ref('forums/list/' + forumId).set(tmpForum);
+             firebaseApp.database().ref('forums/meta').set({lastFullUpdate:new Date().toISOString()});
 
-                       // console.log(tmpForum);
+             // console.log(tmpForum);
 
-                       // console.log(resultP.data.forums[key]);
-                    }
+             // console.log(resultP.data.forums[key]);
+             }
 
-                    var now = new Date();
+             var now = new Date();
 
-                    if (force || now - resultP.time < (1000 * 60 * 60 * 24 * 14)) {
-                        console.log("Forum cache too old, loading from API");
-                        this._getForumsPagesRecursive(1);
-                    }
+             if (force || now - resultP.time < (1000 * 60 * 60 * 24 * 14)) {
+             console.log("Forum cache too old, loading from API");
+             this._getForumsPagesRecursive(1);
+             }
 
-                }
-                else {
-                    console.log("No forum cache found, loading from API");
-                    this._getForumsPagesRecursive(1);
-                }
+             }
+             else {
+             console.log("No forum cache found, loading from API");
+             this._getForumsPagesRecursive(1);
+             }
 
-                resolve(true);
+             resolve(true);
 
-            });
+             });
 
 
-            */
+             */
 
             resolve();
 
@@ -248,7 +245,7 @@ export default class ForumUpdater {
 
             api.makeApiGetCall(uri).then((data) => {
 
-               // console.log("Comment data", data)
+                // console.log("Comment data", data)
 
                 for (key in data.data) {
                     //console.log(data.data[key]);
@@ -256,7 +253,6 @@ export default class ForumUpdater {
                 }
 
                 resolve(data.data);
-
 
             }).catch((err) => {
                 reject(err)
@@ -286,6 +282,67 @@ export default class ForumUpdater {
                 console.log("Post error", err);
                 reject(err);
             });
+
+        })
+
+    }
+
+    /**
+     * Post a new comment in a thread
+     * @param comment
+     * @param thread
+     * @returns {Promise}
+     */
+    postNewThread(forum, title, body) {
+
+        console.log("Posting new post to forum", forum, title, body);
+
+        return new Promise((resolve, reject) => {
+
+            const postBody = {"post": {"body": body, "title": title, tags: [], forum: {id: forum}}};
+            const url = "/posts";
+
+            console.log(url, postBody);
+
+            api.makeApiPostCall(url, {}, postBody).then((data) => {
+                console.log("Post success", data);
+                resolve(data);
+            }).catch((err) => {
+                console.log("Post error", err);
+                reject(err);
+            });
+
+        })
+
+    }
+
+    giveKudosToPost(postId) {
+
+        return new Promise((resolve, reject) => {
+
+            const uri = "/posts/" + postId + "/kudos";
+
+            api.makeApiPostCall(uri).then((data) => {
+                resolve(data);
+            }).catch((err) => {
+                reject(err);
+            })
+
+        })
+
+    }
+
+    giveKudosToComment(commentId) {
+
+        return new Promise((resolve, reject) => {
+
+            const uri = "/comments/" + commentId + "/kudos";
+
+            api.makeApiPostCall(uri).then((data) => {
+                resolve(data);
+            }).catch((err) => {
+                reject(err);
+            })
 
         })
 

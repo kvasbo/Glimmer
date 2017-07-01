@@ -13,7 +13,7 @@ import PageNewMessage from "../Components/PageNewMessage";
 import PageAbout from "../Components/PageAbout";
 
 import PageLogin from "../Components/PageLogin";
-import PageForumList from "../Components/PageForumList";
+//import PageForumList from "../Components/PageForumList";
 import PageLog from "../Components/PageLog";
 
 import PageMore from "../Components/PageMore";
@@ -36,7 +36,7 @@ export function registerScreens(store, Provider) {
         Navigation.registerComponent('glimmer.PageAbout', () => PageAbout, store, Provider);
 
         //Helper pages
-        Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
+        //Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
         Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
         Navigation.registerComponent('glimmer.PageLog', () => PageLog, store, Provider);
         Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, store, Provider);

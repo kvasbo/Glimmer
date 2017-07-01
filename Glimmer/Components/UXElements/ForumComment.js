@@ -27,6 +27,12 @@ class CommentMetadata extends React.Component {
         }
     })
 
+    _giveKudos()
+    {
+        //console.log(this.props.data);
+        arbeidsMaur.forumUpdater.giveKudosToComment(this.props.data.id);
+    }
+
     render() {
 
         return (
@@ -37,6 +43,9 @@ class CommentMetadata extends React.Component {
                 />
                 <Text style={this.styles.element}>{this.props.data.creator.name}</Text>
                 <Text style={this.styles.element}>{this.getTime()}</Text>
+                <TouchableOpacity onLongPress={() => this._giveKudos()}>
+                    <Text>Gi Kudos</Text>
+                </TouchableOpacity>
             </View>
         )
 

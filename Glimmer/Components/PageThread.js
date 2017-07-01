@@ -62,7 +62,7 @@ export default class PageThread extends React.Component {
         //Get page
         arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page).then((data) => {
 
-            console.log("Comments page " + page, data);
+            //console.log("Comments page " + page, data);
 
             tmpPageCache = this.state.pageCache;
             tmpPageCache[page] = data;

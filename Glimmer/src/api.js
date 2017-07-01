@@ -102,6 +102,14 @@ export default class glimmerAPI {
                         })
 
                     }
+                    else if(response.status === 500){
+
+                        response.text().then((data)=>{
+                            console.log("Internal server error", data);
+                            reject("Internal server error");
+                        })
+
+                    }
                     else {
                         response.json().then((data)=>{
                             console.log("API unhandled", data);
