@@ -1,17 +1,23 @@
 import {AsyncStorage} from "react-native";
-import {addFavoritesPost, addStreamPost, replaceForumList, addForumPostComment} from "../Redux/actions";
+import {addFavoritesPost, addForumPostComment, addStreamPost, replaceForumList} from "../Redux/actions";
+
+const Forum = require('../DataClasses/forum.js').default;
+
 const config = require("../config.js");
 
 export default class ForumUpdater {
 
     lastpage_favs = 0;
     lastpage_stream = 0;
+    database = null;
 
     tmpForums = [];
 
     constructor() {
-
+       this.database = firebaseApp.database;
     }
+
+
 
     //Do the API lifting
     loadPosts(favorites = false, page = 1) {
@@ -117,6 +123,7 @@ export default class ForumUpdater {
 
     }
 
+
     /**
      * Init forums from storage and trigger a reload if they are too old (or we force it).
      * @param force
@@ -125,6 +132,8 @@ export default class ForumUpdater {
     initForums(force) {
 
         return new Promise((resolve, reject) => {
+
+            /*
 
             AsyncStorage.getItem('@Cache:forumList', (err, result) => {
                 if (!err && result !== null) {
@@ -136,6 +145,20 @@ export default class ForumUpdater {
                         console.log("Replacing forum list in Redux store with cached data");
                         store.dispatch(replaceForumList(resultP.data.forums));
                         console.log("Restored store", store.getState());
+                    }
+
+                    for (key in resultP.data.forums) {
+
+                        var forumId = resultP.data.forums[key].id;
+
+                        var tmpForum = new Forum(forumId, resultP.data.forums[key].title, resultP.data.forums[key].body);
+
+                        firebaseApp.database().ref('forums/list/' + forumId).set(tmpForum);
+                        firebaseApp.database().ref('forums/meta').set({lastFullUpdate:new Date().toISOString()});
+
+                       // console.log(tmpForum);
+
+                       // console.log(resultP.data.forums[key]);
                     }
 
                     var now = new Date();
@@ -154,7 +177,14 @@ export default class ForumUpdater {
                 resolve(true);
 
             });
+
+
+            */
+
+            resolve();
+
         })
+
     }
 
     /**
@@ -164,7 +194,6 @@ export default class ForumUpdater {
      */
     _addAPIForumsToList(forumBatch) {
         for (forum in forumBatch) {
-
             this.tmpForums.push(forumBatch[forum]);
         }
     }
@@ -174,6 +203,7 @@ export default class ForumUpdater {
      * @private
      */
     _persistForums() {
+
         console.log("Persisting forums");
 
         store.dispatch(replaceForumList(this.tmpForums));
@@ -191,6 +221,7 @@ export default class ForumUpdater {
             })
 
         });
+
     }
 
     _getForumsPagesRecursive(page, maxPages = 999) {
@@ -217,30 +248,20 @@ export default class ForumUpdater {
 
             api.makeApiGetCall(uri).then((data) => {
 
-               // console.log("Comment data", data)
+                // console.log("Comment data", data)
 
-                for(key in data.data)
-                {
+                for (key in data.data) {
                     //console.log(data.data[key]);
                     global.store.dispatch(addForumPostComment(postId, data.data[key]));
                 }
 
-
                 resolve(true);
 
-
-            }).catch((err) => {reject(err)});
+            }).catch((err) => {
+                reject(err)
+            });
 
         })
-
-        /*
-         var uri = "/posts/" + this.props.post.id + "/comments";
-
-         api.makeApiGetCall(uri).then((data) => {
-         //console.log(data);
-         this.setState({comments: data.data, next: data.paging.next});
-         })
-         */
     }
 
     /**

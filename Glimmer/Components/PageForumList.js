@@ -10,9 +10,9 @@ export default class PageForumList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {filterText: "", loading: true, forums: store.getState().ForumList.forums};
+        this.forumsRef = firebaseApp.database().ref("forums/list");
+        this.state = {filterText: "", loading: true, forums: []};
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
     }
 
     static navigatorButtons = {
@@ -28,7 +28,6 @@ export default class PageForumList extends React.Component {
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
-                this.setState({filterText: "", forums: store.getState().ForumList.forums});
                 break;
             case 'didAppear':
                 break;
@@ -45,8 +44,26 @@ export default class PageForumList extends React.Component {
         }
     }
 
-    componentDidMount() {
 
+    componentWillMount() {
+        this.listenForForums(this.forumsRef);
+    }
+
+    componentWillUnmount() {
+        this.forumsRef.off();
+    }
+
+    //Connect to Firebase
+    listenForForums(forumsRef) {
+
+        forumsRef.on('value', (snap) => {
+
+            this.setState({
+                forums: snap.val(),
+                loading: false
+            });
+
+        });
     }
 
     getFilteredForumList() {
@@ -109,10 +126,8 @@ class Forum extends React.Component {
 
     render() {
 
-        //console.log(this.props);
-
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>{console.log(this.props.forum.id)}}>
                 <View style={this.styles.forumContainer}>
                     <Text style={this.styles.forumText}>{this.props.forum.title}</Text>
                 </View>

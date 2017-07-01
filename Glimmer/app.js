@@ -4,8 +4,8 @@ import {registerScreens} from "./src/screens";
 import {Navigation} from "react-native-navigation";
 import Workers from "./Workers/index.js";
 import * as firebase from "firebase";
-import { createStore, applyMiddleware } from 'redux'
-import { createLogger } from 'redux-logger'
+import {applyMiddleware, createStore} from "redux";
+import {createLogger} from "redux-logger";
 import {Provider} from "react-redux";
 import glimmerReducers from "./Redux/index";
 
@@ -19,10 +19,7 @@ import Helpers from "./src/helpers";
 global.moment = require('moment');
 moment.locale('nb')
 
-global.auth = new GlimmerAuth();
-global.api = new GlimmerAPI();
-global.helpers = new Helpers();
-global.arbeidsMaur = new Workers();
+const config = require("./config.js");
 
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];
@@ -47,7 +44,7 @@ setJSExceptionHandler(errorHandler, true);
 
 // Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyD9d9frvKtl8PEOPS5Y6Uc7HDoxyopEJrA",
+    apiKey: config.firebase_api_key,
     authDomain: "glimmer-28101.firebaseapp.com",
     databaseURL: "https://glimmer-28101.firebaseio.com",
     projectId: "glimmer-28101",
@@ -56,12 +53,29 @@ const firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+global.firebaseApp = firebaseApp;
+
+global.auth = new GlimmerAuth();
+global.api = new GlimmerAPI();
+global.helpers = new Helpers();
+global.arbeidsMaur = new Workers();
+
+firebaseApp.auth().onAuthStateChanged(function (user) {
+    if (user) {
+
+        console.log("Firebase signed in", user)
+
+    } else {
+        // User is signed out.
+        console.log("Firebase signed out", user)
+
+    }
+});
 
 //Create the Redux Store. Saving disabled for now
 const loggerMiddleware = createLogger();
 
-if(__DEV__)
-{
+if (__DEV__) {
     global.store = createStore(glimmerReducers, applyMiddleware(
         //thunkMiddleware, // lets us dispatch() functions
         loggerMiddleware // neat middleware that logs actions
@@ -73,37 +87,15 @@ else {
         //loggerMiddleware // neat middleware that logs actions
     ));
 }
-/*
- global.store = createStore(glimmerReducers,
- undefined,
- compose(
- autoRehydrate()
- ));
- */
 
 //Make root navigation callable from anywhere. Should be cleaned up and done via store!
 global.rootNavigation = Navigation;
-
-function saveStore() {
-    if (__DEV__) {
-        console.log("Persisting store", global.store.getState());
-    }
-    //persistStore(global.store, {storage: AsyncStorage});
-}
 
 if (__DEV__) {
     console.log("Store init", global.store.getState());
 }
 
-if (false && __DEV__) {
-    let unsubscribe = global.store.subscribe(() => {
-        console.log("Store change", global.store.getState());
-    })
-}
-
 export default class Glimmer {
-
-    tabIcons = {};
 
     constructor() {
         this.init();
@@ -135,6 +127,8 @@ export default class Glimmer {
         this.attachStoreListener();
 
         registerScreens(store, Provider);
+
+        firebaseApp.auth().signInAnonymously();
 
         //This function will set the loggedin state to true or false in the store, which in term will trigger the store subscription.
         //Then the app starts. I know.
@@ -204,7 +198,7 @@ export default class Glimmer {
                         left: -1
                     },
                 }
-                ],
+            ],
             tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
                 tabBarSelectedButtonColor: '#3499DB', // optional, change the color of the selected tab icon and text (only selected)
             },

@@ -11,7 +11,7 @@ const glimmerReducers = combineReducers({
 
     ForumFavorite,
     ForumStream,
-    ForumList,
+    //ForumList,
     Krets,
     MessageRecipients,
     AppStatus,
