@@ -28,19 +28,7 @@ export default class PageNewForumPost extends React.Component {
 
     postMessage() {
 
-        if (this.props.type == "comment" && this.state.text !== "") {
 
-            arbeidsMaur.forumUpdater.postCommentInThread(this.state.text, this.props.id).then((data) => {
-
-                this.setState({text: ""});
-                AsyncStorage.removeItem(itemKey);
-                this.props.navigator.dismissModal();
-
-            }).catch((error) => {
-                Alert.alert("Noe gikk galt :(");
-            });
-
-        }
     }
 
     textChanged(text) {

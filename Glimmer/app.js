@@ -188,7 +188,7 @@ export default class Glimmer {
                     icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Samtaler'
                 },
-                {
+                /*{
                     label: 'Mer',
                     screen: 'glimmer.MenuLeft',
                     icon: require('./icons/more.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
@@ -197,7 +197,7 @@ export default class Glimmer {
                         right: 1, // optional, default is 0.
                         left: -1
                     },
-                }
+                }*/
             ],
             tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
                 tabBarSelectedButtonColor: '#3499DB', // optional, change the color of the selected tab icon and text (only selected)

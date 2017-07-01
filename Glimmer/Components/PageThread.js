@@ -5,7 +5,9 @@
 import React from "react";
 import {
     ActivityIndicator,
+    Button,
     KeyboardAvoidingView,
+    Modal,
     ScrollView,
     StyleSheet,
     Text,
@@ -33,7 +35,8 @@ export default class PageThread extends React.Component {
             comments: [],
             currentPage: null,
             pageCache: {},
-            numberOfPages: this.findLastPageOfComments()
+            numberOfPages: this.findLastPageOfComments(),
+            pagePickerModalVisible: false,
         };
 
     }
@@ -53,8 +56,6 @@ export default class PageThread extends React.Component {
     }
 
     loadCommentPage(page) {
-
-        this.setState({loading: true});
 
         this._gotoTop();
 
@@ -152,6 +153,38 @@ export default class PageThread extends React.Component {
         this.loadCommentPage(1);
     }
 
+    _getModal() {
+
+        return (
+
+            <Modal
+                animationType={"slide"}
+                transparent={false}
+                visible={this.state.pagePickerModalVisible}>
+                <View style={{marginTop: 22, height: 250}}>
+                    <View>
+
+                        <Text>Velg side</Text>
+
+
+                        <View style={{flexDirection: "row"}}>
+
+                            <Button onPress={() => {
+                                this.setState({pagePickerModalVisible: !this.state.pagePickerModalVisible})
+                            }} title="Lukk"/>
+
+                            <Button onPress={() => {
+                                this.setState({pagePickerModalVisible: !this.state.pagePickerModalVisible})
+                            }} title="Ok"/>
+
+                        </View>
+
+                    </View>
+                </View>
+            </Modal>
+        )
+    }
+
     _getSidevelger() {
 
         if (this.state.loading || this.state.numberOfPages === 1) return null;
@@ -159,6 +192,12 @@ export default class PageThread extends React.Component {
         const activeColor = "#3499DB"
         const passiveColor = "#CCCCCC"
         const size = 18;
+
+        var leftColor = activeColor;
+        var rightColor = activeColor;
+
+        if (this.state.currentPage === 1) rightColor = passiveColor;
+        if (this.state.currentPage === this.state.numberOfPages) leftColor = passiveColor;
 
         var showPage = this.state.numberOfPages - this.state.currentPage + 1;
 
@@ -170,23 +209,10 @@ export default class PageThread extends React.Component {
                 <Icon
                     reverse
                     size={size}
-                    name='keyboard-arrow-left'
-                    color={activeColor}
-                    onPress={() => this._prevPage()}
-                />
-
-                <Icon
-                    reverse
-                    size={size}
                     name='keyboard-arrow-up'
                     color={activeColor}
                     onPress={() => this._gotoTop()}
                 />
-
-
-                <TouchableOpacity>
-                    <Text style={pageStyles.pageNumberText}>{showPage}</Text>
-                </TouchableOpacity>
 
                 <Icon
                     reverse
@@ -196,11 +222,24 @@ export default class PageThread extends React.Component {
                     onPress={() => this._gotoBottom()}
                 />
 
+
+                <TouchableOpacity onPress={() => this.setState({pagePickerModalVisible: true})}>
+                    <Text style={pageStyles.pageNumberText}>{showPage}</Text>
+                </TouchableOpacity>
+
+                <Icon
+                    reverse
+                    size={size}
+                    name='keyboard-arrow-left'
+                    color={leftColor}
+                    onPress={() => this._prevPage()}
+                />
+
                 <Icon
                     reverse
                     size={size}
                     name='keyboard-arrow-right'
-                    color={activeColor}
+                    color={rightColor}
                     onPress={() => this._nextPage()}
                 />
 
@@ -212,7 +251,10 @@ export default class PageThread extends React.Component {
 
         return (
 
+
+
             <ScrollView ref={component => this.scrollbar = component} style={pageStyles.container}>
+                {this._getModal()}
                 <ThreadForumPost data={this.props.post} metaData={false}
                                  cut={false}
                                  touchable={false}/>
@@ -224,11 +266,12 @@ export default class PageThread extends React.Component {
 
                 {this._getSidevelger()}
 
-                <AddCommentBlock postId={this.props.post.id} navigator={this.props.navigator}
-                                 title={this.props.post.title}/>
+                <AddCommentBlock postId={this.props.post.id}/>
+
                 <KeyboardAvoidingView behavior="padding"/>
                 <View style={{height: 20}}/>
             </ScrollView>
+
 
         );
 

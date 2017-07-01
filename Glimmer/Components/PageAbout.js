@@ -24,7 +24,6 @@ export default class PageAbout extends React.Component {
             <ScrollView style={pageStyles.container}>
                 <Text style={listStyles.listSubtitle}>Glimmer lages av kvasbo. For gøy.</Text>
                 <Text style={listStyles.listSubtitle}>Hvis det er noe som ikke virker, send meg en PM.</Text>
-                <Text style={listStyles.listSubtitle}>Glenn, Trist og Uproft, Alt er Trash, Hawk. Sånn.</Text>
                 <Button title="Lukk" onPress={() => {
                     this.props.navigator.dismissModal();
                 }}/>
