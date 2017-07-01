@@ -6,7 +6,7 @@ import React from "react";
 import {AsyncStorage, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image} from "react-native";
 import {Divider, Icon} from "react-native-elements";
 
-const CachedImage = require('react-native-cached-image');
+//const CachedImage = require('react-native-cached-image');
 
 //Get common list styles
 const listStyles = require('../Styles/ListStyles');
@@ -179,7 +179,7 @@ class Conversation extends React.Component {
                 >
                     <View style={listStyles.whiteBox}>
                         <View style={listStyles.imageBlock}>
-                            <CachedImage source={{uri: this.props.data.user.image_url}} style={{width: 40, height: 40, borderRadius: 20}}/>
+                            <Image source={{uri: this.props.data.user.image_url}} style={{width: 40, height: 40, borderRadius: 20}}/>
                         </View>
                         <View style={listStyles.textBlock}>
                             <Text style={this.titleStyle()}>{this.props.data.user.name}</Text>
