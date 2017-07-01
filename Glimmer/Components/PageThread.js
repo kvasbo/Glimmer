@@ -161,6 +161,7 @@ export default class PageThread extends React.Component {
                 animationType={"slide"}
                 transparent={false}
                 visible={this.state.pagePickerModalVisible}>
+                onRequestClose={()=>console.log("Close modal")}
                 <View style={{marginTop: 22, height: 250}}>
                     <View>
 
