@@ -248,14 +248,15 @@ export default class ForumUpdater {
 
             api.makeApiGetCall(uri).then((data) => {
 
-                // console.log("Comment data", data)
+               // console.log("Comment data", data)
 
                 for (key in data.data) {
                     //console.log(data.data[key]);
-                    global.store.dispatch(addForumPostComment(postId, data.data[key]));
+                    //global.store.dispatch(addForumPostComment(postId, data.data[key]));
                 }
 
-                resolve(true);
+                resolve(data.data);
+
 
             }).catch((err) => {
                 reject(err)

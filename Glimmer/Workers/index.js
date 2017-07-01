@@ -1,14 +1,10 @@
 /**
  * Created by kvasbo on 31.05.2017.
  */
-import React, {Component} from 'react';
-import {
-    Linking, AsyncStorage
-} from 'react-native';
+import React from "react";
 import ForumUpdater from "./ForumUpdater";
 import KretsUpdater from "./KretsUpdater";
-
-const shittyQs = require("shitty-qs");
+import UserUpdater from "./UserUpdater";
 
 const config = require("../config.js");
 
@@ -17,13 +13,14 @@ export default class Workers {
     constructor() {
         this.forumUpdater = new ForumUpdater();
         this.kretsUpdater = new KretsUpdater();
+        this.userUpdater = new UserUpdater();
     }
 
     initData() {
 
         var first = [this.forumUpdater.loadFirstFavorites(1), this.forumUpdater.loadStream(1)];
 
-        Promise.all(first).then(()=>{
+        Promise.all(first).then(() => {
             this.kretsUpdater.initKrets(false);
             this.forumUpdater.initForums(false);
         })
@@ -33,8 +30,7 @@ export default class Workers {
     }
 
     refreshForumData() {
-        if(__DEV__)
-        {
+        if (__DEV__) {
             console.log("Refreshing forum data");
         }
         this.forumUpdater.loadFirstFavorites(1);

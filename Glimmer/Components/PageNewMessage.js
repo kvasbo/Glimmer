@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {ScrollView, StyleSheet, View, TextInput, Text, TouchableOpacity, Button, Alert} from "react-native";
+import {Button, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 
 export default class PageNewMessage extends React.Component {
 
@@ -16,8 +16,7 @@ export default class PageNewMessage extends React.Component {
 
     }
 
-    _onTextChange(text)
-    {
+    _onTextChange(text) {
         this.setState({text: text});
     }
 
@@ -26,16 +25,23 @@ export default class PageNewMessage extends React.Component {
         return (
             <ScrollView style={pageStyles.container}>
 
-                <Text>Mottakere</Text>
+                <View style={pageStyles.mottakere}>
 
-                <View style={pageStyles.faceList}>
+                    <Text>Mottakere</Text>
+
+                    <View style={pageStyles.faceList}/>
 
                 </View>
 
-                <TextInput multiline={true} style={pageStyles.textInput} onChangeText={(text) => this._onTextChange(text)} />
+                <TextInput multiline={true} style={pageStyles.textInput}
+                           onChangeText={(text) => this._onTextChange(text)}/>
 
-                <Button title="Avbryt" onPress={() => {console.log("Avbryt melding")}} />
-                <Button title="Send" onPress={() => {console.log("Sende melding")}} />
+                <Button title="Avbryt" onPress={() => {
+                    console.log("Avbryt melding")
+                }}/>
+                <Button title="Send" onPress={() => {
+                    console.log("Sende melding")
+                }}/>
 
 
             </ScrollView>
@@ -60,5 +66,9 @@ const pageStyles = StyleSheet.create({
     },
     faceList: {
         flex: 3,
+    },
+    mottakere: {
+
     }
+
 });

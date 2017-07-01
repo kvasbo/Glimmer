@@ -3,7 +3,16 @@
  */
 
 import React from "react";
-import {KeyboardAvoidingView, ScrollView, StyleSheet, View} from "react-native";
+import {
+    ActivityIndicator,
+    KeyboardAvoidingView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from "react-native";
+import {Icon} from "react-native-elements";
 
 import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
@@ -11,86 +20,77 @@ import AddCommentBlock from "./UXElements/ForumAddComment";
 
 const commentsInPage = 30;
 
-
 export default class PageThread extends React.Component {
 
-    lastPage = null;
-    reduxUnsubscribe = null;
+    scrollbar = null;
+    firstpost = null;
 
     constructor(props) {
+
         super(props);
+        this.state = {
+            loading: true,
+            comments: [],
+            currentPage: null,
+            pageCache: {},
+            numberOfPages: this.findLastPageOfComments()
+        };
 
-        if(typeof store.getState().ForumPostComment.posts[this.props.post.id] !== "undefined")
-        {
-            this.state = {loading: true, comments: store.getState().ForumPostComment.posts[this.props.post.id].comments};
-        }
-        else
-        {
-            this.state = {loading: true, comments: []};
-        }
+    }
 
-        this.lastPage = this.findLastPageOfComments();
+    componentWillMount() {
 
         this.loadInitComments();
 
     }
 
-    componentWillMount() {
-        //Listen to state changes. This really needs to change at some later point.
-        this.reduxUnsubscribe = store.subscribe(() => {
-
-            var state = store.getState();
-
-            if(typeof state.ForumPostComment.posts[this.props.post.id] !== "undefined")
-            {
-
-                var tmpComments = state.ForumPostComment.posts[this.props.post.id].comments;
-
-                if (tmpComments !== this.state.comments) {
-                    this.setState({loading: false, comments: tmpComments});
-                }
-
-            }
-            }
-        )
-    }
-
     componentWillUnmount() {
-        this.reduxUnsubscribe();
+        // this.reduxUnsubscribe();
     }
 
     loadInitComments() {
+        this.loadCommentPage(1);
+    }
 
-        //Get last comments
-        arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, 1);
+    loadCommentPage(page) {
 
-        //...and the page before if possible.
-        if(this.lastPage > 1)
-        {
-            arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, 2);
-        }
+        this.setState({loading: true});
+
+        this._gotoTop();
+
+        //Get page
+        arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page).then((data) => {
+
+            console.log("Comments page " + page, data);
+
+            tmpPageCache = this.state.pageCache;
+            tmpPageCache[page] = data;
+
+            this.setState({currentPage: page, pageCache: tmpPageCache, loading: false});
+
+        });
 
     }
 
-    findLastPageOfComments()
-    {
-
+    findLastPageOfComments() {
 
         var cCount = parseInt(this.props.post.comment_count);
-
-       // console.log("findLastPageOfComments", this.props, cCount);
 
         return parseInt((Math.floor(cCount / commentsInPage) + 1));
     }
 
-
     getComments() {
+
+        if (this.state.loading) {
+            return (<View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>)
+        }
 
         var out = [];
 
-        for (key in this.state.comments) {
-            var c = this.state.comments[key];
-            //console.log("Comment", this.state.comments[i]);
+        var tmpPosts = this.state.pageCache[this.state.currentPage].reverse();
+
+        for (var i = 0; i < tmpPosts.length; i++) {
+            var c = tmpPosts[i];
             out.push(<ForumComment key={c.id} data={c}/>)
         }
 
@@ -98,20 +98,140 @@ export default class PageThread extends React.Component {
 
     }
 
+    /**
+     * Scroll to topish.
+     * @returns {boolean}
+     * @private
+     */
+    _gotoTop() {
+
+        if (this.firstpost === null || this.scrollbar === null) return false;
+
+        this.firstpost.measure((fx, fy, width, height, px, py) => {
+
+            //Scroll to top if initiated
+            if (this.scrollbar !== null) {
+                this.scrollbar.scrollTo({y: height + 100, animated: true});
+            }
+
+        });
+    }
+
+    /**
+     * Guess.
+     * @private
+     */
+    _gotoBottom() {
+        this.scrollbar.scrollToEnd({animated: true});
+    }
+
+    //Newer page
+    _nextPage() {
+
+        if (this.state.currentPage > 1) {
+            this.loadCommentPage(this.state.currentPage - 1);
+        }
+    }
+
+    //Older page
+    _prevPage() {
+
+        if (this.state.currentPage < this.state.numberOfPages) {
+            this.loadCommentPage(this.state.currentPage + 1);
+        }
+
+    }
+
+    //Oldest page
+    _firstPage() {
+        this.loadCommentPage(this.state.numberOfPages);
+    }
+
+    //Newest page
+    _lastPage() {
+        this.loadCommentPage(1);
+    }
+
+    _getSidevelger() {
+
+        if (this.state.loading || this.state.numberOfPages === 1) return null;
+
+        const activeColor = "#3499DB"
+        const passiveColor = "#CCCCCC"
+        const size = 18;
+
+        var showPage = this.state.numberOfPages - this.state.currentPage + 1;
+
+        return (
+
+            <View style={pageStyles.sideVelgerView}>
+
+
+                <Icon
+                    reverse
+                    size={size}
+                    name='keyboard-arrow-left'
+                    color={activeColor}
+                    onPress={() => this._prevPage()}
+                />
+
+                <Icon
+                    reverse
+                    size={size}
+                    name='keyboard-arrow-up'
+                    color={activeColor}
+                    onPress={() => this._gotoTop()}
+                />
+
+
+                <TouchableOpacity>
+                    <Text style={pageStyles.pageNumberText}>{showPage}</Text>
+                </TouchableOpacity>
+
+                <Icon
+                    reverse
+                    size={size}
+                    name='keyboard-arrow-down'
+                    color={activeColor}
+                    onPress={() => this._gotoBottom()}
+                />
+
+                <Icon
+                    reverse
+                    size={size}
+                    name='keyboard-arrow-right'
+                    color={activeColor}
+                    onPress={() => this._nextPage()}
+                />
+
+            </View>
+        )
+    }
+
     render() {
 
         return (
 
-            <ScrollView style={pageStyles.container}>
-                <ThreadForumPost data={this.props.post} metaData={false} cut={false}
+            <ScrollView ref={component => this.scrollbar = component} style={pageStyles.container}>
+                <ThreadForumPost data={this.props.post} metaData={false}
+                                 cut={false}
                                  touchable={false}/>
+                <View ref={component => this.firstpost = component}/>
+
+                {this._getSidevelger()}
+
                 {this.getComments()}
-                <AddCommentBlock postId={this.props.post.id} navigator={this.props.navigator} title={this.props.post.title}/>
+
+                {this._getSidevelger()}
+
+                <AddCommentBlock postId={this.props.post.id} navigator={this.props.navigator}
+                                 title={this.props.post.title}/>
                 <KeyboardAvoidingView behavior="padding"/>
                 <View style={{height: 20}}/>
             </ScrollView>
 
         );
+
     }
 }
 
@@ -124,4 +244,17 @@ const pageStyles = StyleSheet.create({
         paddingBottom: 30,
         paddingRight: 0,
     },
+    sideVelgerView: {
+        flexDirection: "row",
+        marginRight: 10,
+        marginLeft: 10,
+        justifyContent: "space-around",
+        alignContent: "center",
+
+    },
+    pageNumberText: {
+        fontSize: 15,
+        fontWeight: "300",
+        paddingTop: 18,
+    }
 });
