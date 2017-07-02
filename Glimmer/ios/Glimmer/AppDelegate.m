@@ -16,6 +16,9 @@
 //Native navi change
 #import "RCCManager.h"
 
+//Firebase change
+#import <Firebase.h>
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -46,6 +49,9 @@
   [self.window makeKeyAndVisible];
   
    */
+  
+  //Firebase change
+  [FIRApp configure];
    
   return YES;
 }

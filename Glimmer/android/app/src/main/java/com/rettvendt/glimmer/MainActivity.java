@@ -1,4 +1,4 @@
-package com.glimmer;
+package com.rettvendt.glimmer;
 
 //import com.facebook.react.ReactActivity;
 import com.reactnativenavigation.controllers.SplashActivity;

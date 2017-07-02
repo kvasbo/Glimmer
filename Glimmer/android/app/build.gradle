@@ -1,5 +1,9 @@
 apply plugin: "com.android.application"
 
+//Firebase
+apply plugin: "com.google.firebase.firebase-perf"
+//End firebase
+
 import com.android.build.OutputFile
 
 /**
@@ -87,7 +91,7 @@ android {
     buildToolsVersion "25.0.1"
 
     defaultConfig {
-        applicationId "com.glimmer"
+        applicationId "com.rettvendt.glimmer"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -115,6 +119,7 @@ android {
         }
     }
     buildTypes {
+
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -145,6 +150,30 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-navigation')
+
+    //Firebase change start
+
+    // RNFirebase Required dependencies
+      compile(project(':react-native-firebase')) {
+        transitive = false
+      }
+
+      compile "com.google.firebase:firebase-core:11.0.0"
+
+      // RNFirebase optional dependencies
+      compile "com.google.firebase:firebase-ads:11.0.0"
+      compile "com.google.firebase:firebase-analytics:11.0.0"
+      compile "com.google.firebase:firebase-auth:11.0.0"
+      compile "com.google.firebase:firebase-config:11.0.0"
+      compile "com.google.firebase:firebase-crash:11.0.0"
+      compile "com.google.firebase:firebase-database:11.0.0"
+      compile "com.google.firebase:firebase-messaging:11.0.0"
+      compile "com.google.firebase:firebase-perf:11.0.0"
+      compile "com.google.firebase:firebase-storage:11.0.0"
+
+
+      //Firebase change end
+
 }
 
 // Run this once to be able to run the application with BUCK
@@ -153,3 +182,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'
