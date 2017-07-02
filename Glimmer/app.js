@@ -88,12 +88,11 @@ global.rootNavigation = Navigation;
 //Reload stuff on wake.
 _handleAppStateChange = (nextAppState) => {
     if (nextAppState === 'active') {
-        console.log('App has come to the foreground!')
+        console.log('App has come to the foreground!');
+        arbeidsMaur.refreshForumData();
     }
 }
 
-//function to attach listener to app state change
-AppState.addEventListener('change', _handleAppStateChange);
 
 export default class Glimmer {
 
@@ -121,6 +120,9 @@ export default class Glimmer {
     }
 
     init() {
+
+        //function to attach listener to app state change
+        AppState.addEventListener('change', _handleAppStateChange);
 
         helpers.log("Init started");
 
