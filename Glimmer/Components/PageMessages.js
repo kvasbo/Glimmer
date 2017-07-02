@@ -3,10 +3,8 @@
  */
 
 import React from "react";
-import {AsyncStorage, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image} from "react-native";
+import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Divider, Icon} from "react-native-elements";
-
-//const CachedImage = require('react-native-cached-image');
 
 //Get common list styles
 const listStyles = require('../Styles/ListStyles');
@@ -17,8 +15,6 @@ export default class PageMessages extends React.Component {
         super(props);
 
         this.state = {messages: []};
-
-        this.readFromCache();
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
@@ -80,33 +76,15 @@ export default class PageMessages extends React.Component {
 
     }
 
-
-    readFromCache() {
-        AsyncStorage.getItem('@Cache:Conversations', (err, result) => {
-            if (!err && result !== null) {
-                var resultP = JSON.parse(result);
-                //console.log(resultP);
-                this.setState({conversations: resultP.data})
-            }
-        });
-    }
-
     getMessageThreads() {
 
-        var uri = "/messages/conversations";
+        arbeidsMaur.messageUpdater.getMessageThreads(1).then((data) => {
 
-        api.makeApiGetCall(uri).then((data) => {
+            this.setState({conversations: data});
 
-            try {
-                AsyncStorage.setItem('@Cache:Conversations', JSON.stringify(data));
-            } catch (error) {
-                // Error saving data
-            }
+        }).catch((err) => {
 
-            this.setState({conversations: data.data});
-
-        })
-
+        });
     }
 
     getMessages() {
@@ -122,7 +100,6 @@ export default class PageMessages extends React.Component {
 
         return out;
     }
-
 
     render() {
 
@@ -179,7 +156,8 @@ class Conversation extends React.Component {
                 >
                     <View style={listStyles.whiteBox}>
                         <View style={listStyles.imageBlock}>
-                            <Image source={{uri: this.props.data.user.image_url}} style={{width: 40, height: 40, borderRadius: 20}}/>
+                            <Image source={{uri: this.props.data.user.image_url}}
+                                   style={{width: 40, height: 40, borderRadius: 20}}/>
                         </View>
                         <View style={listStyles.textBlock}>
                             <Text style={this.titleStyle()}>{this.props.data.user.name}</Text>
@@ -198,7 +176,6 @@ class Conversation extends React.Component {
         )
     }
 }
-
 
 const pageStyles = StyleSheet.create({
     container: {

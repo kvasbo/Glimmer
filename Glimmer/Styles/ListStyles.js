@@ -20,7 +20,7 @@ module.exports = StyleSheet.create({
 
     imageBlock: {
         padding: 10,
-        paddingTop: 21,
+        paddingTop: 17,
         flex: 1,
     },
 
