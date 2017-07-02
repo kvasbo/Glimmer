@@ -8,7 +8,7 @@ export default class UserUpdater {
     getUserInfo(user) {
         return new Promise((resolve, reject) => {
 
-            api.makeApiGetCall("/users/" + text.toLowerCase()).then((data) => {
+            api.makeApiGetCall("/users/" + user.toLowerCase()).then((data) => {
 
                 resolve(data.data);
 

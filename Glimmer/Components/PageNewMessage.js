@@ -7,13 +7,31 @@ import {Button, ScrollView, StyleSheet, Text, TextInput, View} from "react-nativ
 
 export default class PageNewMessage extends React.Component {
 
+
     constructor(props) {
         super(props);
-        this.state = {text: null}
+        this.state = {text: null, receivers: []};
+
     }
 
     componentDidMount() {
 
+        this.setState({receivers:store.getState().MessageRecipients});
+
+        //Listen to state changes. This really needs to change at some later point.
+        this.reduxUnsubscribe = store.subscribe(() => {
+
+                var tmpRec = store.getState().MessageRecipients;
+
+                if (tmpRec !== this.state.receivers) {
+                    this.setState({receivers: tmpRec});
+                }
+            }
+        )
+    }
+
+    componentWillUnmount() {
+        this.reduxUnsubscribe();
     }
 
     _onTextChange(text) {

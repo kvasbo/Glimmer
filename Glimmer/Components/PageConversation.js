@@ -17,14 +17,12 @@ export default class PageConversation extends React.Component {
 
     componentWillMount() {
 
-        var uri = "/messages/with/" + this.props.user.id;
-
-        api.makeApiGetCall(uri).then((result) => {
+        arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user.id).then((result) => {
 
             var msg = [];
 
-            for (message in result.data) {
-                var m = this.parseMessageForGiftedChat(result.data[message]);
+            for (message in result) {
+                var m = this.parseMessageForGiftedChat(result[message]);
                 msg.push(m);
             }
 
@@ -36,7 +34,7 @@ export default class PageConversation extends React.Component {
     parseMessageForGiftedChat(mess) {
 
         //Mark as read!
-        if(mess.dismissed_at === null){
+        if (mess.dismissed_at === null) {
             arbeidsMaur.messageUpdater.setMessageAsRead(mess.id);
         }
 
@@ -62,9 +60,7 @@ export default class PageConversation extends React.Component {
 
     onSend(messages = []) {
 
-        var payload = {user_id: this.props.user.id, body: messages[0].text};
-
-        api.makeApiPostCall("/messages", payload,).then((data) => {
+        arbeidsMaur.messageUpdater.sendMessageToUser(this.props.user.id, messages[0].text).then((data) => {
             console.log(data);
         })
 

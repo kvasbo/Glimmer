@@ -49,21 +49,6 @@ const fbConfigurationOptions = {
 
 const firebaseApp = RNFirebase.initializeApp(fbConfigurationOptions);
 
-/*
-// Initialize Firebase
-const firebaseConfig = {
-    apiKey: config.firebase_api_key,
-    authDomain: "glimmer-28101.firebaseapp.com",
-    databaseURL: "https://glimmer-28101.firebaseio.com",
-    projectId: "glimmer-28101",
-    storageBucket: "glimmer-28101.appspot.com",
-    messagingSenderId: "971596888536"
-};
-
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-*/
-
 global.firebaseApp = firebaseApp;
 
 global.auth = new GlimmerAuth();
@@ -89,7 +74,7 @@ const loggerMiddleware = createLogger();
 if (__DEV__) {
     global.store = createStore(glimmerReducers, applyMiddleware(
         //thunkMiddleware, // lets us dispatch() functions
-        //loggerMiddleware // neat middleware that logs actions
+        loggerMiddleware // neat middleware that logs actions
     ));
 }
 else {
