@@ -60,7 +60,7 @@ export default class glimmerAPI {
      * @param type
      * @returns {Promise}
      */
-    makeApiCall(url, type, body=null) {
+    makeApiCall(url, type, body = null) {
 
         return new Promise((resolve, reject) => {
 
@@ -68,16 +68,24 @@ export default class glimmerAPI {
 
             auth.getToken().then((token) => {
 
-                fetch(url, {method: type, body: body, headers: {'Content-Type': 'application/json', 'Accept': 'application/json', "Authorization": "Bearer " + token}}).then((response) => {
+                fetch(url, {
+                    method: type,
+                    body: body,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'User-Agent': 'glimmer',
+                        "Authorization": "Bearer " + token
+                    }
+                }).then((response) => {
 
                     //All is fine
                     if (response.ok === true) {
                         response.json().then((data) => {
 
-                            if(__DEV__)
-                            {
+                            if (__DEV__) {
                                 const end = new Date();
-                                console.log("API OK", type, url, end-start);
+                                console.log("API OK", type, url, end - start);
                             }
                             resolve(data);
 
@@ -90,30 +98,35 @@ export default class glimmerAPI {
                     }
                     else if (response.status === 403) {
 
-                        console.log("API Rejected, token not accepted");
-                        helpers.log("API Rejected, token not accepted", url);
+                        response.json().then((data) => {
+                            console.log("API Rejected, token not accepted", data);
+                            helpers.log("API Rejected, token not accepted", url);
+                            reject(Error("API Rejected, token, " + data.error.body));
+                        })
+
                         reject(Error("Token not accepted"));
                     }
                     else if (response.status === 400) {
 
-                        response.json().then((data)=>{
+                        response.json().then((data) => {
                             console.log("API Rejected, validation error", data.error.body);
                             reject(Error("API Rejected, validation, " + data.error.body));
                         })
 
                     }
-                    else if(response.status === 500){
+                    else if (response.status === 500) {
 
-                        response.text().then((data)=>{
+                        response.text().then((data) => {
                             console.log("Internal server error", data);
                             reject("Internal server error");
                         })
 
                     }
                     else {
-                        response.json().then((data)=>{
-                            console.log("API unhandled", data);
-                            reject(data);
+
+                        response.text().then((data) => {
+                            console.log("Unhandled server error", data);
+                            reject("Unhandled server error");
                         })
                     }
 

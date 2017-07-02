@@ -96,9 +96,9 @@ export default class PageNewForumPost extends React.Component {
         AsyncStorage.setItem(itemKey+"_text", text);
     }
 
-    titleChanged(title) {
+    titleChanged(text) {
 
-        this.setState({text: text});
+        this.setState({title: text});
         AsyncStorage.setItem(itemKey+"_title", text);
     }
 

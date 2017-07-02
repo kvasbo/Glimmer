@@ -293,16 +293,14 @@ export default class ForumUpdater {
      * @param thread
      * @returns {Promise}
      */
-    postNewThread(forum, title, body) {
+    postNewThread(forum, title, body, tags = []) {
 
         console.log("Posting new post to forum", forum, title, body);
 
         return new Promise((resolve, reject) => {
 
-            const postBody = {"post": {"body": body, "title": title, tags: [], forum: {id: forum}}};
+            const postBody = {"post": {"body": body, "title": title, "tags": tags, "forum_id": forum}};
             const url = "/posts";
-
-            console.log(url, postBody);
 
             api.makeApiPostCall(url, {}, postBody).then((data) => {
                 console.log("Post success", data);
