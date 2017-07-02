@@ -39,6 +39,22 @@ export default class PageThread extends React.Component {
             pagePickerModalVisible: false,
         };
 
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+
+    }
+
+    onNavigatorEvent(event) {
+        switch (event.id) {
+            case 'willAppear':
+                this.loadCommentPage(this.state.currentPage); //Refresh current page.
+                break;
+            case 'didAppear':
+                break;
+            case 'willDisappear':
+                break;
+            case 'didDisappear':
+                break;
+        }
     }
 
     componentWillMount() {
@@ -48,7 +64,7 @@ export default class PageThread extends React.Component {
     }
 
     componentWillUnmount() {
-        // this.reduxUnsubscribe();
+
     }
 
     loadInitComments() {

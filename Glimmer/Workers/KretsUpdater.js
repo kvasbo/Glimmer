@@ -20,8 +20,6 @@ export default class KretsUpdater {
 
                     var now = new Date();
 
-                    
-
                     this._getKretsPagesRecursive(1);   
 
                 }
@@ -43,17 +41,17 @@ export default class KretsUpdater {
 
         AsyncStorage.setItem('@Cache:krets', serializedData).then((error, result) => {
 
-            console.log("Current redux krets", store.getState().Krets);
+            //console.log("Current redux krets", store.getState().Krets);
 
             AsyncStorage.getItem('@Cache:krets', (err, result) => {
-                console.log("Current store krets", JSON.parse(result).data);
+                //console.log("Current store krets", JSON.parse(result).data);
             })
 
         });
 
     }
 
-    _getKretsPagesRecursive(page) {
+    _getKretsPagesRecursive(page, maxPages = 999) {
 
         var uri = "/users/current/circle?page=" + page;
 
@@ -63,7 +61,7 @@ export default class KretsUpdater {
                 global.store.dispatch(addKretsPerson(data.data[key]));
             }
 
-            if (data.data.length == 0) {
+            if (data.data.length == 0 || page > maxPages) {
                 this._storeKretsList();
             }
             else {

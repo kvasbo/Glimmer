@@ -5,6 +5,7 @@
 import React from "react";
 import {
     AsyncStorage,
+    Alert,
     Button,
     KeyboardAvoidingView,
     Picker,
@@ -77,13 +78,18 @@ export default class PageNewForumPost extends React.Component {
 
     postMessage() {
 
-        //TODO TODO TODO
-        var forum = 1564;
+        if(this.state.title == "" || this.state.text == "")
+        {
+            Alert.alert("Ooops", "Du må skrive både en tittel og en tekst.");
+        }
+
+        var forum = this.state.selectedForum;
 
         if (this.state.selectedForum !== null && this.state.text !== "") {
-            console.log("Posting message");
+           // console.log("Posting message");
 
-            arbeidsMaur.forumUpdater.postNewThread(forum, "Test", "Testbody").then((data) => {
+            arbeidsMaur.forumUpdater.postNewThread(forum, this.state.title, this.state.text).then((data) => {
+                //Håndtere at det gikk bra.
                 console.log(data);
             }).catch((err) => {
                 console.log(err);
