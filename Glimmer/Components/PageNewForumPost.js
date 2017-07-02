@@ -170,7 +170,7 @@ export default class PageNewForumPost extends React.Component {
                                 onValueChange={(value) => this.setState({showAllForums: value})}
                                 value={this.state.showAllForums}
                             />
-                            <Text style={TextStyles.uxExplain}>Alle</Text>
+                            <Text style={TextStyles.uxExplain}>Vis alle</Text>
                         </View>
                         <Picker
 

@@ -3,9 +3,9 @@
  */
 
 import React from "react";
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View, Alert} from "react-native";
 import {Badge} from "react-native-elements";
-
+import GiKudos from "./GiKudos";
 import ForumText from "./ForumText.js";
 //const CachedImage = require('react-native-cached-image');
 var DomParser = require('react-native-html-parser').DOMParser
@@ -20,20 +20,6 @@ class MetaDataFirstPost extends React.Component {
         super(props);
     }
 
-    giKudos() {
-
-        arbeidsMaur.forumUpdater.giveKudosToPost(this.props.post.id).then(()=>{
-
-            //Håndtere at vi har gitt kudos!
-            console.log("Kudos gitt!");
-
-        }).catch((err) =>{
-            console.log(err);
-        })
-
-
-    }
-
     render() {
 
         var comText = "kommentar";
@@ -46,15 +32,7 @@ class MetaDataFirstPost extends React.Component {
 
             <View style={{flexDirection: "row"}}>
 
-                <TouchableOpacity
-                    onLongPress={() => this.giKudos()}
-                >
-                    <Badge
-                        value={"Gi kudos"}
-                        textStyle={{color: 'white'}}
-                        containerStyle={{backgroundColor: 'green', marginRight: 5}}
-                    />
-                </TouchableOpacity>
+                <GiKudos id={this.props.post.id} type="post" given={false}  />
 
                 <Badge
                     value={this.props.post.comment_count + " " + comText}

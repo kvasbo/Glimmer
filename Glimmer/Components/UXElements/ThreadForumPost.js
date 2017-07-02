@@ -30,11 +30,7 @@ class MetaDataFirstPost extends React.Component {
 
             <View style={{flexDirection: "row"}}>
 
-                <Badge
-                    value={"Gi kudos"}
-                    textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: 'green', marginRight: 5}}
-                />
+                <GiKudos id={this.props.post.id} type="post" given={false} />
 
                 <Badge
                     value={this.props.post.comment_count + " " + comText}
