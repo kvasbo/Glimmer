@@ -6,7 +6,6 @@ import React from "react";
 import {StyleSheet} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
 
-
 export default class PageConversation extends React.Component {
 
     constructor(props) {
@@ -22,8 +21,6 @@ export default class PageConversation extends React.Component {
 
         api.makeApiGetCall(uri).then((result) => {
 
-            console.log("Messages", result);
-
             var msg = [];
 
             for (message in result.data) {
@@ -37,6 +34,12 @@ export default class PageConversation extends React.Component {
     }
 
     parseMessageForGiftedChat(mess) {
+
+        //Mark as read!
+        if(mess.dismissed_at === null){
+            arbeidsMaur.messageUpdater.setMessageAsRead(mess.id);
+        }
+
         var userInfo = mess.from;
 
         out = {};

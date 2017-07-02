@@ -6,6 +6,7 @@ import ForumUpdater from "./ForumUpdater";
 import ForumListUpdater from "./ForumListUpdater";
 import KretsUpdater from "./KretsUpdater";
 import UserUpdater from "./UserUpdater";
+import MessageUpdater from "./MessageUpdater";
 
 const config = require("../config.js");
 
@@ -16,6 +17,7 @@ export default class Workers {
         this.forumListUpdater = new ForumListUpdater();
         this.kretsUpdater = new KretsUpdater();
         this.userUpdater = new UserUpdater();
+        this.messageUpdater = new MessageUpdater();
     }
 
     initData() {
