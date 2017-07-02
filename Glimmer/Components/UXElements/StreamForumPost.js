@@ -124,12 +124,12 @@ export default class StreamForumPost extends React.Component {
 
                 {this.getFirstImage()}
 
-                <Text style={pageStyles.creatorInfo}>{creator}, {this.getTime()}. {this.props.data.forum.title}.</Text>
-
                 <View style={pageStyles.thePost}>
                     <ForumText cut={this.props.cut} text={this.props.data.body} images={this.props.images}
                                style={{marginBottom: 10}}/>
                 </View>
+
+                <Text style={pageStyles.creatorInfo}>{creator}, {this.getTime()}. {this.props.data.forum.title}.</Text>
 
                 <View style={pageStyles.metaData}>
                     {this.getMetadataSection()}
@@ -145,38 +145,41 @@ const pageStyles = StyleSheet.create({
     container: {
         backgroundColor: '#FFFFFF',
         padding: 0,
-        marginBottom: 10,
-        marginTop: 10,
-        flex: 1
+        paddingTop: 5,
+        paddingBottom: 15,
+        marginBottom: 5,
+        marginTop: 5,
+        flex: 1,
     },
     title: {
-        marginTop: 10,
+        marginTop: 12 ,
+        marginBottom: 0,
+        marginLeft: 20,
+        marginRight: 20,
+        paddingTop: 0,
+        paddingBottom: 5,
+        backgroundColor: "#FFFFFF"
+    },
+    titleText: {
+        marginTop: 0,
         marginBottom: 0,
         marginLeft: 0,
         marginRight: 0,
-        paddingTop: 5,
-        paddingBottom: 5,
-        backgroundColor: "#2C3E50"
-    },
-    titleText: {
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 20,
-        marginRight: 20,
-        fontSize: 20,
-        fontWeight: "400",
-        color: "#ECF0F1"
+        textAlign: "left",
+        fontSize: 25,
+        fontWeight: "300",
+        color: "#222222",
     },
     image: {
-        marginTop: 0,
+        marginTop: 7,
         marginBottom: 10,
         marginLeft: 0,
         marginRight: 0,
         height: 120,
     },
     creatorInfo: {
-        marginTop: 10,
-        marginBottom: 5,
+        marginTop: 5,
+        marginBottom: 7,
         marginLeft: 20,
         marginRight: 20,
     },
@@ -187,8 +190,8 @@ const pageStyles = StyleSheet.create({
         marginRight: 20,
     },
     metaData: {
-        marginTop: 5,
-        marginBottom: 5,
+        marginTop: 7,
+        marginBottom: 7,
         marginLeft: 20,
         marginRight: 20,
     }

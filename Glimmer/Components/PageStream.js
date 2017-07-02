@@ -125,7 +125,7 @@ export default class PageStream extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FAFAFA',
+        backgroundColor: '#ECF0F1',
         paddingLeft: 0,
         marginTop: 60,
         paddingBottom: 0,
