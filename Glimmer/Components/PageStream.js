@@ -20,6 +20,7 @@ export default class PageStream extends React.Component {
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
+                this._silentRefresh();
                 break;
             case 'didAppear':
                 break;
@@ -87,6 +88,10 @@ export default class PageStream extends React.Component {
                                       cut={true} images={false} data={this.state.posts[post].data}/>);
         }
         return out;
+    }
+
+    _silentRefresh() {
+        if(!this.state.refreshing) global.arbeidsMaur.forumUpdater.loadStream(1);
     }
 
     _onRefresh() {

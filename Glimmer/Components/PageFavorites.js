@@ -18,6 +18,8 @@ export default class PageFavorites extends React.Component {
 
         super(props);
         this.state = {posts: this.props.store.getState().ForumFavorite.posts, loading: true, refreshing: false};
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+
     }
 
     static navigatorStyle = {
@@ -29,7 +31,13 @@ export default class PageFavorites extends React.Component {
         navBarHidden: false,
     };
 
-
+    onNavigatorEvent(event) {
+        switch (event.id) {
+            case 'willAppear':
+                this._silentRefresh();
+                break;
+        }
+    }
 
     componentWillMount() {
 
@@ -49,7 +57,11 @@ export default class PageFavorites extends React.Component {
         this.reduxUnsubscribe();
     }
 
-    _onRefresh() {
+    _silentRefresh() {
+        if(!this.state.loading) global.arbeidsMaur.forumUpdater.addFavorites(1, 1);
+    }
+
+    _refresh() {
 
         this.setState({refreshing: true});
         global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then((data) => {
@@ -109,7 +121,7 @@ export default class PageFavorites extends React.Component {
                 <FlatList
                     style={pageStyles.container}
                     data={this.state.posts}
-                    onRefresh={() => this._onRefresh()}
+                    onRefresh={() => this._refresh()}
                     refreshing={this.state.refreshing}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => item.data.id}
