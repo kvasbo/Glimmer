@@ -27,21 +27,18 @@ export default class ThreadForumPost extends React.Component {
     }
 
     getMetadataSection() {
-        if (this.props.metaData === false) {
-            return null;
-        }
-        else {
-            return (
 
-                <View style={{flexDirection: "row"}}>
+        return (
 
-                    <KudosAndCommentsAndStuff showThreadButton={this.props.showThreadButton}
-                                              navigator={this.props.navigator} post={this.props.data}/>
+            <View style={{flexDirection: "row"}}>
 
-                </View>
+                <KudosAndCommentsAndStuff showCommentBadge={false}
+                                          navigator={this.props.navigator} post={this.props.data}/>
 
-            )
-        }
+            </View>
+
+        )
+
     }
 
     render() {
@@ -62,7 +59,7 @@ export default class ThreadForumPost extends React.Component {
                                style={{marginBottom: 10}}/>
                 </View>
 
-                <View style={this.metaData}>
+                <View style={pageStyles.metaData}>
                     {this.getMetadataSection()}
                 </View>
 

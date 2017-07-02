@@ -32,7 +32,10 @@ export default class KudosAndCommentsAndStuff extends React.Component {
         }
     }
 
-    render() {
+    getCommentThing()
+    {
+        //If disabled, hide. Cause that's what you do.
+        if(!this.props.showCommentBadge) return false;
 
         var comText = "kommentar";
 
@@ -42,20 +45,29 @@ export default class KudosAndCommentsAndStuff extends React.Component {
 
         return (
 
+            <Badge
+                value={this.props.post.comment_count + " " + comText}
+                textStyle={{color: 'white'}}
+                containerStyle={{backgroundColor: 'orange'}}
+                onPress={() => this.props.navigator.push({
+                    screen: 'glimmer.PageThread',
+                    title: this.props.post.title,
+                    passProps: {post: this.props.post}
+                })}
+            />
+
+        )
+    }
+
+    render() {
+
+        return (
+
             <View style={{flexDirection: "row"}}>
 
                 {this.getKudosSection()}
 
-                <Badge
-                    value={this.props.post.comment_count + " " + comText}
-                    textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: 'orange'}}
-                    onPress={() => this.props.navigator.push({
-                        screen: 'glimmer.PageThread',
-                        title: this.props.post.title,
-                        passProps: {post: this.props.post}
-                    })}
-                />
+                {this.getCommentThing()}
 
             </View>
         )

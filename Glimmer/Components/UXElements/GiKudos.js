@@ -46,7 +46,7 @@ export default class GiKudos extends React.Component {
                 <Badge
                     value={"Kudos gitt!"}
                     textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: 'green', marginRight: 5}}
+                    containerStyle={{backgroundColor: '#2C3E50', marginRight: 5}}
                 />
             )
         }
@@ -54,7 +54,7 @@ export default class GiKudos extends React.Component {
 
             return (
                 <TouchableOpacity
-                    onPress={() => this.setState({text: "Hold for kudos!"})}
+                    onPress={() => this.setState({text: "Hold for kudos..."})}
                     onLongPress={() => this.giKudos()}
                 >
                     <Badge

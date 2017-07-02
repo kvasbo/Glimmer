@@ -26,8 +26,8 @@ export default class VisKudos extends React.Component {
             <View style={pageStyles.container}>
                 <Badge
                     value={this.getKudosCount() + " kudos"}
-                    textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: 'red', marginRight: 5}}
+                    textStyle={{color: '#444444'}}
+                    containerStyle={{backgroundColor: '#ECF0F1', marginRight: 5}}
                 />
             </View>
         );

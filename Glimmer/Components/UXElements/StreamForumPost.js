@@ -98,7 +98,7 @@ export default class StreamForumPost extends React.Component {
 
             <View style={{flexDirection: "row"}}>
 
-                <KudosAndCommentsAndStuff showThreadButton={this.props.showThreadButton}
+                <KudosAndCommentsAndStuff showCommentBadge={true}
                                    navigator={this.props.navigator} post={this.props.data} byMe={this.byMe} />
 
             </View>

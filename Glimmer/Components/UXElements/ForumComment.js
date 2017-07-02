@@ -3,9 +3,10 @@
  */
 
 import React from "react";
-import {Image, StyleSheet, Text, View, TouchableOpacity} from "react-native";
+import {Image, StyleSheet, Text, View} from "react-native";
 import ForumText from "./ForumText.js";
 import GiKudos from "./GiKudos";
+import VisKudos from "./VisKudos";
 
 var s = require('../Styles');
 
@@ -32,6 +33,7 @@ class CommentMetadata extends React.Component {
 
         return (
             <View style={{flexDirection: "row", alignItems: "center", marginLeft: 10, marginRight: 10, flex: 1}}>
+
                 <Image
                     style={[this.styles.element, {width: 34, height: 34, borderRadius: 2}]}
                     source={{uri: this.props.data.creator.image_url}}
@@ -39,7 +41,6 @@ class CommentMetadata extends React.Component {
                 <Text style={this.styles.element}>{this.props.data.creator.name}</Text>
                 <Text style={this.styles.element}>{this.getTime()}</Text>
 
-                <GiKudos id={this.props.data.id} type="comment" given={false}  />
 
             </View>
         )
@@ -50,8 +51,36 @@ class CommentMetadata extends React.Component {
 
 export default class ForumComment extends React.Component {
 
+    byMe = false;
+
     constructor(props) {
         super(props);
+
+        if (this.props.data.creator.id === auth.currentUser.id) {
+            this.byMe = true;
+        }
+
+        console.log("Comment", this.props.data, "By me;", this.byMe);
+
+    }
+
+    getKudosSection() {
+        if (this.byMe) {
+
+            var kudos = [];
+
+            if(typeof this.props.data.kudos.from !== "undefined")
+            {
+                kudos = this.props.data.kudos.from;
+            }
+
+            return (<VisKudos kudos={kudos}/>)
+        }
+        else {
+            var given = false;
+            if (typeof(this.props.data.kudos.given) !== "undefined" && this.props.data.kudos.given) given = true;
+            return (<GiKudos id={this.props.data.id} type="comment" given={given}/>)
+        }
     }
 
     render() {
@@ -61,6 +90,9 @@ export default class ForumComment extends React.Component {
                 <CommentMetadata data={this.props.data}/>
                 <View style={pageStyles.comment}>
                     <ForumText cut={false} text={this.props.data.body}/>
+                </View>
+                <View style={{flexDirection: "row", margin: 10, marginTop: 5, padding: 0}}>
+                    {this.getKudosSection()}
                 </View>
             </View>
         )
