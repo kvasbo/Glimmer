@@ -1,10 +1,11 @@
 export default class Forum {
 
-    constructor(id, title, body) {
+    constructor(id, title, body, updateId = null) {
         this.title = title;
         this.id = id;
-        this.changed = new Date().toISOString();
+        this.updated = new Date().toISOString();
         this.body = body;
+        this.updateId = updateId;
     }
 
 }

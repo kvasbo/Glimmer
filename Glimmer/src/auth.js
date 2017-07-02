@@ -19,34 +19,6 @@ export default class glimmerAuth {
 
     currentUser = null;
 
-    /*
-    init() {
-
-        return new Promise((resolve, reject) => {
-            //Check token
-            this.getToken().then((data) => {
-
-                if (__DEV__) {
-                    console.log("Auth.init: Got a token!", data);
-                }
-
-                store.dispatch(setLoginStatus(true));
-
-                resolve();
-
-            }).catch((error) => {
-
-                store.dispatch(setLoginStatus(false));
-
-                console.log("Auth.init: No token found");
-                reject("No token found")
-
-            })
-        })
-
-    }
-    */
-
     doUnderskogOauth() {
 
         return new Promise((resolve, reject) => {
@@ -115,7 +87,7 @@ export default class glimmerAuth {
             .then((credentials) => {
                 if (credentials) {
                     if (__DEV__) {
-                         console.log("Credentials found", credentials.server, credentials.username, credentials.password);
+                         //console.log("Credentials found", credentials.server, credentials.username, credentials.password);
                     }
                     resolve(credentials.password);
                 }

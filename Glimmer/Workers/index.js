@@ -3,6 +3,7 @@
  */
 import React from "react";
 import ForumUpdater from "./ForumUpdater";
+import ForumListUpdater from "./ForumListUpdater";
 import KretsUpdater from "./KretsUpdater";
 import UserUpdater from "./UserUpdater";
 
@@ -12,6 +13,7 @@ export default class Workers {
 
     constructor() {
         this.forumUpdater = new ForumUpdater();
+        this.forumListUpdater = new ForumListUpdater();
         this.kretsUpdater = new KretsUpdater();
         this.userUpdater = new UserUpdater();
     }
@@ -22,7 +24,14 @@ export default class Workers {
 
         Promise.all(first).then(() => {
             this.kretsUpdater.initKrets(false);
-            this.forumUpdater.initForums(false);
+
+            this.forumListUpdater.reloadForums(false);
+
+            if(__DEV__)
+            {
+
+            }
+
         })
 
         //setInterval(this.refreshForumData(), config.interval_forumrefresh * 1000);

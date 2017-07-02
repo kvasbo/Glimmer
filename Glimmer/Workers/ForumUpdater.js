@@ -1,20 +1,16 @@
 import {AsyncStorage} from "react-native";
 import {addFavoritesPost, addStreamPost, replaceForumList} from "../Redux/actions";
 
-const Forum = require('../DataClasses/forum.js').default;
-
 const config = require("../config.js");
 
 export default class ForumUpdater {
 
     lastpage_favs = 0;
     lastpage_stream = 0;
-    database = null;
-
-    tmpForums = [];
+    //database = null;
 
     constructor() {
-        this.database = firebaseApp.database;
+        //this.database = firebaseApp.database;
     }
 
     //Do the API lifting
@@ -119,123 +115,6 @@ export default class ForumUpdater {
 
         });
 
-    }
-
-    /**
-     * Init forums from storage and trigger a reload if they are too old (or we force it).
-     * @param force
-     * @returns {Promise}
-     */
-    initForums(force) {
-
-        return new Promise((resolve, reject) => {
-
-            /*
-
-             AsyncStorage.getItem('@Cache:forumList', (err, result) => {
-             if (!err && result !== null) {
-
-             var resultP = JSON.parse(result);
-
-             //Full replace in store
-             if (typeof resultP.data.forums === "object") {
-             console.log("Replacing forum list in Redux store with cached data");
-             store.dispatch(replaceForumList(resultP.data.forums));
-             console.log("Restored store", store.getState());
-             }
-
-             for (key in resultP.data.forums) {
-
-             var forumId = resultP.data.forums[key].id;
-
-             var tmpForum = new Forum(forumId, resultP.data.forums[key].title, resultP.data.forums[key].body);
-
-             firebaseApp.database().ref('forums/list/' + forumId).set(tmpForum);
-             firebaseApp.database().ref('forums/meta').set({lastFullUpdate:new Date().toISOString()});
-
-             // console.log(tmpForum);
-
-             // console.log(resultP.data.forums[key]);
-             }
-
-             var now = new Date();
-
-             if (force || now - resultP.time < (1000 * 60 * 60 * 24 * 14)) {
-             console.log("Forum cache too old, loading from API");
-             this._getForumsPagesRecursive(1);
-             }
-
-             }
-             else {
-             console.log("No forum cache found, loading from API");
-             this._getForumsPagesRecursive(1);
-             }
-
-             resolve(true);
-
-             });
-
-
-             */
-
-            resolve();
-
-        })
-
-    }
-
-    /**
-     * Add a set of API returns to the temp forum list in anticipation of the atomic rewrite of the entire thing.
-     * @param forumBatch
-     * @private
-     */
-    _addAPIForumsToList(forumBatch) {
-        for (forum in forumBatch) {
-            this.tmpForums.push(forumBatch[forum]);
-        }
-    }
-
-    /**
-     * Persist forum list to cache and replace the Redux store version with the new list.
-     * @private
-     */
-    _persistForums() {
-
-        console.log("Persisting forums");
-
-        store.dispatch(replaceForumList(this.tmpForums));
-
-        this.tmpForums = [];
-
-        var data = {time: new Date(), data: store.getState().ForumList};
-
-        AsyncStorage.setItem('@Cache:forumList', JSON.stringify(data)).then((error, result) => {
-
-            console.log("Current redux list", store.getState().ForumList);
-
-            AsyncStorage.getItem('@Cache:forumList', (err, result) => {
-                console.log("Current store list", JSON.parse(result).data);
-            })
-
-        });
-
-    }
-
-    _getForumsPagesRecursive(page, maxPages = 999) {
-
-        var uri = "/forums?page=" + page;
-
-        api.makeApiGetCall(uri).then((data) => {
-
-            this._addAPIForumsToList(data.data);
-
-            if (data.data.length == 0 || page >= maxPages) {
-                this._persistForums();
-            }
-            else {
-                this._getForumsPagesRecursive(page + 1);
-            }
-        })
     }
 
     loadCommentsForPost(postId, page = 1) {
