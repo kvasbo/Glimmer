@@ -3,18 +3,18 @@ import {Alert} from "react-native";
 import {registerScreens} from "./src/screens";
 import {Navigation} from "react-native-navigation";
 import Workers from "./Workers/index.js";
-import * as firebase from "firebase";
 import {applyMiddleware, createStore} from "redux";
 import {createLogger} from "redux-logger";
 import {Provider} from "react-redux";
 import glimmerReducers from "./Redux/index";
-
+import RNFirebase from 'react-native-firebase'
 import {setJSExceptionHandler} from "react-native-exception-handler";
 import RNRestart from "react-native-restart";
 import "moment/locale/nb";
 import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
 import Helpers from "./src/helpers";
+
 
 global.moment = require('moment');
 moment.locale('nb')
@@ -42,6 +42,14 @@ const errorHandler = (e, isFatal) => {
 
 setJSExceptionHandler(errorHandler, true);
 
+const fbConfigurationOptions = {
+    debug: __DEV__,
+    persistence: true
+};
+
+const firebaseApp = RNFirebase.initializeApp(fbConfigurationOptions);
+
+/*
 // Initialize Firebase
 const firebaseConfig = {
     apiKey: config.firebase_api_key,
@@ -53,6 +61,9 @@ const firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+*/
+
 global.firebaseApp = firebaseApp;
 
 global.auth = new GlimmerAuth();

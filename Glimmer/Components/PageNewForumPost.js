@@ -62,8 +62,10 @@ export default class PageNewForumPost extends React.Component {
                 this.setState({
                     forums: forums.list,
                     muchUsedForums: forums.muchused,
-                    selectedForum: null
                 });
+
+                console.log("State set from db", this.state.forums, this.state.muchUsedForums, this.state.selectedForum);
+
             }
 
         });
@@ -75,12 +77,13 @@ export default class PageNewForumPost extends React.Component {
 
     postMessage() {
 
-        //Testform: 814
+        //TODO TODO TODO
+        var forum = 1564;
 
         if (this.state.selectedForum !== null && this.state.text !== "") {
             console.log("Posting message");
 
-            arbeidsMaur.forumUpdater.postNewThread(814, "Test", "Testbody").then((data) => {
+            arbeidsMaur.forumUpdater.postNewThread(forum, "Test", "Testbody").then((data) => {
                 console.log(data);
             }).catch((err) => {
                 console.log(err);
@@ -113,17 +116,23 @@ export default class PageNewForumPost extends React.Component {
             muchUsed.push(this.state.muchUsedForums[key]);
         }
 
-        //console.log("Getting forums", this.state.forums, muchUsed);
+        var tmpForums = this.state.forums;
 
-        var tmpForums = this.state.forums
+        //clean list and remove filter if needed
+        tmpForums = tmpForums.filter((item) => {
 
-        //Filtrer hvis vi skal dét.
-        if (!this.state.showAllForums) {
-            tmpForums = tmpForums.filter((item) => {
-                if (muchUsed.includes(item.id)) return true;
-                else return false;
-            })
-        }
+            if(item === null) return false; //Due to stupidity
+            if(typeof(item.id) === "undefined" || typeof(item.title) === "undefined") return false;
+
+            //Filtrer hvis vi skal dét.
+            if(!this.state.showAllForums)
+            {
+                if(!muchUsed.includes(item.id)) return false;
+            }
+
+            return true;
+            
+        });
 
         //Sortér
         tmpForums.sort((x, y) => {
