@@ -8,7 +8,8 @@ import {
     MESSAGE_RECIPIENTS_ADD_PERSON,
     MESSAGE_RECIPIENTS_CLEAR,
     MESSAGE_RECIPIENTS_REMOVE_PERSON,
-    FORUMPOST_COMMENT_ADD
+    FORUMPOST_COMMENT_ADD,
+    USERS_ADD_USER
 } from "./constants";
 
 export function replaceForumList(forums) {
@@ -25,10 +26,15 @@ export function addForumToList(forum) {
     }
 }
 
-export function addKretsPerson(person) {
+/**
+ * Just an ID
+ * @param id
+ * @returns {{type, id: *}}
+ */
+export function addKretsPerson(id) {
     return {
         type: KRETS_ADD_PERSON,
-        person
+        id
     }
 }
 
@@ -76,5 +82,12 @@ export function addForumPostComment(postId, comment) {
         type: FORUMPOST_COMMENT_ADD,
         postId,
         comment
+    }
+}
+
+export function addUser(user) {
+    return {
+        type: USERS_ADD_USER,
+        user
     }
 }

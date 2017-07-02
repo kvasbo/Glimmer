@@ -1,5 +1,5 @@
 import React from "react";
-import {Alert} from "react-native";
+import {Alert, AppState} from "react-native";
 import {registerScreens} from "./src/screens";
 import {Navigation} from "react-native-navigation";
 import Workers from "./Workers/index.js";
@@ -7,14 +7,13 @@ import {applyMiddleware, createStore} from "redux";
 import {createLogger} from "redux-logger";
 import {Provider} from "react-redux";
 import glimmerReducers from "./Redux/index";
-import RNFirebase from 'react-native-firebase'
+import RNFirebase from "react-native-firebase";
 import {setJSExceptionHandler} from "react-native-exception-handler";
 import RNRestart from "react-native-restart";
 import "moment/locale/nb";
 import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
 import Helpers from "./src/helpers";
-
 
 global.moment = require('moment');
 moment.locale('nb')
@@ -64,7 +63,6 @@ firebaseApp.auth().onAuthStateChanged(function (user) {
     } else {
         // User is signed out.
         console.log("Firebase signed out", user)
-
     }
 });
 
@@ -87,9 +85,15 @@ else {
 //Make root navigation callable from anywhere. Should be cleaned up and done via store!
 global.rootNavigation = Navigation;
 
-if (__DEV__) {
-    console.log("Store init", global.store.getState());
+//Reload stuff on wake.
+_handleAppStateChange = (nextAppState) => {
+    if (nextAppState === 'active') {
+        console.log('App has come to the foreground!')
+    }
 }
+
+//function to attach listener to app state change
+AppState.addEventListener('change', _handleAppStateChange);
 
 export default class Glimmer {
 

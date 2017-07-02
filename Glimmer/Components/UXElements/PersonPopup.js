@@ -21,8 +21,8 @@ export default class PersonPopup extends React.Component {
         return (
             <View style={pageStyles.container}>
                 <View style={{flexDirection: "column", alignItems: "center", padding: 5}}>
-                    <Image style={pageStyles.image} source={{uri: this.props.person.image_url}}/>
-                    <Text style={pageStyles.title}>{this.props.person.realname}</Text>
+                    <Image style={pageStyles.image} source={{uri: this.props.person.image}}/>
+                    <Text style={pageStyles.title}>{this.props.person.realName}</Text>
                 </View>
                 <Button title="Lukk" onPress={() => this.props.navigator.dismissLightBox() }/>
             </View>

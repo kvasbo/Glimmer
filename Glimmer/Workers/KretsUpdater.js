@@ -1,5 +1,6 @@
 import {AsyncStorage} from "react-native";
-import {addKretsPerson} from "../Redux/actions";
+import {addKretsPerson, addUser} from "../Redux/actions";
+const User = require("../DataClasses/user").default;
 
 export default class KretsUpdater {
 
@@ -11,45 +12,10 @@ export default class KretsUpdater {
             console.log("Init krets");
         }
 
-        return new Promise((resolve, reject) => {
-
-            AsyncStorage.getItem('@Cache:krets', (err, result) => {
-                if (!err && result !== null) {
-
-                    var resultP = JSON.parse(result);
-
-                    var now = new Date();
-
-                    this._getKretsPagesRecursive(1);   
-
-                }
-                else {
-                    console.log("No krets cache found, loading from API");
-                    this._getKretsPagesRecursive(1);
-                }
-
-                resolve(true);
-
-            });
-        })
-    }
-
-    _storeKretsList() {
-
-        var data = {time: new Date(), data: global.store.getState().Krets};
-        var serializedData = JSON.stringify(data);
-
-        AsyncStorage.setItem('@Cache:krets', serializedData).then((error, result) => {
-
-            //console.log("Current redux krets", store.getState().Krets);
-
-            AsyncStorage.getItem('@Cache:krets', (err, result) => {
-                //console.log("Current store krets", JSON.parse(result).data);
-            })
-
-        });
+        this._getKretsPagesRecursive(1);
 
     }
+
 
     _getKretsPagesRecursive(page, maxPages = 999) {
 
@@ -58,11 +24,16 @@ export default class KretsUpdater {
         api.makeApiGetCall(uri).then((data) => {
 
             for (key in data.data) {
-                global.store.dispatch(addKretsPerson(data.data[key]));
+
+                var tmpUser = new User(data.data[key].id, data.data[key].name, data.data[key].realname,  data.data[key].image_url, data.data[key].friend);
+
+                global.store.dispatch(addUser(tmpUser));
+                global.store.dispatch(addKretsPerson(tmpUser.id));
+
             }
 
             if (data.data.length == 0 || page > maxPages) {
-                this._storeKretsList();
+               //this._storeKretsList();
             }
             else {
                 this._getKretsPagesRecursive(page + 1);

@@ -75,7 +75,7 @@ export default class PageKretsVelger extends React.Component {
 
     _renderItem = ({item}) => (
 
-        <PersonFace key={item.person.id} person={item.person} navigator={this.props.navigator}/>
+        <PersonFace key={item.id} person={item} navigator={this.props.navigator}/>
 
     )
 
@@ -87,8 +87,18 @@ export default class PageKretsVelger extends React.Component {
 
     _getDataArray() {
 
-        var krets = Object.values(this.state.krets).sort((x, y) => {
-            return x.person.name.toLowerCase().localeCompare(y.person.name.toLowerCase());
+        var ids = this.state.krets;
+        var folks = store.getState().User;
+
+        var krets = [];
+
+        for(var i = 0; i < ids.length; i++)
+        {
+            krets.push(folks[ids[i]]);
+        }
+
+        krets.sort((x, y) => {
+            return x.name.toLowerCase().localeCompare(y.name.toLowerCase());
         });
 
         return krets;
@@ -170,7 +180,7 @@ export default class PageKretsVelger extends React.Component {
 
                         data={this._getDataArray()}
                         renderItem={this._renderItem}
-                        keyExtractor={(item, index) => item.person.id}
+                        keyExtractor={(item, index) => item.id}
                         contentContainerStyle={pageStyles.list}
 
                     />

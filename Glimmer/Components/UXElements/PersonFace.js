@@ -24,7 +24,7 @@ export default class PersonFace extends React.Component {
     }
 
     getImageUrl() {
-        var url = this.props.person.image_url;
+        var url = this.props.person.image;
         return url;
     }
 
@@ -68,7 +68,7 @@ export default class PersonFace extends React.Component {
         return (
             <TouchableOpacity onPress={() => this.toggleState()} onLongPress={() => this.showInfo()}>
                 <View style={pageStyles.container}>
-                    <Image style={this.getSelectedStyle()} source={{uri: this.props.person.image_url}}/>
+                    <Image style={this.getSelectedStyle()} source={{uri: this.props.person.image}}/>
                     <Text style={pageStyles.name}>{this.props.person.name}</Text>
                 </View>
             </TouchableOpacity>
