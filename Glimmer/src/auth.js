@@ -110,6 +110,7 @@ export default class glimmerAuth {
         return new Promise((resolve, reject) => {
 
             api.makeApiGetCall("/users/current").then((data) => {
+
                 this.currentUser = data.data;
 
                 if (__DEV__) {

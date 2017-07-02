@@ -10,7 +10,7 @@ export default class GiKudos extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {given: this.props.given}
+        this.state = {given: this.props.given, text: "Gi kudos"}
     }
 
     componentDidMount() {
@@ -23,7 +23,6 @@ export default class GiKudos extends React.Component {
             arbeidsMaur.forumUpdater.giveKudosToPost(this.props.id).then(() => {
 
                 this.setState({given: true})
-                console.log("Kudos gitt!");
 
             }).catch((err) => {
                 console.log(err);
@@ -33,7 +32,6 @@ export default class GiKudos extends React.Component {
             arbeidsMaur.forumUpdater.giveKudosToComment(this.props.id).then(() => {
 
                 this.setState({given: true})
-                console.log("Kudos gitt!");
 
             }).catch((err) => {
                 console.log(err);
@@ -56,11 +54,11 @@ export default class GiKudos extends React.Component {
 
             return (
                 <TouchableOpacity
-                    onPress={() => Alert.alert("Vådekudos?", "Hold inne knappen i et lite sekund for å gi kudos.")}
+                    onPress={() => this.setState({text: "Hold for kudos!"})}
                     onLongPress={() => this.giKudos()}
                 >
                     <Badge
-                        value={"Gi kudos"}
+                        value={this.state.text}
                         textStyle={{color: 'white'}}
                         containerStyle={{backgroundColor: 'green', marginRight: 5}}
                     />

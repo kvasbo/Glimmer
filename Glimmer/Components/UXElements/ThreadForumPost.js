@@ -4,49 +4,10 @@
 
 import React from "react";
 import {StyleSheet, Text, View} from "react-native";
-import {Badge} from "react-native-elements";
-
+import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 import ForumText from "./ForumText.js";
 
 var s = require('../Styles');
-
-//https://github.com/jsdf/react-native-htmlview
-
-class MetaDataFirstPost extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-
-        var comText = "kommentar";
-
-        if (this.props.post.comment_count !== 1) {
-            comText = "kommentarer";
-        }
-
-        return (
-
-            <View style={{flexDirection: "row"}}>
-
-                <GiKudos id={this.props.post.id} type="post" given={false} />
-
-                <Badge
-                    value={this.props.post.comment_count + " " + comText}
-                    textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: 'orange'}}
-                    onPress={() => this.props.navigator.push({
-                        screen: 'glimmer.PageThread',
-                        title: this.props.post.title,
-                        passProps: {post: this.props.post}
-                    })}
-                />
-
-            </View>
-        )
-    }
-}
 
 export default class ThreadForumPost extends React.Component {
 
@@ -74,8 +35,8 @@ export default class ThreadForumPost extends React.Component {
 
                 <View style={{flexDirection: "row"}}>
 
-                    <MetaDataFirstPost showThreadButton={this.props.showThreadButton}
-                                       navigator={this.props.navigator} post={this.props.data}/>
+                    <KudosAndCommentsAndStuff showThreadButton={this.props.showThreadButton}
+                                              navigator={this.props.navigator} post={this.props.data}/>
 
                 </View>
 

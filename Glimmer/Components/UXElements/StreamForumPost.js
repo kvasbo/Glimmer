@@ -7,57 +7,28 @@ import {Image, StyleSheet, Text, TouchableOpacity, View, Alert} from "react-nati
 import {Badge} from "react-native-elements";
 import GiKudos from "./GiKudos";
 import ForumText from "./ForumText.js";
+import VisKudos from "./VisKudos";
+import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 //const CachedImage = require('react-native-cached-image');
 var DomParser = require('react-native-html-parser').DOMParser
 
 var s = require('../Styles');
 
-//https://github.com/jsdf/react-native-htmlview
-
-class MetaDataFirstPost extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-
-        var comText = "kommentar";
-
-        if (this.props.post.comment_count !== 1) {
-            comText = "kommentarer";
-        }
-
-        return (
-
-            <View style={{flexDirection: "row"}}>
-
-                <GiKudos id={this.props.post.id} type="post" given={false}  />
-
-                <Badge
-                    value={this.props.post.comment_count + " " + comText}
-                    textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: 'orange'}}
-                    onPress={() => this.props.navigator.push({
-                        screen: 'glimmer.PageThread',
-                        title: this.props.post.title,
-                        passProps: {post: this.props.post}
-                    })}
-                />
-
-            </View>
-        )
-    }
-}
 
 export default class StreamForumPost extends React.Component {
 
     images = [];
+    byMe = false;
 
     constructor(props) {
 
         super(props);
         this.state = {};
+
+        if(this.props.data.creator.id === auth.currentUser.id)
+        {
+            this.byMe = true;
+        }
 
         this.images = this.getImages();
 
@@ -122,21 +93,18 @@ export default class StreamForumPost extends React.Component {
     }
 
     getMetadataSection() {
-        if (this.props.metaData === false) {
-            return null;
-        }
-        else {
-            return (
 
-                <View style={{flexDirection: "row"}}>
+        return (
 
-                    <MetaDataFirstPost showThreadButton={this.props.showThreadButton}
-                                       navigator={this.props.navigator} post={this.props.data}/>
+            <View style={{flexDirection: "row"}}>
 
-                </View>
+                <KudosAndCommentsAndStuff showThreadButton={this.props.showThreadButton}
+                                   navigator={this.props.navigator} post={this.props.data} byMe={this.byMe} />
 
-            )
-        }
+            </View>
+
+        )
+
     }
 
     render() {
