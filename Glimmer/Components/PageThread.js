@@ -128,7 +128,7 @@ export default class PageThread extends React.Component {
 
             //Scroll to top if initiated
             if (this.scrollbar !== null) {
-                this.scrollbar.scrollTo({y: height + 100, animated: true});
+                this.scrollbar.scrollTo({y: 0, animated: true});
             }
 
         });
@@ -271,7 +271,9 @@ export default class PageThread extends React.Component {
 
 
             <ScrollView ref={component => this.scrollbar = component} style={pageStyles.container}>
+
                 {this._getModal()}
+
                 <ThreadForumPost data={this.props.post} metaData={false}
                                  cut={false}
                                  touchable={false}/>
@@ -283,10 +285,10 @@ export default class PageThread extends React.Component {
 
                 {this._getSidevelger()}
 
-                <AddCommentBlock postId={this.props.post.id}/>
+                <KeyboardAvoidingView behavior="position">
+                    <AddCommentBlock postId={this.props.post.id}/>
+                </KeyboardAvoidingView>
 
-                <KeyboardAvoidingView behavior="padding"/>
-                <View style={{height: 20}}/>
             </ScrollView>
 
 

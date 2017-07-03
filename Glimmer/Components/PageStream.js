@@ -57,10 +57,10 @@ export default class PageStream extends React.Component {
     };
 
     static navigatorStyle = {
-        drawUnderTabBar: true,
+        drawUnderTabBar: false,
         statusBarBlur: true,
         drawUnderStatusBar: false,
-        drawUnderNavBar: true,
+        drawUnderNavBar: false,
         navBarBlur: true,
         navBarHidden: false,
     };
@@ -128,9 +128,7 @@ const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ECF0F1',
-        paddingLeft: 0,
-        marginTop: 60,
-        paddingBottom: 0,
-        paddingRight: 0,
+        padding: 0,
+        margin: 0,
     },
 });

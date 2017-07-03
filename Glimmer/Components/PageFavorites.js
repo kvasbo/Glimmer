@@ -23,10 +23,10 @@ export default class PageFavorites extends React.Component {
     }
 
     static navigatorStyle = {
-        drawUnderTabBar: true,
-        statusBarBlur: false,
+        drawUnderTabBar: false,
+        statusBarBlur: true,
         drawUnderStatusBar: false,
-        drawUnderNavBar: true,
+        drawUnderNavBar: false,
         navBarBlur: true,
         navBarHidden: false,
     };
@@ -109,6 +109,11 @@ export default class PageFavorites extends React.Component {
 
     }
 
+    _getHeader()
+    {
+        return (<Divider style={listStyles.divider}/>)
+    }
+
     render() {
 
         if (this.state.loading) {
@@ -127,7 +132,8 @@ export default class PageFavorites extends React.Component {
                     keyExtractor={(item, index) => item.data.id}
                     onEndReached={this._loadMoreItems}
                     onEndReachedThreshold={0.5}
-                    initialNumToRender={30}
+                    initialNumToRender={15}
+                    ListHeaderComponent={this._getHeader}
                 />
             );
         }
@@ -140,8 +146,8 @@ const pageStyles = StyleSheet.create({
         flexDirection: "column",
         backgroundColor: '#FFFFFF',
         paddingLeft: 0,
-        marginTop: 60,
-        marginBottom: 50,
+        marginTop: 0,
+        marginBottom: 0,
         paddingRight: 0,
 
     },
