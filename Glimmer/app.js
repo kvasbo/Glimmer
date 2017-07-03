@@ -134,7 +134,11 @@ export default class Glimmer {
 
         //This function will set the loggedin state to true or false in the store, which in term will trigger the store subscription.
         //Then the app starts. I know.
-        auth.checkAuth();
+        auth.checkAuth().then(()=>{
+            //Logged in, app will start
+        }).catch((err) => {
+            //Not logged in
+        });
     }
 
     startAppBasedOnLoginStatus() {
