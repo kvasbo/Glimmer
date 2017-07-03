@@ -19,9 +19,6 @@
 //Firebase change
 #import <Firebase.h>
 
-//Bugsnag change
-#import <BugsnagReactNative/BugsnagReactNative.h>
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -55,10 +52,6 @@
   
   //Firebase change
   [FIRApp configure];
-  
-  //Bugsnag change
-
-  [BugsnagReactNative start];
    
   return YES;
 }

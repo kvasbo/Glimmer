@@ -3,8 +3,6 @@ package com.rettvendt.glimmer;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-//import io.invertase.firebase.RNFirebaseAdMobPackage;
-import com.bugsnag.BugsnagReactNative;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.oblador.keychain.KeychainPackage;
@@ -67,10 +65,7 @@ public class MainApplication extends NavigationApplication {
                  new RNFirebaseDatabasePackage(),
                  //new RNFirebaseMessagingPackage(),
                  new RNFirebasePerformancePackage(),
-                 new RNFirebaseStoragePackage(),
-
-                 //Bugsnag
-                 BugsnagReactNative.getPackage()
+                 new RNFirebaseStoragePackage()
 
 
 

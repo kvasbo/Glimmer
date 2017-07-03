@@ -14,16 +14,11 @@ import "moment/locale/nb";
 import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
 import Helpers from "./src/helpers";
-import { Client } from 'bugsnag-react-native';
 
 global.moment = require('moment');
 moment.locale('nb')
 
 const config = require("./config.js");
-
-const bugsnagger = new Client();
-
-global.bugsnag = bugsnagger;
 
 //Some hacks
 console.ignoredYellowBox = ['[xmldom warning]'];

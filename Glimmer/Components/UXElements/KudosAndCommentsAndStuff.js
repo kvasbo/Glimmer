@@ -48,7 +48,7 @@ export default class KudosAndCommentsAndStuff extends React.Component {
             <Badge
                 value={this.props.post.comment_count + " " + comText}
                 textStyle={{color: 'white'}}
-                containerStyle={{backgroundColor: '#2980B9'}}
+                containerStyle={{backgroundColor: 'orange'}}
                 onPress={() => this.props.navigator.push({
                     screen: 'glimmer.PageThread',
                     title: this.props.post.title,
