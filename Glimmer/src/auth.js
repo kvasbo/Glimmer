@@ -19,6 +19,33 @@ export default class glimmerAuth {
 
     currentUser = null;
 
+    /** Test if we are connected **/
+    checkAuth() {
+
+        return new Promise((resolve, reject) => {
+
+            api.makeApiGetCall("/users/current").then((data) => {
+
+                this.currentUser = data.data;
+
+                if (__DEV__) {
+                    console.log("Current User", this.currentUser);
+                }
+                store.dispatch(setLoginStatus(true));
+                resolve(data);
+            }).catch((error) => {
+
+                if (__DEV__) {
+                    console.log("Error, doing auth", error);
+                }
+                store.dispatch(setLoginStatus(false));
+                reject("Key not valid");
+            })
+
+        })
+    }
+
+
     doUnderskogOauth() {
 
         return new Promise((resolve, reject) => {
@@ -31,8 +58,6 @@ export default class glimmerAuth {
             const oauthUrl = ["https://underskog.no/oauth/authorize", "?response_type=token", "&client_id=" + app_key, "&redirect_uri=glimmer://foo", "&state=" + state,].join("");
 
             console.log("Oauth URL", oauthUrl);
-
-            helpers.log("Oauth URL", oauthUrl);
 
             Linking.addEventListener("url", handleUrl);
 
@@ -50,12 +75,6 @@ export default class glimmerAuth {
                     }
 
                     let password = query.access_token;
-
-                    /*
-                     AsyncStorage.setItem('token', password).then(()=>{
-                     resolve(password);
-                     });
-                     */
 
                     Keychain
                     .setInternetCredentials(server, username, password)
@@ -86,13 +105,9 @@ export default class glimmerAuth {
             .getInternetCredentials(server)
             .then((credentials) => {
                 if (credentials) {
-                    if (__DEV__) {
-                         //console.log("Credentials found", credentials.server, credentials.username, credentials.password);
-                    }
                     resolve(credentials.password);
                 }
                 else {
-                    console.log("Credentials not found");
                     reject("No token found");
                 }
 
@@ -102,31 +117,6 @@ export default class glimmerAuth {
 
         })
 
-    }
-
-    /** Test if we are connected **/
-    checkAuth() {
-
-        return new Promise((resolve, reject) => {
-
-            api.makeApiGetCall("/users/current").then((data) => {
-
-                this.currentUser = data.data;
-
-                if (__DEV__) {
-                    console.log("Current User", this.currentUser);
-                }
-                store.dispatch(setLoginStatus(true));
-                resolve(data);
-            }).catch((error) => {
-                if (__DEV__) {
-                    console.log("Error, doing auth", error);
-                }
-                store.dispatch(setLoginStatus(false));
-                reject("Key not valid");
-            })
-
-        })
     }
 
 }

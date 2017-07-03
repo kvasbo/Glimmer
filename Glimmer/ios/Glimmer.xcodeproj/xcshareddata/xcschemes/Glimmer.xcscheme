@@ -124,6 +124,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Glimmer"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
