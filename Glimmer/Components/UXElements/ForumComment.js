@@ -89,7 +89,7 @@ export default class ForumComment extends React.Component {
             <View style={pageStyles.container}>
                 <CommentMetadata data={this.props.data}/>
                 <View style={pageStyles.comment}>
-                    <ForumText cut={false} text={this.props.data.body}/>
+                    <ForumText webview={true} cut={false} text={this.props.data.body}/>
                 </View>
                 <View style={{flexDirection: "row", margin: 10, marginTop: 5, padding: 0}}>
                     {this.getKudosSection()}

@@ -3,9 +3,11 @@
  */
 
 import React from "react";
-import {RefreshControl, ScrollView, StyleSheet} from "react-native";
+import {StyleSheet, FlatList, View} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";
+import Divider from "./UXElements/Divider";
+
 
 export default class PageStream extends React.Component {
 
@@ -14,6 +16,7 @@ export default class PageStream extends React.Component {
         super(props);
         this.state = {posts: [], loading: true, refreshing: false};
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+        this._onRefresh = this._onRefresh.bind(this);
 
     }
 
@@ -78,20 +81,18 @@ export default class PageStream extends React.Component {
         )
     }
 
-    createPostList() {
-        out = [];
+    _renderItem(item) {
 
-        for (post in this.state.posts) {
+        return (
 
-            out.push(<StreamForumPost showThreadButton={true} navigator={this.props.navigator}
-                                      key={this.state.posts[post].data.id}
-                                      cut={true} images={false} data={this.state.posts[post].data}/>);
-        }
-        return out;
+            <StreamForumPost navigator={this.props.navigator}
+                             cut={true} images={false} data={item.data}/>
+
+        )
     }
 
     _silentRefresh() {
-        if(!this.state.refreshing) global.arbeidsMaur.forumUpdater.loadStream(1);
+        if (!this.state.refreshing) global.arbeidsMaur.forumUpdater.loadStream(1);
     }
 
     _onRefresh() {
@@ -108,15 +109,16 @@ export default class PageStream extends React.Component {
         } else {
 
             return (
-                <ScrollView style={pageStyles.container}
-                            refreshControl={
-                                <RefreshControl
-                                    refreshing={this.state.refreshing}
-                                    onRefresh={this._onRefresh.bind(this)}
-                                />}
-                >
-                    {this.createPostList()}
-                </ScrollView>
+                <FlatList
+                    style={pageStyles.container}
+                    data={this.state.posts}
+                    renderItem={(item) => this._renderItem(item.item)}
+                    keyExtractor={(item) => {return item.data.id}}
+                    onRefresh={this._onRefresh}
+                    refreshing={this.state.refreshing}
+                    initialNumToRender={5}
+
+                />
             );
         }
     }

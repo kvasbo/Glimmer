@@ -2,11 +2,18 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React from "react";
-
+import React from 'react';
+import {StyleSheet, View, Text, Image, WebView, Linking} from 'react-native';
+import HTMLView from 'react-native-htmlview';
 import AutoHeightWebView from "react-native-autoheight-webview";
 
 export default class ForumText extends React.Component {
+
+    constructor(props)
+    {
+        super(props);
+        this.renderNode = this.renderNode.bind(this);
+    }
 
     wrapper = {
 
@@ -66,19 +73,55 @@ export default class ForumText extends React.Component {
         return new moment(this.props.data.created_at).calendar();
     }
 
+    renderNode(node, index, siblings, parent, defaultRenderer) {
+
+        if (node.name == 'iframe') {
+
+            const a = node.attribs;
+            const iframeHtml = `<iframe src="${a.src}"></iframe>`;
+            return (
+                <Text key={index}>Åpne innlegget for å se iFrame</Text>
+            );
+        }
+
+        if (this.props.images == false && node.name == 'img') {
+             return null;
+        }
+
+    }
+
     render() {
 
         var postBody = this.fixBody();
 
-        return (
-            <AutoHeightWebView
-                enableAnimation={false}
-                animationDuration={255}
-                source={{html: postBody}}
-                //onHeightUpdated={height => console.log(height)}
-                style={{margin: 0, padding: 0, borderWidth: 0, flex: 1}}
-            />
-        );
+        if(this.props.webview)
+        {
+            return (
+                <AutoHeightWebView
+                    enableAnimation={false}
+                    source={{html: postBody}}
+                    //onHeightUpdated={height => console.log(height)}
+                    style={{margin: 0, padding: 0, borderWidth: 0, flex: 1}}
+                />
+            );
+        }
+        else {
+
+            return(
+                <HTMLView
+                    value={postBody}
+                    stylesheet={styles}
+                    renderNode={this.renderNode}
+                />
+            )
+        }
     }
 
 }
+
+const styles = StyleSheet.create({
+    a: {
+        fontWeight: '300',
+        color: '#FF3366', // make links coloured pink
+    },
+});

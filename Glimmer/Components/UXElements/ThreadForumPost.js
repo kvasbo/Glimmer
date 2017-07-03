@@ -55,7 +55,7 @@ export default class ThreadForumPost extends React.Component {
                 <Text style={pageStyles.creatorInfo}>{creator}, {this.getTime()}. {this.props.data.forum.title}.</Text>
 
                 <View style={pageStyles.thePost}>
-                    <ForumText cut={false} text={this.props.data.body} images={true}
+                    <ForumText webview={true} cut={false} text={this.props.data.body} images={true}
                                style={{marginBottom: 10}}/>
                 </View>
 

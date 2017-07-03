@@ -10,10 +10,10 @@ import ForumText from "./ForumText.js";
 import VisKudos from "./VisKudos";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 //const CachedImage = require('react-native-cached-image');
-var DomParser = require('react-native-html-parser').DOMParser
+var DomParser = require('react-native-html-parser').DOMParser;
+import HTMLView from 'react-native-htmlview';
 
 var s = require('../Styles');
-
 
 export default class StreamForumPost extends React.Component {
 
