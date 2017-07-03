@@ -37,8 +37,6 @@ export default class Workers {
 
         })
 
-        //setInterval(this.refreshForumData(), config.interval_forumrefresh * 1000);
-
     }
 
     refreshForumData() {

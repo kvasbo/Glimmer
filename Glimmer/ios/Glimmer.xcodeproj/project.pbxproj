@@ -38,6 +38,8 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* GlimmerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GlimmerTests.m */; };
+		320F5069535D4064A306018E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A9360E7FD7FE4A2982BAA1BD /* libz.tbd */; };
+		343747E11BD345128526D680 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F100A749E64910B0991AE9 /* libRNFirebase.a */; };
 		39CDDDD451C84653B68FD5E2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E20DCD087A94743BACE2CEA /* MaterialIcons.ttf */; };
 		3C29A0CDE01342DE959D7FD2 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77229A6FB3E74DFD9712AF6B /* libRNVectorIcons.a */; };
 		3DCAE7038E634EFBA2911EF0 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBE5566E507540F6BC1F7F11 /* Ionicons.ttf */; };
@@ -47,6 +49,7 @@
 		70176D60DDF74B07920F5605 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4414BF26EA51422EBE273CDC /* Entypo.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		9117FB040C654A37B4DAB9E1 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6CA335C407A4744A8D1F8F5 /* SimpleLineIcons.ttf */; };
+		95D91E8809E741C4BEEA14E1 /* libBugsnagReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D1AC6E49C26440284DBE93F /* libBugsnagReactNative.a */; };
 		95EA88F75C5047928A495D52 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88C82DC48E6F4952B9368E1A /* EvilIcons.ttf */; };
 		9B75C73D53BD4616ACED6A82 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5C286F9AA847F4B424E5E6 /* libRCTRestart.a */; };
 		9CC498E2DB60446BA853D8DB /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 858E1F5BC0464323919BAA63 /* libRNKeychain.a */; };
@@ -278,6 +281,20 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
+		ADDC8A891F0A225400A46CCD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C71F5B123280444DB91F2AC0 /* RNFirebase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNFirebase;
+		};
+		ADDC8A901F0A225400A46CCD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1EBD3CF818154350A2C81C51 /* BugsnagReactNative.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8AD256131D6DE5F600C7D842;
+			remoteInfo = BugsnagReactNative;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -306,6 +323,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		152FEF38DA494F44A4852C1B /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		1BC277FB3575FCD56C37A6B0 /* Pods-Glimmer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Glimmer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Glimmer/Pods-Glimmer.debug.xcconfig"; sourceTree = "<group>"; };
+		1EBD3CF818154350A2C81C51 /* BugsnagReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BugsnagReactNative.xcodeproj; path = "../node_modules/bugsnag-react-native/cocoa/BugsnagReactNative.xcodeproj"; sourceTree = "<group>"; };
 		225F3947E8A849AF9A57E8E5 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		25AED8EBEA97437FA7C5F443 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		268CAC4A89DB4D38B6BA0C41 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
@@ -314,6 +332,7 @@
 		335372550C084A8AB5801973 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		380674208DCF436DB9B8ECA8 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		4414BF26EA51422EBE273CDC /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		4D1AC6E49C26440284DBE93F /* libBugsnagReactNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libBugsnagReactNative.a; sourceTree = "<group>"; };
 		4FFEAC2AD9AF4C93A7A729A1 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		52C2E035F87F41E08CC6BE30 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		5CFD0D2CFA00E8614F661913 /* Pods-Glimmer-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Glimmer-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Glimmer-tvOSTests/Pods-Glimmer-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -324,6 +343,7 @@
 		7BD8FD8617B743A4ADB7AA56 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		7FA6B2AE458C4B4496CB8418 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		80C8D54CD779411FB6827885 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		81F100A749E64910B0991AE9 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		8263FD461E57D693F3F22A86 /* Pods-Glimmer-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Glimmer-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Glimmer-tvOS/Pods-Glimmer-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		858E1F5BC0464323919BAA63 /* libRNKeychain.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNKeychain.a; sourceTree = "<group>"; };
@@ -334,10 +354,12 @@
 		9CEB3A8337EA6E6E3DA6CF7B /* Pods-GlimmerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlimmerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlimmerTests/Pods-GlimmerTests.release.xcconfig"; sourceTree = "<group>"; };
 		9E20DCD087A94743BACE2CEA /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		A4855BFCE8AE4AFE9547F71F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		A9360E7FD7FE4A2982BAA1BD /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		AD134FF21EF9B77800ED5A39 /* Glimmer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Glimmer.entitlements; path = Glimmer/Glimmer.entitlements; sourceTree = "<group>"; };
 		AD5DC8851F08EC8C00235DA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Glimmer/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BC6827B40C1232F4E97293DE /* libPods-Glimmer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Glimmer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C71F5B123280444DB91F2AC0 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		CBE5566E507540F6BC1F7F11 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		CEDFC41CF47341D3895B47AB /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		D30772D1B1094A3CABAC8DCF /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -377,6 +399,9 @@
 				9CC498E2DB60446BA853D8DB /* libRNKeychain.a in Frameworks */,
 				9B75C73D53BD4616ACED6A82 /* libRCTRestart.a in Frameworks */,
 				219217C72703A77EFB918EC2 /* libPods-Glimmer.a in Frameworks */,
+				95D91E8809E741C4BEEA14E1 /* libBugsnagReactNative.a in Frameworks */,
+				320F5069535D4064A306018E /* libz.tbd in Frameworks */,
+				343747E11BD345128526D680 /* libRNFirebase.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +498,7 @@
 				8FD51A3F74481C493C5D6CD7 /* libPods-Glimmer-tvOS.a */,
 				018CD41F5F34A87F85D99E0C /* libPods-Glimmer-tvOSTests.a */,
 				0C89992CDD9382D63647B00D /* libPods-GlimmerTests.a */,
+				A9360E7FD7FE4A2982BAA1BD /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -562,6 +588,8 @@
 				335372550C084A8AB5801973 /* RNVectorIcons.xcodeproj */,
 				0F8EEFE255AC44C8B16B14E8 /* RNKeychain.xcodeproj */,
 				268CAC4A89DB4D38B6BA0C41 /* RCTRestart.xcodeproj */,
+				1EBD3CF818154350A2C81C51 /* BugsnagReactNative.xcodeproj */,
+				C71F5B123280444DB91F2AC0 /* RNFirebase.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -655,6 +683,22 @@
 			isa = PBXGroup;
 			children = (
 				ADC0586A1EF5195D007B758B /* libRNVectorIcons.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADDC8A6B1F0A225400A46CCD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ADDC8A8A1F0A225400A46CCD /* libRNFirebase.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADDC8A8D1F0A225400A46CCD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ADDC8A911F0A225400A46CCD /* libBugsnagReactNative.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -811,6 +855,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = ADDC8A8D1F0A225400A46CCD /* Products */;
+					ProjectRef = 1EBD3CF818154350A2C81C51 /* BugsnagReactNative.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -861,6 +909,10 @@
 				{
 					ProductGroup = AD134F701EF9040B00ED5A39 /* Products */;
 					ProjectRef = AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */;
+				},
+				{
+					ProductGroup = ADDC8A6B1F0A225400A46CCD /* Products */;
+					ProjectRef = C71F5B123280444DB91F2AC0 /* RNFirebase.xcodeproj */;
 				},
 				{
 					ProductGroup = AD134FD21EF9B73D00ED5A39 /* Products */;
@@ -1083,6 +1135,20 @@
 			fileType = archive.ar;
 			path = libRNVectorIcons.a;
 			remoteRef = ADC058691EF5195D007B758B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ADDC8A8A1F0A225400A46CCD /* libRNFirebase.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFirebase.a;
+			remoteRef = ADDC8A891F0A225400A46CCD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ADDC8A911F0A225400A46CCD /* libBugsnagReactNative.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBugsnagReactNative.a;
+			remoteRef = ADDC8A901F0A225400A46CCD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1425,11 +1491,17 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart",
+					"$(SRCROOT)/../node_modules/bugsnag-react-native/cocoa/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = GlimmerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1454,11 +1526,17 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart",
+					"$(SRCROOT)/../node_modules/bugsnag-react-native/cocoa/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = GlimmerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1486,6 +1564,8 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart",
+					"$(SRCROOT)/../node_modules/bugsnag-react-native/cocoa/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = Glimmer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1515,6 +1595,8 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart",
+					"$(SRCROOT)/../node_modules/bugsnag-react-native/cocoa/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = Glimmer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1547,10 +1629,16 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart",
+					"$(SRCROOT)/../node_modules/bugsnag-react-native/cocoa/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = "Glimmer-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1582,10 +1670,16 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart",
+					"$(SRCROOT)/../node_modules/bugsnag-react-native/cocoa/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = "Glimmer-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1613,7 +1707,11 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Glimmer-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Glimmer-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -1636,7 +1734,11 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Glimmer-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Glimmer-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
