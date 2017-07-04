@@ -11,7 +11,11 @@ export default class PersonFace extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {selected: false}
+
+        let initActive = false;
+        if(this.props.active) initActive = true
+
+        this.state = {selected: initActive}
     }
 
     componentDidMount() {
@@ -30,11 +34,9 @@ export default class PersonFace extends React.Component {
 
     toggleState() {
 
-
-
         if(__DEV__)
         {
-            console.log("Setstate", !this.state.selected, this.props.person.name);
+            console.log("Setstate", !this.state.selected, this.props.person.id, this.props.person.name);
         }
 
         if(this.state.selected)

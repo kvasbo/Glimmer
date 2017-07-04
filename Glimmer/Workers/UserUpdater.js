@@ -9,23 +9,23 @@ export default class UserUpdater {
      * @returns {Promise}
      */
     getUserInfo(user) {
+
         return new Promise((resolve, reject) => {
 
             //Read from store. //TODO keep in memory?
-            var users = store.getState().Users;
+            let users = store.getState().Users;
 
             //Get from local cache
-            if(typeof(users[user] !== undefined))
-            {
-                resolve(uses[user]);
+            if (false && typeof(users[user] !== undefined)) {
+                resolve(users[user]);
             }
             else {
 
-                api.makeApiGetCall("/users/" + user.toLowerCase()).then((data) => {
+                api.makeApiGetCall("/users/" + user).then((data) => {
 
                     //Save to cache
-                    var tmpUser = new User(data.data[key].id, data.data[key].name, data.data[key].realname,  data.data[key].image_url, data.data[key].friend);
-                    store.dispatch(addUser(tmpUse));
+                    var tmpUser = new User(data.data.id, data.data.name, data.data.realname, data.data.image_url, data.data.friend);
+                    store.dispatch(addUser(tmpUser));
 
                     resolve(data.data);
 
@@ -37,6 +37,18 @@ export default class UserUpdater {
             }
 
         });
+    }
+
+    async syncGetUserInfo(user) {
+
+        let data = await this.getUserInfo(user);
+
+        console.log("Awaited", data);
+
+        var duta = data;
+
+        return duta;
+
     }
 
 }

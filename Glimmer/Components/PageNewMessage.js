@@ -4,9 +4,9 @@
 
 import React from "react";
 import {Button, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
+import PersonFace from "./UXElements/PersonFace";
 
 export default class PageNewMessage extends React.Component {
-
 
     constructor(props) {
         super(props);
@@ -16,7 +16,7 @@ export default class PageNewMessage extends React.Component {
 
     componentDidMount() {
 
-        this.setState({receivers:store.getState().MessageRecipients});
+        this.setState({receivers: store.getState().MessageRecipients});
 
         //Listen to state changes. This really needs to change at some later point.
         this.reduxUnsubscribe = store.subscribe(() => {
@@ -28,6 +28,25 @@ export default class PageNewMessage extends React.Component {
                 }
             }
         )
+    }
+
+    getReceivers() {
+
+        let out = [];
+
+        let users = store.getState().User;
+
+        for (key in this.state.receivers) {
+            //We have the user info!
+            if (typeof(users[this.state.receivers[key][0]]) !== "undefined") {
+
+                out.push(<PersonFace key={key} person={users[this.state.receivers[key][0]]} active={true}></PersonFace>);
+
+            }
+        }
+
+        return out;
+
     }
 
     componentWillUnmount() {
@@ -46,6 +65,8 @@ export default class PageNewMessage extends React.Component {
                 <View style={pageStyles.mottakere}>
 
                     <Text>Mottakere</Text>
+
+                    {this.getReceivers()}
 
                     <View style={pageStyles.faceList}/>
 
@@ -85,8 +106,6 @@ const pageStyles = StyleSheet.create({
     faceList: {
         flex: 3,
     },
-    mottakere: {
-
-    }
+    mottakere: {}
 
 });
