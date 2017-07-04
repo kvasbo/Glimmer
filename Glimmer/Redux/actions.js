@@ -64,7 +64,7 @@ export function removeNewMessageRecipient(id) {
     }
 }
 
-export function clearNewMessageRecipient() {
+export function clearMessageRecipients() {
     return {
         type: MESSAGE_RECIPIENTS_CLEAR
     }

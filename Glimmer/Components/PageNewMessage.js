@@ -3,8 +3,9 @@
  */
 
 import React from "react";
-import {Button, ScrollView, StyleSheet, Text, TextInput, View, Alert} from "react-native";
+import {Alert, Button, ScrollView, StyleSheet, TextInput, View, Text} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
+import {clearMessageRecipients} from "../Redux/actions";
 
 export default class PageNewMessage extends React.Component {
 
@@ -36,13 +37,18 @@ export default class PageNewMessage extends React.Component {
 
         let users = store.getState().User;
 
-        for (key in this.state.receivers) {
+        if(this.state.receivers.length === 0)
+        {
+            return (<Text style={{margin: 10, color: "white"}}>Ingen mottakere valgt. Skal du sende til ingen du da?</Text>)
+        }
+
+        for (let key in this.state.receivers) {
 
             var userId = this.state.receivers[key]
 
             //We have the user info!
 
-           if (typeof(users[userId]) !== "undefined") {
+            if (typeof(users[userId]) !== "undefined") {
 
                 out.push(<PersonFace key={key} person={users[userId]} active={true}></PersonFace>);
 
@@ -53,30 +59,29 @@ export default class PageNewMessage extends React.Component {
 
     }
 
-    sendMessage()
-    {
-        if(this.state.text != "" && this.state.receivers.length > 0)
-        {
+    sendMessage() {
+        if (this.state.text != "" && this.state.receivers.length > 0) {
             let sending = [];
 
-            for(key in this.state.receivers)
-            {
-
+            for (key in this.state.receivers) {
                 sending.push(arbeidsMaur.messageUpdater.sendMessageToUser(this.state.receivers[key], this.state.text));
-
             }
 
             Promise.all(sending).then(() => {
                 Alert.alert("Hurra", "Alle meldingene er sendt!");
-                This.props.navigator.pop();
+                this.props.navigator.popToRoot();
             })
-
-
 
         }
         else {
             Alert.alert("Hoppsann", "Ingen mottakere, eller tom melding.");
         }
+    }
+
+    _cancelMessage()
+    {
+        store.dispatch(clearMessageRecipients());
+        this.props.navigator.popToRoot();
     }
 
     componentWillUnmount() {
@@ -104,12 +109,23 @@ export default class PageNewMessage extends React.Component {
                 <TextInput multiline={true} style={pageStyles.textInput}
                            onChangeText={(text) => this._onTextChange(text)}/>
 
-                <Button title="Avbryt" onPress={() => {
-                    console.log("Avbryt melding")
-                }}/>
-                <Button title="Send" onPress={() => {
-                    this.sendMessage();
-                }}/>
+                <View style={{flexDirection:"row", justifyContent:"space-around"}}>
+
+                    <Button title="Avbryt" onPress={() => {
+
+                        Alert.alert("Avbryt", "Vil du avbryte? Meldingen går tapt.", [
+                                {text: 'Nei', onPress: () => {}},
+                                {text: 'Ja', onPress: () => this._cancelMessage()},
+                            ],
+                            { cancelable: false });
+
+                    }}/>
+
+                    <Button title="Send" onPress={() => {
+                        this.sendMessage();
+                    }}/>
+
+                </View>
 
 
             </ScrollView>
@@ -129,8 +145,9 @@ const pageStyles = StyleSheet.create({
     textInput: {
         backgroundColor: '#FFFFFF',
         margin: 10,
-
-        height: 100,
+        fontSize: 14,
+        height: 250,
+        borderRadius: 1
     },
     faceList: {
         flexDirection: "row",

@@ -14,7 +14,8 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
-var ImagePicker = require('react-native-image-picker');
+const ImagePicker = require('react-native-image-picker');
+const TextStyles = require("../../Styles/TextStyles");
 
 const imagePickerOptions = {
     title: 'Velg bilde',
@@ -128,7 +129,7 @@ export default class WriteNewPostOrComment extends React.Component {
         });
     }
 
-    //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed. 
+    //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed.
     getLoadingIndicator(loading) {
         if (loading) {
             return (<View style={{backgroundColor: "#FFFFFF66", height: 75, width: 75, padding: 20}}><ActivityIndicator size="large" color="#444444" hidesWhenStopped={true}/></View>)
@@ -205,7 +206,7 @@ export default class WriteNewPostOrComment extends React.Component {
                 <View style={{marginTop: 22}}>
                     <View>
 
-                        <View><Text>{this.props.title}</Text></View>
+                        <View><Text style={[TextStyles.uxTitle]}>{this.props.title}</Text></View>
 
                         <View style={pageStyles.imageViewer}>
                             {this.getImageList()}
@@ -249,7 +250,7 @@ export default class WriteNewPostOrComment extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#ECF0F1',
         padding: 10,
         marginBottom: 2,
         paddingTop: 8,
@@ -260,8 +261,11 @@ const pageStyles = StyleSheet.create({
         padding: 5,
         height: 150,
         borderWidth: 0,
-        backgroundColor: "#ECF0F1"
+        backgroundColor: "#FFFFFF"
     },
-    imageViewer: {}
+    imageViewer: {
+        backgroundColor: "#ECF0F1",
+        minHeight: 15,
+    }
 
 });

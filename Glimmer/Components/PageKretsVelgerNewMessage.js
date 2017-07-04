@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {FlatList, StyleSheet, Text, TextInput, View, Animated} from "react-native";
+import {Alert, Animated, FlatList, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 
 //TODO sort by status and then name
@@ -15,7 +15,13 @@ export default class PageKretsVelger extends React.Component {
     constructor(props) {
         super(props);
         var tmpKrets = store.getState().Krets;
-        this.state = {krets: store.getState().Krets, searchText: "", searchHits: [], performedSearches: [], searching: false}
+        this.state = {
+            krets: store.getState().Krets,
+            searchText: "",
+            searchHits: [],
+            performedSearches: [],
+            searching: false
+        }
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
@@ -41,6 +47,11 @@ export default class PageKretsVelger extends React.Component {
                 this.props.navigator.dismissAllModals();
             }
             if (event.id == "writeNewMessage") {
+
+                if (store.getState.MessageRecipients.receivers.length === 0) {
+                    Alert.alert("Ingen mottakere", "Hvem tenkte du skulle lese denne meldinga da?");
+                }
+
                 this.props.navigator.push({
                     screen: 'glimmer.PageNewMessage', // unique ID registered with Navigation.registerScreen
                     title: "Skriv melding", // navigation bar title of the pushed screen (optional)
@@ -92,8 +103,7 @@ export default class PageKretsVelger extends React.Component {
 
         var krets = [];
 
-        for(var i = 0; i < ids.length; i++)
-        {
+        for (var i = 0; i < ids.length; i++) {
             krets.push(folks[ids[i]]);
         }
 
@@ -112,7 +122,7 @@ export default class PageKretsVelger extends React.Component {
 
         clearTimeout(this.searchTimer);
 
-        this.searchTimer = setTimeout(()=> {
+        this.searchTimer = setTimeout(() => {
 
             if (text.length > 0 && !this.state.performedSearches.includes(text)) {
 
@@ -138,11 +148,9 @@ export default class PageKretsVelger extends React.Component {
 
         }, searchDelay);
 
-
     }
 
-    _getSearchHeight()
-    {
+    _getSearchHeight() {
         return Math.ceil(this.state.searchHits.length / 4) * 85;
     }
 
