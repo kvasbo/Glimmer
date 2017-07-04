@@ -3,65 +3,59 @@
  */
 
 import React from "react";
-import {View, Text, StyleSheet, TextInput, Button, Alert} from "react-native";
+import {Alert, Button, StyleSheet, TextInput, View, Image, ActivityIndicator} from "react-native";
 var ImagePicker = require('react-native-image-picker');
-
 
 const imagePickerOptions = {
     title: 'Velg bilde',
     storageOptions: {
         skipBackup: true,
         path: 'images'
-    }
+    },
+    mediaType: 'photo',
+    maxWidth: '1200',
+    maxHeight: '1200'
+
 };
 
 export default class AddCommentBlock extends React.Component {
 
-
-
     constructor(props) {
         super(props);
-        this.state = {text: '', pics: ''};
+        this.state = {text: '', images: {}};
 
     }
 
-    _clear()
-    {
+    _clear() {
         console.log("Clear comment");
     }
 
-    _post()
-    {
+    _post() {
         if (this.state.text !== "") {
 
             arbeidsMaur.forumUpdater.postCommentInThread(this.state.text, this.props.postId).then((data) => {
 
                 this.setState({text: ""});
 
-
             }).catch((error) => {
                 Alert.alert("Noe gikk galt :(");
             });
 
         }
-        else
-        {
+        else {
             Alert.alert(
                 'Skjerpings',
                 'Tom kommentar? Trist og uproft.',
                 [
                     {text: 'OK', onPress: () => console.log('OK Pressed')},
                 ],
-                { cancelable: false }
+                {cancelable: false}
             )
         }
     }
 
-    addPictures()
-    {
+    addPictures() {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
-
-
 
             console.log('Response = ', response);
 
@@ -76,79 +70,75 @@ export default class AddCommentBlock extends React.Component {
             }
             else {
 
-                storageRef = firebaseApp.storage().ref();
-
                 let fileName = Math.random() + response.fileName;
 
+                //tmp state
+                let tmpImages = this.state.images;
+                tmpImages[fileName] = {orig_uri: response.uri, uri: null, uploaded: false}
+
+                this.setState({images:tmpImages});
+
+                //Upload
                 firebaseApp.storage()
-                .ref('/images/'+fileName)
+                .ref('/postImages/' + fileName)
                 .putFile(response.origURL)
                 .then(uploadedFile => {
-                    console.log("Uploaded");
+
+                    let imageList = this.state.images;
+                    imageList[fileName] = {orig_uri: response.uri, uri: uploadedFile.downloadUrl, uploaded: true};
+
+                    console.log(imageList);
+
+                    this.setState({images: imageList});
+
+                    console.log("Uploaded", uploadedFile);
                 })
                 .catch(err => {
-                    console.log("file upload error");
+                    Alert.alert("Noe gikk galt med opplastingen. Pokker ta.", err)
                 });
 
-                /*
-
-                let data = ''
-                RNFetchBlob.fs.readStream(
-                    // file path
-                    response.origURL,
-                    // encoding, should be one of `base64`, `utf8`, `ascii`
-                    'base64',
-                    // (optional) buffer size, default to 4096 (4095 for BASE64 encoded data)
-                    // when reading file in BASE64 encoding, buffer size must be multiples of 3.
-                    4095)
-                .then((ifstream) => {
-                    ifstream.open()
-                    ifstream.onData((chunk) => {
-                        // when encoding is `ascii`, chunk will be an array contains numbers
-                        // otherwise it will be a string
-                        data += chunk
-                    })
-                    ifstream.onError((err) => {
-                        console.log('oops', err)
-                    })
-                    ifstream.onEnd(() => {
-                        console.log("File read!");
-
-                        storageRef = firebaseApp.storage().ref();
-                        var uploadTask = storageRef.child('images/'+fileName).putString(response.data, 'base64');
-
-
-                    })})
-
-                */
-
-               /* let binData = RNFetchBlob.fs.readStream(source, 'base64', 4095).then((filedata)=>{
-
-                    let fileName = Math.random() + response.fileName;
-
-                    console.log(source,fileName,binData);
-
-
-                });*/
-
-                //var uploadTask = storageRef.child('images/'+response.fileName).putString(response.data, 'base64');
-
-                // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-                //this.setState({
-                 //   avatarSource: source
-                //});
             }
         });
     }
 
+
+    getLoadingIndicator(loading)
+    {
+        if(loading)
+        {
+            return <ActivityIndicator size="small" hidesWhenStopped={true}/>
+        }
+    }
+
+    getImageList() {
+        var outImg = [];
+
+
+
+        for (key in this.state.images) {
+            outImg.push(
+                <View key={key}>
+                    <Image key={Math.random()} source={{uri: this.state.images[key].orig_uri}} style={{height: 60, width: 60, margin: 5, borderRadius: 3}}>
+                        {this.getLoadingIndicator(this.state.images[key].loading)}
+                    </Image>
+                </View>
+            )
+        }
+
+        return outImg;
+
+    }
+
     render() {
 
-        var title = "Ny kommentar til "+ this.props.title;
+        var title = "Ny kommentar til " + this.props.title;
 
         return (
             <View style={pageStyles.container}>
+
+                <View style={pageStyles.imageViewer}>
+                    {this.getImageList()}
+                </View>
 
                 <View>
 
@@ -156,7 +146,7 @@ export default class AddCommentBlock extends React.Component {
                         style={pageStyles.textInput}
                         autoCapitalize="sentences"
                         autoFocus={false}
-                        onChangeText={(text) => this.setState({text:text})}
+                        onChangeText={(text) => this.setState({text: text})}
                         multiline={true}
                         placeholder="Skriv ny kommentar"
                         placeholderTextColor="#888888"
@@ -166,10 +156,10 @@ export default class AddCommentBlock extends React.Component {
 
                 </View>
 
-                <View style={{flexDirection: "row", justifyContent: "space-between",  alignItems: "center"}}>
+                <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
                     <Button onPress={() => this._clear()} title="Tøm"/>
                     <Button onPress={() => this.addPictures()} title="Bilder"/>
-                    <Button onPress={() => this._post()} title="Send" />
+                    <Button onPress={() => this._post()} title="Send"/>
                 </View>
 
             </View>
@@ -191,9 +181,12 @@ const pageStyles = StyleSheet.create({
         marginLeft: 0,
         marginRight: 0,
         padding: 5,
-        height: 100,
+        height: 150,
         borderWidth: 0,
         backgroundColor: "#ECF0F1"
+    },
+    imageViewer: {
+
     }
 
 });
