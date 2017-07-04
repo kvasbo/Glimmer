@@ -25,9 +25,14 @@ export default class StreamForumPost extends React.Component {
         super(props);
         this.state = {};
 
-        if(this.props.data.creator.id === auth.currentUser.id)
+        try {
+            if (this.props.data.creator.id === auth.currentUser.id) {
+                this.byMe = true;
+            }
+        }
+        catch(err)
         {
-            this.byMe = true;
+            console.log("error parsing", this.props);
         }
 
         this.images = this.getImages();
