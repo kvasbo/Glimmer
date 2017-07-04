@@ -3,7 +3,17 @@
  */
 
 import React from "react";
-import {Alert, Button, StyleSheet, TextInput, View, Image, ActivityIndicator} from "react-native";
+import {
+    ActivityIndicator,
+    Alert,
+    Button,
+    Image,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 var ImagePicker = require('react-native-image-picker');
 
 const imagePickerOptions = {
@@ -22,7 +32,7 @@ export default class AddCommentBlock extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {text: '', images: {}};
+        this.state = {text: '', images: {}, bodyCursorPosition: null};
 
     }
 
@@ -33,7 +43,9 @@ export default class AddCommentBlock extends React.Component {
     _post() {
         if (this.state.text !== "") {
 
-            arbeidsMaur.forumUpdater.postCommentInThread(this.state.text, this.props.postId).then((data) => {
+            let text = parseAndReplaceImages(this.state.text);
+
+            arbeidsMaur.forumUpdater.postCommentInThread(text, this.props.postId).then((data) => {
 
                 this.setState({text: ""});
 
@@ -52,6 +64,10 @@ export default class AddCommentBlock extends React.Component {
                 {cancelable: false}
             )
         }
+    }
+
+    parseAndReplaceImages(text) {
+        return text;
     }
 
     addPictures() {
@@ -76,7 +92,7 @@ export default class AddCommentBlock extends React.Component {
                 let tmpImages = this.state.images;
                 tmpImages[fileName] = {orig_uri: response.uri, uri: null, uploaded: false}
 
-                this.setState({images:tmpImages});
+                this.setState({images: tmpImages});
 
                 //Upload
                 firebaseApp.storage()
@@ -101,26 +117,54 @@ export default class AddCommentBlock extends React.Component {
         });
     }
 
-
-    getLoadingIndicator(loading)
-    {
-        if(loading)
-        {
+    getLoadingIndicator(loading) {
+        if (loading) {
             return <ActivityIndicator size="small" hidesWhenStopped={true}/>
         }
+    }
+
+    insertIntoBodyText(text) {
+
+        //We have not yet started writing
+        if (this.state.bodyCursorPosition === null && this.state.text === "") this.setState({text: text});
+
+        var tmpText = this.state.text;
+
+        var start = tmpText.substring(0, this.state.bodyCursorPosition);
+
+        var tail = tmpText.substring(this.state.bodyCursorPosition, tmpText.length);
+
+        this.setState({text: start + text + tail});
+
+    }
+
+    cursormoved(event) {
+        this.setState({bodyCursorPosition: event.nativeEvent.selection.start});
+        console.log(event.nativeEvent.selection);
     }
 
     getImageList() {
         var outImg = [];
 
-
-
         for (key in this.state.images) {
             outImg.push(
-                <View key={key}>
-                    <Image key={Math.random()} source={{uri: this.state.images[key].orig_uri}} style={{height: 60, width: 60, margin: 5, borderRadius: 3}}>
-                        {this.getLoadingIndicator(this.state.images[key].loading)}
-                    </Image>
+                <View key={key} style={{justifyContent: 'flex-start'}}>
+                    <TouchableOpacity onPress={() => this.insertIntoBodyText("!" + this.state.images[key].uri + "!")}>
+                        <Image key={Math.random()} source={{uri: this.state.images[key].orig_uri}}
+                               style={{height: 75, width: 75, margin: 5, borderRadius: 0}}>
+                            {this.getLoadingIndicator(this.state.images[key].loading)}
+                            <View style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                backgroundColor: "#00000055",
+                                padding: 5,
+                                margin: 5,
+                                width: 25,
+                                height: 25,
+                                borderRadius: 10
+                            }}><Text style={{color: "#FFFFFF", fontSize: 15, fontWeight: "200"}}>1</Text></View>
+                        </Image>
+                    </TouchableOpacity>
                 </View>
             )
         }
@@ -147,6 +191,8 @@ export default class AddCommentBlock extends React.Component {
                         autoCapitalize="sentences"
                         autoFocus={false}
                         onChangeText={(text) => this.setState({text: text})}
+                        onSelectionChange={(event) => this.cursormoved(event)}
+                        value={this.state.text}
                         multiline={true}
                         placeholder="Skriv ny kommentar"
                         placeholderTextColor="#888888"
@@ -185,8 +231,6 @@ const pageStyles = StyleSheet.create({
         borderWidth: 0,
         backgroundColor: "#ECF0F1"
     },
-    imageViewer: {
-
-    }
+    imageViewer: {}
 
 });
