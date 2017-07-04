@@ -26,7 +26,7 @@ function MessageRecipients(state = initialState, action) {
 
             return {
                 ...state,
-                recipients: [...state.recipients.filter(item => action.payload !== item)]
+                recipients: [...state.recipients.filter(item => id !== item)]
             }
 
         default:

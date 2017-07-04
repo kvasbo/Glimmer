@@ -13,7 +13,7 @@ export default class PersonFace extends React.Component {
         super(props);
 
         let initActive = false;
-        if(this.props.active) initActive = true
+        if(this.props.active === true) initActive = true
 
         this.state = {selected: initActive}
     }
@@ -85,7 +85,7 @@ const pageStyles = StyleSheet.create({
         height: 90,
         padding: 0,
         justifyContent: "space-around",
-        alignItems: "center"
+        alignItems: "center",
     },
 
     faceSelected: {

@@ -73,7 +73,7 @@ const loggerMiddleware = createLogger();
 if (__DEV__) {
     global.store = createStore(glimmerReducers, applyMiddleware(
         //thunkMiddleware, // lets us dispatch() functions
-        //loggerMiddleware // neat middleware that logs actions
+        loggerMiddleware // neat middleware that logs actions
     ));
 }
 else {
