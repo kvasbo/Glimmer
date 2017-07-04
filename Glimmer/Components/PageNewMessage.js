@@ -144,10 +144,13 @@ const pageStyles = StyleSheet.create({
     },
     textInput: {
         backgroundColor: '#FFFFFF',
-        margin: 10,
-        fontSize: 14,
+        margin: 0,
+        fontSize: 15,
+        padding: 15,
+        paddingTop: 22,
+        paddingBottom: 22,
         height: 250,
-        borderRadius: 1
+        borderRadius: 2
     },
     faceList: {
         flexDirection: "row",

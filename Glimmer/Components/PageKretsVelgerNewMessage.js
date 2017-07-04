@@ -14,7 +14,6 @@ export default class PageKretsVelger extends React.Component {
 
     constructor(props) {
         super(props);
-        var tmpKrets = store.getState().Krets;
         this.state = {
             krets: store.getState().Krets,
             searchText: "",
@@ -48,17 +47,21 @@ export default class PageKretsVelger extends React.Component {
             }
             if (event.id == "writeNewMessage") {
 
-                if (store.getState.MessageRecipients.receivers.length === 0) {
+                if (store.getState().MessageRecipients.recipients.length === 0) {
                     Alert.alert("Ingen mottakere", "Hvem tenkte du skulle lese denne meldinga da?");
+                }else {
+                    this.props.navigator.push({
+                        screen: 'glimmer.PageNewMessage', // unique ID registered with Navigation.registerScreen
+                        title: "Skriv melding", // navigation bar title of the pushed screen (optional)
+                        passProps: {}, // Object that will be passed as props to the pushed screen (optional)
+                        animated: true, // does the push have transition animation or does it happen immediately (optional),
+                        backButtonTitle: "Mottakere",
+                    });
+
                 }
 
-                this.props.navigator.push({
-                    screen: 'glimmer.PageNewMessage', // unique ID registered with Navigation.registerScreen
-                    title: "Skriv melding", // navigation bar title of the pushed screen (optional)
-                    passProps: {}, // Object that will be passed as props to the pushed screen (optional)
-                    animated: true, // does the push have transition animation or does it happen immediately (optional),
-                    backButtonTitle: "Mottakere",
-                });
+
+
             }
         }
     }
