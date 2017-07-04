@@ -3,6 +3,8 @@ package com.rettvendt.glimmer;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+//import io.invertase.firebase.RNFirebaseAdMobPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.oblador.keychain.KeychainPackage;
@@ -19,7 +21,7 @@ import com.reactnativenavigation.NavigationApplication;
 // Required package
 import io.invertase.firebase.RNFirebasePackage; // <-- Add this line
 // Optional packages - add as appropriate
-import io.invertase.firebase.admob.RNFirebaseAdMobPackage; //Firebase AdMob
+//import io.invertase.firebase.admob.RNFirebaseAdMobPackage; //Firebase AdMob
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage; // Firebase Analytics
 import io.invertase.firebase.auth.RNFirebaseAuthPackage; // Firebase Auth
 import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage; // Firebase Remote Config
@@ -57,7 +59,7 @@ public class MainApplication extends NavigationApplication {
                //Firebase change
                 new RNFirebasePackage(),  // <-- Add this line
                  // Add these packages as appropriate
-                 new RNFirebaseAdMobPackage(),
+                 //new RNFirebaseAdMobPackage(),
                  new RNFirebaseAnalyticsPackage(),
                  new RNFirebaseAuthPackage(),
                  new RNFirebaseRemoteConfigPackage(),

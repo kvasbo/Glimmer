@@ -18,7 +18,7 @@ import Helpers from "./src/helpers";
 global.moment = require('moment');
 moment.locale('nb')
 
-const NavStyles = require("./Styles/NavigatorStyles").NavigatorStyles;
+const NavStyles = require("./Styles/NavigatorStyles");
 const config = require("./config.js");
 
 //Some hacks

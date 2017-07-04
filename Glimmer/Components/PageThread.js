@@ -18,7 +18,7 @@ import {Icon} from "react-native-elements";
 
 import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
-import AddCommentBlock from "./UXElements/ForumAddComment";
+import AddCommentBlock from "./UXElements/AddCommentBlock";
 
 const commentsInPage = 30;
 
@@ -285,7 +285,7 @@ export default class PageThread extends React.Component {
 
                 {this._getSidevelger()}
 
-                <KeyboardAvoidingView behavior="position">
+                <KeyboardAvoidingView behavior="height">
                     <AddCommentBlock postId={this.props.post.id}/>
                 </KeyboardAvoidingView>
 

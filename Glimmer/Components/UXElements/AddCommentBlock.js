@@ -3,13 +3,15 @@
  */
 
 import React from "react";
-import {View, Text, StyleSheet, TextInput, Button, Alert} from "react-native";
+import {View, Text, StyleSheet, TextInput, Button, Alert, CameraRoll} from "react-native";
 
 export default class AddCommentBlock extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {text: ''};
+        this.state = {text: '', pics: ''};
+        this.storageRef = firebaseApp.storage().ref().child('images');;
+
     }
 
     _clear()
@@ -44,6 +46,18 @@ export default class AddCommentBlock extends React.Component {
         }
     }
 
+    addPictures()
+    {
+        CameraRoll.getPhotos({
+            first: 20,
+            assetType: 'All'
+        })
+        .then(r => {
+            this.setState({ photos: r.edges })
+            console.log("images",r);
+        })
+    }
+
     render() {
 
         var title = "Ny kommentar til "+ this.props.title;
@@ -69,6 +83,7 @@ export default class AddCommentBlock extends React.Component {
 
                 <View style={{flexDirection: "row", justifyContent: "space-between",  alignItems: "center"}}>
                     <Button onPress={() => this._clear()} title="Tøm"/>
+                    <Button onPress={() => this.addPictures()} title="Bilder"/>
                     <Button onPress={() => this._post()} title="Send" />
                 </View>
 
