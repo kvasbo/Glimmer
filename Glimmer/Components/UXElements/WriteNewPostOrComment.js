@@ -53,7 +53,7 @@ export default class WriteNewPostOrComment extends React.Component {
     _post() {
 
         if (this.state.text !== "") {
-            let text = parseAndReplaceImages(this.state.text);
+            let text = this.parseAndReplaceImages(this.state.text);
         }
         else {
             Alert.alert(
@@ -82,7 +82,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
     addPictures() {
 
-        ImagePicker.showImagePicker(imagePickerOptions, (response) => {
+        ImagePicker.launchImageLibrary(imagePickerOptions, (response) => {
 
             console.log('Response = ', response);
 
@@ -101,7 +101,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
                 //tmp state
                 let tmpImages = this.state.images;
-                tmpImages[fileName] = {orig_uri: response.uri, uri: null, uploaded: false}
+                tmpImages[fileName] = {orig_uri: response.uri, uri: null, done: false}
 
                 this.setState({images: tmpImages});
 
@@ -112,7 +112,7 @@ export default class WriteNewPostOrComment extends React.Component {
                 .then(uploadedFile => {
 
                     let imageList = this.state.images;
-                    imageList[fileName] = {orig_uri: response.uri, uri: uploadedFile.downloadUrl, uploaded: true};
+                    imageList[fileName] = {orig_uri: response.uri, uri: uploadedFile.downloadUrl, done: true};
 
                     console.log(imageList);
 
@@ -128,9 +128,10 @@ export default class WriteNewPostOrComment extends React.Component {
         });
     }
 
+    //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed. 
     getLoadingIndicator(loading) {
         if (loading) {
-            return <ActivityIndicator size="small" hidesWhenStopped={true}/>
+            return (<View style={{backgroundColor: "#FFFFFF66", height: 75, width: 75, padding: 20}}><ActivityIndicator size="large" color="#444444" hidesWhenStopped={true}/></View>)
         }
     }
 
@@ -163,21 +164,11 @@ export default class WriteNewPostOrComment extends React.Component {
 
         for (key in this.state.images) {
             outImg.push(
-                <View key={key} style={{justifyContent: 'flex-start'}}>
+                <View key={key} style={{justifyContent: 'flex-start', margin: 10}}>
                     <TouchableOpacity onPress={() => this.insertIntoBodyText("!" + this.state.images[key].uri + "!")}>
                         <Image key={Math.random()} source={{uri: this.state.images[key].orig_uri}}
                                style={{height: 75, width: 75, margin: 5, borderRadius: 0}}>
-                            {this.getLoadingIndicator(this.state.images[key].loading)}
-                            <View style={{
-                                justifyContent: "center",
-                                alignItems: "center",
-                                backgroundColor: "#00000055",
-                                padding: 5,
-                                margin: 5,
-                                width: 25,
-                                height: 25,
-                                borderRadius: 10
-                            }}><Text style={{color: "#FFFFFF", fontSize: 15, fontWeight: "200"}}>1</Text></View>
+                            {this.getLoadingIndicator(!this.state.images[key].done)}
                         </Image>
                     </TouchableOpacity>
                 </View>
@@ -187,6 +178,20 @@ export default class WriteNewPostOrComment extends React.Component {
         return outImg;
 
     }
+
+    /*
+     <View style={{
+     justifyContent: "center",
+     alignItems: "center",
+     backgroundColor: "#00000055",
+     padding: 5,
+     margin: 5,
+     width: 25,
+     height: 25,
+     borderRadius: 10
+     }}><Text style={{color: "#FFFFFF", fontSize: 15, fontWeight: "200"}}>1</Text></View>
+
+     */
 
     render() {
 
