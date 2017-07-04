@@ -57,6 +57,7 @@
 		AD5DC8881F08EC8C00235DA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD5DC8851F08EC8C00235DA4 /* GoogleService-Info.plist */; };
 		AD5DC8891F08EC8C00235DA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD5DC8851F08EC8C00235DA4 /* GoogleService-Info.plist */; };
 		ADC28FBC1F0B9F68005CD37E /* GlimmerLaunch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBA1F0B9F68005CD37E /* GlimmerLaunch.storyboard */; };
+		ADC28FBE1F0BA582005CD37E /* stol.png in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBD1F0BA582005CD37E /* stol.png */; };
 		BC3777E7D2AB4E9384289430 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25AED8EBEA97437FA7C5F443 /* MaterialCommunityIcons.ttf */; };
 		E17D73F2E10A750449EB2143 /* libPods-Glimmer-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 018CD41F5F34A87F85D99E0C /* libPods-Glimmer-tvOSTests.a */; };
 		FFDF7BB6978F4DFFB4536FB0 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D30772D1B1094A3CABAC8DCF /* Zocial.ttf */; };
@@ -355,6 +356,7 @@
 		AD134FF21EF9B77800ED5A39 /* Glimmer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Glimmer.entitlements; path = Glimmer/Glimmer.entitlements; sourceTree = "<group>"; };
 		AD5DC8851F08EC8C00235DA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Glimmer/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ADC28FBB1F0B9F68005CD37E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Glimmer/Base.lproj/GlimmerLaunch.storyboard; sourceTree = "<group>"; };
+		ADC28FBD1F0BA582005CD37E /* stol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stol.png; path = ../icons/stol.png; sourceTree = "<group>"; };
 		B5682EEB817140BC9D910756 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		BC6827B40C1232F4E97293DE /* libPods-Glimmer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Glimmer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBE5566E507540F6BC1F7F11 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				ADC28FBA1F0B9F68005CD37E /* GlimmerLaunch.storyboard */,
+				ADC28FBD1F0BA582005CD37E /* stol.png */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -1163,6 +1166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD5DC8861F08EC8C00235DA4 /* GoogleService-Info.plist in Resources */,
+				ADC28FBE1F0BA582005CD37E /* stol.png in Resources */,
 				ADC28FBC1F0B9F68005CD37E /* GlimmerLaunch.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				BC3777E7D2AB4E9384289430 /* MaterialCommunityIcons.ttf in Resources */,
