@@ -34,7 +34,11 @@ export default class PageLogin extends React.Component {
             <View style={pageStyles.container}>
 
                 <View style={pageStyles.paragraph}>
-                    <Image source={require("../icons/stol.png")} style={{width: 150, height: 150}}/>
+                    <Text style={pageStyles.header}>Velkommen til Glimmer</Text>
+                </View>
+
+                <View style={pageStyles.paragraph}>
+                    <Button title="Gi tilgang" onPress={() => this.doTheLoginThing()}/>
                 </View>
 
                 <View style={pageStyles.paragraph}>
@@ -42,24 +46,16 @@ export default class PageLogin extends React.Component {
                     <Text style={pageStyles.mainText}>For å bruke denne appen må du gi den tilgang til din
                         Underskogkonto.</Text>
 
-                </View>
-
-                <View style={pageStyles.paragraph}>
-                    <Button title="Gi tilgang til Underskog" onPress={() => this.doTheLoginThing()}/>
-                </View>
-
-                <View style={pageStyles.paragraph}>
                     <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen over og gi tillatelse når
                         Underskog åpner seg i din nettleser.</Text>
-                </View>
 
-                <View style={pageStyles.paragraph}>
 
                     <Text style={pageStyles.smallText}>Dette er ikke farlig - vi stjeler ikke data og benytter ingen
-                        tredjepartstjenester til å lagre personlige data.</Text>
+                        tredjepartstjenester til å lagre personlige data. Faktisk forlater ingen personlige data noensinne telefonen din.</Text>
                     <Text style={pageStyles.smallText}>Innlogginga skjer ved hjelp av noe som heter Oauth som gjør at
                         appen aldri får vite passordet ditt. Du kan når som helst inndra tilgangen på
                         Underskog.no</Text>
+
                 </View>
 
             </View>
@@ -70,11 +66,14 @@ export default class PageLogin extends React.Component {
 const pageStyles = StyleSheet.create({
 
     container: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#ECF0F1',
         flex: 1,
         margin: 0,
-        alignItems: "center"
-
+        alignItems: "center",
+        flexDirection: "column",
+        justifyContent: "space-around",
+        paddingTop: 80,
+        paddingBottom: 80
     },
 
     paragraph: {
@@ -83,17 +82,34 @@ const pageStyles = StyleSheet.create({
         marginBottom: 10,
         marginLeft: 20,
         marginRight: 20,
+        padding: 0,
+        width: 280,
+
     },
 
     theButton: {},
 
+    header: {
+        textAlign: "center",
+        fontSize: 26,
+        color: "#2C3E50",
+        marginTop: 30,
+        marginBottom: 7,
+        fontWeight: "300"
+    },
+
     mainText: {
-        textAlign: "left"
+        color: "#2C3E50",
+        textAlign: "left",
+        marginTop: 7,
+        marginBottom: 7,
     },
 
     smallText: {
         textAlign: "left",
-        fontSize: 12, color: "#777777"
+        fontSize: 13, color: "#555555",
+        marginTop: 7,
+        marginBottom: 7,
     }
 
 });

@@ -18,6 +18,7 @@ import Helpers from "./src/helpers";
 global.moment = require('moment');
 moment.locale('nb')
 
+const NavStyles = require("./Styles/NavigatorStyles").NavigatorStyles;
 const config = require("./config.js");
 
 //Some hacks
@@ -157,11 +158,11 @@ export default class Glimmer {
             screen: {
                 screen: 'glimmer.PageLogin', // unique ID registered with Navigation.registerScreen
                 title: 'Velkommen til Glimmer', // title of the screen as appears in the nav bar (optional)
-                navigatorStyle: {navigatorHidden: true}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
-                navigatorButtons: {} // override the nav buttons for the screen, see "Adding buttons to the navigator" below (optional)
+                navigatorStyle: {navBarHidden: true}
             },
             passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
-            animationType: 'slide-down' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
+            animationType: 'fade', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
+
         });
 
     }
@@ -174,7 +175,8 @@ export default class Glimmer {
             tabs: [{
                 label: 'Mine tråder', screen: 'glimmer.PageFavorites', // this is a registered name for a screen
                 icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                title: 'Mine tråder'
+                title: 'Mine tråder',
+                navigatorStyle: NavStyles.default,
             }, {
                 label: 'Forsiden',
                 screen: 'glimmer.PageStream',
