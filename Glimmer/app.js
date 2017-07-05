@@ -30,10 +30,10 @@ const errorHandler = (e, isFatal) => {
         Alert.alert('Pokker.', `
         Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
  
-        Vi må starte på nytt.
+        Du må nok starte appen på nytt :(.
         `, [{
-            text: 'Omstart', onPress: () => {
-                RNRestart.Restart();
+            text: 'OK', onPress: () => {
+               
             }
         }]);
     } else {

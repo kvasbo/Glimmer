@@ -42,7 +42,7 @@ export default class Workers {
             console.log("Refreshing forum data");
         }
         this.forumUpdater.loadFirstFavorites(1);
-        this.forumUpdater.loadStream(1);
+        this.forumUpdater.loadFirstStream(1);
     }
 
 }
