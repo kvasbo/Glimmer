@@ -5,6 +5,7 @@
 import React from "react";
 import {StyleSheet} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
+import * as colors from "../Styles/colorConstants"
 
 export default class PageConversation extends React.Component {
 
@@ -88,7 +89,7 @@ export default class PageConversation extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#CCCCCC',
+        backgroundColor: colors.COLOR_LIGHT,
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

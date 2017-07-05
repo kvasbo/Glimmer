@@ -30,8 +30,20 @@ export default class PersonFace extends React.Component {
     }
 
     getImageUrl() {
-        var url = this.props.person.image;
-        return url;
+        return this.props.person.image;
+    }
+
+    getImage()
+    {
+        let url = this.getImageUrl();
+
+        if(url==="https://underskog.no/assets/images/noicon_48.png")
+        {
+            return <Image style={this.getSelectedStyle()} source={require('../../icons/default_avatar.png')}/>
+        }
+
+        return <Image style={this.getSelectedStyle()} source={{uri: url}}/>
+
     }
 
     toggleState() {
@@ -72,7 +84,7 @@ export default class PersonFace extends React.Component {
         return (
             <TouchableOpacity onPress={() => this.toggleState()} onLongPress={() => this.showInfo()}>
                 <View style={pageStyles.container}>
-                    <Image style={this.getSelectedStyle()} source={{uri: this.props.person.image}}/>
+                    {this.getImage()}
                     <Text style={pageStyles.name}>{this.props.person.name}</Text>
                 </View>
             </TouchableOpacity>

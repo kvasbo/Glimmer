@@ -19,6 +19,7 @@ import {Icon} from "react-native-elements";
 import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
 import AddCommentBlock from "./UXElements/AddCommentBlock";
+import * as colors from "../Styles/colorConstants";
 
 const commentsInPage = 30;
 
@@ -171,6 +172,7 @@ export default class PageThread extends React.Component {
 
     _getModal() {
 
+        /*
         return (
 
             <Modal
@@ -200,14 +202,15 @@ export default class PageThread extends React.Component {
                 </View>
             </Modal>
         )
+        */
     }
 
     _getSidevelger() {
 
         if (this.state.loading || this.state.numberOfPages === 1) return null;
 
-        const activeColor = "#3499DB"
-        const passiveColor = "#CCCCCC"
+        const activeColor = colors.COLOR_GRAD1
+        const passiveColor = colors.COLOR_DARKGREY
         const size = 18;
 
         var leftColor = activeColor;
@@ -240,7 +243,7 @@ export default class PageThread extends React.Component {
                 />
 
 
-                <TouchableOpacity onPress={() => this.setState({pagePickerModalVisible: true})}>
+                <TouchableOpacity onPress={() => {}}>
                     <Text style={pageStyles.pageNumberText}>{showPage}</Text>
                 </TouchableOpacity>
 
@@ -300,7 +303,7 @@ export default class PageThread extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ECF0F1',
+        backgroundColor: colors.COLOR_LIGHT,
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

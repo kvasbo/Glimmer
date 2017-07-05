@@ -75,7 +75,7 @@ export default class ThreadForumPost extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        backgroundColor: colors.COLOR_LIGHT, padding: 0, marginBottom: 2,
+        backgroundColor: colors.COLOR_WHITE, padding: 0, marginBottom: 2,
     },
     title: {
         marginTop: 10,

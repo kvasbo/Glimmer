@@ -5,7 +5,7 @@
 import React from "react";
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Divider, Icon} from "react-native-elements";
-import * as colors from "../Styles/colorConstants"
+import * as colors from "../Styles/colorConstants";
 
 //Get common list styles
 const listStyles = require('../Styles/ListStyles');
@@ -144,6 +144,22 @@ class Conversation extends React.Component {
         }
     }
 
+    getImageUrl() {
+        return this.props.data.user.image_url;
+    }
+
+    getImage() {
+        let url = this.getImageUrl();
+
+        if (url === "https://underskog.no/assets/images/noicon_48.png") {
+            return <Image style={{width: 40, height: 40, borderRadius: 20}}
+                          source={require('../icons/default_avatar.png')}/>
+        }
+
+        return <Image style={{width: 40, height: 40, borderRadius: 20}} source={{uri: url}}/>
+
+    }
+
     render() {
 
         return (
@@ -157,8 +173,7 @@ class Conversation extends React.Component {
                 >
                     <View style={listStyles.whiteBox}>
                         <View style={listStyles.imageBlock}>
-                            <Image source={{uri: this.props.data.user.image_url}}
-                                   style={{width: 40, height: 40, borderRadius: 20}}/>
+                            {this.getImage()}
                         </View>
                         <View style={listStyles.textBlock}>
                             <Text style={this.titleStyle()}>{this.props.data.user.name}</Text>
@@ -181,7 +196,7 @@ class Conversation extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.COLOR_LIGHT,
+        backgroundColor: colors.COLOR_WHITE,
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,
