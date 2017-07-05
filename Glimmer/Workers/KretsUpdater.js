@@ -1,5 +1,4 @@
-import {AsyncStorage} from "react-native";
-import {addKretsPerson, addUser} from "../Redux/actions";
+import {addKretsPersonBatch, addUserBatch} from "../Redux/actions";
 const User = require("../DataClasses/user").default;
 
 export default class KretsUpdater {
@@ -16,24 +15,29 @@ export default class KretsUpdater {
 
     }
 
-
     _getKretsPagesRecursive(page, maxPages = 999) {
 
         var uri = "/users/current/circle?page=" + page;
 
         api.makeApiGetCall(uri).then((data) => {
 
+            var krets = [];
+            var users = [];
+
             for (key in data.data) {
 
-                var tmpUser = new User(data.data[key].id, data.data[key].name, data.data[key].realname,  data.data[key].image_url, data.data[key].friend);
+                var tmpUser = new User(data.data[key].id, data.data[key].name, data.data[key].realname, data.data[key].image_url, data.data[key].friend);
 
-                global.store.dispatch(addUser(tmpUser));
-                global.store.dispatch(addKretsPerson(tmpUser.id));
+                krets.push(tmpUser.id);
+                users.push(tmpUser);
 
             }
 
+            global.store.dispatch(addKretsPersonBatch(krets));
+            global.store.dispatch(addUserBatch(users));
+
             if (data.data.length == 0 || page > maxPages) {
-               //this._storeKretsList();
+
             }
             else {
                 this._getKretsPagesRecursive(page + 1);

@@ -1,19 +1,17 @@
 import {
-    ADD_POST_FAVORITES,
-    ADD_POST_STREAM,
     ADD_POST_FAVORITES_BATCH,
     ADD_POST_STREAM_BATCH,
     APPCONTROL_USER_LOGIN,
     FORUMLIST_ADD_FORUM,
     FORUMLIST_REPLACE,
-    KRETS_ADD_PERSON,
+    FORUMPOST_COMMENT_ADD,
+    KRETS_ADD_PERSON_BATCH,
+    MESSAGE_CONVERSATION_ADD,
+    MESSAGE_CONVERSATON_ADD_BATCH,
     MESSAGE_RECIPIENTS_ADD_PERSON,
     MESSAGE_RECIPIENTS_CLEAR,
     MESSAGE_RECIPIENTS_REMOVE_PERSON,
-    FORUMPOST_COMMENT_ADD,
-    USERS_ADD_USER,
-    MESSAGE_CONVERSATION_ADD,
-    MESSAGE_CONVERSATON_ADD_BATCH
+    USERS_ADD_USER_BATCH
 } from "./constants";
 
 export function replaceForumList(forums) {
@@ -30,15 +28,10 @@ export function addForumToList(forum) {
     }
 }
 
-/**
- * Just an ID
- * @param id
- * @returns {{type, id: *}}
- */
-export function addKretsPerson(id) {
+export function addKretsPersonBatch(ids) {
     return {
-        type: KRETS_ADD_PERSON,
-        id
+        type: KRETS_ADD_PERSON_BATCH,
+        ids
     }
 }
 
@@ -48,7 +41,6 @@ export function addFavoritesPostBatch(posts) {
         posts
     }
 }
-
 
 export function addStreamPostBatch(posts) {
     return {
@@ -91,10 +83,10 @@ export function addForumPostComment(postId, comment) {
     }
 }
 
-export function addUser(user) {
+export function addUserBatch(users) {
     return {
-        type: USERS_ADD_USER,
-        user
+        type: USERS_ADD_USER_BATCH,
+        users
     }
 }
 

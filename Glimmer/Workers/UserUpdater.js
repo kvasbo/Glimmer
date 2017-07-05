@@ -1,4 +1,4 @@
-import {addUser} from "../Redux/actions";
+import {addUserBatch} from "../Redux/actions";
 const User = require("../DataClasses/user").default;
 
 export default class UserUpdater {
@@ -25,7 +25,7 @@ export default class UserUpdater {
 
                     //Save to cache
                     var tmpUser = new User(data.data.id, data.data.name, data.data.realname, data.data.image_url, data.data.friend);
-                    store.dispatch(addUser(tmpUser));
+                    store.dispatch(addUserBatch([tmpUser])); //ARRAy!
 
                     resolve(data.data);
 
@@ -37,18 +37,6 @@ export default class UserUpdater {
             }
 
         });
-    }
-
-    async syncGetUserInfo(user) {
-
-        let data = await this.getUserInfo(user);
-
-        console.log("Awaited", data);
-
-        var duta = data;
-
-        return duta;
-
     }
 
 }
