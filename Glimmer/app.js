@@ -151,6 +151,21 @@ export default class Glimmer {
         else if (this.loggedIn === false) {
             this.startLoginApp();
         }
+        else {
+            this.showSplashScreen();
+        }
+    }
+
+    showSplashScreen() {
+
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'glimmer.PageSplashScreen', // unique ID registered with Navigation.registerScreen
+                navigatorStyle: {navBarHidden: true}
+            },
+            animationType: 'fade', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
+        })
+
     }
 
     startLoginApp() {

@@ -5,7 +5,7 @@
 import React from "react";
 import {StyleSheet} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
-import * as colors from "../Styles/colorConstants"
+import * as colors from "../Styles/colorConstants";
 
 export default class PageConversation extends React.Component {
 
@@ -44,7 +44,7 @@ export default class PageConversation extends React.Component {
         out = {};
         out._id = mess.id;
         out.text = mess.body.replace(/<(?:.|\n)*?>/gm, '');
-        ;
+
         out.createdAt = mess.sent_at;
         out.user = {};
         out.user._id = userInfo.id;

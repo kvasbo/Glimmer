@@ -1,5 +1,6 @@
 import {Navigation} from "react-native-navigation";
 
+import PageSplashScreen from "../Components/PageSplashScreen";
 import PageStream from "../Components/PageStream";
 import PageFavorites from "../Components/PageFavorites";
 import PageThread from "../Components/PageThread";
@@ -25,6 +26,7 @@ export function registerScreens(store, Provider) {
     return new Promise((resolve, reject) => {
 
         //Proper pages
+        Navigation.registerComponent('glimmer.PageSplashScreen', () => PageSplashScreen, store, Provider);
         Navigation.registerComponent('glimmer.PageStream', () => PageStream, store, Provider);
         Navigation.registerComponent('glimmer.PageFavorites', () => PageFavorites, store, Provider);
         Navigation.registerComponent('glimmer.PageThread', () => PageThread, store, Provider);

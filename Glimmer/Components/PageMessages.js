@@ -71,14 +71,13 @@ export default class PageMessages extends React.Component {
 
     attachToStore()
     {
+
         arbeidsMaur.messageUpdater.updateMessageThreads(1);
 
         //Listen to state changes. This really needs to change at some later point.
         this.reduxUnsubscribe = store.subscribe(() => {
 
                 let tmp = Object.values(store.getState().Conversation);
-
-                console.log(tmp);
 
                 tmp.sort((x,y)=>{
                     return (new Date(x.last_message_time) - new Date(y.last_message_time));
