@@ -23,17 +23,13 @@ export default class Workers {
 
     initData() {
 
-        var first = [this.forumUpdater.loadFirstFavorites(1), this.forumUpdater.loadStream(1)];
+        var first = [this.forumUpdater.loadFirstFavorites(1), this.forumUpdater.loadStream(1), this.messageUpdater.updateMessageThreads(1)];
 
         Promise.all(first).then(() => {
+
             this.kretsUpdater.initKrets(false);
 
             this.forumListUpdater.reloadForums(false);
-
-            if(__DEV__)
-            {
-
-            }
 
         })
 

@@ -3,17 +3,7 @@
  */
 
 import React from "react";
-import {
-    ActivityIndicator,
-    Button,
-    KeyboardAvoidingView,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
-} from "react-native";
+import {ActivityIndicator, Button, ScrollView, Text, TouchableOpacity, View, StyleSheet} from "react-native";
 import {Icon} from "react-native-elements";
 
 import ThreadForumPost from "./UXElements/ThreadForumPost";
@@ -173,36 +163,36 @@ export default class PageThread extends React.Component {
     _getModal() {
 
         /*
-        return (
+         return (
 
-            <Modal
-                animationType={"slide"}
-                transparent={false}
-                visible={this.state.pagePickerModalVisible}>
-                onRequestClose={()=>console.log("Close modal")}
-                <View style={{marginTop: 22, height: 250}}>
-                    <View>
+         <Modal
+         animationType={"slide"}
+         transparent={false}
+         visible={this.state.pagePickerModalVisible}>
+         onRequestClose={()=>console.log("Close modal")}
+         <View style={{marginTop: 22, height: 250}}>
+         <View>
 
-                        <Text>Velg side</Text>
+         <Text>Velg side</Text>
 
 
-                        <View style={{flexDirection: "row"}}>
+         <View style={{flexDirection: "row"}}>
 
-                            <Button onPress={() => {
-                                this.setState({pagePickerModalVisible: !this.state.pagePickerModalVisible})
-                            }} title="Lukk"/>
+         <Button onPress={() => {
+         this.setState({pagePickerModalVisible: !this.state.pagePickerModalVisible})
+         }} title="Lukk"/>
 
-                            <Button onPress={() => {
-                                this.setState({pagePickerModalVisible: !this.state.pagePickerModalVisible})
-                            }} title="Ok"/>
+         <Button onPress={() => {
+         this.setState({pagePickerModalVisible: !this.state.pagePickerModalVisible})
+         }} title="Ok"/>
 
-                        </View>
+         </View>
 
-                    </View>
-                </View>
-            </Modal>
-        )
-        */
+         </View>
+         </View>
+         </Modal>
+         )
+         */
     }
 
     _getSidevelger() {
@@ -242,8 +232,8 @@ export default class PageThread extends React.Component {
                     onPress={() => this._gotoBottom()}
                 />
 
-
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => {
+                }}>
                     <Text style={pageStyles.pageNumberText}>{showPage}</Text>
                 </TouchableOpacity>
 
@@ -288,20 +278,30 @@ export default class PageThread extends React.Component {
 
                 {this._getSidevelger()}
 
-                <KeyboardAvoidingView behavior="height">
-                    <AddCommentBlock postId={this.props.post.id}/>
-                </KeyboardAvoidingView>
+                <Button title="Ny kommentar" onPress={() => {
+
+                    this.props.navigator.push({
+                        screen: 'glimmer.PageNewMessage', // unique ID registered with Navigation.registerScreen
+                        title: "Send ny melding", // navigation bar title of the pushed screen (optional)
+                        passProps: {}, // Object that will be passed as props to the pushed screen (optional)
+                        animated: true, // does the push have transition animation or does it happen immediately (optional),
+                        backButtonTitle: "Mottakere",
+                    });
+
+                }} />
+
 
             </ScrollView>
 
+    );
 
-        );
+        //<AddCommentBlock postId={this.props.post.id} navigator={this.props.navigator}/>
 
     }
-}
+    }
 
-const pageStyles = StyleSheet.create({
-    container: {
+    const pageStyles = StyleSheet.create({
+        container: {
         flex: 1,
         backgroundColor: colors.COLOR_LIGHT,
         paddingLeft: 0,
@@ -309,7 +309,7 @@ const pageStyles = StyleSheet.create({
         paddingBottom: 30,
         paddingRight: 0,
     },
-    sideVelgerView: {
+        sideVelgerView: {
         flexDirection: "row",
         marginRight: 10,
         marginLeft: 10,
@@ -317,9 +317,9 @@ const pageStyles = StyleSheet.create({
         alignContent: "center",
 
     },
-    pageNumberText: {
+        pageNumberText: {
         fontSize: 15,
         fontWeight: "300",
         paddingTop: 18,
     }
-});
+    });

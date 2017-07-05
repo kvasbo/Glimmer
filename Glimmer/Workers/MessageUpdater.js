@@ -1,3 +1,6 @@
+const Conversation = require("../DataClasses/conversation").default;
+import {addConversation} from "../Redux/actions";
+
 export default class MessageUpdater {
 
     setMessageAsRead(messageId) {
@@ -42,6 +45,25 @@ export default class MessageUpdater {
 
         })
 
+    }
+
+    //user, userId, count, unread, user_image, last_message_time, last_message_from
+    updateMessageThreads(page) {
+        this.getMessageThreads(page).then((data) => {
+
+                for(key in data)
+                {
+                    //console.log(data[key]);
+                    var c = data[key];
+                    let convo = new Conversation(c.user.name, c.user.id, c.message_count, c.unread_count, c.user.image_url, c.last_message.from.id, c.last_message.sent_at, c.last_message.body);
+
+                    store.dispatch(addConversation((convo)));
+
+                }
+
+
+            }
+        )
     }
 
     sendMessageToUser(userId, message) {

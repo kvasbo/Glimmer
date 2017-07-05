@@ -15,7 +15,7 @@ export default class PageMessages extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {messages: []};
+        this.state = {conversations: store.getState().Conversation};
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
@@ -35,12 +35,12 @@ export default class PageMessages extends React.Component {
 
         switch (event.id) {
             case 'willAppear':
-                this.getMessageThreads();
+                this.attachToStore();
                 break;
             case 'didAppear':
                 break;
             case 'willDisappear':
-                break;
+                this.reduxUnsubscribe();
             case 'didDisappear':
                 break;
         }
@@ -69,23 +69,29 @@ export default class PageMessages extends React.Component {
         }
     }
 
-    componentDidMount() {
+    attachToStore()
+    {
+        arbeidsMaur.messageUpdater.updateMessageThreads(1);
 
-    }
+        //Listen to state changes. This really needs to change at some later point.
+        this.reduxUnsubscribe = store.subscribe(() => {
 
-    componentWillUnmount() {
+                let tmp = Object.values(store.getState().Conversation);
 
-    }
+                console.log(tmp);
 
-    getMessageThreads() {
+                tmp.sort((x,y)=>{
+                    return (new Date(x.last_message_time) - new Date(y.last_message_time));
+                });
 
-        arbeidsMaur.messageUpdater.getMessageThreads(1).then((data) => {
 
-            this.setState({conversations: data});
 
-        }).catch((err) => {
+                if (tmp !== this.state.conversations) {
+                    this.setState({loading: false, conversations: tmp});
+                }
+            }
+        )
 
-        });
     }
 
     getMessages() {
@@ -93,7 +99,7 @@ export default class PageMessages extends React.Component {
         var out = [];
 
         for (conversation in this.state.conversations) {
-            out.push(<Conversation key={this.state.conversations[conversation].user.name}
+            out.push(<Conversation key={this.state.conversations[conversation].user_id}
                                    data={this.state.conversations[conversation]}
                                    navigator={this.props.navigator}
             />);
@@ -122,21 +128,21 @@ class Conversation extends React.Component {
 
     getTime() {
 
-        return global.helpers.getCalendarTime(this.props.data.last_message.sent_at);
+        return global.helpers.getCalendarTime(this.props.data.last_message_time);
 
     }
 
     getMessageCount() {
 
         var uleste = "uleste";
-        if (this.props.data.unread_count == 1) uleste = "ulest";
+        if (this.props.data.unread == 1) uleste = "ulest";
 
-        var out = this.props.data.message_count + " meldinger, " + this.props.data.unread_count + " " + uleste;
+        var out = this.props.data.count + " meldinger, " + this.props.data.unread + " " + uleste;
         return out;
     }
 
     titleStyle() {
-        if (this.props.data.unread_count == 0) {
+        if (this.props.data.unread == 0) {
             return listStyles.listTitle;
         }
         else {
@@ -145,7 +151,7 @@ class Conversation extends React.Component {
     }
 
     getImageUrl() {
-        return this.props.data.user.image_url;
+        return this.props.data.user_image;
     }
 
     getImage() {
@@ -167,7 +173,7 @@ class Conversation extends React.Component {
                 <TouchableOpacity
                     onPress={ () => this.props.navigator.push({
                         screen: 'glimmer.PageConversation',
-                        title: 'Chat med ' + this.props.data.user.name,
+                        title: 'Chat med ' + this.props.data.user,
                         passProps: {user: this.props.data.user}
                     })}
                 >
@@ -176,7 +182,7 @@ class Conversation extends React.Component {
                             {this.getImage()}
                         </View>
                         <View style={listStyles.textBlock}>
-                            <Text style={this.titleStyle()}>{this.props.data.user.name}</Text>
+                            <Text style={this.titleStyle()}>{this.props.data.user}</Text>
                             <Text style={listStyles.listSubtitle}>{this.getTime()}</Text>
                             <Text style={listStyles.listSubtitle}>{this.getMessageCount()}</Text>
 

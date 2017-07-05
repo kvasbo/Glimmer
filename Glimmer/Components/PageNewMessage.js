@@ -6,6 +6,7 @@ import React from "react";
 import {Alert, Button, ScrollView, StyleSheet, TextInput, View, Text} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 import {clearMessageRecipients} from "../Redux/actions";
+import InputStyles from "../Styles/InputStyles"
 
 export default class PageNewMessage extends React.Component {
 
@@ -107,7 +108,7 @@ export default class PageNewMessage extends React.Component {
 
                 </View>
 
-                <TextInput multiline={true} style={pageStyles.textInput}
+                <TextInput multiline={true} style={[InputStyles.textBox, {height: 250}]}
                            onChangeText={(text) => this._onTextChange(text)}/>
 
                 <View style={{flexDirection:"row", justifyContent:"space-around"}}>

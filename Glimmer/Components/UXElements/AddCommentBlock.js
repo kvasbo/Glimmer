@@ -33,11 +33,11 @@ export default class AddCommentBlock extends React.Component {
                     transparent={false}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                        alert("Modal has been closed.")
+
                     }}
                 >
 
-                    <WriteNewPostOrComment type="comment" postId={this.props.postId} title="Ny kommentar"/>
+                    <WriteNewPostOrComment type="comment" postId={this.props.postId} title="Ny kommentar" navigator={this.props.navigator}/>
 
                 </Modal>
 

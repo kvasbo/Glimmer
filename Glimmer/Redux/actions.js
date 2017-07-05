@@ -9,7 +9,8 @@ import {
     MESSAGE_RECIPIENTS_CLEAR,
     MESSAGE_RECIPIENTS_REMOVE_PERSON,
     FORUMPOST_COMMENT_ADD,
-    USERS_ADD_USER
+    USERS_ADD_USER,
+    MESSAGE_CONVERSATION_ADD
 } from "./constants";
 
 export function replaceForumList(forums) {
@@ -89,5 +90,12 @@ export function addUser(user) {
     return {
         type: USERS_ADD_USER,
         user
+    }
+}
+
+export function addConversation(conversation) {
+    return {
+        type: MESSAGE_CONVERSATION_ADD,
+        conversation
     }
 }

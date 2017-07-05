@@ -8,6 +8,7 @@ import PageMessages from "../Components/PageMessages";
 import PageSettings from "../Components/PageSettings";
 import PageConversation from "../Components/PageConversation";
 import PageNewForumPost from "../Components/PageNewForumPost";
+import PageNewForumComment from "../Components/PageNewForumComment";
 import PageKretsVelger from "../Components/PageKretsVelgerNewMessage";
 import PageNewMessage from "../Components/PageNewMessage";
 import PageAbout from "../Components/PageAbout";
@@ -34,6 +35,7 @@ export function registerScreens(store, Provider) {
         Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
         Navigation.registerComponent('glimmer.PageNewMessage', () => PageNewMessage, store, Provider);
         Navigation.registerComponent('glimmer.PageAbout', () => PageAbout, store, Provider);
+        Navigation.registerComponent('glimmer.PageNewForumComment', () => PageNewForumComment, store, Provider);
 
         //Helper pages
         //Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);

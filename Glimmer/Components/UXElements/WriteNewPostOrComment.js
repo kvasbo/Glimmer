@@ -16,6 +16,8 @@ import {
 } from "react-native";
 const ImagePicker = require('react-native-image-picker');
 const TextStyles = require("../../Styles/TextStyles");
+import InputStyles from "../../Styles/InputStyles"
+
 
 const imagePickerOptions = {
     title: 'Velg bilde',
@@ -157,7 +159,7 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     _hideMe() {
-
+        this.props.navigator.dismissModal();
     }
 
     getImageList() {
@@ -215,7 +217,7 @@ export default class WriteNewPostOrComment extends React.Component {
                         <View>
 
                             <TextInput
-                                style={pageStyles.textInput}
+                                style={[InputStyles.textBox, {height: 250}]}
                                 autoCapitalize="sentences"
                                 autoFocus={false}
                                 onChangeText={(text) => this.setState({text: text})}

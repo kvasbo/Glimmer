@@ -18,7 +18,7 @@ export default class PageConversation extends React.Component {
 
     componentWillMount() {
 
-        arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user.id).then((result) => {
+        arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id).then((result) => {
 
             var msg = [];
 
@@ -61,7 +61,7 @@ export default class PageConversation extends React.Component {
 
     onSend(messages = []) {
 
-        arbeidsMaur.messageUpdater.sendMessageToUser(this.props.user.id, messages[0].text).then((data) => {
+        arbeidsMaur.messageUpdater.sendMessageToUser(this.props.user_id, messages[0].text).then((data) => {
             console.log(data);
         })
 
