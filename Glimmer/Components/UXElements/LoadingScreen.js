@@ -4,7 +4,7 @@
 
 import React from "react";
 import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
-
+import * as colors from "../../Styles/colorConstants"
 
 export default class LoadingScreen extends React.Component {
 
@@ -20,8 +20,8 @@ export default class LoadingScreen extends React.Component {
 
         return (
             <View style={pageStyles.container}>
-                <ActivityIndicator size="large" color="#555555"/>
-                <Text style={{marginTop: 20, color: "#555555"}}>{this.props.text}</Text>
+                <ActivityIndicator size="large" color={colors.COLOR_DARKGREY}/>
+                <Text style={{marginTop: 20, color: colors.COLOR_DARKGREY}}>{this.props.text}</Text>
             </View>
         );
     }
@@ -30,7 +30,7 @@ export default class LoadingScreen extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.COLOR_LIGHT,
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

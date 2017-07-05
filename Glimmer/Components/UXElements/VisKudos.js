@@ -5,6 +5,7 @@
 import React from "react";
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 import {Badge} from "react-native-elements";
+import * as colors from "../../Styles/colorConstants"
 
 export default class VisKudos extends React.Component {
 
@@ -30,7 +31,7 @@ export default class VisKudos extends React.Component {
             out.push(<Badge
                     value={this.props.kudos[key].name}
                     key={this.props.kudos[key].id}
-                    textStyle={{color: '#333333'}}
+                    textStyle={{color: colors.COLOR_DARKGREY}}
                     containerStyle={pageStyles.badgeStyle}
                 />
             )
@@ -56,7 +57,7 @@ export default class VisKudos extends React.Component {
                     <View style={pageStyles.container}>
                         <Badge
                             value={this.getKudosCount() + " kudos"}
-                            textStyle={{color: '#444444'}}
+                            textStyle={{color: colors.COLOR_DARKGREY}}
                             containerStyle={pageStyles.badgeStyle}
                         />
                     </View>
@@ -70,6 +71,6 @@ const pageStyles = StyleSheet.create({
 
     container: { flexDirection: "row", flexWrap: "wrap"},
 
-    badgeStyle: {backgroundColor: '#ECF0F1', marginRight: 5, marginBottom: 5}
+    badgeStyle: {backgroundColor: colors.COLOR_LIGHT, marginRight: 5, marginBottom: 5}
 
 });

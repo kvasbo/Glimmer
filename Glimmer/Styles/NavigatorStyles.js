@@ -1,11 +1,13 @@
+import * as colors from "../Styles/colorConstants"
+
 export default NavigatorStyles = {
 
     default: {
 
         //Common
-        navBarTextColor: '#ECF0F1', // change the text color of the title (remembered across pushes)
-        navBarBackgroundColor: '#2980B9', // change the background color of the nav bar (remembered across pushes)
-        navBarButtonColor: '#ECF0F1', // Change color of nav bar buttons (eg. the back button) (remembered across pushes)
+        navBarTextColor: colors.COLOR_LIGHT, // change the text color of the title (remembered across pushes)
+        navBarBackgroundColor: colors.COLOR_GRAD2, // change the background color of the nav bar (remembered across pushes)
+        navBarButtonColor: colors.COLOR_LIGHT, // Change color of nav bar buttons (eg. the back button) (remembered across pushes)
         navBarHidden: false, // make the nav bar hidden
         navBarHideOnScroll: true, // make the nav bar hidden only after the user starts to scroll
         navBarTranslucent: false, // make the nav bar semi-translucent, works best with drawUnderNavBar:true
@@ -18,9 +20,9 @@ export default NavigatorStyles = {
         tabBarHidden: false, // make the screen content hide the tab bar (remembered across pushes)
         statusBarTextColorScheme: 'light', // text color of status bar, 'dark' / 'light' (remembered across pushes)
         //statusBarTextColorSchemeSingleScreen: 'light', // same as statusBarTextColorScheme but does NOT remember across pushes
-        navBarSubtitleColor: 'white', // subtitle color
+        navBarSubtitleColor: colors.COLOR_LIGHT, // subtitle color
         //navBarSubtitleFontFamily: 'font-name', // subtitle font
-        screenBackgroundColor: 'white', // Default screen color, visible before the actual react view is rendered
+        screenBackgroundColor: colors.COLOR_LIGHT, // Default screen color, visible before the actual react view is rendered
         //orientation: 'portrait', // Sets a specific orientation to a modal and all screens pushed to it. Default: 'auto'. Supported values: 'auto', 'landscape', 'portrait'
 
         // iOS only

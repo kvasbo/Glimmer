@@ -1,4 +1,4 @@
-
+import * as colors from "../Styles/colorConstants"
 import {StyleSheet} from 'react-native'
 
 module.exports = StyleSheet.create({
@@ -11,7 +11,7 @@ module.exports = StyleSheet.create({
 
     uxExplain: {
         fontSize: 12,
-        color: "#777777",
+        color: colors.COLOR_DARKGREY,
         fontWeight: "300",
         marginBottom: 3,
     }

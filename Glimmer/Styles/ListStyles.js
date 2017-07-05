@@ -1,3 +1,4 @@
+import * as colors from "../Styles/colorConstants"
 
 import {StyleSheet} from 'react-native'
 
@@ -43,18 +44,18 @@ module.exports = StyleSheet.create({
         fontSize: 16,
         fontWeight: "600",
         marginBottom: 3,
-        color: "#E74C3C",
+        color: colors.COLOR_HIGHLIGHT,
     },
 
     listSubtitle: {
         fontSize: 13,
         fontWeight: "300",
-        color: "#444444",
+        color: colors.COLOR_DARKGREY,
         marginBottom: 2,
     },
 
     divider : {
-        backgroundColor: '#CCCCCC'
+        backgroundColor: colors.COLOR_LIGHTGREY
     }
 
 })

@@ -3,15 +3,12 @@
  */
 
 import React from "react";
-import {Image, StyleSheet, Text, TouchableOpacity, View, Alert} from "react-native";
-import {Badge} from "react-native-elements";
-import GiKudos from "./GiKudos";
+import {Image, StyleSheet, Text, View} from "react-native";
 import ForumText from "./ForumText.js";
-import VisKudos from "./VisKudos";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
+import * as colors from "../../Styles/colorConstants";
 //const CachedImage = require('react-native-cached-image');
 var DomParser = require('react-native-html-parser').DOMParser;
-import HTMLView from 'react-native-htmlview';
 
 var s = require('../Styles');
 
@@ -30,8 +27,7 @@ export default class StreamForumPost extends React.Component {
                 this.byMe = true;
             }
         }
-        catch(err)
-        {
+        catch (err) {
             console.log("error parsing", this.props);
         }
 
@@ -96,7 +92,6 @@ export default class StreamForumPost extends React.Component {
         }
 
     }
-    
 
     render() {
 
@@ -126,7 +121,8 @@ export default class StreamForumPost extends React.Component {
                     <View style={{flexDirection: "row"}}>
 
                         <KudosAndCommentsAndStuff showCommentBadge={true}
-                                                  navigator={this.props.navigator} post={this.props.data} byMe={this.byMe} />
+                                                  navigator={this.props.navigator} post={this.props.data}
+                                                  byMe={this.byMe}/>
 
                     </View>
                 </View>
@@ -139,7 +135,7 @@ export default class StreamForumPost extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.COLOR_WHITE,
         padding: 0,
         paddingTop: 5,
         paddingBottom: 15,
@@ -148,13 +144,13 @@ const pageStyles = StyleSheet.create({
         flex: 1,
     },
     title: {
-        marginTop: 12 ,
+        marginTop: 12,
         marginBottom: 0,
         marginLeft: 20,
         marginRight: 20,
         paddingTop: 0,
         paddingBottom: 5,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: colors.COLOR_WHITE
     },
     titleText: {
         marginTop: 0,
@@ -164,7 +160,7 @@ const pageStyles = StyleSheet.create({
         textAlign: "left",
         fontSize: 25,
         fontWeight: "300",
-        color: "#222222",
+        color: colors.COLOR_DARKGREY,
     },
     image: {
         marginTop: 7,

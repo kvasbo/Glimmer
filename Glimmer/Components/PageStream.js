@@ -7,7 +7,7 @@ import {StyleSheet, FlatList, View} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";
 import Divider from "./UXElements/Divider";
-
+import * as colors from "../Styles/colorConstants"
 
 export default class PageStream extends React.Component {
 
@@ -127,7 +127,7 @@ export default class PageStream extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ECF0F1',
+        backgroundColor: colors.COLOR_LIGHT,
         padding: 0,
         margin: 0,
     },

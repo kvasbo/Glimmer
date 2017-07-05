@@ -5,6 +5,7 @@
 import React from "react";
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Divider, Icon} from "react-native-elements";
+import * as colors from "../Styles/colorConstants"
 
 //Get common list styles
 const listStyles = require('../Styles/ListStyles');
@@ -166,7 +167,7 @@ class Conversation extends React.Component {
 
                         </View>
                         <View style={listStyles.iconBlock}>
-                            <Icon name="keyboard-arrow-right" color="#AAAAAA" size={30}/>
+                            <Icon name="keyboard-arrow-right" color={colors.COLOR_LIGHTGREY} size={30}/>
                         </View>
 
                     </View>
@@ -180,7 +181,7 @@ class Conversation extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FAFAFA',
+        backgroundColor: colors.COLOR_LIGHT,
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

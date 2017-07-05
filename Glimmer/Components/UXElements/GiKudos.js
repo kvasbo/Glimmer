@@ -5,6 +5,7 @@
 import React from "react";
 import {Alert, StyleSheet, TouchableOpacity, TouchableHighlight, Text, View} from "react-native";
 import {Badge} from "react-native-elements";
+import * as colors from "../../Styles/colorConstants"
 
 export default class GiKudos extends React.Component {
 
@@ -46,7 +47,7 @@ export default class GiKudos extends React.Component {
                 <Badge
                     value={"Kudos gitt!"}
                     textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: '#2C3E50', marginRight: 5}}
+                    containerStyle={{backgroundColor: colors.COLOR_LIGHT, marginRight: 5}}
                 />
             )
         }
@@ -60,7 +61,7 @@ export default class GiKudos extends React.Component {
                     <Badge
                         value={this.state.text}
                         textStyle={{color: 'white'}}
-                        containerStyle={{backgroundColor: 'green', marginRight: 5}}
+                        containerStyle={{backgroundColor: colors.COLOR_GREEN, marginRight: 5}}
                     />
 
 

@@ -6,6 +6,7 @@ import React from "react";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import {Divider, Icon} from "react-native-elements";
+import * as colors from "../Styles/colorConstants"
 
 //Get common list styles
 const listStyles = require('../Styles/ListStyles');
@@ -17,7 +18,7 @@ export default class PageFavorites extends React.Component {
     constructor(props) {
 
         super(props);
-        this.state = {posts: this.props.store.getState().ForumFavorite.posts, loading: true, refreshing: false};
+        this.state = {posts: this.props.store.getState().ForumFavorite.posts, loading: true, refreshing: false, silentLoading: false};
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
@@ -31,6 +32,8 @@ export default class PageFavorites extends React.Component {
         navBarHidden: false,
     };
 
+
+
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
@@ -43,7 +46,7 @@ export default class PageFavorites extends React.Component {
 
         //Listen to state changes. This really needs to change at some later point.
         this.reduxUnsubscribe = store.subscribe(() => {
-            
+
                 var tmpPosts = store.getState().ForumFavorite.posts;
 
                 if (tmpPosts !== this.state.posts) {
@@ -51,6 +54,7 @@ export default class PageFavorites extends React.Component {
                 }
             }
         )
+
     }
 
     componentWillUnmount() {
@@ -58,7 +62,9 @@ export default class PageFavorites extends React.Component {
     }
 
     _silentRefresh() {
-        if(!this.state.loading) global.arbeidsMaur.forumUpdater.addFavorites(1, 1);
+        this.setState({silentLoading: true});
+
+        if(!this.state.loading) global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then(()=>this.setState({silentLoading: false}));
     }
 
     _refresh() {
@@ -91,7 +97,7 @@ export default class PageFavorites extends React.Component {
                         <Text style={listStyles.listSubtitle}>{this.getSubtitle(item.data)}</Text>
                     </View>
                     <View style={listStyles.iconBlock}>
-                        <Icon name="keyboard-arrow-right" color="#AAAAAA" size={30}/>
+                        <Icon name="keyboard-arrow-right" color={colors.COLOR_DARKGREY} size={30}/>
                     </View>
                 </View>
 
@@ -144,7 +150,7 @@ const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.COLOR_WHITE,
         paddingLeft: 0,
         marginTop: 0,
         marginBottom: 0,

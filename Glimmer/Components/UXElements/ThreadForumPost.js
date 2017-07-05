@@ -6,6 +6,7 @@ import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 import ForumText from "./ForumText.js";
+import * as colors from "../../Styles/colorConstants"
 
 var s = require('../Styles');
 
@@ -74,7 +75,7 @@ export default class ThreadForumPost extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFFFFF', padding: 0, marginBottom: 2,
+        backgroundColor: colors.COLOR_LIGHT, padding: 0, marginBottom: 2,
     },
     title: {
         marginTop: 10,

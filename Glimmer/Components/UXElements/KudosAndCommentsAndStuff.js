@@ -3,6 +3,7 @@ import {View} from "react-native";
 import {Badge} from "react-native-elements";
 import GiKudos from "./GiKudos";
 import VisKudos from "./VisKudos";
+import * as colors from "../../Styles/colorConstants"
 
 export default class KudosAndCommentsAndStuff extends React.Component {
 
@@ -47,8 +48,8 @@ export default class KudosAndCommentsAndStuff extends React.Component {
 
             <Badge
                 value={this.props.post.comment_count + " " + comText}
-                textStyle={{color: 'white'}}
-                containerStyle={{backgroundColor: 'orange'}}
+                textStyle={{color: colors.COLOR_WHITE}}
+                containerStyle={{backgroundColor: colors.COLOR_ORANGE}}
                 onPress={() => this.props.navigator.push({
                     screen: 'glimmer.PageThread',
                     title: this.props.post.title,

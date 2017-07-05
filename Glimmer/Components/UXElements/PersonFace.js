@@ -5,6 +5,8 @@
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {addNewMessageRecipient, removeNewMessageRecipient, clearNewMessageRecipient} from "../../Redux/actions"
+import * as colors from "../../Styles/colorConstants"
+
 //const CachedImage = require('react-native-cached-image');
 
 export default class PersonFace extends React.Component {
@@ -93,7 +95,7 @@ const pageStyles = StyleSheet.create({
         height: 48,
         borderRadius: 24,
         borderWidth: 3,
-        borderColor: "#E74C3CFF"
+        borderColor: colors.COLOR_LIGHT + "FF"
     },
 
     faceNotSelected: {
@@ -101,12 +103,12 @@ const pageStyles = StyleSheet.create({
         height: 48,
         borderRadius: 24,
         borderWidth: 3,
-        borderColor:  "#E74C3C00"
+        borderColor: colors.COLOR_LIGHT + "00"
     },
 
     name: {
         fontSize: 12,
-        color: "#ECF0F1"
+        color: colors.COLOR_LIGHT
     }
 
 });

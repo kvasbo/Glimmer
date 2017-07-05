@@ -7,6 +7,7 @@ import {Image, StyleSheet, Text, View} from "react-native";
 import ForumText from "./ForumText.js";
 import GiKudos from "./GiKudos";
 import VisKudos from "./VisKudos";
+import * as colors from "../../Styles/colorConstants"
 
 var s = require('../Styles');
 
@@ -103,7 +104,7 @@ export default class ForumComment extends React.Component {
 
 const pageStyles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.COLOR_WHITE,
         padding: 0,
         paddingTop: 10,
         paddingBottom: 5,
