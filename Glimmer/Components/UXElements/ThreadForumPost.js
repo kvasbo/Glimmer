@@ -11,10 +11,22 @@ var s = require('../Styles');
 
 export default class ThreadForumPost extends React.Component {
 
+    byMe = false;
+
     constructor(props) {
 
         super(props);
         this.state = {};
+
+        try {
+            if (this.props.data.creator.id === auth.currentUser.id) {
+                this.byMe = true;
+            }
+        }
+        catch(err)
+        {
+            console.log("error parsing", this.props);
+        }
 
     }
 
@@ -26,20 +38,6 @@ export default class ThreadForumPost extends React.Component {
         return new moment(this.props.data.created_at).calendar();
     }
 
-    getMetadataSection() {
-
-        return (
-
-            <View style={{flexDirection: "row"}}>
-
-                <KudosAndCommentsAndStuff showCommentBadge={false}
-                                          navigator={this.props.navigator} post={this.props.data}/>
-
-            </View>
-
-        )
-
-    }
 
     render() {
 
@@ -60,7 +58,12 @@ export default class ThreadForumPost extends React.Component {
                 </View>
 
                 <View style={pageStyles.metaData}>
-                    {this.getMetadataSection()}
+                    <View style={{flexDirection: "row"}}>
+
+                        <KudosAndCommentsAndStuff showCommentBadge={false}
+                                                  navigator={this.props.navigator} post={this.props.data} byMe={this.byMe} />
+
+                    </View>
                 </View>
 
             </View>

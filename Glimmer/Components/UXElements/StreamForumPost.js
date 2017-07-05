@@ -96,21 +96,7 @@ export default class StreamForumPost extends React.Component {
         }
 
     }
-
-    getMetadataSection() {
-
-        return (
-
-            <View style={{flexDirection: "row"}}>
-
-                <KudosAndCommentsAndStuff showCommentBadge={true}
-                                   navigator={this.props.navigator} post={this.props.data} byMe={this.byMe} />
-
-            </View>
-
-        )
-
-    }
+    
 
     render() {
 
@@ -137,7 +123,12 @@ export default class StreamForumPost extends React.Component {
                 <Text style={pageStyles.creatorInfo}>{creator}, {this.getTime()}. {this.props.data.forum.title}.</Text>
 
                 <View style={pageStyles.metaData}>
-                    {this.getMetadataSection()}
+                    <View style={{flexDirection: "row"}}>
+
+                        <KudosAndCommentsAndStuff showCommentBadge={true}
+                                                  navigator={this.props.navigator} post={this.props.data} byMe={this.byMe} />
+
+                    </View>
                 </View>
 
             </View>

@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {Alert, StyleSheet, TouchableOpacity, Text} from "react-native";
+import {Alert, StyleSheet, TouchableOpacity, TouchableHighlight, Text, View} from "react-native";
 import {Badge} from "react-native-elements";
 
 export default class GiKudos extends React.Component {
@@ -62,6 +62,7 @@ export default class GiKudos extends React.Component {
                         textStyle={{color: 'white'}}
                         containerStyle={{backgroundColor: 'green', marginRight: 5}}
                     />
+
 
                 </TouchableOpacity>
             );

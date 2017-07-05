@@ -14,11 +14,12 @@ import "moment/locale/nb";
 import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
 import Helpers from "./src/helpers";
+import NavStyles from "./Styles/NavigatorStyles";
 
 global.moment = require('moment');
 moment.locale('nb')
 
-const NavStyles = require("./Styles/NavigatorStyles");
+
 const config = require("./config.js");
 
 //Some hacks
@@ -181,7 +182,8 @@ export default class Glimmer {
                 label: 'Forsiden',
                 screen: 'glimmer.PageStream',
                 icon: require('./icons/front.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                title: 'Forsiden'
+                title: 'Forsiden',
+                navigatorStyle: NavStyles.default,
             }, /*{
              label: 'Kalender',
              screen: 'glimmer.PageCalendar',
@@ -194,7 +196,8 @@ export default class Glimmer {
                     label: 'Samtaler',
                     screen: 'glimmer.PageMessages',
                     icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                    title: 'Samtaler'
+                    title: 'Samtaler',
+                    navigatorStyle: NavStyles.default,
                 },
                 /*{
                     label: 'Mer',

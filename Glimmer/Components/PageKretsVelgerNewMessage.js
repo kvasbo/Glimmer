@@ -5,6 +5,7 @@
 import React from "react";
 import {Alert, Animated, FlatList, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
+import NavigatorStyles from "../Styles/NavigatorStyles";
 
 //TODO sort by status and then name
 
@@ -25,12 +26,14 @@ export default class PageKretsVelger extends React.Component {
 
     }
 
+    static navigatorStyle = NavigatorStyles.default;
+
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
 
         switch (event.id) {
             case 'willAppear':
                 if (__DEV__) {
-                    console.log("Velgerprops", this.props);
+                    //console.log("Velgerprops", this.props);
                 }
                 break;
             case 'didAppear':
@@ -49,18 +52,16 @@ export default class PageKretsVelger extends React.Component {
 
                 if (store.getState().MessageRecipients.recipients.length === 0) {
                     Alert.alert("Ingen mottakere", "Hvem tenkte du skulle lese denne meldinga da?");
-                }else {
+                } else {
                     this.props.navigator.push({
                         screen: 'glimmer.PageNewMessage', // unique ID registered with Navigation.registerScreen
-                        title: "Skriv melding", // navigation bar title of the pushed screen (optional)
+                        title: "Send ny melding", // navigation bar title of the pushed screen (optional)
                         passProps: {}, // Object that will be passed as props to the pushed screen (optional)
                         animated: true, // does the push have transition animation or does it happen immediately (optional),
                         backButtonTitle: "Mottakere",
                     });
 
                 }
-
-
 
             }
         }
@@ -163,7 +164,7 @@ export default class PageKretsVelger extends React.Component {
 
             <View style={pageStyles.container}>
 
-                <Animated.View>
+                <View>
                     <Text style={pageStyles.selectorHeader}>Søk</Text>
                     <TextInput style={{
                         margin: 10,
@@ -177,17 +178,24 @@ export default class PageKretsVelger extends React.Component {
                                onChangeText={(text) => this._searchChanged(text)}
                     />
                     <FlatList
-                        style={{height: this._getSearchHeight(), marginBottom: 10}}
+                        style={{height: this._getSearchHeight()}}
                         data={this.state.searchHits}
                         renderItem={this._renderItemSearch}
                         keyExtractor={(item, index) => item.id}
                         contentContainerStyle={pageStyles.list}
+                        getItemLayout={(data, index) => (
+                            {
+                                length: 90, offset: 90 * index, index
+                            }
+                        )}
+
 
                     />
-                </Animated.View>
-                <View>
+                </View>
+                <View style={{paddingBottom: 50, marginBottom: 50}} >
                     <Text style={pageStyles.selectorHeader}>Krets</Text>
                     <FlatList
+
 
                         data={this._getDataArray()}
                         renderItem={this._renderItem}
@@ -208,7 +216,7 @@ const pageStyles = StyleSheet.create({
         backgroundColor: '#2C3E50',
         paddingLeft: 0,
         paddingTop: 15,
-        paddingBottom: 30,
+        paddingBottom: 50,
         paddingRight: 0,
     },
     list: {

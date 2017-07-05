@@ -68,8 +68,9 @@ export default class PageNewMessage extends React.Component {
             }
 
             Promise.all(sending).then(() => {
-                Alert.alert("Hurra", "Alle meldingene er sendt!");
                 this.props.navigator.popToRoot();
+            }).catch((err) => {
+                Alert.alert("Svarte!", "Dette gikk ikke :( Se i meldingslista hvilke som ble sendt, jeg aner ikke.")
             })
 
         }
@@ -139,7 +140,7 @@ const pageStyles = StyleSheet.create({
         backgroundColor: '#ECF0F1',
         paddingLeft: 0,
         paddingTop: 0,
-        paddingBottom: 30,
+        marginBottom: 30,
         paddingRight: 0,
     },
     textInput: {

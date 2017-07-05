@@ -60,7 +60,7 @@ export default class ForumComment extends React.Component {
             this.byMe = true;
         }
 
-        console.log("Comment", this.props.data, "By me;", this.byMe);
+       // console.log("Comment", this.props.data, "By me;", this.byMe);
 
     }
 
