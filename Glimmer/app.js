@@ -126,8 +126,6 @@ export default class Glimmer {
         //function to attach listener to app state change
         AppState.addEventListener('change', _handleAppStateChange);
 
-        helpers.log("Init started");
-
         this.attachStoreListener();
 
         registerScreens(store, Provider);

@@ -14,23 +14,21 @@ export default class Helpers {
 
     getCalendarTime(time) {
 
-        return new moment(time).calendar();
+        let m = new moment(time);
+
+        if(new moment().diff(m, "hours") < 7)
+        {
+            return m.fromNow();
+        }
+        else
+        {
+            return m.calendar();
+        }
 
     }
 
-    logItems = [];
-
     log() {
 
-        for (var i = 0; i < arguments.length; i++) {
-            var out = {};
-            out.key = Math.random();
-            out.time = new Date();
-            out.data = arguments[i];
-            this.logItems.push(out);
-        }
-
-        this.logItems = this.logItems.slice(0, 500);
     }
 
     getPersonById(id)

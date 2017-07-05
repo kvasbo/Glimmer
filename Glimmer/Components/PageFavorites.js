@@ -18,7 +18,7 @@ export default class PageFavorites extends React.Component {
     constructor(props) {
 
         super(props);
-        this.state = {posts: this.props.store.getState().ForumFavorite.posts, loading: true, refreshing: false, silentLoading: false};
+        this.state = {posts: this.props.store.getState().ForumFavorite, loading: true, refreshing: false, silentLoading: false};
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
@@ -47,10 +47,12 @@ export default class PageFavorites extends React.Component {
         //Listen to state changes. This really needs to change at some later point.
         this.reduxUnsubscribe = store.subscribe(() => {
 
-                var tmpPosts = store.getState().ForumFavorite.posts;
+                var tmpPosts = store.getState().ForumFavorite;
 
                 if (tmpPosts !== this.state.posts) {
+
                     this.setState({loading: false, posts: tmpPosts});
+
                 }
             }
         )
@@ -76,9 +78,19 @@ export default class PageFavorites extends React.Component {
 
     }
 
+    getData()
+    {
+        let out = Object.values(this.state.posts);
+
+        out.sort((x,y) => {
+            return (new Date(y.updated_at) - new Date(x.updated_at));
+        })
+
+        return out;
+    }
+
     getSubtitle(data) {
-        var date = new moment(data.updated_at).calendar()
-        return date;
+        return helpers.getCalendarTime(data.updated_at);
     }
 
     _renderItem = ({item}) => (
@@ -87,14 +99,14 @@ export default class PageFavorites extends React.Component {
             <TouchableOpacity onPress={() =>
                 this.props.navigator.push({
                     screen: 'glimmer.PageThread',
-                    title: item.data.title,
-                    passProps: {post: item.data}
+                    title: item.title,
+                    passProps: {post: item}
                 })
             }>
                 <View style={listStyles.whiteBox}>
                     <View style={listStyles.textBlock}>
-                        <Text style={listStyles.listTitle}>{item.data.title}</Text>
-                        <Text style={listStyles.listSubtitle}>{this.getSubtitle(item.data)}</Text>
+                        <Text style={listStyles.listTitle}>{item.title}</Text>
+                        <Text style={listStyles.listSubtitle}>{this.getSubtitle(item)}</Text>
                     </View>
                     <View style={listStyles.iconBlock}>
                         <Icon name="keyboard-arrow-right" color={colors.COLOR_DARKGREY} size={30}/>
@@ -131,11 +143,11 @@ export default class PageFavorites extends React.Component {
 
                 <FlatList
                     style={pageStyles.container}
-                    data={this.state.posts}
+                    data={this.getData()}
                     onRefresh={() => this._refresh()}
                     refreshing={this.state.refreshing}
                     renderItem={this._renderItem}
-                    keyExtractor={(item, index) => item.data.id}
+                    keyExtractor={(item, index) => item.id}
                     onEndReached={this._loadMoreItems}
                     onEndReachedThreshold={0.5}
                     initialNumToRender={15}

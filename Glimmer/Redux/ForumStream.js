@@ -1,41 +1,18 @@
-import {ADD_POST_STREAM} from "./constants";
+import {ADD_POST_STREAM_BATCH} from "./constants";
 
-const initialState = {
-    posts: []
-}
-
-function ForumStream(state = initialState, action) {
+function ForumStream(state = {}, action) {
     switch (action.type) {
-        case ADD_POST_STREAM:
 
-            //Ensure unique IDs by removing any old posts with this id.
-            const newPosts = state.posts.filter((post) => {
-                if (post.data.id === action.post.id) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
-            });
+        case ADD_POST_STREAM_BATCH:
 
-            //Create return object
-            newState =  Object.assign({}, state, {
-                posts: [
-                    ...newPosts,
-                    {
-                        data: action.post
-                    }
-                ]
-            })
+            var newState = Object.assign({}, state);
 
-            //Sort
-            newState.posts.sort((x,y) => {
-                xd = new Date(x.data.created_at);
-                yd = new Date(y.data.created_at);
-                return yd - xd;
-            })
+            for(var i = 0; i < action.posts.length; i++)
+            {
+                newState[action.posts[i].id] = action.posts[i];
+            }
 
-            return newState
+            return newState;
 
         default:
             return state

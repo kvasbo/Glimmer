@@ -46,6 +46,17 @@ export default class PageStream extends React.Component {
         }
     }
 
+    getData()
+    {
+        let out = Object.values(this.state.posts);
+
+        out.sort((x,y) => {
+            return (new Date(y.created_at) - new Date(x.created_at));
+        })
+
+        return out;
+    }
+
     static navigatorButtons = {
         rightButtons: [
             {
@@ -67,12 +78,12 @@ export default class PageStream extends React.Component {
 
     componentDidMount() {
 
-        this.setState({posts: this.props.store.getState().ForumStream.posts});
+        this.setState({posts: this.props.store.getState().ForumStream});
 
         //Listen to state changes. This really needs to change at some later point.
         reduxUnsubscribe = store.subscribe(() => {
 
-                var tmpPosts = store.getState().ForumStream.posts;
+                var tmpPosts = store.getState().ForumStream;
 
                 if (tmpPosts !== this.state.posts) {
                     this.setState({loading: false, posts: tmpPosts});
@@ -86,20 +97,35 @@ export default class PageStream extends React.Component {
         return (
 
             <StreamForumPost navigator={this.props.navigator}
-                             cut={true} images={false} data={item.data}/>
+                             cut={true} images={false} data={item.item}/>
 
         )
     }
 
     _silentRefresh() {
-        if (!this.state.refreshing) global.arbeidsMaur.forumUpdater.loadStream(1);
+        if (!this.state.refreshing) global.arbeidsMaur.forumUpdater.loadFirstStream(1);
     }
 
     _onRefresh() {
         this.setState({refreshing: true});
-        global.arbeidsMaur.forumUpdater.loadStream(1).then((data) => {
+        global.arbeidsMaur.forumUpdater.loadFirstStream(1).then((data) => {
             this.setState({refreshing: false});
         });
+    }
+
+    _loadMoreItems(){
+        global.arbeidsMaur.forumUpdater.addPagesToStream(1);
+    }
+
+    getData()
+    {
+        let out = Object.values(this.state.posts);
+
+        out.sort((x,y) => {
+            return (new Date(y.created_at) - new Date(x.created_at));
+        })
+
+        return out;
     }
 
     render() {
@@ -111,13 +137,14 @@ export default class PageStream extends React.Component {
             return (
                 <FlatList
                     style={pageStyles.container}
-                    data={this.state.posts}
-                    renderItem={(item) => this._renderItem(item.item)}
-                    keyExtractor={(item) => {return item.data.id}}
+                    data={this.getData()}
+                    renderItem={(item) => this._renderItem(item)}
+                    keyExtractor={(item) => {return item.id}}
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
-                    initialNumToRender={5}
-
+                    initialNumToRender={3}
+                    onEndReached={this._loadMoreItems}
+                    onEndReachedThreshold={0.5}
                 />
             );
         }

@@ -281,11 +281,10 @@ export default class PageThread extends React.Component {
                 <Button title="Ny kommentar" onPress={() => {
 
                     this.props.navigator.push({
-                        screen: 'glimmer.PageNewMessage', // unique ID registered with Navigation.registerScreen
-                        title: "Send ny melding", // navigation bar title of the pushed screen (optional)
-                        passProps: {}, // Object that will be passed as props to the pushed screen (optional)
+                        screen: 'glimmer.PageNewForumComment', // unique ID registered with Navigation.registerScreen
+                        title: "Ny kommentar", // navigation bar title of the pushed screen (optional)
+                        passProps: {postId :this.props.postId}, // Object that will be passed as props to the pushed screen (optional)
                         animated: true, // does the push have transition animation or does it happen immediately (optional),
-                        backButtonTitle: "Mottakere",
                     });
 
                 }} />

@@ -1,6 +1,8 @@
 import {
     ADD_POST_FAVORITES,
     ADD_POST_STREAM,
+    ADD_POST_FAVORITES_BATCH,
+    ADD_POST_STREAM_BATCH,
     APPCONTROL_USER_LOGIN,
     FORUMLIST_ADD_FORUM,
     FORUMLIST_REPLACE,
@@ -10,7 +12,8 @@ import {
     MESSAGE_RECIPIENTS_REMOVE_PERSON,
     FORUMPOST_COMMENT_ADD,
     USERS_ADD_USER,
-    MESSAGE_CONVERSATION_ADD
+    MESSAGE_CONVERSATION_ADD,
+    MESSAGE_CONVERSATON_ADD_BATCH
 } from "./constants";
 
 export function replaceForumList(forums) {
@@ -39,16 +42,18 @@ export function addKretsPerson(id) {
     }
 }
 
-export function addFavoritesPost(post) {
+export function addFavoritesPostBatch(posts) {
     return {
-        type: ADD_POST_FAVORITES,
-        post
+        type: ADD_POST_FAVORITES_BATCH,
+        posts
     }
 }
-export function addStreamPost(post) {
+
+
+export function addStreamPostBatch(posts) {
     return {
-        type: ADD_POST_STREAM,
-        post
+        type: ADD_POST_STREAM_BATCH,
+        posts
     }
 }
 
@@ -97,5 +102,12 @@ export function addConversation(conversation) {
     return {
         type: MESSAGE_CONVERSATION_ADD,
         conversation
+    }
+}
+
+export function addConversationBatch(conversations) {
+    return {
+        type: MESSAGE_CONVERSATON_ADD_BATCH,
+        conversations
     }
 }

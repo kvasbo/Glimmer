@@ -208,8 +208,6 @@ export default class WriteNewPostOrComment extends React.Component {
                 <View style={{marginTop: 22}}>
                     <View>
 
-                        <View><Text style={[TextStyles.uxTitle]}>{this.props.title}</Text></View>
-
                         <View style={pageStyles.imageViewer}>
                             {this.getImageList()}
                         </View>

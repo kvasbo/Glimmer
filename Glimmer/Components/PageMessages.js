@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Divider, Icon} from "react-native-elements";
 import * as colors from "../Styles/colorConstants";
 
@@ -15,9 +15,10 @@ export default class PageMessages extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {conversations: []};
+        this.state = {conversations: [], refreshing: false};
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+        this._onRefresh = this._onRefresh.bind(this);
 
     }
 
@@ -70,11 +71,10 @@ export default class PageMessages extends React.Component {
     }
 
     componentWillMount() {
-        this.attachToStore()
+        this.attachToStore();
     }
 
-    attachToStore()
-    {
+    attachToStore() {
 
         arbeidsMaur.messageUpdater.updateMessageThreads(1);
 
@@ -83,11 +83,9 @@ export default class PageMessages extends React.Component {
 
                 let tmp = Object.values(store.getState().Conversation);
 
-                tmp.sort((x,y)=>{
+                tmp.sort((x, y) => {
                     return (new Date(y.last_message_time) - new Date(x.last_message_time));
                 });
-
-
 
                 if (tmp !== this.state.conversations) {
                     this.setState({loading: false, conversations: tmp});
@@ -97,27 +95,41 @@ export default class PageMessages extends React.Component {
 
     }
 
-    getMessages() {
+    _onRefresh() {
 
-        var out = [];
+        this.setState({refreshing:true});
 
-        for (conversation in this.state.conversations) {
-            out.push(<Conversation key={this.state.conversations[conversation].user_id}
-                                   data={this.state.conversations[conversation]}
-                                   navigator={this.props.navigator}
-            />);
-        }
+        arbeidsMaur.messageUpdater.updateMessageThreads(1).then(()=>{
+            this.setState({refreshing:false});
+        })
 
-        return out;
+    }
+
+    _renderItem(item) {
+
+        //console.log(item);
+
+        return (<Conversation data={item.item} navigator={this.props.navigator}/>)
+
     }
 
     render() {
 
         return (
-            <ScrollView style={pageStyles.container}>
-                {this.getMessages()}
-            </ScrollView>
+            <FlatList
+                style={pageStyles.container}
+                data={this.state.conversations}
+                renderItem={(item) => this._renderItem(item)}
+                keyExtractor={(item) => {
+                    return item.user_id
+                }}
+                onRefresh={this._onRefresh}
+                refreshing={this.state.refreshing}
+                initialNumToRender={15}
+
+            />
         );
+
     }
 }
 
@@ -126,6 +138,8 @@ class Conversation extends React.Component {
     constructor(props) {
 
         super(props);
+
+        //console.log("Conveo", this.props);
 
     }
 
@@ -176,8 +190,8 @@ class Conversation extends React.Component {
                 <TouchableOpacity
                     onPress={ () => this.props.navigator.push({
                         screen: 'glimmer.PageConversation',
-                        title: 'Chat med ' + this.props.data.user,
-                        passProps: {user: this.props.data.user}
+                        title: 'Samtale med ' + this.props.data.user,
+                        passProps: {user_id: this.props.data.user_id}
                     })}
                 >
                     <View style={listStyles.whiteBox}>

@@ -15,10 +15,14 @@ function MessageRecipients(state = initialState, action) {
 
             var id = action.id;
 
-            return {
-                ...state,
-                recipients: [...state.recipients, id]
+            var newState = Object.assign({}, state);
+
+            if(newState.recipients.indexOf(id) === -1)
+            {
+                newState.recipients.push(id);
             }
+
+            return newState;
 
         case MESSAGE_RECIPIENTS_REMOVE_PERSON:
 

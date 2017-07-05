@@ -1,16 +1,14 @@
-import {AsyncStorage} from "react-native";
-import {addFavoritesPost, addStreamPost, replaceForumList} from "../Redux/actions";
-
+import {addFavoritesPostBatch, addStreamPostBatch} from "../Redux/actions";
+const ForumPost = require("../DataClasses/post").default;
 const config = require("../config.js");
 
 export default class ForumUpdater {
 
     lastpage_favs = 0;
     lastpage_stream = 0;
-    //database = null;
 
     constructor() {
-        //this.database = firebaseApp.database;
+
     }
 
     //Do the API lifting
@@ -33,6 +31,19 @@ export default class ForumUpdater {
         });
     }
 
+    loadFirstFavorites(depth = 5) {
+        return this.addFavorites(1, depth);
+    }
+
+
+    addPagesToFavorites(numberOfPages) {
+        if (__DEV__) {
+            console.log("Add pages to favorites", numberOfPages);
+        }
+
+        this.addFavorites(this.lastpage_favs + 1, numberOfPages);
+    }
+
     addFavorites(from = 1, depth = 5) {
 
         return new Promise((resolve, reject) => {
@@ -41,7 +52,7 @@ export default class ForumUpdater {
 
             //Get promises for all
             for (var i = from; i < depth + from; i++) {
-                var p = this.loadPosts(true, i); //.then((data)=>{
+                var p = this.loadPosts(true, i);
                 proms.push(p);
             }
 
@@ -54,11 +65,28 @@ export default class ForumUpdater {
                     fetchedPosts = fetchedPosts.concat(values[key].data);
                 }
 
+                var tmpPosts = [];
+
                 for (key in fetchedPosts) {
-                    global.store.dispatch(addFavoritesPost(fetchedPosts[key].bulletin));
+
+                    var f = fetchedPosts[key].bulletin;
+
+                    try {
+
+                        var p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
+                            f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
+                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title);
+
+                        tmpPosts.push(p);
+                    }
+                    catch (error) {
+                        //Could not parse, oh well.
+                    }
                 }
 
-                lastpage_favs = from + depth - 1;
+                global.store.dispatch(addFavoritesPostBatch(tmpPosts));
+
+                this.lastpage_favs = from + depth - 1;
 
                 resolve();
 
@@ -68,27 +96,31 @@ export default class ForumUpdater {
 
     }
 
-    loadFirstFavorites(depth = 5) {
-        return this.addFavorites(1, depth);
+
+
+
+    loadFirstStream(depth = 5) {
+        return this.addStream(1, depth);
     }
 
-    addPagesToFavorites(numberOfPages) {
+    addPagesToStream(numberOfPages) {
+
         if (__DEV__) {
-            console.log("Add pages to favorites", numberOfPages);
+            console.log("Add pages to stream", numberOfPages);
         }
 
-        this.addFavorites(lastpage_favs + 1, numberOfPages);
+        this.addStream(this.lastpage_stream + 1, numberOfPages);
     }
 
-    loadStream(depth = 5) {
+    addStream(from = 1, depth = 5) {
 
         return new Promise((resolve, reject) => {
 
             var proms = [];
 
             //Get promises for all
-            for (var i = 1; i < depth + 1; i++) {
-                var p = this.loadPosts(false, i); //.then((data)=>{
+            for (var i = from; i < depth + from; i++) {
+                var p = this.loadPosts(false, i);
                 proms.push(p);
             }
 
@@ -98,14 +130,35 @@ export default class ForumUpdater {
                 var fetchedPosts = [];
 
                 for (key in values) {
+
                     fetchedPosts = fetchedPosts.concat(values[key].data);
                 }
 
                 fetchedPosts = global.helpers.arrayUnique(fetchedPosts);
 
+                var tmpPosts = [];
+
                 for (key in fetchedPosts) {
-                    store.dispatch(addStreamPost(fetchedPosts[key]));
+
+                    var f = fetchedPosts[key];
+
+                    try {
+
+                        var p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
+                            f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
+                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title);
+
+                        tmpPosts.push(p);
+                    }
+                    catch (error) {
+                        //Could not parse, oh well.
+                    }
+
                 }
+
+                store.dispatch(addStreamPostBatch(tmpPosts));
+
+                this.lastpage_stream = from + depth - 1;
 
                 resolve()
 
@@ -124,11 +177,7 @@ export default class ForumUpdater {
 
             api.makeApiGetCall(uri).then((data) => {
 
-                // console.log("Comment data", data)
-
                 for (key in data.data) {
-                    //console.log(data.data[key]);
-                    //global.store.dispatch(addForumPostComment(postId, data.data[key]));
                 }
 
                 resolve(data.data);

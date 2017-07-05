@@ -1,41 +1,19 @@
-import {ADD_POST_FAVORITES} from "./constants";
+import {ADD_POST_FAVORITES_BATCH} from "./constants";
 
-const initialState = {
-    posts: []
-}
-
-function ForumFavorite(state = initialState, action) {
+function ForumFavorite(state = {}, action) {
     switch (action.type) {
-        case ADD_POST_FAVORITES:
 
-            //Ensure unique IDs by removing any old posts with this id.
-            const newPosts = state.posts.filter((post) => {
-                if (post.data.id === action.post.id) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
-            });
+        case ADD_POST_FAVORITES_BATCH:
 
-            //Create return object
-            newState = Object.assign({}, state, {
-                posts: [
-                    ...newPosts,
-                    {
-                        data: action.post
-                    }
-                ]
-            })
+            var newState = Object.assign({}, state);
 
-            //Sort
-            newState.posts.sort((x,y) => {
-                    xd = new Date(x.data.updated_at);
-                    yd = new Date(y.data.updated_at);
-                    return yd - xd;
-            })
+            for(var i = 0; i < action.posts.length; i++)
+            {
+                newState[action.posts[i].id] = action.posts[i];
+            }
 
             return newState;
+
 
         default:
             return state

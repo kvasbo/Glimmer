@@ -23,7 +23,7 @@ export default class StreamForumPost extends React.Component {
         this.state = {};
 
         try {
-            if (this.props.data.creator.id === auth.currentUser.id) {
+            if (this.props.data.creator_id === auth.currentUser.id) {
                 this.byMe = true;
             }
         }
@@ -39,8 +39,8 @@ export default class StreamForumPost extends React.Component {
 
     }
 
-    getTime(time) {
-        return new moment(this.props.data.created_at).calendar();
+    getTime() {
+        return helpers.getCalendarTime(this.props.data.created_at);
     }
 
     getImages() {
@@ -96,8 +96,8 @@ export default class StreamForumPost extends React.Component {
     render() {
 
         var creator = null;
-        if (typeof this.props.data.creator !== "undefined") {
-            creator = this.props.data.creator.name;
+        if (typeof this.props.data.creator_name !== "undefined") {
+            creator = this.props.data.creator_name;
         }
 
         return (
@@ -115,7 +115,7 @@ export default class StreamForumPost extends React.Component {
                                style={{marginBottom: 10}}/>
                 </View>
 
-                <Text style={pageStyles.creatorInfo}>{creator}, {this.getTime()}. {this.props.data.forum.title}.</Text>
+                <Text style={pageStyles.creatorInfo}>{creator}, {this.getTime()}. {this.props.data.forum_title}.</Text>
 
                 <View style={pageStyles.metaData}>
                     <View style={{flexDirection: "row"}}>
