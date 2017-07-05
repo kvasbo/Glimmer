@@ -15,7 +15,7 @@ export default class PageMessages extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {conversations: store.getState().Conversation};
+        this.state = {conversations: []};
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
@@ -69,6 +69,10 @@ export default class PageMessages extends React.Component {
         }
     }
 
+    componentWillMount() {
+        this.attachToStore()
+    }
+
     attachToStore()
     {
 
@@ -80,7 +84,7 @@ export default class PageMessages extends React.Component {
                 let tmp = Object.values(store.getState().Conversation);
 
                 tmp.sort((x,y)=>{
-                    return (new Date(x.last_message_time) - new Date(y.last_message_time));
+                    return (new Date(y.last_message_time) - new Date(x.last_message_time));
                 });
 
 
