@@ -9,7 +9,6 @@ import {Provider} from "react-redux";
 import glimmerReducers from "./Redux/index";
 import RNFirebase from "react-native-firebase";
 import {setJSExceptionHandler} from "react-native-exception-handler";
-import RNRestart from "react-native-restart";
 import "moment/locale/nb";
 import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
@@ -33,7 +32,7 @@ const errorHandler = (e, isFatal) => {
         Du må nok starte appen på nytt :(.
         `, [{
             text: 'OK', onPress: () => {
-               
+
             }
         }]);
     } else {
