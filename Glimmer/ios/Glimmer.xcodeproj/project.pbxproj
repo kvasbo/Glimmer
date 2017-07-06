@@ -49,7 +49,6 @@
 		9117FB040C654A37B4DAB9E1 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6CA335C407A4744A8D1F8F5 /* SimpleLineIcons.ttf */; };
 		91F48D0FA0EA46DAB99E70FA /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A345D9C2CB4C39A97031F4 /* libRNImagePicker.a */; };
 		95EA88F75C5047928A495D52 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88C82DC48E6F4952B9368E1A /* EvilIcons.ttf */; };
-		9B75C73D53BD4616ACED6A82 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5C286F9AA847F4B424E5E6 /* libRCTRestart.a */; };
 		9CC498E2DB60446BA853D8DB /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 858E1F5BC0464323919BAA63 /* libRNKeychain.a */; };
 		AD134F8F1EF9042900ED5A39 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD134F8D1EF9040B00ED5A39 /* libReactNativeNavigation.a */; };
 		AD5DC8861F08EC8C00235DA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD5DC8851F08EC8C00235DA4 /* GoogleService-Info.plist */; };
@@ -253,13 +252,6 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		AD06A3511F024786003DFDA8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 268CAC4A89DB4D38B6BA0C41 /* RCTRestart.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3245CDED1BFEE35C00EABF68;
-			remoteInfo = RCTRestart;
-		};
 		AD134F8C1EF9040B00ED5A39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */;
@@ -324,7 +316,6 @@
 		1BC277FB3575FCD56C37A6B0 /* Pods-Glimmer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Glimmer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Glimmer/Pods-Glimmer.debug.xcconfig"; sourceTree = "<group>"; };
 		225F3947E8A849AF9A57E8E5 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		25AED8EBEA97437FA7C5F443 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		268CAC4A89DB4D38B6BA0C41 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Glimmer-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Glimmer-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Glimmer-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Glimmer-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		335372550C084A8AB5801973 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
@@ -586,7 +577,6 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				335372550C084A8AB5801973 /* RNVectorIcons.xcodeproj */,
 				0F8EEFE255AC44C8B16B14E8 /* RNKeychain.xcodeproj */,
-				268CAC4A89DB4D38B6BA0C41 /* RCTRestart.xcodeproj */,
 				B5682EEB817140BC9D910756 /* RNFirebase.xcodeproj */,
 				7112230C421146B48E695F46 /* RNImagePicker.xcodeproj */,
 			);
@@ -652,14 +642,6 @@
 				D30772D1B1094A3CABAC8DCF /* Zocial.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		AD06A3441F024786003DFDA8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AD06A3521F024786003DFDA8 /* libRCTRestart.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		AD134F701EF9040B00ED5A39 /* Products */ = {
@@ -876,10 +858,6 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
-				},
-				{
-					ProductGroup = AD06A3441F024786003DFDA8 /* Products */;
-					ProjectRef = 268CAC4A89DB4D38B6BA0C41 /* RCTRestart.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1106,13 +1084,6 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AD06A3521F024786003DFDA8 /* libRCTRestart.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTRestart.a;
-			remoteRef = AD06A3511F024786003DFDA8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AD134F8D1EF9040B00ED5A39 /* libReactNativeNavigation.a */ = {
