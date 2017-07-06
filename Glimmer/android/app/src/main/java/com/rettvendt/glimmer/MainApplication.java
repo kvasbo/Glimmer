@@ -5,7 +5,6 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
 //import io.invertase.firebase.RNFirebaseAdMobPackage;
-import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.dscj.autoheightwebview.AutoHeightWebViewPackage;

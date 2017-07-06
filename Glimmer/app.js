@@ -26,10 +26,8 @@ console.ignoredYellowBox = ['[xmldom warning]'];
 
 const errorHandler = (e, isFatal) => {
     if (isFatal) {
-        Alert.alert('Pokker.', `
+        Alert.alert('Trist og uproft', `
         Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
- 
-        Du må nok starte appen på nytt :(.
         `, [{
             text: 'OK', onPress: () => {
 

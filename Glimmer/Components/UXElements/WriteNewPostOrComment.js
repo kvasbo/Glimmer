@@ -3,21 +3,10 @@
  */
 
 import React from "react";
-import {
-    ActivityIndicator,
-    Alert,
-    Button,
-    Image,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
-} from "react-native";
+import {ActivityIndicator, Alert, Button, Image, StyleSheet, TextInput, TouchableOpacity, View} from "react-native";
+import InputStyles from "../../Styles/InputStyles";
 const ImagePicker = require('react-native-image-picker');
 const TextStyles = require("../../Styles/TextStyles");
-import InputStyles from "../../Styles/InputStyles"
-
 
 const imagePickerOptions = {
     title: 'Velg bilde',
@@ -49,14 +38,30 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
-    _clear() {
-        console.log("Clear comment");
+    _clear(force) {
+
+        if (force) {
+            this.setState({text: ""});
+        }
+
+        else {
+            Alert.alert("Sikker", "Dette kan ikke angres",
+                [
+                    {
+                        text: 'Nei',
+                    },
+                    {
+                        text: 'Ja', onPress: () => this.setState({text: ""})
+                    }],
+            )
+        }
+
     }
 
     _post() {
 
         if (this.state.text !== "") {
-            let text = this.parseAndReplaceImages(this.state.text);
+            var text = this.parseAndReplaceImages(this.state.text);
         }
         else {
             Alert.alert(
@@ -67,6 +72,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
         //Post a new comment
         if (this.props.type === "comment") {
+
             arbeidsMaur.forumUpdater.postCommentInThread(text, this.props.postId).then((data) => {
 
                 this.setState({text: ""});
@@ -134,7 +140,8 @@ export default class WriteNewPostOrComment extends React.Component {
     //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed.
     getLoadingIndicator(loading) {
         if (loading) {
-            return (<View style={{backgroundColor: "#FFFFFF66", height: 75, width: 75, padding: 20}}><ActivityIndicator size="large" color="#444444" hidesWhenStopped={true}/></View>)
+            return (<View style={{backgroundColor: "#FFFFFF66", height: 75, width: 75, padding: 20}}><ActivityIndicator
+                size="large" color="#444444" hidesWhenStopped={true}/></View>)
         }
     }
 
@@ -230,7 +237,7 @@ export default class WriteNewPostOrComment extends React.Component {
                         </View>
 
                         <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-                            <Button onPress={() => this._clear()} title="Tøm"/>
+                            <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
                             <Button onPress={() => this.addPictures()} title="Bilder"/>
                             <Button onPress={() => this._hideMe()} title="Gjem"/>
                             <Button onPress={() => this._post()} title="Send"/>
