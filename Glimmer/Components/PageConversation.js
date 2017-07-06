@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
 import * as colors from "../Styles/colorConstants";
 
@@ -74,14 +74,16 @@ export default class PageConversation extends React.Component {
 
     render() {
         return (
-            <GiftedChat
-                locale="nb"
-                messages={this.state.messages}
-                onSend={this.onSend}
-                user={{
-                    _id: auth.currentUser.id,
-                }}
-            />
+            <View style={pageStyles.container}>
+                <GiftedChat
+                    locale="nb"
+                    messages={this.state.messages}
+                    onSend={this.onSend}
+                    user={{
+                        _id: auth.currentUser.id,
+                    }}
+                />
+            </View>
         );
     }
 }
