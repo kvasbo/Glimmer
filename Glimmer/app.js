@@ -14,6 +14,7 @@ import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
 import Helpers from "./src/helpers";
 import NavStyles from "./Styles/NavigatorStyles";
+import { iconsMap, iconsLoaded } from './Components/UXElements/Icons';
 
 global.moment = require('moment');
 moment.locale('nb')
@@ -140,8 +141,13 @@ export default class Glimmer {
 
     startAppBasedOnLoginStatus() {
         if (this.loggedIn === true) {
+
             global.arbeidsMaur.initData();
-            this.startMainApp();
+
+            iconsLoaded.then(()=>{
+                this.startMainApp();
+            })
+
         }
         else if (this.loggedIn === false) {
             this.startLoginApp();
@@ -185,13 +191,13 @@ export default class Glimmer {
             passProps: {store: global.store}, //Pass the redux store.
             tabs: [{
                 label: 'Mine tråder', screen: 'glimmer.PageFavorites', // this is a registered name for a screen
-                icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                icon: iconsMap['ios-star'],//icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                 title: 'Mine tråder',
                 navigatorStyle: NavStyles.default,
             }, {
                 label: 'Forsiden',
                 screen: 'glimmer.PageStream',
-                icon: require('./icons/front.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                icon: iconsMap['ios-paper'], //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                 title: 'Forsiden',
                 navigatorStyle: NavStyles.default,
             }, /*{
@@ -205,7 +211,7 @@ export default class Glimmer {
                 {
                     label: 'Samtaler',
                     screen: 'glimmer.PageMessages',
-                    icon: require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                    icon: iconsMap['ios-chatbubbles'], //require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Samtaler',
                     navigatorStyle: NavStyles.default,
                 },

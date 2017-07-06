@@ -4,7 +4,6 @@
 
 import React from "react";
 import {ActivityIndicator, Button, ScrollView, Text, TouchableOpacity, View, StyleSheet} from "react-native";
-//import {Icon} from "react-native-elements";
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
