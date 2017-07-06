@@ -193,7 +193,7 @@ export default class PageThread extends React.Component {
                     size={size}
                     name='ios-create-outline'
                     color={activeColor}
-                    onLongPress={() => {
+                    onPress={() => {
 
                         this.props.navigator.push({
                             screen: 'glimmer.PageNewForumComment', // unique ID registered with Navigation.registerScreen

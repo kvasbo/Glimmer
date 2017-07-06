@@ -3,8 +3,8 @@
  */
 
 import React from "react";
-import {ScrollView, StyleSheet, Text} from "react-native";
-import WriteNewPostOrComment from "./UXElements/WriteNewPostOrComment"
+import {StyleSheet, Text} from "react-native";
+import WriteNewPostOrComment from "./UXElements/WriteNewPostOrComment";
 import * as colors from "../Styles/colorConstants";
 
 export default class PageNewForumPost extends React.Component {
@@ -19,27 +19,14 @@ export default class PageNewForumPost extends React.Component {
 
     render() {
 
-        if(this.forumId === null)
-        {
+        if (this.forumId === null) {
             return <Text>Intet forum valgt, noe er galt</Text>
         }
         else {
             return (
-                <ScrollView style={pageStyles.container}>
-                    <WriteNewPostOrComment type="post" navigator={this.props.navigator}/>
-                </ScrollView>
+                <WriteNewPostOrComment type="post" navigator={this.props.navigator}/>
             );
         }
 
-
     }
 }
-
-const pageStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.COLOR_LIGHT,
-        padding: 0,
-        margin: 0,
-    },
-});

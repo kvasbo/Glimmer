@@ -3,9 +3,7 @@
  */
 
 import React from "react";
-import {ScrollView, StyleSheet} from "react-native";
 import WriteNewPostOrComment from "./UXElements/WriteNewPostOrComment";
-import * as colors from "../Styles/colorConstants";
 
 export default class PageNewForumComment extends React.Component {
 
@@ -22,21 +20,8 @@ export default class PageNewForumComment extends React.Component {
         else {
 
             return (
-                <ScrollView style={pageStyles.container}>
-                    <WriteNewPostOrComment type="comment" postId={this.props.postId} navigator={this.props.navigator}/>
-                </ScrollView>
+                <WriteNewPostOrComment type="comment" postId={this.props.postId} navigator={this.props.navigator}/>
             );
         }
     }
 }
-
-//
-
-const pageStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.COLOR_LIGHT,
-        padding: 0,
-        margin: 0,
-    },
-});

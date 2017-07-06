@@ -9,10 +9,12 @@ import {
     AsyncStorage,
     Button,
     Image,
+    ScrollView,
     StyleSheet,
     TextInput,
     TouchableOpacity,
-    View
+    View,
+    KeyboardAvoidingView
 } from "react-native";
 import InputStyles from "../../Styles/InputStyles";
 import * as colors from "../../Styles/colorConstants";
@@ -120,8 +122,7 @@ export default class WriteNewPostOrComment extends React.Component {
             });
 
         }
-        else if(this.props.type === "post")
-        {
+        else if (this.props.type === "post") {
             var forumId = store.getState().AppStatus.activePostingForum;
 
             var body = ""
@@ -262,7 +263,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
     _getTitleBox() {
         if (this.props.type === "post") {
-            return ( <View><TextInput
+            return ( <View style={{height: 60}}><TextInput
                 style={[InputStyles.textBox, {height: 75}]}
                 autoCapitalize="sentences"
                 autoFocus={false}
@@ -271,11 +272,23 @@ export default class WriteNewPostOrComment extends React.Component {
                 multiline={false}
                 placeholder="Tittel"
                 placeholderTextColor={colors.COLOR_DARKGREY}
-                backgroundColor={colors.COLOR_LIGHT}
-                color={colors.COLOR_BLACK}
 
             /></View>)
         }
+    }
+
+    getImageView() {
+
+        if (Object.values(this.state.images).length > 0) {
+            return (
+                <View style={pageStyles.imageViewer}>
+                    <ScrollView>
+                        {this.getImageList()}
+                    </ScrollView>
+                </View>
+            )
+        }
+
     }
 
     render() {
@@ -291,43 +304,42 @@ export default class WriteNewPostOrComment extends React.Component {
 
         return (
 
-            <View style={pageStyles.container}>
+            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={64} style={pageStyles.container}>
 
+                {this._getTitleBox()}
 
-                <View>
+                <View style={{flex: 1}}>
 
-                    {this._getTitleBox()}
-
-                    <View style={{flex: 1, marginBottom: 10}}>
-
-                        <TextInput
-                            style={[InputStyles.textBox, {height: 300}]}
-                            autoCapitalize="sentences"
-                            autoFocus={false}
-                            onChangeText={(text) => this.textChanged(text)}
-                            onSelectionChange={(event) => this.cursormoved(event)}
-                            value={this.state.text}
-                            multiline={true}
-                            placeholder="Hva har du på hjertet?"
-                            placeholderTextColor={colors.COLOR_LIGHTGREY}
-                        />
-
-                    </View>
-
-                    <View style={pageStyles.imageViewer}>
-                        {this.getImageList()}
-                    </View>
-
-                    <View style={{height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 20}}>
-                        <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
-                        <Button onPress={() => this.addPictures()} title="Bilder"/>
-                        <Button onPress={() => this._post()} title="Send"/>
-                    </View>
+                    <TextInput
+                        style={[InputStyles.textBox, {flex: 1, margin: 0}]}
+                        autoCapitalize="sentences"
+                        autoFocus={false}
+                        onChangeText={(text) => this.textChanged(text)}
+                        onSelectionChange={(event) => this.cursormoved(event)}
+                        value={this.state.text}
+                        multiline={true}
+                        placeholder="Hva har du på hjertet?"
+                        placeholderTextColor={colors.COLOR_LIGHTGREY}
+                    />
 
                 </View>
 
+                {this.getImageView()}
 
-            </View>
+                <View style={{
+                    height: 60,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: 20
+                }}>
+                    <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
+                    <Button onPress={() => this.addPictures()} title="Bilder"/>
+                    <Button onPress={() => this._post()} title="Send"/>
+                </View>
+
+            </KeyboardAvoidingView>
+
 
         )
 
@@ -341,11 +353,10 @@ const pageStyles = StyleSheet.create({
         backgroundColor: colors.COLOR_LIGHT,
         padding: 0,
         margin: 0,
-        marginBottom: 2,
-        paddingTop: 8,
     },
     imageViewer: {
         backgroundColor: colors.COLOR_LIGHT,
+        height: 100
     }
 
 });

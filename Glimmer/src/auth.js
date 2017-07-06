@@ -27,7 +27,7 @@ export default class glimmerAuth {
                 store.dispatch(setActiveUserId(data.data.id));
                 store.dispatch(setLoginStatus(true));
 
-                resolve(data);
+                resolve("Logged in");
 
             }).catch((error) => {
 
@@ -35,7 +35,7 @@ export default class glimmerAuth {
                     console.log("Error, doing auth", error);
                 }
                 store.dispatch(setLoginStatus(false));
-                reject("Key not valid");
+                resolve("Key not valid, logging in");
             })
 
         })
@@ -81,12 +81,12 @@ export default class glimmerAuth {
                             store.dispatch(setActiveUserId(data.data.id));
                             store.dispatch(setLoginStatus(true));
 
-                            resolve(password);
+                            resolve();
 
                         }).catch((error) => {
 
                             store.dispatch(setLoginStatus(false));
-                            reject("Key not valid");
+                            reject("All new key not valid. That sucks a lot.");
                         })
 
                     });

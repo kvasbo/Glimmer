@@ -3,10 +3,10 @@
  */
 
 import React from "react";
-import {Alert, Button, ScrollView, StyleSheet, TextInput, View, Text} from "react-native";
+import {Alert, Button, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 import {clearMessageRecipients} from "../Redux/actions";
-import InputStyles from "../Styles/InputStyles"
+import InputStyles from "../Styles/InputStyles";
 
 export default class PageNewMessage extends React.Component {
 
@@ -38,9 +38,9 @@ export default class PageNewMessage extends React.Component {
 
         let users = store.getState().User;
 
-        if(this.state.receivers.length === 0)
-        {
-            return (<Text style={{margin: 10, color: "white"}}>Ingen mottakere valgt. Skal du sende til ingen du da?</Text>)
+        if (this.state.receivers.length === 0) {
+            return (
+                <Text style={{margin: 10, color: "white"}}>Ingen mottakere valgt. Skal du sende til ingen du da?</Text>)
         }
 
         for (let key in this.state.receivers) {
@@ -80,8 +80,7 @@ export default class PageNewMessage extends React.Component {
         }
     }
 
-    _cancelMessage()
-    {
+    _cancelMessage() {
         store.dispatch(clearMessageRecipients());
         this.props.navigator.popToRoot();
     }
@@ -97,29 +96,36 @@ export default class PageNewMessage extends React.Component {
     render() {
 
         return (
-            <ScrollView style={pageStyles.container}>
 
+            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={64} style={pageStyles.container}>
 
                 <View style={pageStyles.mottakere}>
 
-                    <View style={pageStyles.faceList}>
+                    <ScrollView style={pageStyles.faceList}>
                         {this.getReceivers()}
-                    </View>
+                    </ScrollView>
 
                 </View>
 
-                <TextInput multiline={true} style={[InputStyles.textBox, {height: 250}]}
-                           onChangeText={(text) => this._onTextChange(text)}/>
+                <View style={{flex: 1}}>
 
-                <View style={{flexDirection:"row", justifyContent:"space-around"}}>
+                    <TextInput multiline={true} style={[InputStyles.textBox, {flex: 1}]}
+                               onChangeText={(text) => this._onTextChange(text)}/>
+
+                </View>
+
+                <View style={{height: 60, padding: 0, marginTop: 0, marginBottom: 0, flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
 
                     <Button title="Avbryt" onPress={() => {
 
                         Alert.alert("Avbryt", "Vil du avbryte? Meldingen går tapt.", [
-                                {text: 'Nei', onPress: () => {}},
+                                {
+                                    text: 'Nei', onPress: () => {
+                                }
+                                },
                                 {text: 'Ja', onPress: () => this._cancelMessage()},
                             ],
-                            { cancelable: false });
+                            {cancelable: false});
 
                     }}/>
 
@@ -130,7 +136,7 @@ export default class PageNewMessage extends React.Component {
                 </View>
 
 
-            </ScrollView>
+            </KeyboardAvoidingView>
         );
     }
 }
@@ -141,18 +147,7 @@ const pageStyles = StyleSheet.create({
         backgroundColor: '#ECF0F1',
         paddingLeft: 0,
         paddingTop: 0,
-        marginBottom: 30,
         paddingRight: 0,
-    },
-    textInput: {
-        backgroundColor: '#FFFFFF',
-        margin: 0,
-        fontSize: 15,
-        padding: 15,
-        paddingTop: 22,
-        paddingBottom: 22,
-        height: 250,
-        borderRadius: 2
     },
     faceList: {
         flexDirection: "row",
@@ -160,7 +155,7 @@ const pageStyles = StyleSheet.create({
     },
     mottakere: {
         backgroundColor: "#666666",
-
+        height: 100,
     }
 
 });
