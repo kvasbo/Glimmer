@@ -7,6 +7,7 @@ import {Alert, Button, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextI
 import PersonFace from "./UXElements/PersonFace";
 import {clearMessageRecipients} from "../Redux/actions";
 import InputStyles from "../Styles/InputStyles";
+import * as colors from "../Styles/colorConstants";
 
 export default class PageNewMessage extends React.Component {
 
@@ -100,11 +101,13 @@ export default class PageNewMessage extends React.Component {
             <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={64} style={pageStyles.container}>
 
                 <View style={pageStyles.mottakere}>
+                    <ScrollView>
 
-                    <ScrollView style={pageStyles.faceList}>
-                        {this.getReceivers()}
+                        <View style={pageStyles.faceList}>
+                            {this.getReceivers()}
+                        </View>
+
                     </ScrollView>
-
                 </View>
 
                 <View style={{flex: 1}}>
@@ -117,12 +120,21 @@ export default class PageNewMessage extends React.Component {
                         onChangeText={(text) => this._onTextChange(text)}
                         value={this.state.text}
                         placeholder="Si noe koselig"
+                        placeholderTextColor={colors.COLOR_LIGHTGREY}
                     />
 
 
                 </View>
 
-                <View style={{height: 60, padding: 0, marginTop: 0, marginBottom: 0, flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
+                <View style={{
+                    height: 50,
+                    padding: 3,
+                    marginTop: 0,
+                    marginBottom: 0,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-around"
+                }}>
 
                     <Button title="Avbryt" onPress={() => {
 
@@ -152,17 +164,20 @@ export default class PageNewMessage extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ECF0F1',
+        backgroundColor: colors.COLOR_LIGHT,
         paddingLeft: 0,
         paddingTop: 0,
         paddingRight: 0,
     },
     faceList: {
+        margin: 0,
+        flex: 1,
         flexDirection: "row",
         flexWrap: "wrap"
     },
     mottakere: {
-        backgroundColor: "#666666",
+        margin: 0,
+        backgroundColor: colors.COLOR_DARKGREY,
         height: 100,
     }
 

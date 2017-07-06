@@ -304,7 +304,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
         return (
 
-            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={64} style={pageStyles.container}>
+            <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={64} style={pageStyles.container}>
 
                 {this._getTitleBox()}
 
@@ -328,11 +328,11 @@ export default class WriteNewPostOrComment extends React.Component {
                 {this.getImageView()}
 
                 <View style={{
-                    height: 60,
+                    height: 50,
                     flexDirection: "row",
-                    justifyContent: "space-between",
+                    justifyContent: "space-around",
                     alignItems: "center",
-                    padding: 20
+                    padding: 3
                 }}>
                     <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
                     <Button onPress={() => this.addPictures()} title="Bilder"/>
