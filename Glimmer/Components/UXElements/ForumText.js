@@ -3,9 +3,10 @@
  */
 
 import React from 'react';
-import {StyleSheet, View, Text, Image, WebView, Linking} from 'react-native';
+import {StyleSheet, View, Text, Image, WebView, Linking, TouchableOpacity} from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import AutoHeightWebView from "react-native-autoheight-webview";
+import * as colors from "../../Styles/colorConstants";
 
 export default class ForumText extends React.Component {
 
@@ -33,7 +34,11 @@ export default class ForumText extends React.Component {
 
         var cutLength = 75;
 
-        var text = this.props.text;
+        var text = "";
+        if(typeof(this.props.text) !== "undefined" && this.props.text !== null)
+        {
+            var text = this.props.text;
+        }
 
         if (this.props.cut === true) {
             var tmp = text.split(" ");
@@ -84,6 +89,14 @@ export default class ForumText extends React.Component {
             );
         }
 
+        /*
+        if(node.name == 'a')
+        {
+            const a = node.attribs;
+            console.log(a);
+        }
+        */
+
         if (this.props.images == false && node.name == 'img') {
              return null;
         }
@@ -100,7 +113,6 @@ export default class ForumText extends React.Component {
                 <AutoHeightWebView
                     enableAnimation={false}
                     source={{html: postBody}}
-                    //onHeightUpdated={height => console.log(height)}
                     style={{margin: 0, padding: 0, borderWidth: 0, flex: 1}}
                 />
             );
@@ -121,7 +133,7 @@ export default class ForumText extends React.Component {
 
 const styles = StyleSheet.create({
     a: {
-        fontWeight: '300',
-        color: '#FF3366', // make links coloured pink
+        fontWeight: '400',
+        color: colors.COLOR_HIGHLIGHT,
     },
 });

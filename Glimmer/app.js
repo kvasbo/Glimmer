@@ -58,11 +58,11 @@ global.arbeidsMaur = new Workers();
 firebaseApp.auth().onAuthStateChanged(function (user) {
     if (user) {
 
-        console.log("Firebase signed in", user)
+        //console.log("Firebase signed in", user)
 
     } else {
         // User is signed out.
-        console.log("Firebase signed out", user)
+        //console.log("Firebase signed out", user)
     }
 });
 

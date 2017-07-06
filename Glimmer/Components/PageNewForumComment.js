@@ -5,6 +5,7 @@
 import React from "react";
 import {ScrollView, StyleSheet} from "react-native";
 import WriteNewPostOrComment from "./UXElements/WriteNewPostOrComment"
+import * as colors from "../Styles/colorConstants";
 
 export default class PageNewForumComment extends React.Component {
 
@@ -29,7 +30,7 @@ export default class PageNewForumComment extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#CCCCCC',
+        backgroundColor: colors.COLOR_LIGHTGREY,
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

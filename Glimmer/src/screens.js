@@ -8,14 +8,14 @@ import PageCalendar from "../Components/PageCalendar";
 import PageMessages from "../Components/PageMessages";
 import PageSettings from "../Components/PageSettings";
 import PageConversation from "../Components/PageConversation";
-import PageNewForumPost from "../Components/PageNewForumPost";
 import PageNewForumComment from "../Components/PageNewForumComment";
 import PageKretsVelger from "../Components/PageKretsVelgerNewMessage";
 import PageNewMessage from "../Components/PageNewMessage";
 import PageAbout from "../Components/PageAbout";
+import PageNewForumPost from "../Components/PageNewForumPost";
 
 import PageLogin from "../Components/PageLogin";
-//import PageForumList from "../Components/PageForumList";
+import PageForumList from "../Components/PageForumList";
 import PageLog from "../Components/PageLog";
 
 import PageMore from "../Components/PageMore";
@@ -34,13 +34,13 @@ export function registerScreens(store, Provider) {
         Navigation.registerComponent('glimmer.PageSettings', () => PageSettings, store, Provider);
         Navigation.registerComponent('glimmer.PageConversation', () => PageConversation, store, Provider);
         Navigation.registerComponent('glimmer.PageCalendar', () => PageCalendar, store, Provider);
-        Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
         Navigation.registerComponent('glimmer.PageNewMessage', () => PageNewMessage, store, Provider);
         Navigation.registerComponent('glimmer.PageAbout', () => PageAbout, store, Provider);
         Navigation.registerComponent('glimmer.PageNewForumComment', () => PageNewForumComment, store, Provider);
+        Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
+        Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
 
         //Helper pages
-        //Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
         Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
         Navigation.registerComponent('glimmer.PageLog', () => PageLog, store, Provider);
         Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, store, Provider);

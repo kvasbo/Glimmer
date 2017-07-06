@@ -10,6 +10,8 @@ import * as colors from "../Styles/colorConstants";
 
 export default class PageStream extends React.Component {
 
+    reduxUnsubscribe = null;
+
     constructor(props) {
 
         super(props);
@@ -33,11 +35,11 @@ export default class PageStream extends React.Component {
         }
 
         if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
-            if (event.id == 'newMessage') { // this is the same id field from the static navigatorButtons definition
+            if (event.id == 'newForumPost') { // this is the same id field from the static navigatorButtons definition
 
                 this.props.navigator.push({
-                    screen: 'glimmer.PageNewForumPost', // unique ID registered with Navigation.registerScreen
-                    title: "Nytt innlegg", // navigation bar title of the pushed screen (optional)
+                    screen: 'glimmer.PageForumList', // unique ID registered with Navigation.registerScreen
+                    title: "Velg forum", // navigation bar title of the pushed screen (optional)
                     animated: true, // does the push have transition animation or does it happen immediately (optional)
                 });
 
@@ -59,7 +61,7 @@ export default class PageStream extends React.Component {
         rightButtons: [
             {
                 icon: require("../icons/plus.png"),
-                id: 'newMessage', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+                id: 'newForumPost', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
                 showAsAction: 'ifRoom', // optional, Android only. Control how the button is displayed in the Toolbar. Accepted valued: 'ifRoom' (default) - Show this item as a button in an Action Bar if the system decides there is room for it. 'always' - Always show this item as a button in an Action Bar. 'withText' - When this item is in the action bar, always show it with a text label even if it also has an icon specified. 'never' - Never show this item as a button in an Action Bar.
             }
         ]
@@ -79,7 +81,7 @@ export default class PageStream extends React.Component {
         this.setState({posts: this.props.store.getState().ForumStream});
 
         //Listen to state changes. This really needs to change at some later point.
-        reduxUnsubscribe = store.subscribe(() => {
+        this.reduxUnsubscribe = store.subscribe(() => {
 
                 var tmpPosts = store.getState().ForumStream;
 
@@ -88,6 +90,11 @@ export default class PageStream extends React.Component {
                 }
             }
         )
+    }
+
+    componentWillUnmount()
+    {
+        this.reduxUnsubscribe();
     }
 
     _renderItem(item) {

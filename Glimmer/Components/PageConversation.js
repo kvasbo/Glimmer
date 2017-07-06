@@ -89,7 +89,7 @@ export default class PageConversation extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.COLOR_LIGHT,
+        backgroundColor: colors.COLOR_WHITE,
         paddingLeft: 0,
         paddingTop: 0,
         paddingBottom: 30,

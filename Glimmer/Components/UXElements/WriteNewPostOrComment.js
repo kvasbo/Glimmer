@@ -3,11 +3,21 @@
  */
 
 import React from "react";
-import {ActivityIndicator, Alert, Button, Image, StyleSheet, TextInput, TouchableOpacity, View} from "react-native";
+import {
+    ActivityIndicator,
+    Alert,
+    AsyncStorage,
+    Button,
+    Image,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 import InputStyles from "../../Styles/InputStyles";
+import * as colors from "../../Styles/colorConstants";
 const ImagePicker = require('react-native-image-picker');
 const TextStyles = require("../../Styles/TextStyles");
-import * as colors from "../../Styles/colorConstants"
 
 const imagePickerOptions = {
     title: 'Velg bilde',
@@ -26,23 +36,37 @@ export default class WriteNewPostOrComment extends React.Component {
     /*
 
      props:
-
      type: "comment"; "post"
      postId: null (for new post), postId(for comment)
      forum: null (for comment), forumid (for new post)
 
      */
 
+    itemKey; //To store in async storage.
+
     constructor(props) {
+
         super(props);
-        this.state = {text: '', images: {}, bodyCursorPosition: null};
+
+        //Set key for storing the temp data.
+        if (this.props.type === "comment") {
+            this.itemKey = "@tmp_comment_" + this.postId;
+        }
+        else if (this.props.type === "post") {
+            this.ItemKey = "@tmp_newPost";
+        }
+        else {
+            this.itemKey = "@trash"
+        }
+
+        this.state = {text: '', title: '', tags: [], images: {}, bodyCursorPosition: null};
 
     }
 
     _clear(force) {
 
         if (force) {
-            this.setState({text: ""});
+            this._doClear();
         }
 
         else {
@@ -52,31 +76,42 @@ export default class WriteNewPostOrComment extends React.Component {
                         text: 'Nei',
                     },
                     {
-                        text: 'Ja', onPress: () => this.setState({text: ""})
+                        text: 'Ja', onPress: () => {
+                        this._doClear();
+
+                    }
                     }],
             )
         }
+    }
+
+    _doClear() {
+
+        AsyncStorage.setItem(this.itemKey + "_text", "");
+        AsyncStorage.setItem(this.itemKey + "_title", "");
+        this.setState({text: "", title: "", tags: []});
 
     }
 
     _post() {
 
-        if (this.state.text !== "") {
-            var text = this.parseAndReplaceImages(this.state.text);
-        }
-        else {
-            Alert.alert(
-                'Skjerpings',
-                'Tom kommentar? Trist og uproft.');
-            return false;
-        }
-
-        //Post a new comment
         if (this.props.type === "comment") {
+
+            if (this.state.text !== "") {
+                var text = this.parseAndReplaceImages(this.state.text);
+            }
+            else {
+                Alert.alert(
+                    'Trist og uproft',
+                    'Kommentaren din er tom.');
+                return false;
+            }
+
+            //Post a new comment
 
             arbeidsMaur.forumUpdater.postCommentInThread(text, this.props.postId).then((data) => {
 
-                this.setState({text: ""});
+                this._doClear();
 
             }).catch((error) => {
                 Alert.alert("Noe gikk galt :(");
@@ -84,6 +119,18 @@ export default class WriteNewPostOrComment extends React.Component {
 
         }
 
+    }
+
+    textChanged(text) {
+
+        this.setState({text: text});
+        AsyncStorage.setItem(this.itemKey+"_text", text);
+    }
+
+    titleChanged(text) {
+
+        this.setState({title: text});
+        AsyncStorage.setItem(this.itemKey+"_title", text);
     }
 
     parseAndReplaceImages(text) {
@@ -152,22 +199,14 @@ export default class WriteNewPostOrComment extends React.Component {
         if (this.state.bodyCursorPosition === null && this.state.text === "") this.setState({text: text});
 
         var tmpText = this.state.text;
-
         var start = tmpText.substring(0, this.state.bodyCursorPosition);
-
         var tail = tmpText.substring(this.state.bodyCursorPosition, tmpText.length);
-
         this.setState({text: start + text + tail});
 
     }
 
     cursormoved(event) {
         this.setState({bodyCursorPosition: event.nativeEvent.selection.start});
-        console.log(event.nativeEvent.selection);
-    }
-
-    _hideMe() {
-        this.props.navigator.dismissModal();
     }
 
     getImageList() {
@@ -190,26 +229,38 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
-    /*
-     <View style={{
-     justifyContent: "center",
-     alignItems: "center",
-     backgroundColor: "#00000055",
-     padding: 5,
-     margin: 5,
-     width: 25,
-     height: 25,
-     borderRadius: 10
-     }}><Text style={{color: "#FFFFFF", fontSize: 15, fontWeight: "200"}}>1</Text></View>
+    _getTitleBox()
+    {
+        if(this.props.type === "post")
+        {
+            return ( <TextInput
+                style={[InputStyles.textBox, {height: 50}]}
+                autoCapitalize="sentences"
+                autoFocus={false}
+                onChangeText={(text) => this.titleChanged(text)}
+                value={this.state.title}
+                multiline={false}
+                placeholder="Tittel"
+                placeholderTextColor={colors.COLOR_DARKGREY}
 
-     */
+            />)
+        }
+    }
 
     render() {
 
-        var title = "Ny kommentar til " + this.props.title;
+        var title = "???";
+
+        if(this.props.type === "comment")
+        {
+            title = "Ny kommentar til " + this.props.title;
+        }
+        else if(this.props.type === "post")
+        {
+            title = "Ny post";
+        }
 
         return (
-
 
             <View style={pageStyles.container}>
 
@@ -226,11 +277,11 @@ export default class WriteNewPostOrComment extends React.Component {
                                 style={[InputStyles.textBox, {height: 250}]}
                                 autoCapitalize="sentences"
                                 autoFocus={false}
-                                onChangeText={(text) => this.setState({text: text})}
+                                onChangeText={(text) => this.textChanged(text)}
                                 onSelectionChange={(event) => this.cursormoved(event)}
                                 value={this.state.text}
                                 multiline={true}
-                                placeholder="Skriv ny kommentar"
+                                placeholder="Hva har du på hjertet?"
                                 placeholderTextColor={colors.COLOR_DARKGREY}
 
                             />
@@ -240,7 +291,6 @@ export default class WriteNewPostOrComment extends React.Component {
                         <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
                             <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
                             <Button onPress={() => this.addPictures()} title="Bilder"/>
-                            <Button onPress={() => this._hideMe()} title="Gjem"/>
                             <Button onPress={() => this._post()} title="Send"/>
                         </View>
 

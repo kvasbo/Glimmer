@@ -1,7 +1,8 @@
-import {APPCONTROL_USER_LOGIN} from "./constants";
+import {APPCONTROL_USER_LOGIN, APPCONTROL_SET_ACTIVE_POSTING_FORUM} from "./constants";
 
 const initialState = {
-    loggedIn: null
+    loggedIn: null,
+    activePostingForum: null,
 }
 
 function AppStatus(state = initialState, action) {
@@ -10,11 +11,17 @@ function AppStatus(state = initialState, action) {
 
         case APPCONTROL_USER_LOGIN:
 
-            var s = Object.assign(state);
+            var s = Object.assign({}, state);
 
             s.loggedIn = action.status;
 
-            console.log("Set login status", s);
+            return s;
+
+        case APPCONTROL_SET_ACTIVE_POSTING_FORUM:
+
+            var s = Object.assign({}, state);
+
+            s.activePostingForum = action.forumId;
 
             return s;
 
