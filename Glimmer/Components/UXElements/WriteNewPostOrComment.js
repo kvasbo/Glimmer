@@ -311,6 +311,7 @@ export default class WriteNewPostOrComment extends React.Component {
                 <View style={{flex: 1}}>
 
                     <TextInput
+                        textAlignVertical="top"
                         style={[InputStyles.textBox, {flex: 1, margin: 0}]}
                         autoCapitalize="sentences"
                         autoFocus={false}

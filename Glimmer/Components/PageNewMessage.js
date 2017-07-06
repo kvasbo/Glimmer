@@ -97,7 +97,7 @@ export default class PageNewMessage extends React.Component {
 
         return (
 
-            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={64} style={pageStyles.container}>
+            <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={64} style={pageStyles.container}>
 
                 <View style={pageStyles.mottakere}>
 
@@ -109,8 +109,16 @@ export default class PageNewMessage extends React.Component {
 
                 <View style={{flex: 1}}>
 
-                    <TextInput multiline={true} style={[InputStyles.textBox, {flex: 1}]}
-                               onChangeText={(text) => this._onTextChange(text)}/>
+                    <TextInput
+                        textAlignVertical="top"
+                        autoCapitalize="sentences"
+                        multiline={true}
+                        style={[InputStyles.textBox, {flex: 1}]}
+                        onChangeText={(text) => this._onTextChange(text)}
+                        value={this.state.text}
+                        placeholder="Si noe koselig"
+                    />
+
 
                 </View>
 
