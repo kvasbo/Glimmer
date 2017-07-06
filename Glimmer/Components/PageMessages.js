@@ -4,7 +4,8 @@
 
 import React from "react";
 import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {Divider, Icon} from "react-native-elements";
+import Icon from 'react-native-vector-icons/Ionicons';
+import Divider from "./UXElements/Divider";
 import * as colors from "../Styles/colorConstants";
 
 //Get common list styles
@@ -205,12 +206,12 @@ class Conversation extends React.Component {
 
                         </View>
                         <View style={listStyles.iconBlock}>
-                            <Icon name="keyboard-arrow-right" color={colors.COLOR_LIGHTGREY} size={30}/>
+                            <Icon name="ios-arrow-forward" color={colors.COLOR_LIGHTGREY} size={30}/>
                         </View>
 
                     </View>
                 </TouchableOpacity>
-                <Divider style={listStyles.divider}/>
+                <Divider/>
             </View>
         )
     }

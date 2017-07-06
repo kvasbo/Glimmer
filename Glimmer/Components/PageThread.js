@@ -4,8 +4,8 @@
 
 import React from "react";
 import {ActivityIndicator, Button, ScrollView, Text, TouchableOpacity, View, StyleSheet} from "react-native";
-import {Icon} from "react-native-elements";
-
+//import {Icon} from "react-native-elements";
+import Icon from 'react-native-vector-icons/Ionicons';
 import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
 import AddCommentBlock from "./UXElements/AddCommentBlock";
@@ -197,11 +197,11 @@ export default class PageThread extends React.Component {
 
     _getSidevelger() {
 
-        if (this.state.loading || this.state.numberOfPages === 1) return null;
+        if (this.state.loading) return null;
 
         const activeColor = colors.COLOR_GRAD1
         const passiveColor = colors.COLOR_DARKGREY
-        const size = 18;
+        const size = 30;
 
         var leftColor = activeColor;
         var rightColor = activeColor;
@@ -217,17 +217,15 @@ export default class PageThread extends React.Component {
 
 
                 <Icon
-                    reverse
                     size={size}
-                    name='keyboard-arrow-up'
+                    name='ios-arrow-up'
                     color={activeColor}
                     onPress={() => this._gotoTop()}
                 />
 
                 <Icon
-                    reverse
                     size={size}
-                    name='keyboard-arrow-down'
+                    name='ios-arrow-down'
                     color={activeColor}
                     onPress={() => this._gotoBottom()}
                 />
@@ -238,17 +236,15 @@ export default class PageThread extends React.Component {
                 </TouchableOpacity>
 
                 <Icon
-                    reverse
                     size={size}
-                    name='keyboard-arrow-left'
+                    name='ios-arrow-back'
                     color={leftColor}
                     onPress={() => this._prevPage()}
                 />
 
                 <Icon
-                    reverse
                     size={size}
-                    name='keyboard-arrow-right'
+                    name='ios-arrow-forward'
                     color={rightColor}
                     onPress={() => this._nextPage()}
                 />

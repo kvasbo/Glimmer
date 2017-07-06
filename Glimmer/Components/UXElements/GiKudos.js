@@ -47,7 +47,7 @@ export default class GiKudos extends React.Component {
                 <Badge
                     value={"Kudos gitt!"}
                     textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: colors.COLOR_LIGHT, marginRight: 5}}
+                    containerStyle={{backgroundColor: colors.COLOR_GRAD3, marginRight: 5}}
                 />
             )
         }

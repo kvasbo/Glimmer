@@ -3,11 +3,10 @@
  */
 
 import React from "react";
-import {StyleSheet, FlatList, View} from "react-native";
+import {FlatList, StyleSheet} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";
-import Divider from "./UXElements/Divider";
-import * as colors from "../Styles/colorConstants"
+import * as colors from "../Styles/colorConstants";
 
 export default class PageStream extends React.Component {
 
@@ -46,11 +45,10 @@ export default class PageStream extends React.Component {
         }
     }
 
-    getData()
-    {
+    getData() {
         let out = Object.values(this.state.posts);
 
-        out.sort((x,y) => {
+        out.sort((x, y) => {
             return (new Date(y.created_at) - new Date(x.created_at));
         })
 
@@ -113,15 +111,14 @@ export default class PageStream extends React.Component {
         });
     }
 
-    _loadMoreItems(){
+    _loadMoreItems() {
         global.arbeidsMaur.forumUpdater.addPagesToStream(1);
     }
 
-    getData()
-    {
+    getData() {
         let out = Object.values(this.state.posts);
 
-        out.sort((x,y) => {
+        out.sort((x, y) => {
             return (new Date(y.created_at) - new Date(x.created_at));
         })
 
@@ -139,7 +136,9 @@ export default class PageStream extends React.Component {
                     style={pageStyles.container}
                     data={this.getData()}
                     renderItem={(item) => this._renderItem(item)}
-                    keyExtractor={(item) => {return item.id}}
+                    keyExtractor={(item) => {
+                        return item.id
+                    }}
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
                     initialNumToRender={3}

@@ -5,8 +5,9 @@
 import React from "react";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
-import {Divider, Icon} from "react-native-elements";
-import * as colors from "../Styles/colorConstants"
+import Icon from 'react-native-vector-icons/Ionicons';
+import * as colors from "../Styles/colorConstants";
+import Divider from "./UXElements/Divider";
 
 //Get common list styles
 const listStyles = require('../Styles/ListStyles');
@@ -18,7 +19,12 @@ export default class PageFavorites extends React.Component {
     constructor(props) {
 
         super(props);
-        this.state = {posts: this.props.store.getState().ForumFavorite, loading: true, refreshing: false, silentLoading: false};
+        this.state = {
+            posts: this.props.store.getState().ForumFavorite,
+            loading: true,
+            refreshing: false,
+            silentLoading: false
+        };
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
@@ -31,8 +37,6 @@ export default class PageFavorites extends React.Component {
         navBarBlur: true,
         navBarHidden: false,
     };
-
-
 
     onNavigatorEvent(event) {
         switch (event.id) {
@@ -66,7 +70,7 @@ export default class PageFavorites extends React.Component {
     _silentRefresh() {
         this.setState({silentLoading: true});
 
-        if(!this.state.loading) global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then(()=>this.setState({silentLoading: false}));
+        if (!this.state.loading) global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then(() => this.setState({silentLoading: false}));
     }
 
     _refresh() {
@@ -78,11 +82,10 @@ export default class PageFavorites extends React.Component {
 
     }
 
-    getData()
-    {
+    getData() {
         let out = Object.values(this.state.posts);
 
-        out.sort((x,y) => {
+        out.sort((x, y) => {
             return (new Date(y.updated_at) - new Date(x.updated_at));
         })
 
@@ -109,12 +112,12 @@ export default class PageFavorites extends React.Component {
                         <Text style={listStyles.listSubtitle}>{this.getSubtitle(item)}</Text>
                     </View>
                     <View style={listStyles.iconBlock}>
-                        <Icon name="keyboard-arrow-right" color={colors.COLOR_DARKGREY} size={30}/>
+                        <Icon name="ios-arrow-forward" color={colors.COLOR_LIGHTGREY} size={30}/>
                     </View>
                 </View>
 
             </TouchableOpacity>
-            <Divider style={listStyles.divider}/>
+            <Divider />
         </View>
 
     )
@@ -127,9 +130,8 @@ export default class PageFavorites extends React.Component {
 
     }
 
-    _getHeader()
-    {
-        return (<Divider style={listStyles.divider}/>)
+    _getHeader() {
+        return (<Divider/>)
     }
 
     render() {

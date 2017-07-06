@@ -7,6 +7,7 @@ import {ActivityIndicator, Alert, Button, Image, StyleSheet, TextInput, Touchabl
 import InputStyles from "../../Styles/InputStyles";
 const ImagePicker = require('react-native-image-picker');
 const TextStyles = require("../../Styles/TextStyles");
+import * as colors from "../../Styles/colorConstants"
 
 const imagePickerOptions = {
     title: 'Velg bilde',
@@ -230,7 +231,7 @@ export default class WriteNewPostOrComment extends React.Component {
                                 value={this.state.text}
                                 multiline={true}
                                 placeholder="Skriv ny kommentar"
-                                placeholderTextColor="#888888"
+                                placeholderTextColor={colors.COLOR_DARKGREY}
 
                             />
 
@@ -257,7 +258,7 @@ export default class WriteNewPostOrComment extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ECF0F1',
+        backgroundColor: colors.COLOR_LIGHT,
         padding: 10,
         marginBottom: 2,
         paddingTop: 8,
@@ -268,10 +269,10 @@ const pageStyles = StyleSheet.create({
         padding: 5,
         height: 150,
         borderWidth: 0,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: colors.COLOR_WHITE
     },
     imageViewer: {
-        backgroundColor: "#ECF0F1",
+        backgroundColor: colors.COLOR_LIGHT,
         minHeight: 15,
     }
 
