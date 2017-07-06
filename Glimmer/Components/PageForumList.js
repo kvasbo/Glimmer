@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {FlatList, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {setActivePostingForum} from "../Redux/actions";
 import * as colors from "../Styles/colorConstants";
 
@@ -23,7 +23,7 @@ export default class PageForumList extends React.Component {
             chosenForumName: null,
             chosenForumBody: null,
             mushUsedForums: [],
-            showAllForums: false,
+            onlyMostUsed: true,
         };
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
@@ -53,11 +53,20 @@ export default class PageForumList extends React.Component {
         if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
             if (event.id == 'skriv') { // this is the same id field from the static navigatorButtons definition
 
-                this.props.navigator.push({
-                    screen: 'glimmer.PageNewForumPost', // unique ID registered with Navigation.registerScreen
-                    title: "Skriv", // navigation bar title of the pushed screen (optional)
-                    animated: true, // does the push have transition animation or does it happen immediately (optional)
-                });
+                if(store.getState().AppStatus.activePostingForum !== null)
+                {
+                    this.props.navigator.push({
+                        screen: 'glimmer.PageNewForumPost', // unique ID registered with Navigation.registerScreen
+                        title: "Nytt innlegg", // navigation bar title of the pushed screen (optional)
+                        animated: true, // does the push have transition animation or does it happen immediately (optional)
+                    });
+                }
+                else
+                {
+                    Alert.alert("Hoppsann", "Du må velge et forum å poste i.");
+                }
+
+
 
             }
         }
@@ -106,7 +115,7 @@ export default class PageForumList extends React.Component {
                     loading: false
                 });
 
-                console.log("State set from db", this.state.forums, this.state.muchUsedForums, this.state.selectedForum);
+                //console.log("State set from db", this.state.forums, this.state.muchUsedForums, this.state.selectedForum);
 
             }
 
@@ -118,7 +127,7 @@ export default class PageForumList extends React.Component {
 
         var arr = this.state.forums;
 
-        if (!this.state.showAllForums) {
+        if (this.state.onlyMostUsed) {
             var muchUsed = []; //= this.state.muchUsedForums;
             //Lag array av mye brukte
             for (key in this.state.muchUsedForums) {
@@ -131,7 +140,7 @@ export default class PageForumList extends React.Component {
             if (x == null) return false;
 
             //Filtrer hvis vi skal dét.
-            if (!this.state.showAllForums) {
+            if (this.state.onlyMostUsed) {
                 if (!muchUsed.includes(x.id)) return false;
             }
 
@@ -172,34 +181,56 @@ export default class PageForumList extends React.Component {
         return (
             <View style={{flex: 1}}>
 
-                <View style={{flex: 1}}>
-                    <Text>Valgt forum</Text>
-                    <Text>{this._getChosenForumInfo()}</Text>
+                <View style={{height: 70, alignItems: "center", justifyContent: "center", margin: 0}}>
+                    <Text style={{fontSize: 20}}>{this._getChosenForumInfo()}</Text>
                 </View>
 
-                <View style={{flex: 6, paddingTop: 0}}>
+                <View style={{flex: 1, paddingTop: 0}}>
 
-                    <TextInput
-                        style={{
-                            height: 40,
-                            borderColor: 'gray',
-                            borderWidth: 1,
-                            padding: 5,
-                            paddingLeft: 10,
-                            paddingRight: 10
-                        }}
-                        onChangeText={(text) => this.setState({filterText: text})}
-                        value={this.state.text}
-                        placeholder="Filtrér"
-                    />
+                    <View style={{flexDirection: "row", height: 50, backgroundColor: colors.COLOR_GRAD2}}>
 
-                    <FlatList style={pageStyles.container}
-                              data={this.getFilteredForumList()}
-                              keyExtractor={(item, index) => item.id}
-                              renderItem={({item}) => <Forum forum={item}></Forum>}
-                    >
+                        <View style={{flex: 1, padding: 10, flexDirection: "row", alignItems: "center"}}>
+                            <TextInput
+                                style={{
+                                    height: 33,
+                                    borderColor: colors.COLOR_LIGHT,
+                                    color: colors.COLOR_DARKGREY,
+                                    backgroundColor: colors.COLOR_WHITE,
+                                    fontSize: 13,
+                                    borderWidth: 1,
+                                    padding: 5,
+                                    paddingLeft: 10,
+                                    paddingRight: 10,
+                                    margin: 0,
+                                    flex: 1
+                                }}
+                                onChangeText={(text) => this.setState({filterText: text})}
+                                value={this.state.text}
+                                placeholder="Filtrér"
+                            />
+                        </View>
 
-                    </FlatList>
+                        <View style={{flex: 1, padding: 10, flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
+
+                            <Text style={{color: colors.COLOR_LIGHT, marginRight: 5}}>Kun velbrukte:</Text>
+
+                            <Switch
+                                onValueChange={(value) => this.setState({onlyMostUsed: value})}
+                                value={this.state.onlyMostUsed}
+                            />
+
+                        </View>
+
+
+
+                    </View>
+
+                        <FlatList style={pageStyles.container}
+                                  data={this.getFilteredForumList()}
+                                  keyExtractor={(item, index) => item.id}
+                                  renderItem={({item}) => <Forum forum={item}></Forum>}
+                        />
+
                 </View>
 
             </View>
@@ -220,7 +251,7 @@ class Forum extends React.Component {
         },
 
         forumText: {
-            color: "#FFFFFF",
+            color: colors.COLOR_WHITE,
         }
 
     });

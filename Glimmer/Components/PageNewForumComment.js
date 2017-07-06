@@ -4,13 +4,17 @@
 
 import React from "react";
 import {ScrollView, StyleSheet} from "react-native";
-import WriteNewPostOrComment from "./UXElements/WriteNewPostOrComment"
+import WriteNewPostOrComment from "./UXElements/WriteNewPostOrComment";
 import * as colors from "../Styles/colorConstants";
 
 export default class PageNewForumComment extends React.Component {
 
     constructor(props) {
         super(props);
+
+        if (__DEV__) {
+            console.log("Page props", this.props);
+        }
     }
 
     componentDidMount() {
@@ -19,21 +23,25 @@ export default class PageNewForumComment extends React.Component {
 
     render() {
 
-        return (
-            <ScrollView style={pageStyles.container}>
-                <WriteNewPostOrComment type="comment" postId={this.props.postId} title="Ny kommentar" navigator={this.props.navigator}/>
-            </ScrollView>
-        );
+        if (this.props.postId === null) {
+            return <Text>Intet forum valgt, noe er galt</Text>
+        }
+        else {
+
+            return (
+                <ScrollView style={pageStyles.container}>
+                    <WriteNewPostOrComment type="comment" postId={this.props.postId} navigator={this.props.navigator}/>
+                </ScrollView>
+            );
+        }
     }
 }
 
 const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.COLOR_LIGHTGREY,
-        paddingLeft: 0,
-        paddingTop: 0,
-        paddingBottom: 30,
-        paddingRight: 0,
+        backgroundColor: colors.COLOR_LIGHT,
+        padding: 0,
+        margin: 0,
     },
 });

@@ -38,7 +38,6 @@ export default class WriteNewPostOrComment extends React.Component {
      props:
      type: "comment"; "post"
      postId: null (for new post), postId(for comment)
-     forum: null (for comment), forumid (for new post)
 
      */
 
@@ -60,6 +59,8 @@ export default class WriteNewPostOrComment extends React.Component {
         }
 
         this.state = {text: '', title: '', tags: [], images: {}, bodyCursorPosition: null};
+
+        console.log("Writer props", this.props);
 
     }
 
@@ -86,17 +87,16 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     _doClear() {
-
         AsyncStorage.setItem(this.itemKey + "_text", "");
         AsyncStorage.setItem(this.itemKey + "_title", "");
         this.setState({text: "", title: "", tags: []});
-
     }
 
     _post() {
 
         if (this.props.type === "comment") {
 
+            var text = "";
             if (this.state.text !== "") {
                 var text = this.parseAndReplaceImages(this.state.text);
             }
@@ -112,9 +112,40 @@ export default class WriteNewPostOrComment extends React.Component {
             arbeidsMaur.forumUpdater.postCommentInThread(text, this.props.postId).then((data) => {
 
                 this._doClear();
+                this.props.navigator.pop();
 
             }).catch((error) => {
                 Alert.alert("Noe gikk galt :(");
+                console.log(error);
+            });
+
+        }
+        else if(this.props.type === "post")
+        {
+            var forumId = store.getState().AppStatus.activePostingForum;
+
+            var body = ""
+            if (this.state.text !== "" && this.state.title !== "") {
+                body = this.parseAndReplaceImages(this.state.text);
+            }
+            else {
+                Alert.alert(
+                    'Trist og uproft',
+                    'Kommentaren eller tittelen din er tom.');
+                return false;
+            }
+
+            //Post a new comment
+
+            arbeidsMaur.forumUpdater.postNewThread(forumId, this.state.title, body, []).then((data) => {
+
+                this._doClear();
+                this.arbeidsMaur.forumUpdater.loadFirstStream(1);
+                this.props.navigator.popToRoot();
+
+            }).catch((error) => {
+                Alert.alert("Noe gikk galt :(");
+                console.log(error);
             });
 
         }
@@ -124,13 +155,13 @@ export default class WriteNewPostOrComment extends React.Component {
     textChanged(text) {
 
         this.setState({text: text});
-        AsyncStorage.setItem(this.itemKey+"_text", text);
+        AsyncStorage.setItem(this.itemKey + "_text", text);
     }
 
     titleChanged(text) {
 
         this.setState({title: text});
-        AsyncStorage.setItem(this.itemKey+"_title", text);
+        AsyncStorage.setItem(this.itemKey + "_title", text);
     }
 
     parseAndReplaceImages(text) {
@@ -141,7 +172,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
         ImagePicker.launchImageLibrary(imagePickerOptions, (response) => {
 
-            console.log('Response = ', response);
+            //console.log('Response = ', response);
 
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -171,11 +202,11 @@ export default class WriteNewPostOrComment extends React.Component {
                     let imageList = this.state.images;
                     imageList[fileName] = {orig_uri: response.uri, uri: uploadedFile.downloadUrl, done: true};
 
-                    console.log(imageList);
+                    //console.log(imageList);
 
                     this.setState({images: imageList});
 
-                    console.log("Uploaded", uploadedFile);
+                    //console.log("Uploaded", uploadedFile);
                 })
                 .catch(err => {
                     Alert.alert("Noe gikk galt med opplastingen. Pokker ta.", err)
@@ -229,12 +260,10 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
-    _getTitleBox()
-    {
-        if(this.props.type === "post")
-        {
-            return ( <TextInput
-                style={[InputStyles.textBox, {height: 50}]}
+    _getTitleBox() {
+        if (this.props.type === "post") {
+            return ( <View><TextInput
+                style={[InputStyles.textBox, {height: 75}]}
                 autoCapitalize="sentences"
                 autoFocus={false}
                 onChangeText={(text) => this.titleChanged(text)}
@@ -242,8 +271,10 @@ export default class WriteNewPostOrComment extends React.Component {
                 multiline={false}
                 placeholder="Tittel"
                 placeholderTextColor={colors.COLOR_DARKGREY}
+                backgroundColor={colors.COLOR_LIGHT}
+                color={colors.COLOR_BLACK}
 
-            />)
+            /></View>)
         }
     }
 
@@ -251,12 +282,10 @@ export default class WriteNewPostOrComment extends React.Component {
 
         var title = "???";
 
-        if(this.props.type === "comment")
-        {
+        if (this.props.type === "comment") {
             title = "Ny kommentar til " + this.props.title;
         }
-        else if(this.props.type === "post")
-        {
+        else if (this.props.type === "post") {
             title = "Ny post";
         }
 
@@ -264,38 +293,41 @@ export default class WriteNewPostOrComment extends React.Component {
 
             <View style={pageStyles.container}>
 
-                <View style={{marginTop: 22}}>
-                    <View>
 
-                        <View style={pageStyles.imageViewer}>
-                            {this.getImageList()}
-                        </View>
+                <View>
 
-                        <View>
+                    {this._getTitleBox()}
 
-                            <TextInput
-                                style={[InputStyles.textBox, {height: 250}]}
-                                autoCapitalize="sentences"
-                                autoFocus={false}
-                                onChangeText={(text) => this.textChanged(text)}
-                                onSelectionChange={(event) => this.cursormoved(event)}
-                                value={this.state.text}
-                                multiline={true}
-                                placeholder="Hva har du på hjertet?"
-                                placeholderTextColor={colors.COLOR_DARKGREY}
+                    <View style={{flex: 1, marginBottom: 10}}>
 
-                            />
+                        <TextInput
+                            style={[InputStyles.textBox, {height: 300}]}
+                            autoCapitalize="sentences"
+                            autoFocus={false}
+                            onChangeText={(text) => this.textChanged(text)}
+                            onSelectionChange={(event) => this.cursormoved(event)}
+                            value={this.state.text}
+                            multiline={true}
+                            placeholder="Hva har du på hjertet?"
+                            placeholderTextColor={colors.COLOR_LIGHTGREY}
+                            backgroundColor={colors.COLOR_WHITE}
 
-                        </View>
-
-                        <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-                            <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
-                            <Button onPress={() => this.addPictures()} title="Bilder"/>
-                            <Button onPress={() => this._post()} title="Send"/>
-                        </View>
+                        />
 
                     </View>
+
+                    <View style={pageStyles.imageViewer}>
+                        {this.getImageList()}
+                    </View>
+
+                    <View style={{height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 20}}>
+                        <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
+                        <Button onPress={() => this.addPictures()} title="Bilder"/>
+                        <Button onPress={() => this._post()} title="Send"/>
+                    </View>
+
                 </View>
+
 
             </View>
 
@@ -309,21 +341,13 @@ const pageStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.COLOR_LIGHT,
-        padding: 10,
+        padding: 0,
+        margin: 0,
         marginBottom: 2,
         paddingTop: 8,
     },
-    textInput: {
-        marginLeft: 0,
-        marginRight: 0,
-        padding: 5,
-        height: 150,
-        borderWidth: 0,
-        backgroundColor: colors.COLOR_WHITE
-    },
     imageViewer: {
         backgroundColor: colors.COLOR_LIGHT,
-        minHeight: 15,
     }
 
 });

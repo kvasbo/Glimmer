@@ -3,11 +3,10 @@
  */
 
 import React from "react";
-import {ActivityIndicator, Button, ScrollView, Text, TouchableOpacity, View, StyleSheet} from "react-native";
-import Icon from 'react-native-vector-icons/Ionicons';
+import {ActivityIndicator, Button, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
-import AddCommentBlock from "./UXElements/AddCommentBlock";
 import * as colors from "../Styles/colorConstants";
 
 const commentsInPage = 30;
@@ -159,41 +158,6 @@ export default class PageThread extends React.Component {
         this.loadCommentPage(1);
     }
 
-    _getModal() {
-
-        /*
-         return (
-
-         <Modal
-         animationType={"slide"}
-         transparent={false}
-         visible={this.state.pagePickerModalVisible}>
-         onRequestClose={()=>console.log("Close modal")}
-         <View style={{marginTop: 22, height: 250}}>
-         <View>
-
-         <Text>Velg side</Text>
-
-
-         <View style={{flexDirection: "row"}}>
-
-         <Button onPress={() => {
-         this.setState({pagePickerModalVisible: !this.state.pagePickerModalVisible})
-         }} title="Lukk"/>
-
-         <Button onPress={() => {
-         this.setState({pagePickerModalVisible: !this.state.pagePickerModalVisible})
-         }} title="Ok"/>
-
-         </View>
-
-         </View>
-         </View>
-         </Modal>
-         )
-         */
-    }
-
     _getSidevelger() {
 
         if (this.state.loading) return null;
@@ -260,8 +224,6 @@ export default class PageThread extends React.Component {
 
             <ScrollView ref={component => this.scrollbar = component} style={pageStyles.container}>
 
-                {this._getModal()}
-
                 <ThreadForumPost data={this.props.post} metaData={false}
                                  cut={false}
                                  touchable={false}/>
@@ -278,24 +240,22 @@ export default class PageThread extends React.Component {
                     this.props.navigator.push({
                         screen: 'glimmer.PageNewForumComment', // unique ID registered with Navigation.registerScreen
                         title: "Ny kommentar", // navigation bar title of the pushed screen (optional)
-                        passProps: {postId :this.props.postId}, // Object that will be passed as props to the pushed screen (optional)
+                        passProps: {postId: this.props.post.id}, // Object that will be passed as props to the pushed screen (optional)
                         animated: true, // does the push have transition animation or does it happen immediately (optional),
                     });
 
-                }} />
+                }}/>
 
 
             </ScrollView>
 
-    );
-
-        //<AddCommentBlock postId={this.props.post.id} navigator={this.props.navigator}/>
+        );
 
     }
-    }
+}
 
-    const pageStyles = StyleSheet.create({
-        container: {
+const pageStyles = StyleSheet.create({
+    container: {
         flex: 1,
         backgroundColor: colors.COLOR_LIGHT,
         paddingLeft: 0,
@@ -303,7 +263,7 @@ export default class PageThread extends React.Component {
         paddingBottom: 30,
         paddingRight: 0,
     },
-        sideVelgerView: {
+    sideVelgerView: {
         flexDirection: "row",
         marginRight: 10,
         marginLeft: 10,
@@ -311,9 +271,9 @@ export default class PageThread extends React.Component {
         alignContent: "center",
 
     },
-        pageNumberText: {
+    pageNumberText: {
         fontSize: 15,
         fontWeight: "300",
         paddingTop: 18,
     }
-    });
+});
