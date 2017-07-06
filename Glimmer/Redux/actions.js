@@ -12,7 +12,8 @@ import {
     MESSAGE_RECIPIENTS_CLEAR,
     MESSAGE_RECIPIENTS_REMOVE_PERSON,
     USERS_ADD_USER_BATCH,
-    APPCONTROL_SET_ACTIVE_POSTING_FORUM
+    APPCONTROL_SET_ACTIVE_POSTING_FORUM,
+    APPCONTROL_SET_CURRENT_USER
 } from "./constants";
 
 export function replaceForumList(forums) {
@@ -109,6 +110,13 @@ export function setActivePostingForum(forumId) {
     return {
         type: APPCONTROL_SET_ACTIVE_POSTING_FORUM,
         forumId
+    }
+}
+
+export function setActiveUserId(userId) {
+    return {
+        type: APPCONTROL_SET_CURRENT_USER,
+        userId
     }
 }
 

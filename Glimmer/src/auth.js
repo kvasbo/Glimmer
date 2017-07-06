@@ -4,7 +4,7 @@
 import React from "react";
 import {Linking} from "react-native";
 import * as Keychain from "react-native-keychain";
-import {setLoginStatus} from "../Redux/actions";
+import {setLoginStatus, setActiveUserId} from "../Redux/actions";
 
 const shittyQs = require("shitty-qs");
 
@@ -31,8 +31,12 @@ export default class glimmerAuth {
                 if (__DEV__) {
                     console.log("Current User", this.currentUser);
                 }
+
+                store.dispatch(setActiveUserId(data.data.id));
                 store.dispatch(setLoginStatus(true));
+
                 resolve(data);
+
             }).catch((error) => {
 
                 if (__DEV__) {
@@ -81,7 +85,9 @@ export default class glimmerAuth {
                     .then(() => {
                         console.log("Token stored");
 
-                        global.store.dispatch(setLoginStatus(true));
+                        this.checkAuth().then((data)=>{
+                            //global.store.dispatch(setLoginStatus(true));
+                        });
 
                         resolve(password);
                     });

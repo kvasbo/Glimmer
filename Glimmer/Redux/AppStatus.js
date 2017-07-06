@@ -1,8 +1,9 @@
-import {APPCONTROL_USER_LOGIN, APPCONTROL_SET_ACTIVE_POSTING_FORUM} from "./constants";
+import {APPCONTROL_USER_LOGIN, APPCONTROL_SET_ACTIVE_POSTING_FORUM, APPCONTROL_SET_CURRENT_USER} from "./constants";
 
 const initialState = {
     loggedIn: null,
     activePostingForum: null,
+    activeUserId: null,
 }
 
 function AppStatus(state = initialState, action) {
@@ -22,6 +23,14 @@ function AppStatus(state = initialState, action) {
             var s = Object.assign({}, state);
 
             s.activePostingForum = action.forumId;
+
+            return s;
+
+        case APPCONTROL_SET_CURRENT_USER:
+
+            var s = Object.assign({}, state);
+
+            s.activeUserId = action.userId;
 
             return s;
 

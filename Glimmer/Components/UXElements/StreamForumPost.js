@@ -23,7 +23,7 @@ export default class StreamForumPost extends React.Component {
         this.state = {};
 
         try {
-            if (this.props.data.creator_id === auth.currentUser.id) {
+            if (this.props.data.creator_id === store.getState().AppStatus.activeUserId) {
                 this.byMe = true;
             }
         }

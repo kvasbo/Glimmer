@@ -57,7 +57,7 @@ export default class ForumComment extends React.Component {
     constructor(props) {
         super(props);
 
-        if (this.props.data.creator.id === auth.currentUser.id) {
+        if (this.props.data.creator.id === store.getState().AppStatus.activeUserId) {
             this.byMe = true;
         }
 
