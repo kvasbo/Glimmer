@@ -10,15 +10,8 @@ import * as colors from "../Styles/colorConstants";
 export default class PageNewForumComment extends React.Component {
 
     constructor(props) {
+
         super(props);
-
-        if (__DEV__) {
-            console.log("Page props", this.props);
-        }
-    }
-
-    componentDidMount() {
-
     }
 
     render() {
@@ -36,6 +29,8 @@ export default class PageNewForumComment extends React.Component {
         }
     }
 }
+
+//
 
 const pageStyles = StyleSheet.create({
     container: {

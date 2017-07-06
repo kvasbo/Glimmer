@@ -310,8 +310,6 @@ export default class WriteNewPostOrComment extends React.Component {
                             multiline={true}
                             placeholder="Hva har du på hjertet?"
                             placeholderTextColor={colors.COLOR_LIGHTGREY}
-                            backgroundColor={colors.COLOR_WHITE}
-
                         />
 
                     </View>

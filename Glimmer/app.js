@@ -164,7 +164,7 @@ export default class Glimmer {
                 screen: 'glimmer.PageSplashScreen', // unique ID registered with Navigation.registerScreen
                 navigatorStyle: {navBarHidden: true}
             },
-            animationType: 'fade', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
+            animationType: 'none', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
         })
 
     }
@@ -178,7 +178,7 @@ export default class Glimmer {
                 navigatorStyle: {navBarHidden: true}
             },
             passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
-            animationType: 'fade', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
+            animationType: 'none', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
 
         });
 
@@ -188,6 +188,7 @@ export default class Glimmer {
 
         //Start the actual app
         Navigation.startTabBasedApp({
+            animationType: 'none', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
             passProps: {store: global.store}, //Pass the redux store.
             tabs: [{
                 label: 'Mine tråder', screen: 'glimmer.PageFavorites', // this is a registered name for a screen

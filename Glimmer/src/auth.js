@@ -17,20 +17,12 @@ global.log = [];
 
 export default class glimmerAuth {
 
-    currentUser = null;
-
     /** Test if we are connected **/
     checkAuth() {
 
         return new Promise((resolve, reject) => {
 
             api.makeApiGetCall("/users/current").then((data) => {
-
-                this.currentUser = data.data;
-
-                if (__DEV__) {
-                    console.log("Current User", this.currentUser);
-                }
 
                 store.dispatch(setActiveUserId(data.data.id));
                 store.dispatch(setLoginStatus(true));
@@ -83,19 +75,28 @@ export default class glimmerAuth {
                     Keychain
                     .setInternetCredentials(server, username, password)
                     .then(() => {
-                        console.log("Token stored");
 
-                        this.checkAuth().then((data)=>{
-                            //global.store.dispatch(setLoginStatus(true));
-                        });
+                        api.makeApiGetCall("/users/current").then((data) => {
 
-                        resolve(password);
+                            store.dispatch(setActiveUserId(data.data.id));
+                            store.dispatch(setLoginStatus(true));
+
+                            resolve(password);
+
+                        }).catch((error) => {
+
+                            store.dispatch(setLoginStatus(false));
+                            reject("Key not valid");
+                        })
+
                     });
 
                 }
 
                 Linking.removeEventListener("url", handleUrl);
             }
+
+
 
             Linking.openURL(oauthUrl);
 

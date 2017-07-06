@@ -62,17 +62,13 @@ export default class PageThread extends React.Component {
 
     loadCommentPage(page) {
 
-        this._gotoTop();
-
         //Get page
         arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page).then((data) => {
-
-            //console.log("Comments page " + page, data);
 
             tmpPageCache = this.state.pageCache;
             tmpPageCache[page] = data;
 
-            this.setState({currentPage: page, pageCache: tmpPageCache, loading: false});
+            this.setState({currentPage: page, pageCache: tmpPageCache, loading: false, numberOfPages: this.findLastPageOfComments()});
 
         });
 
@@ -193,6 +189,22 @@ export default class PageThread extends React.Component {
                     onPress={() => this._gotoBottom()}
                 />
 
+                <Icon
+                    size={size}
+                    name='ios-create-outline'
+                    color={activeColor}
+                    onLongPress={() => {
+
+                        this.props.navigator.push({
+                            screen: 'glimmer.PageNewForumComment', // unique ID registered with Navigation.registerScreen
+                            title: "Ny kommentar", // navigation bar title of the pushed screen (optional)
+                            passProps: {postId: this.props.post.id}, // Object that will be passed as props to the pushed screen (optional)
+                            animated: true, // does the push have transition animation or does it happen immediately (optional),
+                        });
+
+                    }}
+                />
+
                 <TouchableOpacity onPress={() => {
                 }}>
                     <Text style={pageStyles.pageNumberText}>{showPage}</Text>
@@ -221,33 +233,25 @@ export default class PageThread extends React.Component {
         return (
 
 
+            <View style={pageStyles.container} >
+                <ScrollView ref={component => this.scrollbar = component} style={{flex:1}} >
 
-            <ScrollView ref={component => this.scrollbar = component} style={pageStyles.container}>
+                    <ThreadForumPost data={this.props.post} metaData={false}
+                                     cut={false}
+                                     touchable={false}/>
+                    <View ref={component => this.firstpost = component}/>
 
-                <ThreadForumPost data={this.props.post} metaData={false}
-                                 cut={false}
-                                 touchable={false}/>
-                <View ref={component => this.firstpost = component}/>
+                    {this.getComments()}
 
-                {this._getSidevelger()}
+                </ScrollView>
 
-                {this.getComments()}
+                <View style={pageStyles.navBar}>
 
-                {this._getSidevelger()}
+                    {this._getSidevelger()}
 
-                <Button title="Ny kommentar" onPress={() => {
+                </View>
 
-                    this.props.navigator.push({
-                        screen: 'glimmer.PageNewForumComment', // unique ID registered with Navigation.registerScreen
-                        title: "Ny kommentar", // navigation bar title of the pushed screen (optional)
-                        passProps: {postId: this.props.post.id}, // Object that will be passed as props to the pushed screen (optional)
-                        animated: true, // does the push have transition animation or does it happen immediately (optional),
-                    });
-
-                }}/>
-
-
-            </ScrollView>
+            </View>
 
         );
 
@@ -265,15 +269,18 @@ const pageStyles = StyleSheet.create({
     },
     sideVelgerView: {
         flexDirection: "row",
-        marginRight: 10,
-        marginLeft: 10,
         justifyContent: "space-around",
         alignContent: "center",
-
+        alignItems: "center",
+    },
+    navBar: {
+        height: 13,
+        margin: 0,
+        paddingTop: 5,
     },
     pageNumberText: {
         fontSize: 15,
         fontWeight: "300",
-        paddingTop: 18,
+        color: colors.COLOR_GRAD1
     }
 });
