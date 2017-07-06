@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {FlatList, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {FlatList, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View, Alert} from "react-native";
 import {setActivePostingForum} from "../Redux/actions";
 import * as colors from "../Styles/colorConstants";
 
