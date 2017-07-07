@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 import {Alert, AppState} from "react-native";
 import {registerScreens} from "./src/screens";
 import {Navigation} from "react-native-navigation";
@@ -94,10 +95,14 @@ _handleAppStateChange = (nextAppState) => {
 }
 
 
-export default class Glimmer {
+class Glimmer extends React.Component {
 
-    constructor() {
+
+
+    constructor(props) {
+        super(props);
         this.init();
+        this.store = global.store;
     }
 
     //To keep track of changes in state, should be done with react
@@ -127,6 +132,8 @@ export default class Glimmer {
         this.attachStoreListener();
 
         registerScreens(store, Provider);
+
+        this.startAppBasedOnLoginStatus();
 
         firebaseApp.auth().signInAnonymously();
 
@@ -236,5 +243,13 @@ export default class Glimmer {
     }
 
 }
+
+function mapStateToProps(state) {
+    return {
+        appState: state.AppState
+    }
+}
+
+export default Glimmer
 
 
