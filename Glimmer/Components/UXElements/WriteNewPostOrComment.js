@@ -9,12 +9,12 @@ import {
     AsyncStorage,
     Button,
     Image,
+    KeyboardAvoidingView,
     ScrollView,
     StyleSheet,
     TextInput,
     TouchableOpacity,
-    View,
-    KeyboardAvoidingView
+    View
 } from "react-native";
 import InputStyles from "../../Styles/InputStyles";
 import * as colors from "../../Styles/colorConstants";
@@ -173,8 +173,6 @@ export default class WriteNewPostOrComment extends React.Component {
 
         ImagePicker.launchImageLibrary(imagePickerOptions, (response) => {
 
-            //console.log('Response = ', response);
-
             if (response.didCancel) {
                 console.log('User cancelled image picker');
             }
@@ -186,7 +184,37 @@ export default class WriteNewPostOrComment extends React.Component {
             }
             else {
 
-                let fileName = Math.random() + response.fileName;
+                //Check and set mimetype / rotation /metadata.
+                //console.log('Response = ', response);
+
+                var metadata = {};
+
+                try {
+
+                    let filename =  response.fileName.toLowerCase();
+                    let filenameArr = filename.split(".");
+                    var extension = filenameArr.slice(-1)[0];
+
+                    //console.log(filename, filenameArr, extension);
+
+                    if (extension === "jpg" || extension === "jpeg") {
+                        metadata.contentType = 'image/jpeg';
+                    }
+                    else if (extension === "png") {
+                        metadata.contentType = 'image/png';
+                    }
+                    else if (extension === "gif") {
+                        metadata.contentType = 'image/gif';
+                    }
+                    else if (extension === "webp") {
+                        metadata.contentType = 'image/webp';
+                    }
+                }
+                catch (err) {
+                    console.log(err);
+                }
+
+                let fileName = (new Date().getTime() + "_" + response.fileName).toLowerCase();
 
                 //tmp state
                 let tmpImages = this.state.images;
@@ -197,7 +225,7 @@ export default class WriteNewPostOrComment extends React.Component {
                 //Upload
                 firebaseApp.storage()
                 .ref('/postImages/' + fileName)
-                .putFile(response.origURL)
+                .putFile(response.origURL, metadata)
                 .then(uploadedFile => {
 
                     let imageList = this.state.images;
