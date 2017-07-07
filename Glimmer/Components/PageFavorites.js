@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import { connect } from 'react-redux'
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -12,31 +13,20 @@ import Divider from "./UXElements/Divider";
 //Get common list styles
 const listStyles = require('../Styles/ListStyles');
 
-export default class PageFavorites extends React.Component {
-
-    reduxUnsubscribe = null;
+class PageFavorites extends React.Component {
 
     constructor(props) {
 
         super(props);
         this.state = {
-            posts: this.props.store.getState().ForumFavorite,
-            loading: true,
+            loading: false,
             refreshing: false,
             silentLoading: false
         };
+
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
-
-    static navigatorStyle = {
-        drawUnderTabBar: false,
-        statusBarBlur: true,
-        drawUnderStatusBar: false,
-        drawUnderNavBar: false,
-        navBarBlur: true,
-        navBarHidden: false,
-    };
 
     onNavigatorEvent(event) {
         switch (event.id) {
@@ -44,27 +34,6 @@ export default class PageFavorites extends React.Component {
                 this._silentRefresh();
                 break;
         }
-    }
-
-    componentWillMount() {
-
-        //Listen to state changes. This really needs to change at some later point.
-        this.reduxUnsubscribe = store.subscribe(() => {
-
-                var tmpPosts = store.getState().ForumFavorite;
-
-                if (tmpPosts !== this.state.posts) {
-
-                    this.setState({loading: false, posts: tmpPosts});
-
-                }
-            }
-        )
-
-    }
-
-    componentWillUnmount() {
-        this.reduxUnsubscribe();
     }
 
     _silentRefresh() {
@@ -83,7 +52,8 @@ export default class PageFavorites extends React.Component {
     }
 
     getData() {
-        let out = Object.values(this.state.posts);
+
+        let out = Object.values(this.props.favorites);
 
         out.sort((x, y) => {
             return (new Date(y.updated_at) - new Date(x.updated_at));
@@ -124,9 +94,7 @@ export default class PageFavorites extends React.Component {
     )
 
     _loadMoreItems(distance) {
-        if (__DEV__) {
-            console.log("Reached end", distance)
-        }
+
         global.arbeidsMaur.forumUpdater.addPagesToFavorites(1);
 
     }
@@ -137,7 +105,9 @@ export default class PageFavorites extends React.Component {
 
     render() {
 
-        if (this.state.loading) {
+        var data = this.getData();
+
+        if (data.length === 0 || this.state.loading === true) {
             return <LoadingScreen text="Laster trådene dine..."/>
         }
         else {
@@ -146,7 +116,7 @@ export default class PageFavorites extends React.Component {
 
                 <FlatList
                     style={pageStyles.container}
-                    data={this.getData()}
+                    data={data}
                     onRefresh={() => this._refresh()}
                     refreshing={this.state.refreshing}
                     renderItem={this._renderItem}
@@ -174,3 +144,13 @@ const pageStyles = StyleSheet.create({
     },
 
 });
+
+function mapStateToProps(state) {
+    return {
+        favorites: state.ForumFavorite
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(PageFavorites)

@@ -3,11 +3,11 @@
  */
 
 import React from "react";
+import {connect} from "react-redux";
 import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from "react-native-vector-icons/Ionicons";
 import Divider from "./UXElements/Divider";
 import * as colors from "../Styles/colorConstants";
-import { connect } from 'react-redux'
 
 //Get common list styles
 const listStyles = require('../Styles/ListStyles');
@@ -78,10 +78,10 @@ class PageMessages extends React.Component {
 
     _onRefresh() {
 
-        this.setState({refreshing:true});
+        this.setState({refreshing: true});
 
-        arbeidsMaur.messageUpdater.updateMessageThreads(1).then(()=>{
-            this.setState({refreshing:false});
+        arbeidsMaur.messageUpdater.updateMessageThreads(1).then(() => {
+            this.setState({refreshing: false});
         })
 
     }
@@ -90,7 +90,7 @@ class PageMessages extends React.Component {
         return (<Conversation data={item.item} navigator={this.props.navigator}/>)
     }
 
-    _getConversations(){
+    _getConversations() {
 
         let tmp = Object.values(this.props.conversations);
 
@@ -215,7 +215,7 @@ const pageStyles = StyleSheet.create({
 
 });
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         conversations: state.Conversation
     }

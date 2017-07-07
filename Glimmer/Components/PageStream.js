@@ -3,19 +3,20 @@
  */
 
 import React from "react";
+import { connect } from 'react-redux'
 import {FlatList, StyleSheet} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";
 import * as colors from "../Styles/colorConstants";
 
-export default class PageStream extends React.Component {
+class PageStream extends React.Component {
 
     reduxUnsubscribe = null;
 
     constructor(props) {
 
         super(props);
-        this.state = {posts: [], loading: true, refreshing: false};
+        this.state = {loading: false, refreshing: false};
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this._onRefresh = this._onRefresh.bind(this);
 
@@ -25,12 +26,6 @@ export default class PageStream extends React.Component {
         switch (event.id) {
             case 'willAppear':
                 this._silentRefresh();
-                break;
-            case 'didAppear':
-                break;
-            case 'willDisappear':
-                break;
-            case 'didDisappear':
                 break;
         }
 
@@ -47,16 +42,6 @@ export default class PageStream extends React.Component {
         }
     }
 
-    getData() {
-        let out = Object.values(this.state.posts);
-
-        out.sort((x, y) => {
-            return (new Date(y.created_at) - new Date(x.created_at));
-        })
-
-        return out;
-    }
-
     static navigatorButtons = {
         rightButtons: [
             {
@@ -66,36 +51,6 @@ export default class PageStream extends React.Component {
             }
         ]
     };
-
-    static navigatorStyle = {
-        drawUnderTabBar: false,
-        statusBarBlur: true,
-        drawUnderStatusBar: false,
-        drawUnderNavBar: false,
-        navBarBlur: true,
-        navBarHidden: false,
-    };
-
-    componentDidMount() {
-
-        this.setState({posts: this.props.store.getState().ForumStream});
-
-        //Listen to state changes. This really needs to change at some later point.
-        this.reduxUnsubscribe = store.subscribe(() => {
-
-                var tmpPosts = store.getState().ForumStream;
-
-                if (tmpPosts !== this.state.posts) {
-                    this.setState({loading: false, posts: tmpPosts});
-                }
-            }
-        )
-    }
-
-    componentWillUnmount()
-    {
-        this.reduxUnsubscribe();
-    }
 
     _renderItem(item) {
 
@@ -123,7 +78,7 @@ export default class PageStream extends React.Component {
     }
 
     getData() {
-        let out = Object.values(this.state.posts);
+        let out = Object.values(this.props.posts);
 
         out.sort((x, y) => {
             return (new Date(y.created_at) - new Date(x.created_at));
@@ -134,14 +89,16 @@ export default class PageStream extends React.Component {
 
     render() {
 
-        if (this.state.loading) {
+        var data = this.getData();
+
+        if (data.length === 0 || this.state.loading) {
             return <LoadingScreen text="Laster forsiden..."/>
         } else {
 
             return (
                 <FlatList
                     style={pageStyles.container}
-                    data={this.getData()}
+                    data={data}
                     renderItem={(item) => this._renderItem(item)}
                     keyExtractor={(item) => {
                         return item.id
@@ -165,3 +122,13 @@ const pageStyles = StyleSheet.create({
         margin: 0,
     },
 });
+
+function mapStateToProps(state) {
+    return {
+        posts: state.ForumStream
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(PageStream)
