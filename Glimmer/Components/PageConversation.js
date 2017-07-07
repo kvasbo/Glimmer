@@ -3,33 +3,23 @@
  */
 
 import React from "react";
+import {connect} from "react-redux";
 import {StyleSheet, View} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
 import * as colors from "../Styles/colorConstants";
 
-export default class PageConversation extends React.Component {
+class PageConversation extends React.Component {
 
     constructor(props) {
+
         super(props);
-        this.state = {messages: []};
         this.onSend = this.onSend.bind(this);
-        this.parseMessageForGiftedChat = this.parseMessageForGiftedChat.bind(this);
     }
 
     componentWillMount() {
 
-        arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id).then((result) => {
+        arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);
 
-            var msg = [];
-
-            for (message in result) {
-                var m = this.parseMessageForGiftedChat(result[message]);
-                msg.push(m);
-            }
-
-            this.setState({messages: msg});
-
-        })
     }
 
     parseMessageForGiftedChat(mess) {
@@ -39,17 +29,31 @@ export default class PageConversation extends React.Component {
             arbeidsMaur.messageUpdater.setMessageAsRead(mess.id);
         }
 
-        var userInfo = mess.from;
-
         out = {};
         out._id = mess.id;
         out.text = mess.body.replace(/<(?:.|\n)*?>/gm, '');
 
         out.createdAt = mess.sent_at;
         out.user = {};
-        out.user._id = userInfo.id;
-        out.user.name = userInfo.name;
-        out.user.avatar = userInfo.image_url;
+        out.user._id = mess.from_id;
+        out.user.name = mess.from_name;
+        out.user.avatar = mess.from_image;
+
+        return out;
+
+    }
+
+    _getMessages() {
+        //No messages, or none loaded yet
+        if (typeof this.props.messages[this.props.user_id] === "undefined") return [];
+
+        var tmpMsgs = Object.values(this.props.messages[this.props.user_id]);
+
+        tmpMsgs.sort((x, y) => {
+            return (new Date(y.sent_at) - new Date(x.sent_at));
+        })
+
+        var out = tmpMsgs.map(this.parseMessageForGiftedChat);
 
         return out;
 
@@ -62,14 +66,8 @@ export default class PageConversation extends React.Component {
     onSend(messages = []) {
 
         arbeidsMaur.messageUpdater.sendMessageToUser(this.props.user_id, messages[0].text).then((data) => {
-            console.log(data);
+            arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);
         })
-
-        this.setState((previousState) => {
-            return {
-                messages: GiftedChat.append(previousState.messages, messages),
-            };
-        });
     }
 
     render() {
@@ -77,7 +75,7 @@ export default class PageConversation extends React.Component {
             <View style={pageStyles.container}>
                 <GiftedChat
                     locale="nb"
-                    messages={this.state.messages}
+                    messages={this._getMessages()}
                     onSend={this.onSend}
                     user={{
                         _id: store.getState().AppStatus.activeUserId,
@@ -98,3 +96,13 @@ const pageStyles = StyleSheet.create({
         paddingRight: 0,
     },
 });
+
+function mapStateToProps(state) {
+    return {
+        messages: state.Message
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(PageConversation)

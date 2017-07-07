@@ -7,11 +7,12 @@ import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-n
 import Icon from 'react-native-vector-icons/Ionicons';
 import Divider from "./UXElements/Divider";
 import * as colors from "../Styles/colorConstants";
+import { connect } from 'react-redux'
 
 //Get common list styles
 const listStyles = require('../Styles/ListStyles');
 
-export default class PageMessages extends React.Component {
+class PageMessages extends React.Component {
 
     constructor(props) {
         super(props);
@@ -37,12 +38,12 @@ export default class PageMessages extends React.Component {
 
         switch (event.id) {
             case 'willAppear':
-                this.attachToStore();
+                arbeidsMaur.messageUpdater.updateMessageThreads(1);
                 break;
             case 'didAppear':
                 break;
             case 'willDisappear':
-                this.reduxUnsubscribe();
+
             case 'didDisappear':
                 break;
         }
@@ -72,28 +73,7 @@ export default class PageMessages extends React.Component {
     }
 
     componentWillMount() {
-        this.attachToStore();
-    }
-
-    attachToStore() {
-
         arbeidsMaur.messageUpdater.updateMessageThreads(1);
-
-        //Listen to state changes. This really needs to change at some later point.
-        this.reduxUnsubscribe = store.subscribe(() => {
-
-                let tmp = Object.values(store.getState().Conversation);
-
-                tmp.sort((x, y) => {
-                    return (new Date(y.last_message_time) - new Date(x.last_message_time));
-                });
-
-                if (tmp !== this.state.conversations) {
-                    this.setState({loading: false, conversations: tmp});
-                }
-            }
-        )
-
     }
 
     _onRefresh() {
@@ -107,10 +87,18 @@ export default class PageMessages extends React.Component {
     }
 
     _renderItem(item) {
-
-        //console.log(item);
-
         return (<Conversation data={item.item} navigator={this.props.navigator}/>)
+    }
+
+    _getConversations(){
+
+        let tmp = Object.values(this.props.conversations);
+
+        tmp.sort((x, y) => {
+            return (new Date(y.last_message_time) - new Date(x.last_message_time));
+        });
+
+        return tmp;
 
     }
 
@@ -119,7 +107,7 @@ export default class PageMessages extends React.Component {
         return (
             <FlatList
                 style={pageStyles.container}
-                data={this.state.conversations}
+                data={this._getConversations()}
                 renderItem={(item) => this._renderItem(item)}
                 keyExtractor={(item) => {
                     return item.user_id
@@ -139,8 +127,6 @@ class Conversation extends React.Component {
     constructor(props) {
 
         super(props);
-
-        //console.log("Conveo", this.props);
 
     }
 
@@ -228,3 +214,13 @@ const pageStyles = StyleSheet.create({
     },
 
 });
+
+function mapStateToProps (state) {
+    return {
+        conversations: state.Conversation
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(PageMessages)

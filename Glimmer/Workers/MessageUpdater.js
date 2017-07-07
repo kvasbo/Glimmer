@@ -1,5 +1,6 @@
 const Conversation = require("../DataClasses/conversation").default;
-import {addConversation, addConversationBatch} from "../Redux/actions";
+const Message = require("../DataClasses/message").default;
+import {addConversationBatch,addMessageBatch} from "../Redux/actions";
 
 export default class MessageUpdater {
 
@@ -19,13 +20,28 @@ export default class MessageUpdater {
 
     }
 
-    getMessagesWithUser(userId) {
-
-        const uri = "/messages/with/" + userId;
+    getMessagesWithUser(userId, page = 1) {
 
         return new Promise((resolve, reject) => {
+
+            const uri = "/messages/with/" + userId + "?page="+page;
+
             api.makeApiGetCall(uri).then((result) => {
+
+                var messages = [];
+
+                for(let i = 0; i<result.data.length; i++)
+                {
+                    //id, body, sent_at, dismissed_at, from_id, from_name, from_image, to_id, to_name, to_image
+                    let m = result.data[i];
+                    let n = new Message(m.id, m.body, m.sent_at, m.dismissed_at, m.from.id, m.from.name, m.from.image_url, m.to.id, m.to.name, m.to.image_url);
+                    messages.push(n);
+                }
+
+                store.dispatch(addMessageBatch(userId, messages));
+
                 resolve(result.data);
+
             }).catch((err) => reject(err));
         })
 

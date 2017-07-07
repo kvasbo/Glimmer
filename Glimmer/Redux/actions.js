@@ -1,20 +1,21 @@
 import {
     ADD_POST_FAVORITES_BATCH,
     ADD_POST_STREAM_BATCH,
+    APPCONTROL_SET_ACTIVE_POSTING_FORUM,
+    APPCONTROL_SET_CURRENT_USER,
     APPCONTROL_USER_LOGIN,
     FORUMLIST_ADD_FORUM,
     FORUMLIST_REPLACE,
     FORUMPOST_COMMENTS_ADD,
+    FORUMPOST_COMMENTS_SET_ACTIVE_PAGE,
     KRETS_ADD_PERSON_BATCH,
     MESSAGE_CONVERSATION_ADD,
     MESSAGE_CONVERSATON_ADD_BATCH,
     MESSAGE_RECIPIENTS_ADD_PERSON,
     MESSAGE_RECIPIENTS_CLEAR,
     MESSAGE_RECIPIENTS_REMOVE_PERSON,
-    USERS_ADD_USER_BATCH,
-    APPCONTROL_SET_ACTIVE_POSTING_FORUM,
-    APPCONTROL_SET_CURRENT_USER,
-    FORUMPOST_COMMENTS_SET_ACTIVE_PAGE,
+    MESSAGE_MESSAGES_ADD_BATCH,
+    USERS_ADD_USER_BATCH
 } from "./constants";
 
 export function replaceForumList(forums) {
@@ -68,6 +69,14 @@ export function removeNewMessageRecipient(id) {
 export function clearMessageRecipients() {
     return {
         type: MESSAGE_RECIPIENTS_CLEAR
+    }
+}
+
+export function addMessageBatch(userId, messages) {
+    return {
+        type: MESSAGE_MESSAGES_ADD_BATCH,
+        userId,
+        messages
     }
 }
 
