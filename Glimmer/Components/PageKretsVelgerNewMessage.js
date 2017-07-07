@@ -1,22 +1,18 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from "react";
+import {connect} from "react-redux";
 import {Alert, Animated, FlatList, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 import NavigatorStyles from "../Styles/NavigatorStyles";
 
 //TODO sort by status and then name
 
-export default class PageKretsVelger extends React.Component {
+class PageKretsVelger extends React.Component {
 
     reduxUnsubscribe = null;
 
     constructor(props) {
         super(props);
         this.state = {
-            krets: store.getState().Krets,
             searchText: "",
             searchHits: [],
             performedSearches: [],
@@ -32,9 +28,6 @@ export default class PageKretsVelger extends React.Component {
 
         switch (event.id) {
             case 'willAppear':
-                if (__DEV__) {
-                    //console.log("Velgerprops", this.props);
-                }
                 break;
             case 'didAppear':
                 break;
@@ -60,28 +53,9 @@ export default class PageKretsVelger extends React.Component {
                         animated: true, // does the push have transition animation or does it happen immediately (optional),
                         backButtonTitle: "Mottakere",
                     });
-
                 }
-
             }
         }
-    }
-
-    componentDidMount() {
-
-        this.setState({krets: store.getState().Krets});
-
-        //Listen to state changes. This really needs to change at some later point.
-        this.reduxUnsubscribe = store.subscribe(() => {
-
-                var tmpKrets = store.getState().Krets;
-
-                if (tmpKrets !== this.state.krets) {
-                    this.setState({krets: tmpKrets});
-                }
-            }
-        )
-
     }
 
     componentWillUnmount() {
@@ -102,13 +76,10 @@ export default class PageKretsVelger extends React.Component {
 
     _getDataArray() {
 
-        var ids = this.state.krets;
-        var folks = store.getState().User;
-
         var krets = [];
 
-        for (var i = 0; i < ids.length; i++) {
-            krets.push(folks[ids[i]]);
+        for (var i = 0; i < this.props.krets.length; i++) {
+            krets.push(this.props.users[this.props.krets[i]]);
         }
 
         krets.sort((x, y) => {
@@ -234,3 +205,14 @@ const pageStyles = StyleSheet.create({
         marginBottom: 5,
     }
 });
+
+
+function mapStateToProps(state) {
+    return {
+        krets: state.Krets, users: state.User
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(PageKretsVelger)
