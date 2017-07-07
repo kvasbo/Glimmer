@@ -16,7 +16,6 @@ import PageNewForumPost from "../Components/PageNewForumPost";
 
 import PageLogin from "../Components/PageLogin";
 import PageForumList from "../Components/PageForumList";
-import PageLog from "../Components/PageLog";
 
 import PageMore from "../Components/PageMore";
 import PersonPopup from "../Components/UXElements/PersonPopup";
@@ -42,7 +41,6 @@ export function registerScreens(store, Provider) {
 
         //Helper pages
         Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
-        Navigation.registerComponent('glimmer.PageLog', () => PageLog, store, Provider);
         Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, store, Provider);
 
         //Menus etc.

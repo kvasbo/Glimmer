@@ -3,7 +3,8 @@
  */
 
 import React from "react";
-import {Button, Image, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Button, ScrollView, StyleSheet, Text, View} from "react-native";
+import * as colors from "../Styles/colorConstants";
 
 export default class PageLogin extends React.Component {
 
@@ -31,33 +32,43 @@ export default class PageLogin extends React.Component {
     render() {
 
         return (
+
             <View style={pageStyles.container}>
 
-                <View style={pageStyles.paragraph}>
-                    <Text style={pageStyles.header}>Velkommen til Glimmer</Text>
-                </View>
-
-                <View style={pageStyles.paragraph}>
-                    <Button title="Gi tilgang" onPress={() => this.doTheLoginThing()}/>
-                </View>
-
-                <View style={pageStyles.paragraph}>
-
-                    <Text style={pageStyles.mainText}>For å bruke denne appen må du gi den tilgang til din
-                        Underskogkonto.</Text>
-
-                    <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen over og gi tillatelse når
-                        Underskog åpner seg i din nettleser.</Text>
+                <ScrollView style={{margin: 0, flex: 1, alignContent: "center",}}>
 
 
-                    <Text style={pageStyles.smallText}>Dette er ikke farlig - vi stjeler ikke data og benytter ingen
-                        tredjepartstjenester til å lagre personlige data. Faktisk forlater ingen personlige data noensinne telefonen din.</Text>
-                    <Text style={pageStyles.smallText}>Innlogginga skjer ved hjelp av noe som heter Oauth som gjør at
-                        appen aldri får vite passordet ditt. Du kan når som helst inndra tilgangen på
-                        Underskog.no</Text>
+                    <View style={pageStyles.paragraph}>
+                        <Text style={pageStyles.header}>Velkommen til Glimmer</Text>
+                    </View>
 
-                </View>
+                    <View style={pageStyles.paragraph}>
+                        <Button title="Gi tilgang" onPress={() => this.doTheLoginThing()}/>
+                    </View>
 
+                    <View style={pageStyles.paragraph}>
+
+                        <Text style={pageStyles.mainText}>For å bruke denne appen må du gi den tilgang til din
+                            Underskogkonto.</Text>
+
+                        <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen over og gi tillatelse når
+                            Underskog åpner seg i din nettleser.</Text>
+
+                        <View style={{height: 40}} />
+
+                        <Text style={pageStyles.smallText}>Dette er ikke farlig - vi stjeler ikke data og benytter ingen
+                            tredjepartstjenester til å lagre personlige data. Faktisk forlater ingen personlige data
+                            noensinne telefonen din.</Text>
+
+                        <Text style={pageStyles.smallText}>Innlogginga skjer ved hjelp av noe som heter Oauth som gjør
+                            at
+                            appen aldri får vite passordet ditt. Du kan når som helst inndra tilgangen på
+                            Underskog.no</Text>
+
+                    </View>
+
+
+                </ScrollView>
             </View>
         );
     }
@@ -66,14 +77,12 @@ export default class PageLogin extends React.Component {
 const pageStyles = StyleSheet.create({
 
     container: {
-        backgroundColor: '#ECF0F1',
+        backgroundColor: colors.COLOR_LIGHT,
         flex: 1,
         margin: 0,
         alignItems: "center",
         flexDirection: "column",
-        justifyContent: "space-around",
-        paddingTop: 80,
-        paddingBottom: 80
+        justifyContent: "center",
     },
 
     paragraph: {
@@ -83,7 +92,6 @@ const pageStyles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         padding: 0,
-        width: 280,
 
     },
 
@@ -92,14 +100,14 @@ const pageStyles = StyleSheet.create({
     header: {
         textAlign: "center",
         fontSize: 26,
-        color: "#2C3E50",
+        color: colors.COLOR_DARKGREY,
         marginTop: 30,
         marginBottom: 7,
         fontWeight: "300"
     },
 
     mainText: {
-        color: "#2C3E50",
+        color: colors.COLOR_DARKGREY,
         textAlign: "left",
         marginTop: 7,
         marginBottom: 7,
@@ -107,7 +115,7 @@ const pageStyles = StyleSheet.create({
 
     smallText: {
         textAlign: "left",
-        fontSize: 13, color: "#555555",
+        fontSize: 12, color: colors.COLOR_DARKGREY,
         marginTop: 7,
         marginBottom: 7,
     }
