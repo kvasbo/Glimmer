@@ -104,8 +104,8 @@ export default class ForumComment extends React.Component {
 const pageStyles = StyleSheet.create({
     container: {
         backgroundColor: colors.COLOR_WHITE,
-        padding: 0,
-        paddingTop: 10,
+        padding: 10,
+
         paddingBottom: 5,
         marginBottom: 2,
         marginTop: 2,
@@ -113,7 +113,6 @@ const pageStyles = StyleSheet.create({
     },
     comment: {
         padding: 10,
-        paddingLeft: 13,
         paddingTop: 5,
         marginRight: 10,
     }

@@ -10,21 +10,21 @@ export default NavigatorStyles = {
         navBarButtonColor: colors.COLOR_LIGHT, // Change color of nav bar buttons (eg. the back button) (remembered across pushes)
         navBarHidden: false, // make the nav bar hidden
         navBarHideOnScroll: true, // make the nav bar hidden only after the user starts to scroll
-        navBarTranslucent: false, // make the nav bar semi-translucent, works best with drawUnderNavBar:true
+        navBarTranslucent: true, // make the nav bar semi-translucent, works best with drawUnderNavBar:true
         navBarTransparent: false, // make the nav bar transparent, works best with drawUnderNavBar:true,
         navBarNoBorder: false, // hide the navigation bar bottom border (hair line). Default false
         drawUnderNavBar: false, // draw the screen content under the nav bar, works best with navBarTranslucent:true
         drawUnderTabBar: false, // draw the screen content under the tab bar (the tab bar is always translucent)
-        statusBarBlur: true, // blur the area under the status bar, works best with navBarHidden:true
+        statusBarBlur: false, // blur the area under the status bar, works best with navBarHidden:true
         navBarBlur: false, // blur the entire nav bar, works best with drawUnderNavBar:true
         tabBarHidden: false, // make the screen content hide the tab bar (remembered across pushes)
-        statusBarTextColorScheme: 'light', // text color of status bar, 'dark' / 'light' (remembered across pushes)
+        statusBarTextColorScheme: 'dark', // text color of status bar, 'dark' / 'light' (remembered across pushes)
         //statusBarTextColorSchemeSingleScreen: 'light', // same as statusBarTextColorScheme but does NOT remember across pushes
         navBarSubtitleColor: colors.COLOR_LIGHT, // subtitle color
         //navBarSubtitleFontFamily: 'font-name', // subtitle font
         screenBackgroundColor: colors.COLOR_LIGHT, // Default screen color, visible before the actual react view is rendered
         //orientation: 'portrait', // Sets a specific orientation to a modal and all screens pushed to it. Default: 'auto'. Supported values: 'auto', 'landscape', 'portrait'
-
+        statusBarBackgroundColor: colors.COLOR_GRAD2,
         // iOS only
         statusBarHideWithNavBar: false, // hide the status bar if the nav bar is also hidden, useful for navBarHidden:true
         statusBarHidden: false, // make the status bar hidden regardless of nav bar state
