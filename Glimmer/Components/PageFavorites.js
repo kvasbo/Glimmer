@@ -5,7 +5,7 @@
 import React from "react";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from "react-native-vector-icons/Ionicons";
 import * as colors from "../Styles/colorConstants";
 import Divider from "./UXElements/Divider";
 
@@ -98,14 +98,15 @@ export default class PageFavorites extends React.Component {
 
     _renderItem = ({item}) => (
 
-        <View>
-            <TouchableOpacity onPress={() =>
-                this.props.navigator.push({
-                    screen: 'glimmer.PageThread',
-                    title: item.title,
-                    passProps: {post: item}
-                })
-            }>
+        <TouchableOpacity onPress={() =>
+            this.props.navigator.push({
+                screen: 'glimmer.PageThread',
+                title: item.title,
+                passProps: {post: item}
+            })
+        }>
+            <View>
+
                 <View style={[listStyles.whiteBox, {justifyContent: "space-between"}]}>
                     <View style={listStyles.textBlock}>
                         <Text style={listStyles.listTitle}>{item.title}</Text>
@@ -116,10 +117,10 @@ export default class PageFavorites extends React.Component {
                     </View>
                 </View>
 
-            </TouchableOpacity>
-            <Divider />
-        </View>
 
+                <Divider />
+            </View>
+        </TouchableOpacity>
     )
 
     _loadMoreItems(distance) {

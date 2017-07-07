@@ -173,7 +173,7 @@ export default class ForumUpdater {
             var uri = "/posts/" + postId + "/comments?page=" + page;
 
             api.makeApiGetCall(uri).then((data) => {
-                
+
                 var comments = [];
                 for (key in data.data) {
 

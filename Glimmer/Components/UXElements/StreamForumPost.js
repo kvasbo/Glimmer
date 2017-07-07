@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import ForumText from "./ForumText.js";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 import * as colors from "../../Styles/colorConstants";
@@ -104,11 +104,24 @@ export default class StreamForumPost extends React.Component {
 
             <View style={pageStyles.container}>
 
-                <View style={pageStyles.title}>
-                    <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
-                </View>
+                <TouchableOpacity
+                    onPress={() => this.props.navigator.push({
+                        screen: 'glimmer.PageThread',
+                        title: this.props.data.title,
+                        passProps: {post: this.props.data}
+                    })}
+                >
+                    <View>
 
-                {this.getFirstImage()}
+                        <View style={pageStyles.title}>
+                            <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
+                        </View>
+
+                        {this.getFirstImage()}
+
+                    </View>
+
+                </TouchableOpacity>
 
                 <View style={pageStyles.thePost}>
                     <ForumText cut={this.props.cut} text={this.props.data.body} images={this.props.images}
