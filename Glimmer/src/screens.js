@@ -4,20 +4,16 @@ import PageSplashScreen from "../Components/PageSplashScreen";
 import PageStream from "../Components/PageStream";
 import PageFavorites from "../Components/PageFavorites";
 import PageThread from "../Components/PageThread";
-import PageCalendar from "../Components/PageCalendar";
 import PageMessages from "../Components/PageMessages";
-import PageSettings from "../Components/PageSettings";
 import PageConversation from "../Components/PageConversation";
 import PageNewForumComment from "../Components/PageNewForumComment";
 import PageKretsVelger from "../Components/PageKretsVelgerNewMessage";
 import PageNewMessage from "../Components/PageNewMessage";
-import PageAbout from "../Components/PageAbout";
 import PageNewForumPost from "../Components/PageNewForumPost";
 
 import PageLogin from "../Components/PageLogin";
 import PageForumList from "../Components/PageForumList";
 
-import PageMore from "../Components/PageMore";
 import PersonPopup from "../Components/UXElements/PersonPopup";
 
 export function registerScreens(store, Provider) {
@@ -30,11 +26,8 @@ export function registerScreens(store, Provider) {
         Navigation.registerComponent('glimmer.PageFavorites', () => PageFavorites, store, Provider);
         Navigation.registerComponent('glimmer.PageThread', () => PageThread, store, Provider);
         Navigation.registerComponent('glimmer.PageMessages', () => PageMessages, store, Provider);
-        Navigation.registerComponent('glimmer.PageSettings', () => PageSettings, store, Provider);
         Navigation.registerComponent('glimmer.PageConversation', () => PageConversation, store, Provider);
-        Navigation.registerComponent('glimmer.PageCalendar', () => PageCalendar, store, Provider);
         Navigation.registerComponent('glimmer.PageNewMessage', () => PageNewMessage, store, Provider);
-        Navigation.registerComponent('glimmer.PageAbout', () => PageAbout, store, Provider);
         Navigation.registerComponent('glimmer.PageNewForumComment', () => PageNewForumComment, store, Provider);
         Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
         Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);

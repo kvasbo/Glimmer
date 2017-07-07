@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import {connect} from "react-redux";
 import {ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import ThreadForumPost from "./UXElements/ThreadForumPost";
@@ -12,7 +13,7 @@ import {setForumPostCommentActivePage} from "../Redux/actions";
 
 const commentsInPage = 30;
 
-export default class PageThread extends React.Component {
+class PageThread extends React.Component {
 
     scrollbar = null;
     firstpost = null;
@@ -21,13 +22,10 @@ export default class PageThread extends React.Component {
 
         super(props);
         this.state = {
-            loading: true,
-            comments: [],
-            currentPage: 1,
-            pageCache: {},
-            numberOfPages: this.findLastPageOfComments(),
-            pagePickerModalVisible: false,
+            loading: false,
         };
+
+        this.numberOfPages = this.findLastPageOfComments(),
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
@@ -37,7 +35,7 @@ export default class PageThread extends React.Component {
         switch (event.id) {
             case 'willAppear':
                 if (this.state.currentPage !== null) {
-                    this.loadCommentPage(this.state.currentPage);
+                    this.loadCommentPage(1);
                 }
                 break;
             case 'didAppear':
@@ -49,51 +47,7 @@ export default class PageThread extends React.Component {
         }
     }
 
-    componentWillMount() {
-
-        //Listen to state changes. This really needs to change at some later point.
-        this.reduxUnsubscribe = store.subscribe(() => {
-
-                try {
-
-                    //We have data for this page
-                    if (typeof(store.getState().ForumPostComment[this.props.post.id]) !== "undefined") {
-
-                        if (typeof(store.getState().ForumPostComment[this.props.post.id].currentPage !== this.state.currentPage)) {
-                            this.setState({
-                                currentPage: store.getState().ForumPostComment[this.props.post.id].activePage,
-                            })
-                        }
-
-                        //And for this page!
-                        if (typeof(store.getState().ForumPostComment[this.props.post.id].page[this.state.currentPage]) !== "undefined") {
-
-                            var tmpComments = store.getState().ForumPostComment[this.props.post.id].page[this.state.currentPage].comments;
-
-                            if (tmpComments !== this.state.comments) {
-                                this.setState({loading: false, comments: tmpComments});
-                            }
-
-                        }
-                    }
-
-                }
-                catch
-                    (err) {
-                    console.log(err);
-                }
-            }
-        )
-        ;
-    }
-
-    componentWillUnmount() {
-        this.reduxUnsubscribe();
-    }
-
     loadCommentPage(page) {
-
-        //
 
         store.dispatch(setForumPostCommentActivePage(this.props.post.id, page));
 
@@ -106,29 +60,6 @@ export default class PageThread extends React.Component {
         let pNumber = parseInt((Math.ceil(cCount / commentsInPage)));
 
         return pNumber
-    }
-
-    getComments() {
-
-        if (this.state.loading) {
-            return (
-                <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>)
-        }
-
-        var out = [];
-
-        var tmpComments = Object.values(this.state.comments);
-
-        tmpComments.sort((x, y) => {
-            return (new Date(x.created_at) - new Date(y.created_at));
-        });
-
-        for (let i = 0; i < tmpComments.length; i++) {
-            out.push(<ForumComment key={tmpComments[i].id} data={tmpComments[i]}/>)
-        }
-
-        return out;
-
     }
 
     /**
@@ -158,15 +89,15 @@ export default class PageThread extends React.Component {
         this.scrollbar.scrollToEnd({animated: true});
     }
 
-//Newer page
+    //Newer page
     _nextPage() {
-        this.setState({loading: true});
+
         this.loadCommentPage(Math.max(this.state.currentPage - 1, 1));
     }
 
-//Older page
+    //Older page
     _prevPage() {
-        this.setState({loading: true});
+
         this.loadCommentPage(Math.min(this.state.currentPage + 1, this.findLastPageOfComments()));
 
     }
@@ -174,11 +105,9 @@ export default class PageThread extends React.Component {
     _newestPage() {
         this.loadCommentPage(1);
 
-
     }
 
     _oldestPage() {
-        this.setState({loading: true});
         this.loadCommentPage(this.findLastPageOfComments());
     }
 
@@ -193,10 +122,9 @@ export default class PageThread extends React.Component {
         var leftColor = activeColor;
         var rightColor = activeColor;
 
-        // if (this.state.currentPage === 1) rightColor = passiveColor;
-        // if (this.state.currentPage === this.state.numberOfPages) leftColor = passiveColor;
+        var showPage = "";
 
-        var showPage = this.state.numberOfPages - this.state.currentPage + 1;
+        if(typeof this.props.comments[this.props.post.id] !== "undefined") showPage = this.props.comments[this.props.post.id].activePage;
 
         return (
 
@@ -258,6 +186,48 @@ export default class PageThread extends React.Component {
         )
     }
 
+    getComments() {
+
+        //Vi har ikke data
+        if(typeof this.props.comments[this.props.post.id] === "undefined" || typeof this.props.comments[this.props.post.id].page[this.props.comments.activePage] === "undefined")
+        {
+            return (
+                <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
+            )
+        }
+
+        const cData = this.props.comments[this.props.post.id];
+
+
+        if(typeof cData.activePage === "undefined" || typeof cData.page[cData.activePage] === "undefined")
+        {
+            return (
+                <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
+            )
+        }
+
+        const ourPage = cData.page[cData.activePage];
+
+        if(ourPage.loading === true)
+        {
+            return (
+                <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
+            )
+        }
+
+        ourPage.comments.sort((x, y) => {
+            return (new Date(x.created_at) - new Date(y.created_at));
+        });
+
+        var out = [];
+        for (let i = 0; i < ourPage.comments.length; i++) {
+            out.push(<ForumComment key={ourPage.comments[i].id} data={ourPage.comments[i]}/>)
+        }
+
+        return out;
+
+    }
+
     render() {
 
         return (
@@ -315,3 +285,13 @@ const
             color: colors.COLOR_GRAD1
         }
     });
+
+function mapStateToProps(state) {
+    return {
+        comments: state.ForumPostComment
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(PageThread)

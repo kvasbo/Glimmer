@@ -1,11 +1,8 @@
-import {
-    FORUMPOST_COMMENTS_ADD,
-    FORUMPOST_COMMENTS_SET_ACTIVE_PAGE
-} from "./constants";
+import {FORUMPOST_COMMENTS_ADD, FORUMPOST_COMMENTS_SET_ACTIVE_PAGE} from "./constants";
 
 const initialState = {}
 
-const initialPostState = {page: {}, numberOfPages: null, activePage: null}
+const initialPostState = {page: {}, activePage: 1}
 
 function ForumPostComment(state = initialState, action) {
     switch (action.type) {
@@ -27,7 +24,7 @@ function ForumPostComment(state = initialState, action) {
             };
 
             //Return
-            return newState
+            return newState;
 
         case FORUMPOST_COMMENTS_SET_ACTIVE_PAGE:
 
@@ -39,18 +36,16 @@ function ForumPostComment(state = initialState, action) {
                 newState[action.postId] = initialPostState;
             }
 
-            //Change the state of the currently chosen page to loading, and start load.
-            if (typeof(newState[action.postId]).page[action.activePage] === "undefined") {
-                newState[action.postId].page[action.activePage] = {updated: null, loading: true, comments: []};
-            }
-            else {
-                newState[action.postId].page[action.activePage].loading = true;
-            }
+            newState[action.postId].page[action.page] = {
+                updated: new Date(),
+                loading: true,
+                comments: []
+            };
+
+            newState[action.postId].activePage = action.activePage;
 
             //Start API Fetching the data
             global.arbeidsMaur.forumUpdater.loadCommentsForPost(action.postId, action.activePage);
-
-            newState[action.postId].activePage = action.activePage;
 
             return newState;
 

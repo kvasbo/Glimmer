@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { connect } from 'react-redux'
+import {connect} from "react-redux";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import Icon from "react-native-vector-icons/Ionicons";
