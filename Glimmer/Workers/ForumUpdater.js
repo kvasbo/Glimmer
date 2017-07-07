@@ -1,5 +1,6 @@
-import {addFavoritesPostBatch, addStreamPostBatch} from "../Redux/actions";
+import {addFavoritesPostBatch, addStreamPostBatch, addForumPostComments} from "../Redux/actions";
 const ForumPost = require("../DataClasses/post").default;
+const ForumPostComment = require("../DataClasses/postComment").default;
 const config = require("../config.js");
 
 export default class ForumUpdater {
@@ -34,7 +35,6 @@ export default class ForumUpdater {
     loadFirstFavorites(depth = 5) {
         return this.addFavorites(1, depth);
     }
-
 
     addPagesToFavorites(numberOfPages) {
         if (__DEV__) {
@@ -95,9 +95,6 @@ export default class ForumUpdater {
         });
 
     }
-
-
-
 
     loadFirstStream(depth = 5) {
         return this.addStream(1, depth);
@@ -176,9 +173,21 @@ export default class ForumUpdater {
             var uri = "/posts/" + postId + "/comments?page=" + page;
 
             api.makeApiGetCall(uri).then((data) => {
-
+                
+                var comments = [];
                 for (key in data.data) {
+
+                    try {
+                        let d = data.data[key];
+                        let tmpC = new ForumPostComment(d.id, postId, d.body, d.created_at, d.kudos, d.updated_at, d.creator.name, d.creator.id, d.creator.image_url);
+                        comments.push(tmpC);
+                    }
+                    catch (err) {
+                        console.log(err);
+                    }
                 }
+
+                store.dispatch(addForumPostComments(postId, page, comments));
 
                 resolve(data.data);
 

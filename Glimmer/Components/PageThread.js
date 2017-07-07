@@ -3,11 +3,12 @@
  */
 
 import React from "react";
-import {ActivityIndicator, Button, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
 import * as colors from "../Styles/colorConstants";
+import {setForumPostCommentActivePage} from "../Redux/actions";
 
 const commentsInPage = 30;
 
@@ -22,7 +23,7 @@ export default class PageThread extends React.Component {
         this.state = {
             loading: true,
             comments: [],
-            currentPage: null,
+            currentPage: 1,
             pageCache: {},
             numberOfPages: this.findLastPageOfComments(),
             pagePickerModalVisible: false,
@@ -35,7 +36,9 @@ export default class PageThread extends React.Component {
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
-                this.loadCommentPage(this.state.currentPage); //Refresh current page.
+                if (this.state.currentPage !== null) {
+                    this.loadCommentPage(this.state.currentPage);
+                }
                 break;
             case 'didAppear':
                 break;
@@ -48,52 +51,80 @@ export default class PageThread extends React.Component {
 
     componentWillMount() {
 
-        this.loadInitComments();
+        //Listen to state changes. This really needs to change at some later point.
+        this.reduxUnsubscribe = store.subscribe(() => {
 
+                try {
+
+                    //We have data for this page
+                    if (typeof(store.getState().ForumPostComment[this.props.post.id]) !== "undefined") {
+
+                        if (typeof(store.getState().ForumPostComment[this.props.post.id].currentPage !== this.state.currentPage)) {
+                            this.setState({
+                                currentPage: store.getState().ForumPostComment[this.props.post.id].activePage,
+                            })
+                        }
+
+                        //And for this page!
+                        if (typeof(store.getState().ForumPostComment[this.props.post.id].page[this.state.currentPage]) !== "undefined") {
+
+                            var tmpComments = store.getState().ForumPostComment[this.props.post.id].page[this.state.currentPage].comments;
+
+                            if (tmpComments !== this.state.comments) {
+                                this.setState({loading: false, comments: tmpComments});
+                            }
+
+                        }
+                    }
+
+                }
+                catch
+                    (err) {
+                    console.log(err);
+                }
+            }
+        )
+        ;
     }
 
     componentWillUnmount() {
-
-    }
-
-    loadInitComments() {
-        this.loadCommentPage(1);
+        this.reduxUnsubscribe();
     }
 
     loadCommentPage(page) {
 
-        //Get page
-        arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page).then((data) => {
+        //
 
-            tmpPageCache = this.state.pageCache;
-            tmpPageCache[page] = data;
-
-            this.setState({currentPage: page, pageCache: tmpPageCache, loading: false, numberOfPages: this.findLastPageOfComments()});
-
-        });
+        store.dispatch(setForumPostCommentActivePage(this.props.post.id, page));
 
     }
 
     findLastPageOfComments() {
 
-        var cCount = parseInt(this.props.post.comment_count);
+        let cCount = parseInt(this.props.post.comment_count);
 
-        return parseInt((Math.floor(cCount / commentsInPage) + 1));
+        let pNumber = parseInt((Math.ceil(cCount / commentsInPage)));
+
+        return pNumber
     }
 
     getComments() {
 
         if (this.state.loading) {
-            return (<View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>)
+            return (
+                <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>)
         }
 
         var out = [];
 
-        var tmpPosts = this.state.pageCache[this.state.currentPage].reverse();
+        var tmpComments = Object.values(this.state.comments);
 
-        for (var i = 0; i < tmpPosts.length; i++) {
-            var c = tmpPosts[i];
-            out.push(<ForumComment key={c.id} data={c}/>)
+        tmpComments.sort((x, y) => {
+            return (new Date(x.created_at) - new Date(y.created_at));
+        });
+
+        for (let i = 0; i < tmpComments.length; i++) {
+            out.push(<ForumComment key={tmpComments[i].id} data={tmpComments[i]}/>)
         }
 
         return out;
@@ -127,31 +158,28 @@ export default class PageThread extends React.Component {
         this.scrollbar.scrollToEnd({animated: true});
     }
 
-    //Newer page
+//Newer page
     _nextPage() {
-
-        if (this.state.currentPage > 1) {
-            this.loadCommentPage(this.state.currentPage - 1);
-        }
+        this.setState({loading: true});
+        this.loadCommentPage(Math.max(this.state.currentPage - 1, 1));
     }
 
-    //Older page
+//Older page
     _prevPage() {
-
-        if (this.state.currentPage < this.state.numberOfPages) {
-            this.loadCommentPage(this.state.currentPage + 1);
-        }
+        this.setState({loading: true});
+        this.loadCommentPage(Math.min(this.state.currentPage + 1, this.findLastPageOfComments()));
 
     }
 
-    //Oldest page
-    _firstPage() {
-        this.loadCommentPage(this.state.numberOfPages);
-    }
-
-    //Newest page
-    _lastPage() {
+    _newestPage() {
         this.loadCommentPage(1);
+
+
+    }
+
+    _oldestPage() {
+        this.setState({loading: true});
+        this.loadCommentPage(this.findLastPageOfComments());
     }
 
     _getSidevelger() {
@@ -165,8 +193,8 @@ export default class PageThread extends React.Component {
         var leftColor = activeColor;
         var rightColor = activeColor;
 
-        if (this.state.currentPage === 1) rightColor = passiveColor;
-        if (this.state.currentPage === this.state.numberOfPages) leftColor = passiveColor;
+        // if (this.state.currentPage === 1) rightColor = passiveColor;
+        // if (this.state.currentPage === this.state.numberOfPages) leftColor = passiveColor;
 
         var showPage = this.state.numberOfPages - this.state.currentPage + 1;
 
@@ -215,6 +243,7 @@ export default class PageThread extends React.Component {
                     name='ios-arrow-back'
                     color={leftColor}
                     onPress={() => this._prevPage()}
+                    onLongPress={() => this._oldestPage()}
                 />
 
                 <Icon
@@ -222,6 +251,7 @@ export default class PageThread extends React.Component {
                     name='ios-arrow-forward'
                     color={rightColor}
                     onPress={() => this._nextPage()}
+                    onLongPress={() => this._newestPage()}
                 />
 
             </View>
@@ -233,8 +263,8 @@ export default class PageThread extends React.Component {
         return (
 
 
-            <View style={pageStyles.container} >
-                <ScrollView ref={component => this.scrollbar = component} style={{flex:1}} >
+            <View style={pageStyles.container}>
+                <ScrollView ref={component => this.scrollbar = component} style={{flex: 1}}>
 
                     <ThreadForumPost data={this.props.post} metaData={false}
                                      cut={false}
@@ -258,29 +288,30 @@ export default class PageThread extends React.Component {
     }
 }
 
-const pageStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.COLOR_LIGHT,
-        paddingLeft: 0,
-        paddingTop: 0,
-        paddingBottom: 30,
-        paddingRight: 0,
-    },
-    sideVelgerView: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-    },
-    navBar: {
-        height: 13,
-        margin: 0,
-        paddingTop: 5,
-    },
-    pageNumberText: {
-        fontSize: 15,
-        fontWeight: "300",
-        color: colors.COLOR_GRAD1
-    }
-});
+const
+    pageStyles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: colors.COLOR_LIGHT,
+            paddingLeft: 0,
+            paddingTop: 0,
+            paddingBottom: 30,
+            paddingRight: 0,
+        },
+        sideVelgerView: {
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignContent: "center",
+            alignItems: "center",
+        },
+        navBar: {
+            height: 13,
+            margin: 0,
+            paddingTop: 5,
+        },
+        pageNumberText: {
+            fontSize: 15,
+            fontWeight: "300",
+            color: colors.COLOR_GRAD1
+        }
+    });

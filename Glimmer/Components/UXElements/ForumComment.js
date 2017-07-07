@@ -7,7 +7,7 @@ import {Image, StyleSheet, Text, View} from "react-native";
 import ForumText from "./ForumText.js";
 import GiKudos from "./GiKudos";
 import VisKudos from "./VisKudos";
-import * as colors from "../../Styles/colorConstants"
+import * as colors from "../../Styles/colorConstants";
 
 var s = require('../Styles');
 
@@ -20,7 +20,7 @@ class CommentMetadata extends React.Component {
     }
 
     getTime() {
-        return new moment(this.props.data.created_at).calendar();
+        return helpers.getCalendarTime(this.props.data.created_at);
     }
 
     styles = StyleSheet.create({
@@ -37,9 +37,9 @@ class CommentMetadata extends React.Component {
 
                 <Image
                     style={[this.styles.element, {width: 34, height: 34, borderRadius: 2}]}
-                    source={{uri: this.props.data.creator.image_url}}
+                    source={{uri: this.props.data.creator_image}}
                 />
-                <Text style={this.styles.element}>{this.props.data.creator.name}</Text>
+                <Text style={this.styles.element}>{this.props.data.creator_name}</Text>
                 <Text style={this.styles.element}>{this.getTime()}</Text>
 
 
@@ -57,11 +57,11 @@ export default class ForumComment extends React.Component {
     constructor(props) {
         super(props);
 
-        if (this.props.data.creator.id === store.getState().AppStatus.activeUserId) {
+        if (this.props.data.creator_id === store.getState().AppStatus.activeUserId) {
             this.byMe = true;
         }
 
-       // console.log("Comment", this.props.data, "By me;", this.byMe);
+       // console.log("Comment", this.props, "By me;", this.byMe);
 
     }
 
@@ -70,8 +70,7 @@ export default class ForumComment extends React.Component {
 
             var kudos = [];
 
-            if(typeof this.props.data.kudos.from !== "undefined")
-            {
+            if (typeof this.props.data.kudos.from !== "undefined") {
                 kudos = this.props.data.kudos.from;
             }
 

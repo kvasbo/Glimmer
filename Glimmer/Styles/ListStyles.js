@@ -29,7 +29,7 @@ module.exports = StyleSheet.create({
 
     iconBlock: {
         padding: 10,
-        paddingRight: 13,
+        paddingRight: 0,
         flex: 1,
     },
 

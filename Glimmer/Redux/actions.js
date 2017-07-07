@@ -4,7 +4,7 @@ import {
     APPCONTROL_USER_LOGIN,
     FORUMLIST_ADD_FORUM,
     FORUMLIST_REPLACE,
-    FORUMPOST_COMMENT_ADD,
+    FORUMPOST_COMMENTS_ADD,
     KRETS_ADD_PERSON_BATCH,
     MESSAGE_CONVERSATION_ADD,
     MESSAGE_CONVERSATON_ADD_BATCH,
@@ -13,7 +13,8 @@ import {
     MESSAGE_RECIPIENTS_REMOVE_PERSON,
     USERS_ADD_USER_BATCH,
     APPCONTROL_SET_ACTIVE_POSTING_FORUM,
-    APPCONTROL_SET_CURRENT_USER
+    APPCONTROL_SET_CURRENT_USER,
+    FORUMPOST_COMMENTS_SET_ACTIVE_PAGE,
 } from "./constants";
 
 export function replaceForumList(forums) {
@@ -77,11 +78,20 @@ export function setLoginStatus(status) {
     }
 }
 
-export function addForumPostComment(postId, comment) {
+export function addForumPostComments(postId, page, comments) {
     return {
-        type: FORUMPOST_COMMENT_ADD,
+        type: FORUMPOST_COMMENTS_ADD,
         postId,
-        comment
+        page,
+        comments
+    }
+}
+
+export function setForumPostCommentActivePage(postId, activePage) {
+    return {
+        type: FORUMPOST_COMMENTS_SET_ACTIVE_PAGE,
+        postId,
+        activePage
     }
 }
 

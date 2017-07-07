@@ -1,47 +1,58 @@
-import {FORUMPOST_COMMENT_ADD} from "./constants";
+import {
+    FORUMPOST_COMMENTS_ADD,
+    FORUMPOST_COMMENTS_SET_ACTIVE_PAGE
+} from "./constants";
 
-const initialState = {
-    posts: {}
-}
+const initialState = {}
+
+const initialPostState = {page: {}, numberOfPages: null, activePage: null}
 
 function ForumPostComment(state = initialState, action) {
     switch (action.type) {
 
-        case FORUMPOST_COMMENT_ADD:
-
-           // console.log(action);
+        case FORUMPOST_COMMENTS_ADD:
 
             //Create a copy
             var newState = Object.assign({}, state);
 
-            //Ensure that we have the post id defined as an array
-            if(typeof newState.posts[action.postId] === "undefined")
-            {
-                newState.posts[action.postId] = {comments:[]};
+            //Ensure that we have the post id defined as an object
+            if (typeof newState[action.postId] === "undefined") {
+                newState[action.postId] = initialPostState;
             }
 
-            //Ensure unique IDs by removing any old posts with this id.
-            const newPosts = newState.posts[action.postId].comments.filter((comment) => {
-                if (comment.id === action.comment.id) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
-            });
-
-            //Add the post to the list
-            newState.posts[action.postId].comments = [...newPosts, action.comment];
-
-            //Sort by created date desc
-            newState.posts[action.postId].comments.sort((x, y) => {
-                xd = new Date(x.created_at);
-                yd = new Date(y.created_at);
-                return xd - yd;
-            })
+            newState[action.postId].page[action.page] = {
+                updated: new Date(),
+                loading: false,
+                comments: action.comments
+            };
 
             //Return
             return newState
+
+        case FORUMPOST_COMMENTS_SET_ACTIVE_PAGE:
+
+            //Create a copy
+            var newState = Object.assign({}, state);
+
+            //Ensure that we have the post id defined as an object
+            if (typeof newState[action.postId] === "undefined") {
+                newState[action.postId] = initialPostState;
+            }
+
+            //Change the state of the currently chosen page to loading, and start load.
+            if (typeof(newState[action.postId]).page[action.activePage] === "undefined") {
+                newState[action.postId].page[action.activePage] = {updated: null, loading: true, comments: []};
+            }
+            else {
+                newState[action.postId].page[action.activePage].loading = true;
+            }
+
+            //Start API Fetching the data
+            global.arbeidsMaur.forumUpdater.loadCommentsForPost(action.postId, action.activePage);
+
+            newState[action.postId].activePage = action.activePage;
+
+            return newState;
 
         default:
             return state

@@ -106,7 +106,7 @@ export default class PageFavorites extends React.Component {
                     passProps: {post: item}
                 })
             }>
-                <View style={listStyles.whiteBox}>
+                <View style={[listStyles.whiteBox, {justifyContent: "space-between"}]}>
                     <View style={listStyles.textBlock}>
                         <Text style={listStyles.listTitle}>{item.title}</Text>
                         <Text style={listStyles.listSubtitle}>{this.getSubtitle(item)}</Text>
