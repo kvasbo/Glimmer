@@ -3,3 +3,4 @@ config.js
 glimmer.keystore
 google-services.json
 GoogleService-Info.plist
+.idea
