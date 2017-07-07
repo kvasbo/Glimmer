@@ -94,8 +94,8 @@ android {
         applicationId "com.rettvendt.glimmer"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 5
-        versionName "1.0 alpha 3"
+        versionCode 6
+        versionName "1.0 alpha 6"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
