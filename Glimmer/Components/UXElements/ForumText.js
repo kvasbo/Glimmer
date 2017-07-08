@@ -2,81 +2,77 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React from 'react';
-import {StyleSheet, View, Text, Image, WebView, Linking, TouchableOpacity} from 'react-native';
-import HTMLView from 'react-native-htmlview';
-import AutoHeightWebView from "react-native-autoheight-webview";
+import React from "react";
+import {Dimensions, Image, StyleSheet, Text, View, Linking} from "react-native";
+import HTMLView from "react-native-htmlview";
 import * as colors from "../../Styles/colorConstants";
+var DOMParser = require('xmldom').DOMParser;
+var XMLSerializer = require('xmldom').XMLSerializer;
 
 export default class ForumText extends React.Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
         this.renderNode = this.renderNode.bind(this);
+
+        this.dim = Dimensions.get("window");
+        this.parsed = this.parseBody(this.fixBody());
+
     }
 
-    wrapper = {
+    parseBody(html) {
+        try {
 
-        start: "<html><head><style>" +
-        ".skogspost {font-family: -apple-system, Roboto, sans-serif; padding-left: 0px !important; margin: 0px !important;}" +
-        "img, iframe {max-width:100% !important; height: auto !important; clear: both !important}" +
-        "div {max-width:100% !important; height: auto !important; padding-left: 0px !important;}" +
-        "body {max-width:91% !important; height: auto !important; margin-left: 0px !important; padding: 0px !important;}" +
-        "</style></head><body><div class='skogspost'>",
-        end: "</div></body></html>",
+            const parser = new DOMParser();
+            const serializer = new XMLSerializer();
 
-        imageRemove: "<style>img {display: none !important;}</style>"
+            let doc = parser.parseFromString(html, 'text/html');
 
+            //Rense opp inni her!
+
+            //Fjerne HR.
+            let hr = doc.getElementsByTagName("hr");
+            for (let i = 0; i <= hr.$$length; i++) {
+                if (typeof(hr[i]) !== "undefined") {
+                    doc.removeChild(hr[i]);
+                }
+                else {
+                    break;
+                }
+            }
+
+            //Avslutte rensinga.
+
+            var str = serializer.serializeToString(doc);
+
+            //console.log(str);
+
+            return str;
+
+        } catch (err) {
+            console.log(err);
+            return "";
+        }
     }
 
     fixBody() {
 
-        var cutLength = 75;
-
         var text = "";
-        if(typeof(this.props.text) !== "undefined" && this.props.text !== null)
-        {
+
+        if (typeof(this.props.text) !== "undefined" && this.props.text !== null) {
             var text = this.props.text;
-        }
-
-        if (this.props.cut === true) {
-            var tmp = text.split(" ");
-
-            tmp = tmp.slice(0, cutLength);
-
-            if (tmp.length == cutLength) {
-                tmp.push("(...)");
-            }
-
-            text = tmp.join(" ");
-
         }
 
         text = this.replaceAll(text, 'href="//images', 'href="https://images');
         text = this.replaceAll(text, 'src="//images', 'src="https://images');
 
-        // console.log(out);
-
-        out = this.wrapper.start;
-
-        if (this.props.images === false) {
-            out += this.wrapper.imageRemove;
-        }
-
-        out += text;
-        out += this.wrapper.end;
-
-        return out;
+        return text;
     }
 
     replaceAll(str, find, replace) {
         return str.replace(new RegExp(find, 'g'), replace);
     }
 
-    getTime(time) {
-        return new moment(this.props.data.created_at).calendar();
-    }
 
     renderNode(node, index, siblings, parent, defaultRenderer) {
 
@@ -89,44 +85,61 @@ export default class ForumText extends React.Component {
             );
         }
 
-        /*
-        if(node.name == 'a')
-        {
-            const a = node.attribs;
-            console.log(a);
-        }
-        */
+        if (node.name == 'img') {
 
-        if (this.props.images == false && node.name == 'img') {
-             return null;
+            try {
+
+                const Dim = Dimensions.get("window");
+
+                var width = Dim.width - 30;
+
+                return (
+                    <Image key={index} resizeMode="contain" source={{uri: node.attribs.src}}
+                           style={{width: width, height: width}}/>
+                );
+            }
+            catch (err) {
+                return null;
+            }
+        }
+
+    }
+
+    _handleLink(url) {
+
+        console.log("Url pressed", url);
+
+        if(url.includes("images.underskog.no"))
+        {
+            console.log("Bildelenke");
+        }
+        else if(url.includes("underskog.no/medlem/"))
+        {
+            console.log("brukerlenke");
+        }
+        else if(url.includes("underskog.no/samtale/"))
+        {
+             console.log("samtalelenke");
+        }
+        else
+        {
+            Linking.openURL(url);
         }
 
     }
 
     render() {
 
-        var postBody = this.fixBody();
-
-        if(this.props.webview)
-        {
-            return (
-                <AutoHeightWebView
-                    enableAnimation={false}
-                    source={{html: postBody}}
-                    style={{margin: 0, padding: 0, borderWidth: 0, flex: 1}}
-                />
-            );
-        }
-        else {
-
-            return(
-                <HTMLView
-                    value={postBody}
-                    stylesheet={styles}
-                    renderNode={this.renderNode}
-                />
-            )
-        }
+        return (
+            <HTMLView
+                nodecomponent={View}
+                paragraphBreak=''
+                value={this.parsed}
+                stylesheet={styles}
+                renderNode={this.renderNode}
+                onLinkPress={(url) => this._handleLink(url)}
+            />
+        )
     }
 
 }
@@ -136,4 +149,5 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: colors.COLOR_HIGHLIGHT,
     },
+    p: {}
 });
