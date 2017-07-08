@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {Alert, Dimensions, Image, Linking, StyleSheet, Text, View} from "react-native";
+import {Alert, Dimensions, Image, Linking, StyleSheet, Text, View, WebView} from "react-native";
 import HTMLView from "react-native-htmlview";
 import * as colors from "../../Styles/colorConstants";
 var DOMParser = require('xmldom').DOMParser;
@@ -77,12 +77,16 @@ export default class ForumText extends React.Component {
 
     renderNode(node, index, siblings, parent, defaultRenderer) {
 
-        if (node.name == 'iframe') {
+        const Dim = Dimensions.get("window");
+        var width = Dim.width - 30;
 
+        if (node.name == 'iframe') {
             const a = node.attribs;
             const iframeHtml = `<iframe src="${a.src}"></iframe>`;
             return (
-                <Text key={index}>Åpne innlegget for å se iFrame</Text>
+                <View key={index} style={{width: Number(width), height: Number(width)}}>
+                    <WebView source={{html: iframeHtml}} />
+                </View>
             );
         }
 

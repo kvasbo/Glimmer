@@ -23,6 +23,7 @@ class PageThread extends React.Component {
         super(props);
         this.state = {
             loading: false,
+            currentPage: 1,
         };
 
         this.numberOfPages = this.findLastPageOfComments(),
@@ -49,6 +50,7 @@ class PageThread extends React.Component {
 
     loadCommentPage(page) {
 
+        this.setState({currentPage:page});
         store.dispatch(setForumPostCommentActivePage(this.props.post.id, page));
 
     }
@@ -189,7 +191,7 @@ class PageThread extends React.Component {
     getComments() {
 
         //Vi har ikke data
-        if(typeof this.props.comments[this.props.post.id] === "undefined" || typeof this.props.comments[this.props.post.id].page[this.props.comments.activePage] === "undefined")
+        if(typeof this.props.comments[this.props.post.id] === "undefined" || typeof this.props.comments[this.props.post.id].page[this.state.currentPage] === "undefined")
         {
             return (
                 <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
@@ -199,14 +201,14 @@ class PageThread extends React.Component {
         const cData = this.props.comments[this.props.post.id];
 
 
-        if(typeof cData.activePage === "undefined" || typeof cData.page[cData.activePage] === "undefined")
+        if(typeof this.state.currentPage === "undefined" || typeof cData.page[this.state.currentPage] === "undefined")
         {
             return (
                 <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
             )
         }
 
-        const ourPage = cData.page[cData.activePage];
+        const ourPage = cData.page[this.state.currentPage];
 
         if(ourPage.loading === true)
         {
