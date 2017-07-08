@@ -207,3 +207,12 @@ const pageStyles = StyleSheet.create({
 });
 
 
+function mapStateToProps(state) {
+    return {
+        krets: state.Krets, users: state.User
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(PageKretsVelger)
