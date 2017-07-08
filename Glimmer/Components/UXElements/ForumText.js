@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {Dimensions, Image, StyleSheet, Text, View, Linking} from "react-native";
+import {Alert, Dimensions, Image, Linking, StyleSheet, Text, View} from "react-native";
 import HTMLView from "react-native-htmlview";
 import * as colors from "../../Styles/colorConstants";
 var DOMParser = require('xmldom').DOMParser;
@@ -43,6 +43,8 @@ export default class ForumText extends React.Component {
 
             //Avslutte rensinga.
 
+            doc.normalize();
+
             var str = serializer.serializeToString(doc);
 
             //console.log(str);
@@ -72,7 +74,6 @@ export default class ForumText extends React.Component {
     replaceAll(str, find, replace) {
         return str.replace(new RegExp(find, 'g'), replace);
     }
-
 
     renderNode(node, index, siblings, parent, defaultRenderer) {
 
@@ -109,21 +110,25 @@ export default class ForumText extends React.Component {
 
         console.log("Url pressed", url);
 
-        if(url.includes("images.underskog.no"))
-        {
+        if (url.includes("images.underskog.no")) {
             console.log("Bildelenke");
+            Linking.openURL(url);
         }
-        else if(url.includes("underskog.no/medlem/"))
-        {
+        else if (url.includes("underskog.no/medlem/")) {
+            Alert.alert("Dette er litt flaut...", "Lenker internt på Underskog er ikke implementert ennå");
             console.log("brukerlenke");
         }
-        else if(url.includes("underskog.no/samtale/"))
-        {
-             console.log("samtalelenke");
+        else if (url.includes("underskog.no/samtale/")) {
+            Alert.alert("Dette er litt flaut...", "Lenker internt på Underskog er ikke implementert ennå");
+            console.log("samtalelenke");
         }
-        else
-        {
+        else if (url.includes("http") && url.includes("://")){
+
             Linking.openURL(url);
+        }
+        else {
+            Alert.alert("Jøsses.", "Dette er en lenketype Glimmer ikke kjenner igjen. Send gjerne @kvasbo en melding om hva du trykka på!");
+            console.log("samtalelenke");
         }
 
     }

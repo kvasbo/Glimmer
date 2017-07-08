@@ -142,7 +142,6 @@ export default class StreamForumPost extends React.Component {
 
                 {this.getTextSection()}
 
-
                 <View style={pageStyles.metaDataBox}>
 
                     <View style={pageStyles.metaData}>
