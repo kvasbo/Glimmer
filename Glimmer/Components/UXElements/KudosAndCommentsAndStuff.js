@@ -1,9 +1,10 @@
 import React from "react";
-import {View} from "react-native";
-import {Badge} from "react-native-elements";
+import {TouchableOpacity, View} from "react-native";
+//import {Badge} from "react-native-elements";
 import GiKudos from "./GiKudos";
 import VisKudos from "./VisKudos";
-import * as colors from "../../Styles/colorConstants"
+import * as colors from "../../Styles/colorConstants";
+import Badge from "./Badge";
 
 export default class KudosAndCommentsAndStuff extends React.Component {
 
@@ -16,8 +17,7 @@ export default class KudosAndCommentsAndStuff extends React.Component {
         if (this.props.byMe) {
             var kudos = [];
 
-            if(typeof this.props.post.kudos.from !== "undefined")
-            {
+            if (typeof this.props.post.kudos.from !== "undefined") {
                 kudos = this.props.post.kudos.from;
             }
 
@@ -33,10 +33,9 @@ export default class KudosAndCommentsAndStuff extends React.Component {
         }
     }
 
-    getCommentThing()
-    {
+    getCommentThing() {
         //If disabled, hide. Cause that's what you do.
-        if(!this.props.showCommentBadge) return false;
+        if (!this.props.showCommentBadge) return false;
 
         var comText = "kommentar";
 
@@ -45,19 +44,33 @@ export default class KudosAndCommentsAndStuff extends React.Component {
         }
 
         return (
-
-            <Badge
-                value={this.props.post.comment_count + " " + comText}
-                textStyle={{color: colors.COLOR_WHITE}}
-                containerStyle={{backgroundColor: colors.COLOR_ORANGE}}
+            <TouchableOpacity
                 onPress={() => this.props.navigator.push({
                     screen: 'glimmer.PageThread',
                     title: this.props.post.title,
                     passProps: {post: this.props.post}
                 })}
-            />
-
+            >
+                <Badge
+                    text={this.props.post.comment_count + " " + comText}
+                    color={colors.COLOR_ORANGE}
+                    textColor={colors.COLOR_WHITE}
+                />
+            </TouchableOpacity>
         )
+
+        /*
+         return (
+
+         <Badge
+         value={this.props.post.comment_count + " " + comText}
+         textStyle={{color: colors.COLOR_WHITE}}
+         containerStyle={{backgroundColor: colors.COLOR_ORANGE}}
+
+         />
+
+         )
+         */
     }
 
     render() {

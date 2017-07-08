@@ -4,8 +4,9 @@
 
 import React from "react";
 import {Alert, StyleSheet, TouchableOpacity, TouchableHighlight, Text, View} from "react-native";
-import {Badge} from "react-native-elements";
+//import {Badge} from "react-native-elements";
 import * as colors from "../../Styles/colorConstants"
+import Badge from "./Badge";
 
 export default class GiKudos extends React.Component {
 
@@ -45,9 +46,10 @@ export default class GiKudos extends React.Component {
         if (this.state.given === true) {
             return (
                 <Badge
-                    value={"Kudos gitt!"}
-                    textStyle={{color: 'white'}}
-                    containerStyle={{backgroundColor: colors.COLOR_GRAD3, marginRight: 5}}
+                    text={"Kudos gitt!"}
+                    textColor={colors.COLOR_WHITE}
+                    color={colors.COLOR_GRAD3}
+                    style={{marginRight: 5}}
                 />
             )
         }
@@ -59,9 +61,10 @@ export default class GiKudos extends React.Component {
                     onLongPress={() => this.giKudos()}
                 >
                     <Badge
-                        value={this.state.text}
-                        textStyle={{color: 'white'}}
-                        containerStyle={{backgroundColor: colors.COLOR_GREEN, marginRight: 5}}
+                        text={this.state.text}
+                        textColor={colors.COLOR_WHITE}
+                        color={colors.COLOR_GREEN}
+                        style={{marginRight: 5}}
                     />
 
 
