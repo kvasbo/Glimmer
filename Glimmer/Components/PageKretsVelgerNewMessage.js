@@ -7,9 +7,7 @@ import NavigatorStyles from "../Styles/NavigatorStyles";
 //TODO sort by status and then name
 
 class PageKretsVelger extends React.Component {
-
-    reduxUnsubscribe = null;
-
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -56,10 +54,6 @@ class PageKretsVelger extends React.Component {
                 }
             }
         }
-    }
-
-    componentWillUnmount() {
-        this.reduxUnsubscribe();
     }
 
     _renderItem = ({item}) => (
@@ -136,7 +130,7 @@ class PageKretsVelger extends React.Component {
             <View style={pageStyles.container}>
 
                 <View>
-                    <Text style={pageStyles.selectorHeader}>Søk</Text>
+                    <Text style={pageStyles.selectorHeader}>Søk blant alle</Text>
                     <TextInput style={{
                         margin: 10,
                         padding: 10,
@@ -164,7 +158,7 @@ class PageKretsVelger extends React.Component {
                     />
                 </View>
                 <View style={{paddingBottom: 50, marginBottom: 50}} >
-                    <Text style={pageStyles.selectorHeader}>Krets</Text>
+                    <Text style={pageStyles.selectorHeader}>Velg i krets</Text>
                     <FlatList
 
 
