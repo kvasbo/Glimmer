@@ -7,7 +7,7 @@ import NavigatorStyles from "../Styles/NavigatorStyles";
 //TODO sort by status and then name
 
 class PageKretsVelger extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
