@@ -1,4 +1,4 @@
-import {addUserBatch} from "../Redux/actions";
+import {addUserBatch} from "../src/Redux/actions";
 const User = require("../src/DataClasses/user").default;
 
 export default class UserUpdater {

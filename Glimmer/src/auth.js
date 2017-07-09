@@ -4,7 +4,7 @@
 import React from "react";
 import {Linking} from "react-native";
 import * as Keychain from "react-native-keychain";
-import {setLoginStatus, setActiveUserId} from "../Redux/actions";
+import {setLoginStatus, setActiveUserId} from "./Redux/actions";
 
 const shittyQs = require("shitty-qs");
 
