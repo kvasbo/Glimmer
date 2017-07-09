@@ -4,13 +4,12 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
 import * as colors from "../Styles/colorConstants";
-import {setForumPostCommentActivePage} from "../Redux/actions";
+import LoadingScreen from "./UXElements/LoadingScreen";
 
 const commentsInPage = 30;
 
@@ -23,22 +22,18 @@ class PageThread extends React.Component {
 
         super(props);
         this.state = {
-            loading: false,
+            loading: true,
             currentPage: 1,
+            comments: []
         };
-
-        this.numberOfPages = this.findLastPageOfComments(),
-
-            this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
 
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
-                if (this.state.currentPage !== null) {
-                    this.loadCommentPage(1);
-                }
+                this.loadCommentPage(1);
                 break;
             case 'didAppear':
                 break;
@@ -51,8 +46,11 @@ class PageThread extends React.Component {
 
     loadCommentPage(page) {
 
-        this.setState({currentPage: page});
-        store.dispatch(setForumPostCommentActivePage(this.props.post.id, page));
+        this.setState({currentPage: page, loading: true});
+
+        arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page).then((data) => {
+            this.setState({comments: data, loading: false});
+        });
 
     }
 
@@ -116,14 +114,8 @@ class PageThread extends React.Component {
 
     _getSidevelger() {
 
-        if (this.state.loading) return null;
-
         const activeColor = colors.COLOR_GRAD1
         const size = 30;
-
-        let showPage = "";
-
-        if (typeof this.props.comments[this.props.post.id] !== "undefined") showPage = this.props.comments[this.props.post.id].activePage;
 
         return (
 
@@ -172,7 +164,7 @@ class PageThread extends React.Component {
                 <TouchableOpacity onPress={() => {
                 }}>
                     <View style={pageStyles.iconButton}>
-                        <Text style={pageStyles.pageNumberText}>{showPage}</Text>
+                        <Text style={pageStyles.pageNumberText}>{this.state.currentPage}</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -203,36 +195,20 @@ class PageThread extends React.Component {
 
     getComments() {
 
-        //Vi har ikke data
-        if (typeof this.props.comments[this.props.post.id] === "undefined" || typeof this.props.comments[this.props.post.id].page[this.state.currentPage] === "undefined") {
-            return (
-                <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
-            )
+        if (this.state.loading) {
+            var loadText = "Laster side " + this.state.currentPage;
+            return (<LoadingScreen text={loadText}/>);
         }
 
-        const cData = this.props.comments[this.props.post.id];
+        var tmpPosts = this.state.comments;
 
-        if (typeof this.state.currentPage === "undefined" || typeof cData.page[this.state.currentPage] === "undefined") {
-            return (
-                <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
-            )
-        }
-
-        const ourPage = cData.page[this.state.currentPage];
-
-        if (ourPage.loading === true) {
-            return (
-                <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
-            )
-        }
-
-        ourPage.comments.sort((x, y) => {
+        tmpPosts.sort((x, y) => {
             return (new Date(x.created_at) - new Date(y.created_at));
         });
 
         var out = [];
-        for (let i = 0; i < ourPage.comments.length; i++) {
-            out.push(<ForumComment key={ourPage.comments[i].id} data={ourPage.comments[i]}/>)
+        for (let i = 0; i < tmpPosts.length; i++) {
+            out.push(<ForumComment key={tmpPosts[i].id} data={tmpPosts[i]}/>)
         }
 
         return out;
@@ -246,16 +222,18 @@ class PageThread extends React.Component {
 
             <View style={pageStyles.container}>
 
-                <ScrollView ref={component => this.scrollbar = component} style={{flex: 1}}>
+                <View style={{flex: 1}}>
+                    <ScrollView ref={component => this.scrollbar = component} style={{flex: 1}}>
 
-                    <ThreadForumPost data={this.props.post} metaData={false}
-                                     cut={false}
-                                     touchable={false}/>
-                    <View ref={component => this.firstpost = component}/>
+                        <ThreadForumPost data={this.props.post} metaData={false}
+                                         cut={false}
+                                         touchable={false}/>
+                        <View ref={component => this.firstpost = component}/>
 
-                    {this.getComments()}
+                        {this.getComments()}
 
-                </ScrollView>
+                    </ScrollView>
+                </View>
 
                 <View style={pageStyles.navBar}>
 
@@ -268,6 +246,7 @@ class PageThread extends React.Component {
         );
 
     }
+
 }
 
 const pageStyles = StyleSheet.create({
@@ -276,7 +255,7 @@ const pageStyles = StyleSheet.create({
         backgroundColor: colors.COLOR_LIGHT,
         paddingLeft: 0,
         paddingTop: 0,
-        paddingBottom: 20,
+        paddingBottom: 0,
         paddingRight: 0,
     },
     sideVelgerView: {
@@ -284,15 +263,16 @@ const pageStyles = StyleSheet.create({
         justifyContent: "space-around",
         alignContent: "center",
         alignItems: "center",
-        padding: 0,
+        margin: 0,
     },
     navBar: {
-        height: 20,
+        height: 40,
         padding: 0,
         margin: 0,
-        paddingTop: 3,
+        paddingTop: 0,
         borderTopColor: colors.COLOR_GRAD2,
-        borderTopWidth: 1
+        borderTopWidth: 1,
+        justifyContent: "center",
     },
     pageNumberText: {
         fontSize: 15,
@@ -315,12 +295,4 @@ PageThread.propTypes = {
     post: PropTypes.object.isRequired
 }
 
-function mapStateToProps(state) {
-    return {
-        comments: state.ForumPostComment
-    }
-}
-
-export default connect(
-    mapStateToProps
-)(PageThread)
+export default PageThread;

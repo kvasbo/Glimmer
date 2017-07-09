@@ -3,7 +3,8 @@
  */
 
 import React from "react";
-import {Alert, Dimensions, Image, Linking, StyleSheet, Text, View, WebView} from "react-native";
+import PropTypes from "prop-types";
+import {Alert, Dimensions, Image, Linking, Platform, StyleSheet, View, WebView} from "react-native";
 import HTMLView from "react-native-htmlview";
 import * as colors from "../../Styles/colorConstants";
 var DOMParser = require('xmldom').DOMParser;
@@ -41,13 +42,22 @@ export default class ForumText extends React.Component {
                 }
             }
 
+            let iframes = doc.getElementsByTagName("iframe");
+            for (let i = 0; i <= iframes.$$length; i++) {
+                if (typeof(iframes[i]) !== "undefined") {
+                    console.log("Iframe")
+                    //doc.removeChild(hr[i]);
+                }
+                else {
+                    break;
+                }
+            }
+
             //Avslutte rensinga.
 
             doc.normalize();
 
             var str = serializer.serializeToString(doc);
-
-            //console.log(str);
 
             return str;
 
@@ -81,13 +91,21 @@ export default class ForumText extends React.Component {
         var width = Dim.width - 30;
 
         if (node.name == 'iframe') {
-            const a = node.attribs;
-            const iframeHtml = `<iframe src="${a.src}"></iframe>`;
-            return (
-                <View key={index} style={{width: Number(width), height: Number(width)}}>
-                    <WebView source={{html: iframeHtml}} />
-                </View>
-            );
+
+            if (Platform.OS === "ios") {
+                const a = node.attribs;
+                const iframeHtml = `<iframe src="${a.src}"></iframe>`;
+
+                return (
+                    <View style={{width: Number(width), height: Number(width)}}>
+                        <WebView key={index} source={{html: iframeHtml}}/>
+                    </View>
+                );
+            }
+            else {
+                return null;
+            }
+
         }
 
         if (node.name == 'img') {
@@ -126,7 +144,7 @@ export default class ForumText extends React.Component {
             Alert.alert("Dette er litt flaut...", "Lenker internt på Underskog er ikke implementert ennå");
             console.log("samtalelenke");
         }
-        else if (url.includes("http") && url.includes("://")){
+        else if (url.includes("http") && url.includes("://")) {
 
             Linking.openURL(url);
         }
@@ -142,15 +160,22 @@ export default class ForumText extends React.Component {
         return (
             <HTMLView
                 nodecomponent={View}
+                textcomponent={View}
                 paragraphBreak=''
                 value={this.parsed}
                 stylesheet={styles}
                 renderNode={this.renderNode}
                 onLinkPress={(url) => this._handleLink(url)}
+                onError={(err) => console.log(err)}
             />
         )
     }
 
+}
+
+ForumText.props = {
+    text: PropTypes.string.isRequired,
+    navigator: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({

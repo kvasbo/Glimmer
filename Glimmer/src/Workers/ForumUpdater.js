@@ -176,7 +176,7 @@ export default class ForumUpdater {
 
                 store.dispatch(addForumPostComments(postId, page, comments));
 
-                resolve(data.data);
+                resolve(comments);
 
             }).catch((err) => {
                 reject(err)

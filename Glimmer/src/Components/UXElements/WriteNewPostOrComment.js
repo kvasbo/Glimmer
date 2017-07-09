@@ -16,6 +16,7 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
+import PropTypes from "prop-types";
 import InputStyles from "../../Styles/InputStyles";
 import * as colors from "../../Styles/colorConstants";
 const ImagePicker = require('react-native-image-picker');
@@ -35,13 +36,6 @@ const imagePickerOptions = {
 
 export default class WriteNewPostOrComment extends React.Component {
 
-    /*
-
-     props:
-     type: "comment"; "post"
-     postId: null (for new post), postId(for comment)
-
-     */
 
     itemKey; //To store in async storage.
 
@@ -51,7 +45,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
         //Set key for storing the temp data.
         if (this.props.type === "comment") {
-            this.itemKey = "@tmp_comment_" + this.postId;
+            this.itemKey = "@tmp_comment_" + this.props.postId;
         }
         else if (this.props.type === "post") {
             this.ItemKey = "@tmp_newPost";
@@ -63,6 +57,25 @@ export default class WriteNewPostOrComment extends React.Component {
         this.state = {text: '', title: '', tags: [], images: {}, bodyCursorPosition: null};
 
         console.log("Writer props", this.props);
+
+    }
+
+    componentWillMount() {
+
+        AsyncStorage.getItem(this.itemKey + "_text").then((data) => {
+
+            if (data !== null) {
+                this.setState({text: data});
+            }
+        });
+
+        AsyncStorage.getItem(this.itemKey + "_title").then((data) => {
+
+            if (data !== null) {
+                this.setState({title: data});
+            }
+
+        });
 
     }
 
@@ -191,7 +204,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
                 try {
 
-                    let filename =  response.fileName.toLowerCase();
+                    let filename = response.fileName.toLowerCase();
                     let filenameArr = filename.split(".");
                     var extension = filenameArr.slice(-1)[0];
 
@@ -248,8 +261,9 @@ export default class WriteNewPostOrComment extends React.Component {
     //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed.
     getLoadingIndicator(loading) {
         if (loading) {
-            return (<View style={{backgroundColor: "#FFFFFF66", height: 75, width: 75, padding: 20}}><ActivityIndicator
-                size="large" color="#444444" hidesWhenStopped={true}/></View>)
+            return (
+                <View style={{backgroundColor: "#FFFFFF66", height: 75, width: 75, padding: 20}}><ActivityIndicator
+                    size="large" color="#444444" hidesWhenStopped={true}/></View>)
         }
     }
 
@@ -275,7 +289,8 @@ export default class WriteNewPostOrComment extends React.Component {
         for (key in this.state.images) {
             outImg.push(
                 <View key={key} style={{justifyContent: 'flex-start', margin: 10}}>
-                    <TouchableOpacity onPress={() => this.insertIntoBodyText("!" + this.state.images[key].uri + "!")}>
+                    <TouchableOpacity
+                        onPress={() => this.insertIntoBodyText("!" + this.state.images[key].uri + "!")}>
                         <Image key={Math.random()} source={{uri: this.state.images[key].orig_uri}}
                                style={{height: 75, width: 75, margin: 5, borderRadius: 0}}>
                             {this.getLoadingIndicator(!this.state.images[key].done)}
@@ -376,16 +391,24 @@ export default class WriteNewPostOrComment extends React.Component {
 
 }
 
-const pageStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.COLOR_LIGHT,
-        padding: 0,
-        margin: 0,
-    },
-    imageViewer: {
-        backgroundColor: colors.COLOR_LIGHT,
-        height: 100
-    }
+WriteNewPostOrComment.props = {
 
-});
+    type: PropTypes.string.isRequired,
+    postId: PropTypes.number,
+
+}
+
+const
+    pageStyles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: colors.COLOR_LIGHT,
+            padding: 0,
+            margin: 0,
+        },
+        imageViewer: {
+            backgroundColor: colors.COLOR_LIGHT,
+            height: 100
+        }
+
+    });

@@ -20,11 +20,10 @@ import { iconsMap, iconsLoaded } from './Components/UXElements/Icons';
 global.moment = require('moment');
 moment.locale('nb')
 
-
 const config = require("../config.js");
 
 //Some hacks
-console.ignoredYellowBox = ['[xmldom warning]'];
+console.disableYellowBox = true;
 
 const errorHandler = (e, isFatal) => {
     if (isFatal) {
