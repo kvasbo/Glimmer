@@ -5,28 +5,22 @@ export default class KretsUpdater {
 
     krets = {folk: [], updated: null};
 
-    initKrets(force) {
-
-        if (__DEV__) {
-            console.log("Init krets");
-        }
-
+    initKrets() {
         this._getKretsPagesRecursive(1);
-
     }
 
     _getKretsPagesRecursive(page, maxPages = 999) {
 
-        var uri = "/users/current/circle?page=" + page;
+        let uri = "/users/current/circle?page=" + page;
 
         api.makeApiGetCall(uri).then((data) => {
 
-            var krets = [];
-            var users = [];
+            let krets = [];
+            let users = [];
 
-            for (key in data.data) {
+            for (let key in data.data) {
 
-                var tmpUser = new User(data.data[key].id, data.data[key].name, data.data[key].realname, data.data[key].image_url, data.data[key].friend);
+                let tmpUser = new User(data.data[key].id, data.data[key].name, data.data[key].realname, data.data[key].image_url, data.data[key].friend);
 
                 krets.push(tmpUser.id);
                 users.push(tmpUser);
@@ -36,10 +30,7 @@ export default class KretsUpdater {
             global.store.dispatch(addKretsPersonBatch(krets));
             global.store.dispatch(addUserBatch(users));
 
-            if (data.data.length == 0 || page > maxPages) {
-
-            }
-            else {
+            if (!(data.data.length == 0 || page > maxPages)) {
                 this._getKretsPagesRecursive(page + 1);
             }
         })

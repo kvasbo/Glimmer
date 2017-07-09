@@ -1,16 +1,11 @@
 import {addFavoritesPostBatch, addStreamPostBatch, addForumPostComments} from "../Redux/actions";
 const ForumPost = require("../DataClasses/post").default;
 const ForumPostComment = require("../DataClasses/postComment").default;
-const config = require("../../config.js");
 
 export default class ForumUpdater {
 
     lastpage_favs = 0;
     lastpage_stream = 0;
-
-    constructor() {
-
-    }
 
     //Do the API lifting
     loadPosts(favorites = false, page = 1) {
@@ -37,10 +32,6 @@ export default class ForumUpdater {
     }
 
     addPagesToFavorites(numberOfPages) {
-        if (__DEV__) {
-            console.log("Add pages to favorites", numberOfPages);
-        }
-
         this.addFavorites(this.lastpage_favs + 1, numberOfPages);
     }
 
@@ -48,32 +39,32 @@ export default class ForumUpdater {
 
         return new Promise((resolve, reject) => {
 
-            var proms = [];
+            let proms = [];
 
             //Get promises for all
-            for (var i = from; i < depth + from; i++) {
-                var p = this.loadPosts(true, i);
+            for (let i = from; i < depth + from; i++) {
+                let p = this.loadPosts(true, i);
                 proms.push(p);
             }
 
             //Resolve all the promises! This is nice. And needs some error handling I guess.
             Promise.all(proms).then(values => {
 
-                var fetchedPosts = [];
+                let fetchedPosts = [];
 
-                for (key in values) {
+                for (var key in values) {
                     fetchedPosts = fetchedPosts.concat(values[key].data);
                 }
 
-                var tmpPosts = [];
+                let tmpPosts = [];
 
                 for (key in fetchedPosts) {
 
-                    var f = fetchedPosts[key].bulletin;
+                    let f = fetchedPosts[key].bulletin;
 
                     try {
 
-                        var p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
+                        let p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
                             f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
                             f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title);
 
@@ -90,7 +81,7 @@ export default class ForumUpdater {
 
                 resolve();
 
-            });
+            }).catch((err) => reject(err));
 
         });
 
@@ -101,10 +92,6 @@ export default class ForumUpdater {
     }
 
     addPagesToStream(numberOfPages) {
-
-        if (__DEV__) {
-            console.log("Add pages to stream", numberOfPages);
-        }
 
         this.addStream(this.lastpage_stream + 1, numberOfPages);
     }
@@ -126,7 +113,7 @@ export default class ForumUpdater {
 
                 var fetchedPosts = [];
 
-                for (key in values) {
+                for (let key in values) {
 
                     fetchedPosts = fetchedPosts.concat(values[key].data);
                 }
@@ -135,7 +122,7 @@ export default class ForumUpdater {
 
                 var tmpPosts = [];
 
-                for (key in fetchedPosts) {
+                for (let key in fetchedPosts) {
 
                     var f = fetchedPosts[key];
 
@@ -175,7 +162,7 @@ export default class ForumUpdater {
             api.makeApiGetCall(uri).then((data) => {
 
                 var comments = [];
-                for (key in data.data) {
+                for (let key in data.data) {
 
                     try {
                         let d = data.data[key];
@@ -183,7 +170,7 @@ export default class ForumUpdater {
                         comments.push(tmpC);
                     }
                     catch (err) {
-                        console.log(err);
+                       
                     }
                 }
 

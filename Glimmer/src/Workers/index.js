@@ -1,15 +1,11 @@
 /**
  * Created by kvasbo on 31.05.2017.
  */
-import React from "react";
-
 import ForumUpdater from "./ForumUpdater";
 import ForumListUpdater from "./ForumListUpdater";
 import KretsUpdater from "./KretsUpdater";
 import UserUpdater from "./UserUpdater";
 import MessageUpdater from "./MessageUpdater";
-
-const config = require("../../config.js");
 
 export default class Workers {
 
@@ -27,7 +23,7 @@ export default class Workers {
 
         Promise.all(first).then(() => {
 
-            this.kretsUpdater.initKrets(false);
+            this.kretsUpdater.initKrets();
 
             this.forumListUpdater.reloadForums(false);
 
@@ -38,9 +34,6 @@ export default class Workers {
     }
 
     refreshForumData() {
-        if (__DEV__) {
-            console.log("Refreshing forum data");
-        }
         this.forumUpdater.loadFirstFavorites(1);
         this.forumUpdater.loadFirstStream(1);
     }

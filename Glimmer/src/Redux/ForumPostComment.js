@@ -10,14 +10,14 @@ function ForumPostComment(state = initialState, action) {
         case FORUMPOST_COMMENTS_ADD:
 
             //Create a copy
-            var newState = Object.assign({}, state);
+            let newCommentsState = Object.assign({}, state);
 
             //Ensure that we have the post id defined as an object
-            if (typeof newState[action.postId] === "undefined") {
-                newState[action.postId] = initialPostState;
+            if (typeof newCommentsState[action.postId] === "undefined") {
+                newCommentsState[action.postId] = initialPostState;
             }
 
-            newState[action.postId].page[action.page] = {
+            newCommentsState[action.postId].page[action.page] = {
                 updated: new Date(),
                 loading: false,
                 comments: action.comments
@@ -29,25 +29,25 @@ function ForumPostComment(state = initialState, action) {
         case FORUMPOST_COMMENTS_SET_ACTIVE_PAGE:
 
             //Create a copy
-            var newState = Object.assign({}, state);
+            let newActiveState = Object.assign({}, state);
 
             //Ensure that we have the post id defined as an object
-            if (typeof newState[action.postId] === "undefined") {
-                newState[action.postId] = initialPostState;
+            if (typeof newActiveState[action.postId] === "undefined") {
+                newActiveState[action.postId] = initialPostState;
             }
 
-            newState[action.postId].page[action.page] = {
+            newActiveState[action.postId].page[action.page] = {
                 updated: new Date(),
                 loading: true,
                 comments: []
             };
 
-            newState[action.postId].activePage = action.activePage;
+            newActiveState[action.postId].activePage = action.activePage;
 
             //Start API Fetching the data
             global.arbeidsMaur.forumUpdater.loadCommentsForPost(action.postId, action.activePage);
 
-            return newState;
+            return newActiveState;
 
         default:
             return state

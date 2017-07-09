@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {StyleSheet, View} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
@@ -96,6 +97,12 @@ const pageStyles = StyleSheet.create({
         paddingRight: 0,
     },
 });
+
+PageConversation.propTypes = {
+    user_id: PropTypes.number.isRequired,
+    messages: PropTypes.object.isRequired
+}
+
 
 function mapStateToProps(state) {
     return {

@@ -13,13 +13,13 @@ export default class UserUpdater {
         return new Promise((resolve, reject) => {
 
             //Read from store. //TODO keep in memory?
-            let users = store.getState().Users;
+           // let users = store.getState().Users;
 
             //Get from local cache
-            if (false && typeof(users[user] !== undefined)) {
-                resolve(users[user]);
-            }
-            else {
+           // if (false && typeof(users[user] !== "undefined")) {
+            //    resolve(users[user]);
+            //}
+            //else {
 
                 api.makeApiGetCall("/users/" + user).then((data) => {
 
@@ -34,7 +34,7 @@ export default class UserUpdater {
                     reject(err);
 
                 });
-            }
+           // }
 
         });
     }

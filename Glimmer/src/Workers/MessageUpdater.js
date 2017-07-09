@@ -11,7 +11,7 @@ export default class MessageUpdater {
             const uri = "/messages/" + messageId + "/dismiss";
 
             api.makeApiPostCall(uri).then((data) => {
-                resolve();
+                resolve(data);
             }).catch((err) => {
                 reject(err);
             })
@@ -72,7 +72,7 @@ export default class MessageUpdater {
 
                     var tmp = [];
 
-                    for(key in data)
+                    for(let key in data)
                     {
                         //console.log(data[key]);
                         var c = data[key];

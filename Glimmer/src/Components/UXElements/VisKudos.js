@@ -4,7 +4,7 @@
 
 import React from "react";
 import {StyleSheet, TouchableOpacity, View} from "react-native";
-//import {Badge} from "react-native-elements";
+import PropTypes from 'prop-types';
 import * as colors from "../../Styles/colorConstants";
 import Badge from "./Badge";
 
@@ -68,6 +68,10 @@ export default class VisKudos extends React.Component {
             );
         }
     }
+}
+
+VisKudos.proptypes = {
+    kudos: PropTypes.array.isRequired
 }
 
 const pageStyles = StyleSheet.create({
