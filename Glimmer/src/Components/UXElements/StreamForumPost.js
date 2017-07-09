@@ -4,6 +4,7 @@
 
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import CommentMetadata from "./CommentMetadata";
 import ForumText from "./ForumText.js";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 import * as colors from "../../Styles/colorConstants";
@@ -129,8 +130,8 @@ export default class StreamForumPost extends React.Component {
                             <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
                         </View>
 
-                        <Text
-                            style={pageStyles.creatorInfo}>{creator}, {this.getTime()}. {this.props.data.forum_title}.</Text>
+                        <CommentMetadata image={this.props.data.creator_image} name={this.props.data.creator_name}
+                                         time={this.props.data.created_at} forum={this.props.data.forum_title}/>
 
                         {this.getFirstImage()}
 

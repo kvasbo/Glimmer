@@ -3,52 +3,15 @@
  */
 
 import React from "react";
-import {Image, StyleSheet, Text, View} from "react-native";
+import PropTypes from "prop-types";
+import {StyleSheet, View} from "react-native";
 import ForumText from "./ForumText.js";
 import GiKudos from "./GiKudos";
 import VisKudos from "./VisKudos";
+import CommentMetadata from "./CommentMetadata";
 import * as colors from "../../Styles/colorConstants";
 
 var s = require('../Styles');
-
-//https://github.com/jsdf/react-native-htmlview
-
-class CommentMetadata extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    getTime() {
-        return helpers.getCalendarTime(this.props.data.created_at);
-    }
-
-    styles = StyleSheet.create({
-        element: {
-            margin: 0,
-            marginRight: 6,
-        }
-    })
-
-    render() {
-
-        return (
-            <View style={{flexDirection: "row", alignItems: "center", marginLeft: 10, marginRight: 10, flex: 1}}>
-
-                <Image
-                    style={[this.styles.element, {width: 34, height: 34, borderRadius: 2}]}
-                    source={{uri: this.props.data.creator_image}}
-                />
-                <Text style={this.styles.element}>{this.props.data.creator_name}</Text>
-                <Text style={this.styles.element}>{this.getTime()}</Text>
-
-
-            </View>
-        )
-
-    }
-
-}
 
 export default class ForumComment extends React.Component {
 
@@ -60,9 +23,6 @@ export default class ForumComment extends React.Component {
         if (this.props.data.creator_id === store.getState().AppStatus.activeUserId) {
             this.byMe = true;
         }
-
-       // console.log("Comment", this.props, "By me;", this.byMe);
-
     }
 
     getKudosSection() {
@@ -87,7 +47,11 @@ export default class ForumComment extends React.Component {
 
         return (
             <View style={pageStyles.container}>
-                <CommentMetadata data={this.props.data}/>
+
+                <View>
+                    <CommentMetadata name={this.props.data.creator_name} time={this.props.data.created_at} image={this.props.data.creator_image}/>
+                </View>
+
                 <View style={pageStyles.comment}>
                     <ForumText webview={true} cut={false} text={this.props.data.body}/>
                 </View>
@@ -99,6 +63,10 @@ export default class ForumComment extends React.Component {
 
     }
 
+}
+
+ForumComment.propTypes = {
+    data: PropTypes.object.isRequired
 }
 
 const pageStyles = StyleSheet.create({
@@ -113,7 +81,7 @@ const pageStyles = StyleSheet.create({
     },
     comment: {
         padding: 10,
-        paddingTop: 5,
+        paddingTop: 10,
         marginRight: 10,
     }
 });

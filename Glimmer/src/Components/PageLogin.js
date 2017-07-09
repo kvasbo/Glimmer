@@ -54,7 +54,7 @@ export default class PageLogin extends React.Component {
                         <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen over og gi tillatelse når
                             Underskog åpner seg i din nettleser.</Text>
 
-                        <View style={{height: 40}} />
+                        <View style={{height: 40}}/>
 
                         <Text style={pageStyles.smallText}>Dette er ikke farlig - vi stjeler ikke data og benytter ingen
                             tredjepartstjenester til å lagre personlige data. Faktisk forlater ingen personlige data

@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -28,7 +29,7 @@ class PageThread extends React.Component {
 
         this.numberOfPages = this.findLastPageOfComments(),
 
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+            this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
 
@@ -50,7 +51,7 @@ class PageThread extends React.Component {
 
     loadCommentPage(page) {
 
-        this.setState({currentPage:page});
+        this.setState({currentPage: page});
         store.dispatch(setForumPostCommentActivePage(this.props.post.id, page));
 
     }
@@ -126,7 +127,7 @@ class PageThread extends React.Component {
 
         var showPage = "";
 
-        if(typeof this.props.comments[this.props.post.id] !== "undefined") showPage = this.props.comments[this.props.post.id].activePage;
+        if (typeof this.props.comments[this.props.post.id] !== "undefined") showPage = this.props.comments[this.props.post.id].activePage;
 
         return (
 
@@ -191,8 +192,7 @@ class PageThread extends React.Component {
     getComments() {
 
         //Vi har ikke data
-        if(typeof this.props.comments[this.props.post.id] === "undefined" || typeof this.props.comments[this.props.post.id].page[this.state.currentPage] === "undefined")
-        {
+        if (typeof this.props.comments[this.props.post.id] === "undefined" || typeof this.props.comments[this.props.post.id].page[this.state.currentPage] === "undefined") {
             return (
                 <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
             )
@@ -200,9 +200,7 @@ class PageThread extends React.Component {
 
         const cData = this.props.comments[this.props.post.id];
 
-
-        if(typeof this.state.currentPage === "undefined" || typeof cData.page[this.state.currentPage] === "undefined")
-        {
+        if (typeof this.state.currentPage === "undefined" || typeof cData.page[this.state.currentPage] === "undefined") {
             return (
                 <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
             )
@@ -210,8 +208,7 @@ class PageThread extends React.Component {
 
         const ourPage = cData.page[this.state.currentPage];
 
-        if(ourPage.loading === true)
-        {
+        if (ourPage.loading === true) {
             return (
                 <View style={{marginLeft: 10, marginRight: 10, alignItems: "center"}}><ActivityIndicator/></View>
             )
@@ -260,33 +257,37 @@ class PageThread extends React.Component {
     }
 }
 
-const
-    pageStyles = StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: colors.COLOR_LIGHT,
-            paddingLeft: 0,
-            paddingTop: 0,
-            paddingBottom: 30,
-            paddingRight: 0,
-        },
-        sideVelgerView: {
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignContent: "center",
-            alignItems: "center",
-        },
-        navBar: {
-            height: 13,
-            margin: 0,
-            paddingTop: 5,
-        },
-        pageNumberText: {
-            fontSize: 15,
-            fontWeight: "300",
-            color: colors.COLOR_GRAD1
-        }
-    });
+const pageStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.COLOR_LIGHT,
+        paddingLeft: 0,
+        paddingTop: 0,
+        paddingBottom: 30,
+        paddingRight: 0,
+    },
+    sideVelgerView: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignContent: "center",
+        alignItems: "center",
+    },
+    navBar: {
+        height: 13,
+        margin: 0,
+        paddingTop: 5,
+    },
+    pageNumberText: {
+        fontSize: 15,
+        fontWeight: "300",
+        color: colors.COLOR_GRAD1
+    }
+});
+
+PageThread.propTypes = {
+    navigator: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired
+}
 
 function mapStateToProps(state) {
     return {

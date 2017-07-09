@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { connect } from 'react-redux'
+import {connect} from "react-redux";
 import {FlatList, StyleSheet} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";

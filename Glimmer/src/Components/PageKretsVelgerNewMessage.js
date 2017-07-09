@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Alert, Animated, FlatList, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, FlatList, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 import NavigatorStyles from "../Styles/NavigatorStyles";
 
@@ -157,7 +157,7 @@ class PageKretsVelger extends React.Component {
 
                     />
                 </View>
-                <View style={{paddingBottom: 50, marginBottom: 50}} >
+                <View style={{paddingBottom: 50, marginBottom: 50}}>
                     <Text style={pageStyles.selectorHeader}>Velg i krets</Text>
                     <FlatList
 
@@ -199,7 +199,6 @@ const pageStyles = StyleSheet.create({
         marginBottom: 5,
     }
 });
-
 
 function mapStateToProps(state) {
     return {

@@ -24,7 +24,7 @@ function ForumPostComment(state = initialState, action) {
             };
 
             //Return
-            return newState;
+            return newCommentsState;
 
         case FORUMPOST_COMMENTS_SET_ACTIVE_PAGE:
 

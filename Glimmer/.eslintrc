@@ -33,7 +33,8 @@
     "__DEV__": true,
     "auth": true,
     "firebaseApp": true,
-    "moment": true
+    "moment": true,
+    "helpers": true
   },
   "extends": [
     "eslint:recommended",

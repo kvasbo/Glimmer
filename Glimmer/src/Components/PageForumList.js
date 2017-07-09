@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import {FlatList, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View, Alert} from "react-native";
+import {Alert, FlatList, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {setActivePostingForum} from "../Redux/actions";
 import * as colors from "../Styles/colorConstants";
 
@@ -53,20 +53,16 @@ export default class PageForumList extends React.Component {
         if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
             if (event.id == 'skriv') { // this is the same id field from the static navigatorButtons definition
 
-                if(store.getState().AppStatus.activePostingForum !== null)
-                {
+                if (store.getState().AppStatus.activePostingForum !== null) {
                     this.props.navigator.push({
                         screen: 'glimmer.PageNewForumPost', // unique ID registered with Navigation.registerScreen
                         title: "Nytt innlegg", // navigation bar title of the pushed screen (optional)
                         animated: true, // does the push have transition animation or does it happen immediately (optional)
                     });
                 }
-                else
-                {
+                else {
                     Alert.alert("Hoppsann", "Du må velge et forum å poste i.");
                 }
-
-
 
             }
         }
@@ -210,7 +206,13 @@ export default class PageForumList extends React.Component {
                             />
                         </View>
 
-                        <View style={{flex: 1, padding: 10, flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
+                        <View style={{
+                            flex: 1,
+                            padding: 10,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-around"
+                        }}>
 
                             <Text style={{color: colors.COLOR_LIGHT, marginRight: 5}}>Kun velbrukte:</Text>
 
@@ -222,14 +224,13 @@ export default class PageForumList extends React.Component {
                         </View>
 
 
-
                     </View>
 
-                        <FlatList style={pageStyles.container}
-                                  data={this.getFilteredForumList()}
-                                  keyExtractor={(item, index) => item.id}
-                                  renderItem={({item}) => <Forum forum={item}></Forum>}
-                        />
+                    <FlatList style={pageStyles.container}
+                              data={this.getFilteredForumList()}
+                              keyExtractor={(item, index) => item.id}
+                              renderItem={({item}) => <Forum forum={item}></Forum>}
+                    />
 
                 </View>
 

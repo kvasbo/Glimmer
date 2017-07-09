@@ -3,9 +3,8 @@
  */
 
 import React from "react";
-import {View, StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
 import * as colors from "../Styles/colorConstants";
-
 
 export default class PageSplashScreen extends React.Component {
 
