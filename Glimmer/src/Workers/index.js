@@ -9,7 +9,7 @@ import KretsUpdater from "./KretsUpdater";
 import UserUpdater from "./UserUpdater";
 import MessageUpdater from "./MessageUpdater";
 
-const config = require("../config.js");
+const config = require("../../config.js");
 
 export default class Workers {
 

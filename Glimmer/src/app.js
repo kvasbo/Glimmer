@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Alert, AppState} from "react-native";
 import {registerScreens} from "./screens";
 import {Navigation} from "react-native-navigation";
-import Workers from "../Workers/index.js";
+import Workers from "./Workers/index.js";
 import {applyMiddleware, createStore} from "redux";
 import {createLogger} from "redux-logger";
 import {Provider} from "react-redux";

@@ -1,6 +1,6 @@
-const Conversation = require("../src/DataClasses/conversation").default;
-const Message = require("../src/DataClasses/message").default;
-import {addConversationBatch,addMessageBatch} from "../src/Redux/actions";
+const Conversation = require("../DataClasses/conversation").default;
+const Message = require("../DataClasses/message").default;
+import {addConversationBatch,addMessageBatch} from "../Redux/actions";
 
 export default class MessageUpdater {
 

@@ -1,7 +1,7 @@
-import {addFavoritesPostBatch, addStreamPostBatch, addForumPostComments} from "../src/Redux/actions";
-const ForumPost = require("../src/DataClasses/post").default;
-const ForumPostComment = require("../src/DataClasses/postComment").default;
-const config = require("../config.js");
+import {addFavoritesPostBatch, addStreamPostBatch, addForumPostComments} from "../Redux/actions";
+const ForumPost = require("../DataClasses/post").default;
+const ForumPostComment = require("../DataClasses/postComment").default;
+const config = require("../../config.js");
 
 export default class ForumUpdater {
 

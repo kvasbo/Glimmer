@@ -1,4 +1,4 @@
-const Forum = require('../src/DataClasses/forum.js').default;
+const Forum = require('../DataClasses/forum.js').default;
 
 export default class ForumListUpdater {
 
