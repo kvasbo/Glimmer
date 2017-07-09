@@ -6,9 +6,8 @@ import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 import ForumText from "./ForumText.js";
-import * as colors from "../../src/Styles/colorConstants"
+import * as colors from "../../Styles/colorConstants"
 
-var s = require('../Styles');
 
 export default class ThreadForumPost extends React.Component {
 

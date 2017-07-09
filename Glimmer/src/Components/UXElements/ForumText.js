@@ -5,7 +5,7 @@
 import React from "react";
 import {Alert, Dimensions, Image, Linking, StyleSheet, Text, View, WebView} from "react-native";
 import HTMLView from "react-native-htmlview";
-import * as colors from "../../src/Styles/colorConstants";
+import * as colors from "../../Styles/colorConstants";
 var DOMParser = require('xmldom').DOMParser;
 var XMLSerializer = require('xmldom').XMLSerializer;
 

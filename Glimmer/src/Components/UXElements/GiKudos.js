@@ -5,7 +5,7 @@
 import React from "react";
 import {Alert, StyleSheet, TouchableOpacity, TouchableHighlight, Text, View} from "react-native";
 //import {Badge} from "react-native-elements";
-import * as colors from "../../src/Styles/colorConstants"
+import * as colors from "../../Styles/colorConstants"
 import Badge from "./Badge";
 
 export default class GiKudos extends React.Component {

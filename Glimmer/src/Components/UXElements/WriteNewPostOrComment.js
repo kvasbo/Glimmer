@@ -16,10 +16,10 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
-import InputStyles from "../../src/Styles/InputStyles";
-import * as colors from "../../src/Styles/colorConstants";
+import InputStyles from "../../Styles/InputStyles";
+import * as colors from "../../Styles/colorConstants";
 const ImagePicker = require('react-native-image-picker');
-const TextStyles = require("../../src/Styles/TextStyles");
+const TextStyles = require("../../Styles/TextStyles");
 
 const imagePickerOptions = {
     title: 'Velg bilde',

@@ -7,11 +7,11 @@ import {connect} from "react-redux";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import Icon from "react-native-vector-icons/Ionicons";
-import * as colors from "../src/Styles/colorConstants";
+import * as colors from "../Styles/colorConstants";
 import Divider from "./UXElements/Divider";
 
 //Get common list styles
-const listStyles = require('../src/Styles/ListStyles');
+const listStyles = require('../Styles/ListStyles');
 
 class PageFavorites extends React.Component {
 

@@ -15,7 +15,7 @@ import GlimmerAuth from "./auth.js";
 import GlimmerAPI from "./api";
 import Helpers from "./helpers";
 import NavStyles from "./Styles/NavigatorStyles";
-import { iconsMap, iconsLoaded } from '../Components/UXElements/Icons';
+import { iconsMap, iconsLoaded } from './Components/UXElements/Icons';
 
 global.moment = require('moment');
 moment.locale('nb')

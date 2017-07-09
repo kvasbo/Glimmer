@@ -7,10 +7,10 @@ import {connect} from "react-redux";
 import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Divider from "./UXElements/Divider";
-import * as colors from "../src/Styles/colorConstants";
+import * as colors from "../Styles/colorConstants";
 
 //Get common list styles
-const listStyles = require('../src/Styles/ListStyles');
+const listStyles = require('../Styles/ListStyles');
 
 class PageMessages extends React.Component {
 
@@ -27,7 +27,7 @@ class PageMessages extends React.Component {
     static navigatorButtons = {
         rightButtons: [
             {
-                icon: require("../icons/plus.png"),
+                icon: require("../../icons/plus.png"),
                 id: 'newMessage', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
                 showAsAction: 'ifRoom', // optional, Android only. Control how the button is displayed in the Toolbar. Accepted valued: 'ifRoom' (default) - Show this item as a button in an Action Bar if the system decides there is room for it. 'always' - Always show this item as a button in an Action Bar. 'withText' - When this item is in the action bar, always show it with a text label even if it also has an icon specified. 'never' - Never show this item as a button in an Action Bar.
             }
@@ -60,7 +60,7 @@ class PageMessages extends React.Component {
                     navigatorButtons: {
                         rightButtons: [
                             {
-                                icon: require("../icons/compose.png"),
+                                icon: require("../../icons/compose.png"),
                                 id: 'writeNewMessage', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
                                 showAsAction: 'ifRoom', // optional, Android only. Control how the button is displayed in the Toolbar. Accepted valued: 'ifRoom' (default) - Show this item as a button in an Action Bar if the system decides there is room for it. 'always' - Always show this item as a button in an Action Bar. 'withText' - When this item is in the action bar, always show it with a text label even if it also has an icon specified. 'never' - Never show this item as a button in an Action Bar.
                             }
@@ -163,7 +163,7 @@ class Conversation extends React.Component {
 
         if (url === "https://underskog.no/assets/images/noicon_48.png") {
             return <Image style={{width: 40, height: 40, borderRadius: 20}}
-                          source={require('../icons/default_avatar.png')}/>
+                          source={require('../../icons/default_avatar.png')}/>
         }
 
         return <Image style={{width: 40, height: 40, borderRadius: 20}} source={{uri: url}}/>

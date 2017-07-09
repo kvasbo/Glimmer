@@ -6,10 +6,8 @@ import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import ForumText from "./ForumText.js";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
-import * as colors from "../../src/Styles/colorConstants";
-//const CachedImage = require('react-native-cached-image');
+import * as colors from "../../Styles/colorConstants";
 var DomParser = require('xmldom').DOMParser;
-var s = require('../Styles');
 
 export default class StreamForumPost extends React.Component {
 

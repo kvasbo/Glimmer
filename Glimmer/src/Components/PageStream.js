@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import {FlatList, StyleSheet} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";
-import * as colors from "../src/Styles/colorConstants";
+import * as colors from "../Styles/colorConstants";
 
 class PageStream extends React.Component {
 
@@ -45,7 +45,7 @@ class PageStream extends React.Component {
     static navigatorButtons = {
         rightButtons: [
             {
-                icon: require("../icons/plus.png"),
+                icon: require("../../icons/plus.png"),
                 id: 'newForumPost', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
                 showAsAction: 'ifRoom', // optional, Android only. Control how the button is displayed in the Toolbar. Accepted valued: 'ifRoom' (default) - Show this item as a button in an Action Bar if the system decides there is room for it. 'always' - Always show this item as a button in an Action Bar. 'withText' - When this item is in the action bar, always show it with a text label even if it also has an icon specified. 'never' - Never show this item as a button in an Action Bar.
             }

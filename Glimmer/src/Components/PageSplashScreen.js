@@ -3,9 +3,11 @@
  */
 
 import React from "react";
-import {View, StyleSheet, ViewPropTypes} from "react-native";
+import {View, StyleSheet} from "react-native";
+import * as colors from "../Styles/colorConstants";
 
-export default class Empty extends React.Component {
+
+export default class PageSplashScreen extends React.Component {
 
     constructor(props) {
         super(props);
@@ -26,9 +28,12 @@ export default class Empty extends React.Component {
 }
 
 const pageStyles = StyleSheet.create({
-
     container: {
-
+        flex: 1,
+        backgroundColor: colors.COLOR_LIGHT,
+        paddingLeft: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        paddingRight: 0,
     },
-
 });

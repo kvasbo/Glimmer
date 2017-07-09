@@ -4,7 +4,7 @@
 
 import React from "react";
 import {Button, ScrollView, StyleSheet, Text, View} from "react-native";
-import * as colors from "../src/Styles/colorConstants";
+import * as colors from "../Styles/colorConstants";
 
 export default class PageLogin extends React.Component {
 

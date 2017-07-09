@@ -1,20 +1,20 @@
 import {Navigation} from "react-native-navigation";
 
-import PageSplashScreen from "../Components/PageSplashScreen";
-import PageStream from "../Components/PageStream";
-import PageFavorites from "../Components/PageFavorites";
-import PageThread from "../Components/PageThread";
-import PageMessages from "../Components/PageMessages";
-import PageConversation from "../Components/PageConversation";
-import PageNewForumComment from "../Components/PageNewForumComment";
-import PageKretsVelger from "../Components/PageKretsVelgerNewMessage";
-import PageNewMessage from "../Components/PageNewMessage";
-import PageNewForumPost from "../Components/PageNewForumPost";
+import PageSplashScreen from "./Components/PageSplashScreen";
+import PageStream from "./Components/PageStream";
+import PageFavorites from "./Components/PageFavorites";
+import PageThread from "./Components/PageThread";
+import PageMessages from "./Components/PageMessages";
+import PageConversation from "./Components/PageConversation";
+import PageNewForumComment from "./Components/PageNewForumComment";
+import PageKretsVelger from "./Components/PageKretsVelgerNewMessage";
+import PageNewMessage from "./Components/PageNewMessage";
+import PageNewForumPost from "./Components/PageNewForumPost";
 
-import PageLogin from "../Components/PageLogin";
-import PageForumList from "../Components/PageForumList";
+import PageLogin from "./Components/PageLogin";
+import PageForumList from "./Components/PageForumList";
 
-import PersonPopup from "../Components/UXElements/PersonPopup";
+import PersonPopup from "./Components/UXElements/PersonPopup";
 
 export function registerScreens(store, Provider) {
 

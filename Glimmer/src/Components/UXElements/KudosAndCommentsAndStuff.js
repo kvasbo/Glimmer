@@ -3,7 +3,7 @@ import {TouchableOpacity, View} from "react-native";
 //import {Badge} from "react-native-elements";
 import GiKudos from "./GiKudos";
 import VisKudos from "./VisKudos";
-import * as colors from "../../src/Styles/colorConstants";
+import * as colors from "../../Styles/colorConstants";
 import Badge from "./Badge";
 
 export default class KudosAndCommentsAndStuff extends React.Component {

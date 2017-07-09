@@ -4,8 +4,8 @@
 
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {addNewMessageRecipient, removeNewMessageRecipient, clearNewMessageRecipient} from "../../src/Redux/actions"
-import * as colors from "../../src/Styles/colorConstants"
+import {addNewMessageRecipient, removeNewMessageRecipient, clearNewMessageRecipient} from "../../Redux/actions"
+import * as colors from "../../Styles/colorConstants"
 
 //const CachedImage = require('react-native-cached-image');
 
@@ -39,7 +39,7 @@ export default class PersonFace extends React.Component {
 
         if(url==="https://underskog.no/assets/images/noicon_48.png")
         {
-            return <Image style={this.getSelectedStyle()} source={require('../../icons/default_avatar.png')}/>
+            return <Image style={this.getSelectedStyle()} source={require('../../../icons/default_avatar.png')}/>
         }
 
         return <Image style={this.getSelectedStyle()} source={{uri: url}}/>
