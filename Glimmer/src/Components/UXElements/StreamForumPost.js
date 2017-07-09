@@ -130,8 +130,11 @@ export default class StreamForumPost extends React.Component {
                             <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
                         </View>
 
-                        <CommentMetadata image={this.props.data.creator_image} name={this.props.data.creator_name}
+                        <View style={{margin: 4, marginLeft: 6, marginBottom: 2}}>
+                        <CommentMetadata  image={this.props.data.creator_image} showImage={false} name={this.props.data.creator_name}
                                          time={this.props.data.created_at} forum={this.props.data.forum_title}/>
+
+                        </View>
 
                         {this.getFirstImage()}
 

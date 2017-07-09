@@ -24,17 +24,29 @@ export default class CommentMetadata extends React.Component {
         }
     })
 
-    getForumTitle()
-    {
-        if(typeof this.props.forum === "undefined") return null;
+    getForumTitle() {
+        if (typeof this.props.forum === "undefined") return null;
 
-        else
-        {
+        else {
             return (
                 <Text style={[this.styles.element, {color: colors.COLOR_MIDGREY}]}>{this.props.forum}</Text>
             )
         }
 
+    }
+
+    getPicture() {
+        if (!this.props.showImage) return null;
+
+        else {
+            return (
+
+                <Image
+                    style={[this.styles.element, {width: 24, height: 24, borderRadius: 12}]}
+                    source={{uri: this.props.image}}
+                />
+            )
+        }
     }
 
     render() {
@@ -49,10 +61,8 @@ export default class CommentMetadata extends React.Component {
                 flex: 1
             }}>
 
-                <Image
-                    style={[this.styles.element, {width: 24, height: 24, borderRadius: 12}]}
-                    source={{uri: this.props.image}}
-                />
+                {this.getPicture()}
+
 
                 <Text style={[this.styles.element, {color: colors.COLOR_MIDGREY}]}>{this.props.name}</Text>
                 <Text style={[this.styles.element, {color: colors.COLOR_MIDGREY}]}>{this.getTime()}</Text>

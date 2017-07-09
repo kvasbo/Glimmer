@@ -119,13 +119,9 @@ class PageThread extends React.Component {
         if (this.state.loading) return null;
 
         const activeColor = colors.COLOR_GRAD1
-        const passiveColor = colors.COLOR_DARKGREY
         const size = 30;
 
-        var leftColor = activeColor;
-        var rightColor = activeColor;
-
-        var showPage = "";
+        let showPage = "";
 
         if (typeof this.props.comments[this.props.post.id] !== "undefined") showPage = this.props.comments[this.props.post.id].activePage;
 
@@ -133,57 +129,73 @@ class PageThread extends React.Component {
 
             <View style={pageStyles.sideVelgerView}>
 
+                <TouchableOpacity onPress={() => this._gotoTop()}>
+                    <View style={pageStyles.iconButton}>
+                        <Icon
+                            size={size}
+                            name='ios-arrow-up'
+                            color={activeColor}
+                        />
+                    </View>
+                </TouchableOpacity>
 
-                <Icon
-                    size={size}
-                    name='ios-arrow-up'
-                    color={activeColor}
-                    onPress={() => this._gotoTop()}
-                />
+                <TouchableOpacity onPress={() => this._gotoBottom()}>
+                    <View style={pageStyles.iconButton}>
+                        <Icon
+                            size={size}
+                            name='ios-arrow-down'
+                            color={activeColor}
+                        />
+                    </View>
+                </TouchableOpacity>
 
-                <Icon
-                    size={size}
-                    name='ios-arrow-down'
-                    color={activeColor}
-                    onPress={() => this._gotoBottom()}
-                />
+                <TouchableOpacity onPress={() => {
 
-                <Icon
-                    size={size}
-                    name='ios-create-outline'
-                    color={activeColor}
-                    onPress={() => {
+                    this.props.navigator.push({
+                        screen: 'glimmer.PageNewForumComment', // unique ID registered with Navigation.registerScreen
+                        title: "Ny kommentar", // navigation bar title of the pushed screen (optional)
+                        passProps: {postId: this.props.post.id}, // Object that will be passed as props to the pushed screen (optional)
+                        animated: true, // does the push have transition animation or does it happen immediately (optional),
+                    });
 
-                        this.props.navigator.push({
-                            screen: 'glimmer.PageNewForumComment', // unique ID registered with Navigation.registerScreen
-                            title: "Ny kommentar", // navigation bar title of the pushed screen (optional)
-                            passProps: {postId: this.props.post.id}, // Object that will be passed as props to the pushed screen (optional)
-                            animated: true, // does the push have transition animation or does it happen immediately (optional),
-                        });
+                }}>
+                    <View style={pageStyles.iconButton}>
+                        <Icon
+                            size={size}
+                            name='ios-create-outline'
+                            color={activeColor}
+                        />
+                    </View>
+                </TouchableOpacity>
 
-                    }}
-                />
 
                 <TouchableOpacity onPress={() => {
                 }}>
-                    <Text style={pageStyles.pageNumberText}>{showPage}</Text>
+                    <View style={pageStyles.iconButton}>
+                        <Text style={pageStyles.pageNumberText}>{showPage}</Text>
+                    </View>
                 </TouchableOpacity>
 
-                <Icon
-                    size={size}
-                    name='ios-arrow-back'
-                    color={leftColor}
-                    onPress={() => this._prevPage()}
-                    onLongPress={() => this._oldestPage()}
-                />
 
-                <Icon
-                    size={size}
-                    name='ios-arrow-forward'
-                    color={rightColor}
-                    onPress={() => this._nextPage()}
-                    onLongPress={() => this._newestPage()}
-                />
+                <TouchableOpacity onLongPress={() => this._oldestPage()} onPress={() => this._prevPage()}>
+                    <View style={pageStyles.iconButton}>
+                        <Icon
+                            size={size}
+                            name='ios-arrow-back'
+                            color={activeColor}
+                        />
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onLongPress={() => this._newestPage()} onPress={() => this._nextPage()}>
+                    <View style={pageStyles.iconButton}>
+                        <Icon
+                            size={size}
+                            name='ios-arrow-forward'
+                            color={activeColor}
+                        />
+                    </View>
+                </TouchableOpacity>
 
             </View>
         )
@@ -233,6 +245,7 @@ class PageThread extends React.Component {
 
 
             <View style={pageStyles.container}>
+
                 <ScrollView ref={component => this.scrollbar = component} style={{flex: 1}}>
 
                     <ThreadForumPost data={this.props.post} metaData={false}
@@ -263,7 +276,7 @@ const pageStyles = StyleSheet.create({
         backgroundColor: colors.COLOR_LIGHT,
         paddingLeft: 0,
         paddingTop: 0,
-        paddingBottom: 30,
+        paddingBottom: 20,
         paddingRight: 0,
     },
     sideVelgerView: {
@@ -271,16 +284,29 @@ const pageStyles = StyleSheet.create({
         justifyContent: "space-around",
         alignContent: "center",
         alignItems: "center",
+        padding: 0,
     },
     navBar: {
-        height: 13,
+        height: 20,
+        padding: 0,
         margin: 0,
-        paddingTop: 5,
+        paddingTop: 3,
+        borderTopColor: colors.COLOR_GRAD2,
+        borderTopWidth: 1
     },
     pageNumberText: {
         fontSize: 15,
         fontWeight: "300",
         color: colors.COLOR_GRAD1
+    },
+    iconButton: {
+        padding: 0,
+        height: 35,
+        width: 50,
+        margin: 0,
+        justifyContent: "center",
+        alignContent: "center",
+        alignItems: "center",
     }
 });
 
