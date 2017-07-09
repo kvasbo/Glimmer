@@ -6,7 +6,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {StyleSheet, View} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
-import * as colors from "../Styles/colorConstants";
+import * as colors from "../src/Styles/colorConstants";
 
 class PageConversation extends React.Component {
 

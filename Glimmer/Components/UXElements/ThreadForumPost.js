@@ -6,7 +6,7 @@ import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 import ForumText from "./ForumText.js";
-import * as colors from "../../Styles/colorConstants"
+import * as colors from "../../src/Styles/colorConstants"
 
 var s = require('../Styles');
 

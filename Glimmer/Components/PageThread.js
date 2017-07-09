@@ -8,7 +8,7 @@ import {ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View}
 import Icon from "react-native-vector-icons/Ionicons";
 import ThreadForumPost from "./UXElements/ThreadForumPost";
 import ForumComment from "./UXElements/ForumComment";
-import * as colors from "../Styles/colorConstants";
+import * as colors from "../src/Styles/colorConstants";
 import {setForumPostCommentActivePage} from "../Redux/actions";
 
 const commentsInPage = 30;

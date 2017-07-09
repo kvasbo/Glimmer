@@ -4,7 +4,7 @@
 
 import React from "react";
 import {View} from "react-native";
-import * as colors from "../../Styles/colorConstants"
+import * as colors from "../../src/Styles/colorConstants"
 
 export default class Divider extends React.Component {
 

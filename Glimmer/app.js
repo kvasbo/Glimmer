@@ -14,7 +14,7 @@ import "moment/locale/nb";
 import GlimmerAuth from "./src/auth.js";
 import GlimmerAPI from "./src/api";
 import Helpers from "./src/helpers";
-import NavStyles from "./Styles/NavigatorStyles";
+import NavStyles from "./src/Styles/NavigatorStyles";
 import { iconsMap, iconsLoaded } from './Components/UXElements/Icons';
 
 global.moment = require('moment');

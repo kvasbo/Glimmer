@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Alert, Animated, FlatList, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
-import NavigatorStyles from "../Styles/NavigatorStyles";
+import NavigatorStyles from "../src/Styles/NavigatorStyles";
 
 //TODO sort by status and then name
 

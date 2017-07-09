@@ -5,7 +5,7 @@
 import React from "react";
 import {FlatList, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View, Alert} from "react-native";
 import {setActivePostingForum} from "../Redux/actions";
-import * as colors from "../Styles/colorConstants";
+import * as colors from "../src/Styles/colorConstants";
 
 export default class PageForumList extends React.Component {
 

@@ -5,7 +5,7 @@
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {addNewMessageRecipient, removeNewMessageRecipient, clearNewMessageRecipient} from "../../Redux/actions"
-import * as colors from "../../Styles/colorConstants"
+import * as colors from "../../src/Styles/colorConstants"
 
 //const CachedImage = require('react-native-cached-image');
 

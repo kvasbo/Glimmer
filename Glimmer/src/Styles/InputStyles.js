@@ -1,4 +1,4 @@
-import * as colors from "../Styles/colorConstants"
+import * as colors from "./colorConstants"
 import {StyleSheet} from 'react-native'
 
 export default InputStyles = StyleSheet.create({

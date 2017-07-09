@@ -7,10 +7,10 @@ import {connect} from "react-redux";
 import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Divider from "./UXElements/Divider";
-import * as colors from "../Styles/colorConstants";
+import * as colors from "../src/Styles/colorConstants";
 
 //Get common list styles
-const listStyles = require('../Styles/ListStyles');
+const listStyles = require('../src/Styles/ListStyles');
 
 class PageMessages extends React.Component {
 

@@ -6,8 +6,8 @@ import React from "react";
 import {Alert, Button, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 import {clearMessageRecipients} from "../Redux/actions";
-import InputStyles from "../Styles/InputStyles";
-import * as colors from "../Styles/colorConstants";
+import InputStyles from "../src/Styles/InputStyles";
+import * as colors from "../src/Styles/colorConstants";
 
 export default class PageNewMessage extends React.Component {
 

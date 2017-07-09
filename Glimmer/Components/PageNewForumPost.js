@@ -5,7 +5,7 @@
 import React from "react";
 import {StyleSheet, Text} from "react-native";
 import WriteNewPostOrComment from "./UXElements/WriteNewPostOrComment";
-import * as colors from "../Styles/colorConstants";
+import * as colors from "../src/Styles/colorConstants";
 
 export default class PageNewForumPost extends React.Component {
 

@@ -1,4 +1,4 @@
-import * as colors from "../Styles/colorConstants"
+import * as colors from "./colorConstants"
 
 export default NavigatorStyles = {
 

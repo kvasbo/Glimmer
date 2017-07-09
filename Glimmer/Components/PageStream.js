@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import {FlatList, StyleSheet} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";
-import * as colors from "../Styles/colorConstants";
+import * as colors from "../src/Styles/colorConstants";
 
 class PageStream extends React.Component {
 

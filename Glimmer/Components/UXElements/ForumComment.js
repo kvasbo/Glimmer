@@ -7,7 +7,7 @@ import {Image, StyleSheet, Text, View} from "react-native";
 import ForumText from "./ForumText.js";
 import GiKudos from "./GiKudos";
 import VisKudos from "./VisKudos";
-import * as colors from "../../Styles/colorConstants";
+import * as colors from "../../src/Styles/colorConstants";
 
 var s = require('../Styles');
 
