@@ -1,5 +1,5 @@
 import {addKretsPersonBatch, addUserBatch} from "../Redux/actions";
-const User = require("../DataClasses/user").default;
+const User = require("../src/DataClasses/user").default;
 
 export default class KretsUpdater {
 
