@@ -383,7 +383,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
 WriteNewPostOrComment.propTypes = {
 
-    type: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['comment', 'post']).isRequired,
     postId: PropTypes.number,
     navigator: PropTypes.object,
     title: PropTypes.string

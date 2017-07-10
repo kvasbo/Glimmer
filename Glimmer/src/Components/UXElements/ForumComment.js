@@ -11,8 +11,6 @@ import VisKudos from "./VisKudos";
 import CommentMetadata from "./CommentMetadata";
 import * as colors from "../../Styles/colorConstants";
 
-var s = require('../Styles');
-
 export default class ForumComment extends React.Component {
 
     byMe = false;

@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {Button, Image, StyleSheet, Text, View} from "react-native";
 //const CachedImage = require('react-native-cached-image');
 
@@ -28,6 +29,11 @@ export default class PersonPopup extends React.Component {
             </View>
         );
     }
+}
+
+PersonPopup.propTypes = {
+    person: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired
 }
 
 const pageStyles = StyleSheet.create({

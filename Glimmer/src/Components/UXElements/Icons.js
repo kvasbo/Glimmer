@@ -30,7 +30,7 @@ const icons = {
 const defaultIconProvider = Ionicons;
 
 let iconsMap = {};
-let iconsLoaded = new Promise((resolve, reject) => {
+let iconsLoaded = new Promise((resolve) => {
     new Promise.all(
         Object.keys(icons).map(iconName => {
             const Provider = icons[iconName][2] || defaultIconProvider; // Ionicons

@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types"
 import {Text, View} from "react-native";
+import * as colors from "../../Styles/colorConstants";
 
 export default class Badge extends React.Component {
 
@@ -24,4 +26,15 @@ export default class Badge extends React.Component {
         );
     }
 
+}
+
+Badge.defaultProps = {
+    color: colors.COLOR_MIDGREY,
+    textColor: colors.COLOR_WHITE
+}
+
+Badge.propTypes = {
+    color: PropTypes.string,
+    textColor: PropTypes.string,
+    text: PropTypes.string.isRequired
 }

@@ -1,7 +1,7 @@
 /**
  * Created by kvasbo on 31.05.2017.
  */
-import React from "react";
+
 import {Linking} from "react-native";
 import * as Keychain from "react-native-keychain";
 import {setLoginStatus, setActiveUserId} from "./Redux/actions";
@@ -58,7 +58,7 @@ export default class glimmerAuth {
             Linking.addEventListener("url", handleUrl);
 
             function handleUrl(event) {
-                const [, query_string] = event.url.match(/\#(.*)/);
+                const [, query_string] = event.url.match(/#(.*)/);
                 const query = shittyQs(query_string);
 
                 helpers.log("Mottatt handleurl event")

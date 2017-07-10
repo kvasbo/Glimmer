@@ -30,7 +30,7 @@ class PageConversation extends React.Component {
             arbeidsMaur.messageUpdater.setMessageAsRead(mess.id);
         }
 
-        out = {};
+        let out = {};
         out._id = mess.id;
         out.text = mess.body.replace(/<(?:.|\n)*?>/gm, '');
 

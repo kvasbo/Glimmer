@@ -3,8 +3,9 @@
  */
 
 import React from "react";
-import {Alert, StyleSheet, TouchableOpacity, TouchableHighlight, Text, View} from "react-native";
-import * as colors from "../../Styles/colorConstants"
+import PropTypes from "prop-types";
+import {TouchableOpacity} from "react-native";
+import * as colors from "../../Styles/colorConstants";
 import Badge from "./Badge";
 
 export default class GiKudos extends React.Component {
@@ -73,8 +74,12 @@ export default class GiKudos extends React.Component {
     }
 }
 
-const pageStyles = StyleSheet.create({
+GiKudos.defaultProps = {
+    given: false,
+}
 
-    container: {},
-
-});
+GiKudos.propTypes = {
+    given: PropTypes.bool,
+    type: PropTypes.oneOf(['comment', 'post']).isRequired,
+    id: PropTypes.number.isRequired
+}

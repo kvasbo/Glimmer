@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types"
 import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
 import * as colors from "../../Styles/colorConstants"
 
@@ -25,6 +26,10 @@ export default class LoadingScreen extends React.Component {
             </View>
         );
     }
+}
+
+LoadingScreen.propTypes = {
+    text: PropTypes.string
 }
 
 const pageStyles = StyleSheet.create({

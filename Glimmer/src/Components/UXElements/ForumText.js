@@ -72,7 +72,7 @@ export default class ForumText extends React.Component {
         var text = "";
 
         if (typeof(this.props.text) !== "undefined" && this.props.text !== null) {
-            var text = this.props.text;
+            text = this.props.text;
         }
 
         text = this.replaceAll(text, 'href="//images', 'href="https://images');
@@ -85,6 +85,7 @@ export default class ForumText extends React.Component {
         return str.replace(new RegExp(find, 'g'), replace);
     }
 
+    //renderNode(node, index, siblings, parent, defaultRenderer) {
     renderNode(node, index, siblings, parent, defaultRenderer) {
 
         const Dim = Dimensions.get("window");
@@ -111,10 +112,6 @@ export default class ForumText extends React.Component {
         if (node.name == 'img') {
 
             try {
-
-                const Dim = Dimensions.get("window");
-
-                var width = Dim.width - 30;
 
                 return (
                     <Image key={index} resizeMode="contain" source={{uri: node.attribs.src}}
@@ -173,7 +170,7 @@ export default class ForumText extends React.Component {
 
 }
 
-ForumText.props = {
+ForumText.propTypes = {
     text: PropTypes.string.isRequired,
     navigator: PropTypes.object.isRequired,
 }

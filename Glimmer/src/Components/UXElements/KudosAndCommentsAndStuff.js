@@ -96,7 +96,12 @@ export default class KudosAndCommentsAndStuff extends React.Component {
     }
 }
 
-KudosAndCommentsAndStuff.PropTypes = {
+KudosAndCommentsAndStuff.defaultProps = {
+    byMe: false,
+}
+
+
+KudosAndCommentsAndStuff.propTypes = {
     post: PropTypes.object.isRequired,
     showCommentBadge: PropTypes.bool,
     byMe: PropTypes.bool,

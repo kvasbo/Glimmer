@@ -23,7 +23,7 @@ moment.locale('nb')
 const config = require("../config.js");
 
 //Some hacks
-console.disableYellowBox = true;
+//console.disableYellowBox = true;
 
 const errorHandler = (e, isFatal) => {
     if (isFatal) {

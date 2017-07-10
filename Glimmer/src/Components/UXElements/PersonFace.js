@@ -3,9 +3,10 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {addNewMessageRecipient, removeNewMessageRecipient, clearNewMessageRecipient} from "../../Redux/actions"
-import * as colors from "../../Styles/colorConstants"
+import {addNewMessageRecipient, removeNewMessageRecipient} from "../../Redux/actions";
+import * as colors from "../../Styles/colorConstants";
 
 //const CachedImage = require('react-native-cached-image');
 
@@ -15,7 +16,7 @@ export default class PersonFace extends React.Component {
         super(props);
 
         let initActive = false;
-        if(this.props.active === true) initActive = true
+        if (this.props.active === true) initActive = true
 
         this.state = {selected: initActive}
     }
@@ -33,12 +34,10 @@ export default class PersonFace extends React.Component {
         return this.props.person.image;
     }
 
-    getImage()
-    {
+    getImage() {
         let url = this.getImageUrl();
 
-        if(url==="https://underskog.no/assets/images/noicon_48.png")
-        {
+        if (url === "https://underskog.no/assets/images/noicon_48.png") {
             return <Image style={this.getSelectedStyle()} source={require('../../../icons/default_avatar.png')}/>
         }
 
@@ -48,17 +47,14 @@ export default class PersonFace extends React.Component {
 
     toggleState() {
 
-        if(__DEV__)
-        {
+        if (__DEV__) {
             console.log("Setstate", !this.state.selected, this.props.person.id, this.props.person.name);
         }
 
-        if(this.state.selected)
-        {
+        if (this.state.selected) {
             store.dispatch(removeNewMessageRecipient(this.props.person.id));
         }
-        else
-        {
+        else {
             store.dispatch(addNewMessageRecipient(this.props.person.id));
         }
 
@@ -91,6 +87,16 @@ export default class PersonFace extends React.Component {
         );
     }
 }
+
+PersonFace.defaultProps = {
+    active: true
+}
+
+PersonFace.propTypes = {
+    person: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired,
+    active: PropTypes.bool
+};
 
 const pageStyles = StyleSheet.create({
 
