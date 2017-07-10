@@ -1,12 +1,11 @@
 import React from "react";
-import {connect} from "react-redux";
+import {Provider} from "react-redux";
 import {Alert, AppState} from "react-native";
 import {registerScreens} from "./screens";
 import {Navigation} from "react-native-navigation";
 import Workers from "./Workers/index.js";
 import {applyMiddleware, createStore} from "redux";
 import {createLogger} from "redux-logger";
-import {Provider} from "react-redux";
 import glimmerReducers from "./Redux/index";
 import RNFirebase from "react-native-firebase";
 import {setJSExceptionHandler} from "react-native-exception-handler";
@@ -15,7 +14,7 @@ import GlimmerAuth from "./auth.js";
 import GlimmerAPI from "./api";
 import Helpers from "./helpers";
 import NavStyles from "./Styles/NavigatorStyles";
-import { iconsMap, iconsLoaded } from './Components/UXElements/Icons';
+import {iconsLoaded, iconsMap} from "./Components/UXElements/Icons";
 
 global.moment = require('moment');
 moment.locale('nb')
@@ -86,17 +85,14 @@ else {
 global.rootNavigation = Navigation;
 
 //Reload stuff on wake.
-_handleAppStateChange = (nextAppState) => {
+const _handleAppStateChange = (nextAppState) => {
     if (nextAppState === 'active') {
         console.log('App has come to the foreground!');
         arbeidsMaur.refreshForumData();
     }
 }
 
-
 class Glimmer extends React.Component {
-
-
 
     constructor(props) {
         super(props);
@@ -110,7 +106,7 @@ class Glimmer extends React.Component {
     attachStoreListener() {
 
         //Listen to state changes. This really needs to change at some later point.
-        reduxUnsubscribe = store.subscribe(() => {
+        store.subscribe(() => {
 
                 //Login state has changed, switch context (and start app, if first time)
                 if (store.getState().AppStatus.loggedIn !== this.loggedIn) {
@@ -138,7 +134,7 @@ class Glimmer extends React.Component {
 
         //This function will set the loggedin state to true or false in the store, which in term will trigger the store subscription.
         //Then the app starts. I know.
-        auth.checkAuth().then(()=>{
+        auth.checkAuth().then(() => {
             //Logged in, app will start
         }).catch((err) => {
             //Not logged in
@@ -150,7 +146,7 @@ class Glimmer extends React.Component {
 
             global.arbeidsMaur.initData();
 
-            iconsLoaded.then(()=>{
+            iconsLoaded.then(() => {
                 this.startMainApp();
             })
 
@@ -223,15 +219,15 @@ class Glimmer extends React.Component {
                     navigatorStyle: NavStyles.default,
                 },
                 /*{
-                    label: 'Mer',
-                    screen: 'glimmer.MenuLeft',
-                    icon: require('./icons/more.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                    title: 'Andre greier',
-                    iconInsets: { // add this to change icon position (optional, iOS only).
-                        right: 1, // optional, default is 0.
-                        left: -1
-                    },
-                }*/
+                 label: 'Mer',
+                 screen: 'glimmer.MenuLeft',
+                 icon: require('./icons/more.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                 title: 'Andre greier',
+                 iconInsets: { // add this to change icon position (optional, iOS only).
+                 right: 1, // optional, default is 0.
+                 left: -1
+                 },
+                 }*/
             ],
             tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
                 tabBarSelectedButtonColor: '#3499DB', // optional, change the color of the selected tab icon and text (only selected)

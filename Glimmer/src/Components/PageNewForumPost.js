@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {Text} from "react-native";
 import WriteNewPostOrComment from "./UXElements/WriteNewPostOrComment";
 
@@ -28,4 +29,8 @@ export default class PageNewForumPost extends React.Component {
         }
 
     }
+}
+
+PageNewForumPost.propTypes = {
+    navigator: PropTypes.object.isRequired
 }

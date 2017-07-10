@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {Button, ScrollView, StyleSheet, Text, View} from "react-native";
 import * as colors from "../Styles/colorConstants";
 
@@ -72,6 +73,10 @@ export default class PageLogin extends React.Component {
             </View>
         );
     }
+}
+
+PageLogin.propTypes = {
+    navigator: PropTypes.object.isRequired
 }
 
 const pageStyles = StyleSheet.create({

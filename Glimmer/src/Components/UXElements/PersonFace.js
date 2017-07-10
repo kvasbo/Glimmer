@@ -89,7 +89,7 @@ export default class PersonFace extends React.Component {
 }
 
 PersonFace.defaultProps = {
-    active: true
+    active: false
 }
 
 PersonFace.propTypes = {

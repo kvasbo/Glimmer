@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {Alert, Button, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 import {clearMessageRecipients} from "../Redux/actions";
@@ -14,7 +15,7 @@ export default class PageNewMessage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {text: null, receivers: []};
-
+        console.log(this.props);
     }
 
     componentDidMount() {
@@ -52,7 +53,7 @@ export default class PageNewMessage extends React.Component {
 
             if (typeof(users[userId]) !== "undefined") {
 
-                out.push(<PersonFace key={key} person={users[userId]} active={true}></PersonFace>);
+                out.push(<PersonFace key={key} person={users[userId]} active={true} navigator={this.props.navigator}></PersonFace>);
 
             }
         }
@@ -65,7 +66,7 @@ export default class PageNewMessage extends React.Component {
         if (this.state.text != "" && this.state.receivers.length > 0) {
             let sending = [];
 
-            for (key in this.state.receivers) {
+            for (let key in this.state.receivers) {
                 sending.push(arbeidsMaur.messageUpdater.sendMessageToUser(this.state.receivers[key], this.state.text));
             }
 
@@ -159,6 +160,10 @@ export default class PageNewMessage extends React.Component {
             </KeyboardAvoidingView>
         );
     }
+}
+
+PageNewMessage.propTypes = {
+    navigator: PropTypes.instanceOf("Navigator").isRequired
 }
 
 const pageStyles = StyleSheet.create({

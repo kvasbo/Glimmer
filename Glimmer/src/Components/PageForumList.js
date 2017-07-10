@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {Alert, FlatList, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {setActivePostingForum} from "../Redux/actions";
 import * as colors from "../Styles/colorConstants";
@@ -126,7 +127,7 @@ export default class PageForumList extends React.Component {
         if (this.state.onlyMostUsed) {
             var muchUsed = []; //= this.state.muchUsedForums;
             //Lag array av mye brukte
-            for (key in this.state.muchUsedForums) {
+            for (let key in this.state.muchUsedForums) {
                 muchUsed.push(this.state.muchUsedForums[key]);
             }
         }
@@ -240,6 +241,10 @@ export default class PageForumList extends React.Component {
     }
 }
 
+PageForumList.propTypes = {
+    navigator: PropTypes.object.isRequired,
+}
+
 class Forum extends React.Component {
 
     styles = new StyleSheet.create({
@@ -270,6 +275,10 @@ class Forum extends React.Component {
         )
 
     }
+}
+
+Forum.propTypes = {
+    forum: PropTypes.object.isRequired
 }
 
 const pageStyles = StyleSheet.create({

@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
@@ -129,6 +130,11 @@ class PageFavorites extends React.Component {
             );
         }
     }
+}
+
+PageFavorites.propTypes = {
+    favorites: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired
 }
 
 const pageStyles = StyleSheet.create({

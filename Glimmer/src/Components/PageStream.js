@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {FlatList, StyleSheet} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
@@ -112,6 +113,11 @@ class PageStream extends React.Component {
             );
         }
     }
+}
+
+PageStream.propTypes = {
+    navigator: PropTypes.object.isRequired,
+    posts: PropTypes.object.isRequired
 }
 
 const pageStyles = StyleSheet.create({

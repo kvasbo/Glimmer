@@ -17,7 +17,7 @@ export default class glimmerAPI {
 
         var data = "";
 
-        for (element in payload) {
+        for (let element in payload) {
             var tempStr = encodeURIComponent(element) + "=" + encodeURIComponent(payload[element]) + "&"
             data += tempStr;
         }

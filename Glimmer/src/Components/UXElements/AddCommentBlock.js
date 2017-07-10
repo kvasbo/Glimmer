@@ -5,7 +5,7 @@
 import React from "react";
 import {Button, Modal, StyleSheet, View} from "react-native";
 import WriteNewPostOrComment from "./WriteNewPostOrComment";
-
+import PropTypes from "prop-types";
 var ImagePicker = require('react-native-image-picker');
 
 export default class AddCommentBlock extends React.Component {
@@ -20,8 +20,6 @@ export default class AddCommentBlock extends React.Component {
     }
 
     render() {
-
-        var title = "Ny kommentar til " + this.props.title;
 
         return (
 
@@ -51,6 +49,11 @@ export default class AddCommentBlock extends React.Component {
 
     }
 
+}
+
+AddCommentBlock.propTypes = {
+    postId: PropTypes.number.isRequired,
+    navigator: PropTypes.object.isRequired
 }
 
 const pageStyles = StyleSheet.create({

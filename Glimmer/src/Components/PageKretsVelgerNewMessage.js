@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
 import {Alert, FlatList, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 import NavigatorStyles from "../Styles/NavigatorStyles";
@@ -173,6 +174,12 @@ class PageKretsVelger extends React.Component {
 
         );
     }
+}
+
+PageKretsVelger.propTypes = {
+    navigator: PropTypes.object.isRequired,
+    krets: PropTypes.array.isRequired,
+    users: PropTypes.object.isRequired,
 }
 
 const pageStyles = StyleSheet.create({

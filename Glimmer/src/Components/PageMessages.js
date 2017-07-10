@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -43,7 +44,7 @@ class PageMessages extends React.Component {
             case 'didAppear':
                 break;
             case 'willDisappear':
-
+                break;
             case 'didDisappear':
                 break;
         }
@@ -201,6 +202,16 @@ class Conversation extends React.Component {
             </View>
         )
     }
+}
+
+Conversation.propTypes = {
+    data: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired
+}
+
+PageMessages.propTypes = {
+    navigator: PropTypes.object.isRequired,
+    conversations: PropTypes.object.isRequired,
 }
 
 const pageStyles = StyleSheet.create({
