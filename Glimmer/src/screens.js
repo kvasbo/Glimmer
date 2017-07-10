@@ -20,27 +20,31 @@ export function registerScreens(store, Provider) {
 
     return new Promise((resolve, reject) => {
 
-        //Proper pages
-        Navigation.registerComponent('glimmer.PageSplashScreen', () => PageSplashScreen, store, Provider);
-        Navigation.registerComponent('glimmer.PageStream', () => PageStream, store, Provider);
-        Navigation.registerComponent('glimmer.PageFavorites', () => PageFavorites, store, Provider);
-        Navigation.registerComponent('glimmer.PageThread', () => PageThread, store, Provider);
-        Navigation.registerComponent('glimmer.PageMessages', () => PageMessages, store, Provider);
-        Navigation.registerComponent('glimmer.PageConversation', () => PageConversation, store, Provider);
-        Navigation.registerComponent('glimmer.PageNewMessage', () => PageNewMessage, store, Provider);
-        Navigation.registerComponent('glimmer.PageNewForumComment', () => PageNewForumComment, store, Provider);
-        Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
-        Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
+        try {
+            //Proper pages
+            Navigation.registerComponent('glimmer.PageSplashScreen', () => PageSplashScreen, store, Provider);
+            Navigation.registerComponent('glimmer.PageStream', () => PageStream, store, Provider);
+            Navigation.registerComponent('glimmer.PageFavorites', () => PageFavorites, store, Provider);
+            Navigation.registerComponent('glimmer.PageThread', () => PageThread, store, Provider);
+            Navigation.registerComponent('glimmer.PageMessages', () => PageMessages, store, Provider);
+            Navigation.registerComponent('glimmer.PageConversation', () => PageConversation, store, Provider);
+            Navigation.registerComponent('glimmer.PageNewMessage', () => PageNewMessage, store, Provider);
+            Navigation.registerComponent('glimmer.PageNewForumComment', () => PageNewForumComment, store, Provider);
+            Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
+            Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
 
-        //Helper pages
-        Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
-        Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, store, Provider);
+            //Helper pages
+            Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
+            Navigation.registerComponent('glimmer.PageKretsVelger', () => PageKretsVelger, store, Provider);
 
-        //Menus etc.
-        Navigation.registerComponent('glimmer.MenuLeft', () => PageMore, store, Provider);
-        Navigation.registerComponent('glimmer.PersonPopup', () => PersonPopup, store, Provider);
+            //Menus etc.
+            Navigation.registerComponent('glimmer.PersonPopup', () => PersonPopup, store, Provider);
 
-        resolve();
+            resolve();
+        }
+        catch (err) {
+            reject(err);
+        }
 
     })
 

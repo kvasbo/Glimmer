@@ -7,10 +7,9 @@ const initialPostState = {page: {}, activePage: 1}
 function ForumPostComment(state = initialState, action) {
     switch (action.type) {
 
-        case FORUMPOST_COMMENTS_ADD:
-
+        case FORUMPOST_COMMENTS_ADD: {
             //Create a copy
-            let newCommentsState = Object.assign({}, state);
+            let newCommentsState = Object.assign({}, state)
 
             //Ensure that we have the post id defined as an object
             if (typeof newCommentsState[action.postId] === "undefined") {
@@ -25,8 +24,9 @@ function ForumPostComment(state = initialState, action) {
 
             //Return
             return newCommentsState;
+        }
 
-        case FORUMPOST_COMMENTS_SET_ACTIVE_PAGE:
+        case FORUMPOST_COMMENTS_SET_ACTIVE_PAGE: {
 
             //Create a copy
             let newActiveState = Object.assign({}, state);
@@ -48,9 +48,10 @@ function ForumPostComment(state = initialState, action) {
             global.arbeidsMaur.forumUpdater.loadCommentsForPost(action.postId, action.activePage);
 
             return newActiveState;
-
-        default:
+        }
+        default: {
             return state
+        }
     }
 
 }

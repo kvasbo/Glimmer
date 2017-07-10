@@ -9,7 +9,6 @@ import {
     FORUMPOST_COMMENTS_ADD,
     FORUMPOST_COMMENTS_SET_ACTIVE_PAGE,
     KRETS_ADD_PERSON_BATCH,
-    MESSAGE_CONVERSATION_ADD,
     MESSAGE_CONVERSATON_ADD_BATCH,
     MESSAGE_RECIPIENTS_ADD_PERSON,
     MESSAGE_RECIPIENTS_CLEAR,
@@ -108,13 +107,6 @@ export function addUserBatch(users) {
     return {
         type: USERS_ADD_USER_BATCH,
         users
-    }
-}
-
-export function addConversation(conversation) {
-    return {
-        type: MESSAGE_CONVERSATION_ADD,
-        conversation
     }
 }
 

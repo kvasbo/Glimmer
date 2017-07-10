@@ -13,24 +13,24 @@ function MessageRecipients(state = initialState, action) {
 
         case MESSAGE_RECIPIENTS_ADD_PERSON:
 
-            var id = action.id;
+            var addId = action.id;
 
             var newState = Object.assign({}, state);
 
-            if(newState.recipients.indexOf(id) === -1)
+            if(newState.recipients.indexOf(addId) === -1)
             {
-                newState.recipients.push(id);
+                newState.recipients.push(addId);
             }
 
             return newState;
 
         case MESSAGE_RECIPIENTS_REMOVE_PERSON:
 
-            var id = action.id;
+            var removeId = action.id;
 
             return {
                 ...state,
-                recipients: [...state.recipients.filter(item => id !== item)]
+                recipients: [...state.recipients.filter(item => removeId !== item)]
             }
 
         default:

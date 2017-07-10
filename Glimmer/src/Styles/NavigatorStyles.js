@@ -1,6 +1,6 @@
 import * as colors from "./colorConstants"
 
-export default NavigatorStyles = {
+let NavigatorStyles = {
 
     default: {
 
@@ -55,3 +55,5 @@ export default NavigatorStyles = {
     }
 
 }
+
+export default NavigatorStyles;

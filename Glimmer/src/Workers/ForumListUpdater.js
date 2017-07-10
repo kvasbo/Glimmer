@@ -16,7 +16,7 @@ export default class ForumListUpdater {
      * @private
      */
     _addAPIForumsToList(forumBatch) {
-        for (forum in forumBatch) {
+        for (let forum in forumBatch) {
             this.tmpForums.push(forumBatch[forum]);
         }
     }
@@ -37,7 +37,7 @@ export default class ForumListUpdater {
 
         var updateId = Math.random();
 
-        for (key in this.tmpForums) {
+        for (let key in this.tmpForums) {
             var f = this.tmpForums[key];
             var tmpForum = new Forum(f.id, f.title, f.body, updateId);
             firebaseApp.database().ref('forums/list/' + f.id).set(tmpForum);

@@ -1,5 +1,4 @@
 import * as colors from "./colorConstants"
-
 import {StyleSheet} from 'react-native'
 
 module.exports = StyleSheet.create({

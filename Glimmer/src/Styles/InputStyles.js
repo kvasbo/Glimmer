@@ -1,7 +1,7 @@
-import * as colors from "./colorConstants"
+//import * as colors from "./colorConstants"
 import {StyleSheet} from 'react-native'
 
-export default InputStyles = StyleSheet.create({
+let InputStyles = StyleSheet.create({
 
     textBox: {
         backgroundColor: '#FFFFFF',
@@ -13,4 +13,6 @@ export default InputStyles = StyleSheet.create({
         borderRadius: 2
     }
 
-})
+});
+
+export default InputStyles

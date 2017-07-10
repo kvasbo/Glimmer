@@ -1,4 +1,4 @@
-import {KRETS_ADD_PERSON, KRETS_ADD_PERSON_BATCH} from "./constants";
+import {KRETS_ADD_PERSON_BATCH} from "./constants";
 
 const initialState = [];
 

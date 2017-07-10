@@ -12,27 +12,27 @@ function AppStatus(state = initialState, action) {
 
         case APPCONTROL_USER_LOGIN:
 
-            var s = Object.assign({}, state);
+            var newLoginState = Object.assign({}, state);
 
-            s.loggedIn = action.status;
+            newLoginState.loggedIn = action.status;
 
-            return s;
+            return newLoginState;
 
         case APPCONTROL_SET_ACTIVE_POSTING_FORUM:
 
-            var s = Object.assign({}, state);
+            var newForumState = Object.assign({}, state);
 
-            s.activePostingForum = action.forumId;
+            newForumState.activePostingForum = action.forumId;
 
-            return s;
+            return newForumState;
 
         case APPCONTROL_SET_CURRENT_USER:
 
-            var s = Object.assign({}, state);
+            var userState = Object.assign({}, state);
 
-            s.activeUserId = action.userId;
+            userState.activeUserId = action.userId;
 
-            return s;
+            return userState;
 
         default:
             return state

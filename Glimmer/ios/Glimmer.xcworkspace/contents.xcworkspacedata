@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Stickers.xcstickers">
+   </FileRef>
+   <FileRef
       location = "group:Glimmer.xcodeproj">
    </FileRef>
    <FileRef
