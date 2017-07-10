@@ -27,7 +27,7 @@ export default class VisKudos extends React.Component {
 
         let out = [];
 
-        for (key in this.props.kudos) {
+        for (let key in this.props.kudos) {
 
             out.push(<Badge
                     text={this.props.kudos[key].name}
@@ -70,7 +70,7 @@ export default class VisKudos extends React.Component {
     }
 }
 
-VisKudos.proptypes = {
+VisKudos.propTypes = {
     kudos: PropTypes.array.isRequired
 }
 

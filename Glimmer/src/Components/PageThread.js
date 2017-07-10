@@ -208,7 +208,11 @@ class PageThread extends React.Component {
 
         var out = [];
         for (let i = 0; i < tmpPosts.length; i++) {
-            out.push(<ForumComment key={tmpPosts[i].id} data={tmpPosts[i]}/>)
+
+            let byStarter = false;
+            if(tmpPosts[i].creator_id === this.props.post.creator_id) byStarter = true;
+
+            out.push(<ForumComment key={tmpPosts[i].id} byStarter={byStarter} data={tmpPosts[i]}/>);
         }
 
         return out;

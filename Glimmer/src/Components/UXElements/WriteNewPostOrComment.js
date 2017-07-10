@@ -20,7 +20,6 @@ import PropTypes from "prop-types";
 import InputStyles from "../../Styles/InputStyles";
 import * as colors from "../../Styles/colorConstants";
 const ImagePicker = require('react-native-image-picker');
-const TextStyles = require("../../Styles/TextStyles");
 
 const imagePickerOptions = {
     title: 'Velg bilde',
@@ -111,9 +110,9 @@ export default class WriteNewPostOrComment extends React.Component {
 
         if (this.props.type === "comment") {
 
-            var text = "";
+            var posttext = "";
             if (this.state.text !== "") {
-                var text = this.parseAndReplaceImages(this.state.text);
+                posttext = this.parseAndReplaceImages(this.state.text);
             }
             else {
                 Alert.alert(
@@ -124,7 +123,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
             //Post a new comment
 
-            arbeidsMaur.forumUpdater.postCommentInThread(text, this.props.postId).then((data) => {
+            arbeidsMaur.forumUpdater.postCommentInThread(posttext, this.props.postId).then(() => {
 
                 this._doClear();
                 this.props.navigator.pop();
@@ -151,7 +150,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
             //Post a new comment
 
-            arbeidsMaur.forumUpdater.postNewThread(forumId, this.state.title, body, []).then((data) => {
+            arbeidsMaur.forumUpdater.postNewThread(forumId, this.state.title, body, []).then(() => {
 
                 this._doClear();
                 this.arbeidsMaur.forumUpdater.loadFirstStream(1);
@@ -286,7 +285,7 @@ export default class WriteNewPostOrComment extends React.Component {
     getImageList() {
         var outImg = [];
 
-        for (key in this.state.images) {
+        for (let key in this.state.images) {
             outImg.push(
                 <View key={key} style={{justifyContent: 'flex-start', margin: 10}}>
                     <TouchableOpacity
@@ -336,15 +335,6 @@ export default class WriteNewPostOrComment extends React.Component {
 
     render() {
 
-        var title = "???";
-
-        if (this.props.type === "comment") {
-            title = "Ny kommentar til " + this.props.title;
-        }
-        else if (this.props.type === "post") {
-            title = "Ny post";
-        }
-
         return (
 
             <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={64} style={pageStyles.container}>
@@ -391,12 +381,16 @@ export default class WriteNewPostOrComment extends React.Component {
 
 }
 
-WriteNewPostOrComment.props = {
+WriteNewPostOrComment.propTypes = {
 
     type: PropTypes.string.isRequired,
     postId: PropTypes.number,
+    navigator: PropTypes.object,
+    title: PropTypes.string
 
 }
+
+
 
 const
     pageStyles = StyleSheet.create({

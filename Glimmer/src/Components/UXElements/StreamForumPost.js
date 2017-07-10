@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import CommentMetadata from "./CommentMetadata";
 import ForumText from "./ForumText.js";
@@ -59,7 +60,7 @@ export default class StreamForumPost extends React.Component {
 
             for (var i = 0; i <= 1; i++) {
                 if (typeof(images[i]) !== "undefined") {
-                    for (attr in images[i].attributes) {
+                    for (let attr in images[i].attributes) {
                         if (images[i].attributes[attr].name === "src") {
                             var uri = "https:" + images[i].attributes[attr].value;
                             var image = {src: uri, id: null, width: null, height: null}
@@ -106,11 +107,6 @@ export default class StreamForumPost extends React.Component {
     }
 
     render() {
-
-        var creator = null;
-        if (typeof this.props.data.creator_name !== "undefined") {
-            creator = this.props.data.creator_name;
-        }
 
         return (
 
@@ -160,6 +156,13 @@ export default class StreamForumPost extends React.Component {
             </View>
         );
     }
+
+}
+
+StreamForumPost.propTypes = {
+
+    data: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired,
 
 }
 

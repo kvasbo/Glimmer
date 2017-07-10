@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import {StyleSheet, View} from "react-native";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 import ForumText from "./ForumText.js";
@@ -39,11 +40,6 @@ export default class ThreadForumPost extends React.Component {
 
     render() {
 
-        var creator = null;
-        if (typeof this.props.data.creator_name !== "undefined") {
-            creator = this.props.data.creator_name;
-        }
-
         return (
 
             <View style={pageStyles.container}>
@@ -71,6 +67,13 @@ export default class ThreadForumPost extends React.Component {
             </View>
         );
     }
+
+}
+
+ThreadForumPost.propTypes = {
+
+    data: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired,
 
 }
 

@@ -35,7 +35,8 @@
     "auth": true,
     "firebaseApp": true,
     "moment": true,
-    "helpers": true
+    "helpers": true,
+    "arbeidsMaur": true
   },
   "extends": [
     "eslint:recommended",

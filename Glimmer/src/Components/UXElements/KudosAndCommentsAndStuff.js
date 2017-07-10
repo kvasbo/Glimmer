@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {TouchableOpacity, View} from "react-native";
 //import {Badge} from "react-native-elements";
 import GiKudos from "./GiKudos";
@@ -37,6 +38,13 @@ export default class KudosAndCommentsAndStuff extends React.Component {
         //If disabled, hide. Cause that's what you do.
         if (!this.props.showCommentBadge) return false;
 
+        var comColor = colors.COLOR_ORANGE;
+
+        if(this.props.post.comment_count === 0)
+        {
+            comColor = colors.COLOR_LIGHTGREY;
+        }
+
         var comText = "kommentar";
 
         if (this.props.post.comment_count !== 1) {
@@ -53,7 +61,7 @@ export default class KudosAndCommentsAndStuff extends React.Component {
             >
                 <Badge
                     text={this.props.post.comment_count + " " + comText}
-                    color={colors.COLOR_ORANGE}
+                    color={comColor}
                     textColor={colors.COLOR_WHITE}
                 />
             </TouchableOpacity>
@@ -86,4 +94,11 @@ export default class KudosAndCommentsAndStuff extends React.Component {
             </View>
         )
     }
+}
+
+KudosAndCommentsAndStuff.PropTypes = {
+    post: PropTypes.object.isRequired,
+    showCommentBadge: PropTypes.bool,
+    byMe: PropTypes.bool,
+    navigator: PropTypes.object.isRequired
 }

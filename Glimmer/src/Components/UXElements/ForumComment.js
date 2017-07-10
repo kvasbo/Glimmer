@@ -49,7 +49,8 @@ export default class ForumComment extends React.Component {
             <View style={pageStyles.container}>
 
                 <View>
-                    <CommentMetadata name={this.props.data.creator_name} time={this.props.data.created_at} image={this.props.data.creator_image}/>
+                    <CommentMetadata name={this.props.data.creator_name} time={this.props.data.created_at}
+                                     image={this.props.data.creator_image}/>
                 </View>
 
                 <View style={pageStyles.comment}>
@@ -65,15 +66,19 @@ export default class ForumComment extends React.Component {
 
 }
 
+ForumComment.defaultProps = {
+    byStarter: false
+};
+
 ForumComment.propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    byStarter: PropTypes.bool //Skrevet av trådstarter
 }
 
 const pageStyles = StyleSheet.create({
     container: {
         backgroundColor: colors.COLOR_WHITE,
         padding: 10,
-
         paddingBottom: 5,
         marginBottom: 2,
         marginTop: 2,
