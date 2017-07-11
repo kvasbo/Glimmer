@@ -1,4 +1,8 @@
+import {Platform} from "react-native";
+
 export default class Helpers {
+
+
 
     arrayUnique(array) {
         var a = array.concat();
@@ -16,12 +20,10 @@ export default class Helpers {
 
         let m = new moment(time);
 
-        if(new moment().diff(m, "hours") < 7)
-        {
+        if (new moment().diff(m, "hours") < 7) {
             return m.fromNow();
         }
-        else
-        {
+        else {
             return m.calendar();
         }
 
@@ -31,10 +33,23 @@ export default class Helpers {
 
     }
 
-    getPersonById(id)
-    {
+    getPersonById(id) {
         var tmp = global.store.getState().Krets;
         return tmp.filter((item) => id == item.person.id)
+    }
+
+    getPlatformDependentVars() {
+
+        let platform = Platform.OS;
+
+        var out = {};
+
+        out.platform = platform;
+
+        out.keyboardAvoidingOffset = (platform === "ios") ? 64 : -150;
+
+        return out;
+
     }
 
 }

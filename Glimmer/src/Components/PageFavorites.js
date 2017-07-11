@@ -126,6 +126,7 @@ class PageFavorites extends React.Component {
                     onEndReachedThreshold={0.5}
                     initialNumToRender={15}
                     ListHeaderComponent={this._getHeader}
+                    scrollsToTop={true}
                 />
             );
         }

@@ -91,8 +91,8 @@ export default class glimmerAPI {
 
                         }).catch((error) => {
                             console.log("JSON error", error);
-                            helpers.log("JSON error", error.toString());
-                            reject(error);
+
+                            resolve("API OK, but could not parse JSON.");
                         })
 
                     }
@@ -100,7 +100,7 @@ export default class glimmerAPI {
 
                         response.json().then((data) => {
                             console.log("API Rejected, token not accepted", data);
-                            helpers.log("API Rejected, token not accepted", url);
+
                             reject(Error("API Rejected, token, " + data.error.body));
                         })
 
@@ -132,13 +132,12 @@ export default class glimmerAPI {
 
                 }).catch((error) => {
                     console.log("Fetch error", error);
-                    helpers.log("Fetch error", error.toString());
+
                     reject(error);
                 })
 
             }).catch((error) => {
                 console.log("Getkey error", error);
-                helpers.log("Getkey error", error.toString());
                 reject(error);
             })
 

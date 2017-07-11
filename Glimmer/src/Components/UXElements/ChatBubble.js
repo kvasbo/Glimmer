@@ -17,8 +17,7 @@ export default class ChatBubble extends React.Component {
         this.fromMe = (this.props.message.from_id === store.getState().AppStatus.activeUserId) ? true : false;
         
         this.alignBox = (this.fromMe) ? "flex-end" : "flex-start";
- 
-        console.log("In bubble", this.props.message, this.fromMe, this.alignBox);
+
     }
 
     componentDidMount() {

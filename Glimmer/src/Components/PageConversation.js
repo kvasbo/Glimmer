@@ -6,17 +6,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import ReversedFlatList from "react-native-reversed-flat-list";
-import {StyleSheet, View, TextInput, KeyboardAvoidingView} from "react-native";
+import {KeyboardAvoidingView, StyleSheet, TextInput, View} from "react-native";
 import * as colors from "../Styles/colorConstants";
 import ChatBubble from "./UXElements/ChatBubble";
 
 class PageConversation extends React.Component {
 
+    flatList = null;
+    reloadTimer = null;
+
     constructor(props) {
 
         super(props);
         this.onSend = this.onSend.bind(this);
-        this.state = {refreshing: null}
+        this.state = {refreshing: null, text: null, lastPage: 1}
+        this._loadMoreItems = this._loadMoreItems.bind(this);
+
     }
 
     componentWillMount() {
@@ -24,6 +29,19 @@ class PageConversation extends React.Component {
         arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);
 
     }
+
+    componentDidMount() {
+
+        this.reloadTimer = setInterval(()=>{arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);}, 5000);
+
+    }
+
+    componentWillUnmount() {
+
+        clearInterval(this.reloadTimer);
+
+    }
+
 
     parseMessage(mess) {
 
@@ -54,8 +72,12 @@ class PageConversation extends React.Component {
 
     }
 
-    _loadMoreItems() {
+    _loadMoreItems(distance) {
 
+        var nextPage = this.state.lastPage+1;
+        arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, nextPage).then(() => {
+            this.setState({lastPage: nextPage});
+        });
     }
 
     _renderItem(item) {
@@ -65,40 +87,67 @@ class PageConversation extends React.Component {
         )
     }
 
-    componentDidMount() {
-
-    }
-
     _refresh() {
 
     }
 
-    onSend(messages = []) {
+    setRef(item)
+    {
+        this.flatList = item;
+    }
 
-        arbeidsMaur.messageUpdater.sendMessageToUser(this.props.user_id, messages[0].text).then((data) => {
-            arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);
-        })
+    onSend() {
+
+        if(this.state.text !== null && this.state.text !== "")
+        {
+            var sendText = this.state.text;
+            this.setState({text : ""});
+
+            arbeidsMaur.messageUpdater.sendMessageToUser(this.props.user_id, sendText).then((data) => {
+
+                arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);
+
+                if(this.flatList !== null) this.flatList.scrollToEnd();
+
+            }).catch((err) => {console.log(err)})
+        }
+
     }
 
     render() {
         return (
-            <KeyboardAvoidingView behavior="height" style={pageStyles.container}>
+            <View style={pageStyles.container}>
 
-                <ReversedFlatList
-                    style={pageStyles.chatWindow}
-                    data={this._getMessages()}
-                    onRefresh={() => this._refresh()}
-                    refreshing={this.state.refreshing}
-                    renderItem={this._renderItem}
-                    keyExtractor={(item, index) => item.id}
-                    onEndReached={this._loadMoreItems}
-                    onEndReachedThreshold={0.5}
-                    initialNumToRender={15}
-                />
+                <KeyboardAvoidingView keyboardVerticalOffset={helpers.getPlatformDependentVars().keyboardAvoidingOffset} behavior="padding" style={{flex:1}}>
 
-                <TextInput style={pageStyles.textWindow} />
+                    <ReversedFlatList
+                        style={pageStyles.chatWindow}
+                        data={this._getMessages()}
+                        onRefresh={() => this._refresh()}
+                        refreshing={this.state.refreshing}
+                        renderItem={this._renderItem}
+                        keyExtractor={(item, index) => item.id}
+                        onEndReached={this._loadMoreItems}
+                        onEndReachedThreshold={0.5}
+                        initialNumToRender={15}
+                        ref={(item) => this.setRef(item)}
+                    />
 
-            </KeyboardAvoidingView>
+                    <TextInput
+                        style={pageStyles.textWindow}
+                        multiline={false}
+                        autoFocus={false}
+                        autoCapitalize="sentences"
+                        onSubmitEditing={() => this.onSend()}
+                        returnKeyType="send"
+                        placeholderTextColor={colors.COLOR_LIGHTGREY}
+                        placeholder="..."
+                        value={this.state.text}
+                        onChangeText={(text) => this.setState({text: text})}
+                    />
+
+                </KeyboardAvoidingView>
+            </View>
         );
     }
 }
@@ -127,12 +176,12 @@ const pageStyles = StyleSheet.create({
         flex: 1
     },
     textWindow: {
-        height: 30,
+        height: 40,
         marginLeft: 0,
         marginRight: 0,
         padding: 10,
-        borderTopWidth: 1,
-        fontSize: 13,
+        borderTopWidth: 2,
+        fontSize: 14,
         borderTopColor: colors.COLOR_LIGHT
     }
 });

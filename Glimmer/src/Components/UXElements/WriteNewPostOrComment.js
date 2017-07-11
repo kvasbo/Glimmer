@@ -35,7 +35,6 @@ const imagePickerOptions = {
 
 export default class WriteNewPostOrComment extends React.Component {
 
-
     itemKey; //To store in async storage.
 
     constructor(props) {
@@ -333,46 +332,66 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
+    _getPictureButton()
+    {
+        if(helpers.getPlatformDependentVars().platform === "ios")
+        {
+            return ( <Button onPress={() => this.addPictures()} title="Bilder"/>)
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     render() {
 
         return (
 
-            <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={64} style={pageStyles.container}>
+            <View style={pageStyles.container}>
 
-                {this._getTitleBox()}
+                <KeyboardAvoidingView behavior="padding"
+                                      keyboardVerticalOffset={helpers.getPlatformDependentVars().keyboardAvoidingOffset}
+                                      style={{flex:1}}>
 
-                <View style={{flex: 1}}>
+                    {this._getTitleBox()}
 
-                    <TextInput
-                        textAlignVertical="top"
-                        style={[InputStyles.textBox, {flex: 1, margin: 0}]}
-                        autoCapitalize="sentences"
-                        autoFocus={false}
-                        onChangeText={(text) => this.textChanged(text)}
-                        onSelectionChange={(event) => this.cursormoved(event)}
-                        value={this.state.text}
-                        multiline={true}
-                        placeholder="Hva har du på hjertet?"
-                        placeholderTextColor={colors.COLOR_LIGHTGREY}
-                    />
+                    <View style={{flex: 1}}>
 
-                </View>
+                        <TextInput
+                            textAlignVertical="top"
+                            style={[InputStyles.textBox, {flex: 1, margin: 0}]}
+                            autoCapitalize="sentences"
+                            autoFocus={false}
+                            onChangeText={(text) => this.textChanged(text)}
+                            onSelectionChange={(event) => this.cursormoved(event)}
+                            value={this.state.text}
+                            multiline={true}
+                            placeholder="Hva har du på hjertet?"
+                            placeholderTextColor={colors.COLOR_LIGHTGREY}
+                        />
 
-                {this.getImageView()}
+                    </View>
 
-                <View style={{
-                    height: 50,
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                    alignItems: "center",
-                    padding: 3
-                }}>
-                    <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
-                    <Button onPress={() => this.addPictures()} title="Bilder"/>
-                    <Button onPress={() => this._post()} title="Send"/>
-                </View>
+                    {this.getImageView()}
 
-            </KeyboardAvoidingView>
+                    <View style={{
+                        height: 50,
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                        alignItems: "center",
+                        padding: 3
+                    }}>
+                        <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
+
+                        {this._getPictureButton()}
+
+                        <Button onPress={() => this._post()} title="Send"/>
+                    </View>
+
+                </KeyboardAvoidingView>
+
+            </View>
 
 
         )
@@ -389,8 +408,6 @@ WriteNewPostOrComment.propTypes = {
     title: PropTypes.string
 
 }
-
-
 
 const
     pageStyles = StyleSheet.create({

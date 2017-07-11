@@ -70,6 +70,7 @@ ForumComment.defaultProps = {
 
 ForumComment.propTypes = {
     data: PropTypes.object.isRequired,
+    navigator: PropTypes.object.isRequired,
     byStarter: PropTypes.bool //Skrevet av trådstarter
 }
 
