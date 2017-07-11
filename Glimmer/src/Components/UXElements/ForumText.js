@@ -180,5 +180,4 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: colors.COLOR_HIGHLIGHT,
     },
-    p: {}
 });
