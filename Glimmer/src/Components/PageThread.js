@@ -212,7 +212,7 @@ class PageThread extends React.Component {
             let byStarter = false;
             if(tmpPosts[i].creator_id === this.props.post.creator_id) byStarter = true;
 
-            out.push(<ForumComment key={tmpPosts[i].id} byStarter={byStarter} data={tmpPosts[i]}/>);
+            out.push(<ForumComment key={tmpPosts[i].id} byStarter={byStarter} navigator={this.props.navigator} data={tmpPosts[i]}/>);
         }
 
         return out;
@@ -229,9 +229,8 @@ class PageThread extends React.Component {
                 <View style={{flex: 1}}>
                     <ScrollView ref={component => this.scrollbar = component} style={{flex: 1}}>
 
-                        <ThreadForumPost data={this.props.post} metaData={false}
-                                         cut={false}
-                                         touchable={false}/>
+                        <ThreadForumPost data={this.props.post} navigator={this.props.navigator} metaData={false}
+                                         cut={false} />
                         <View ref={component => this.firstpost = component}/>
 
                         {this.getComments()}

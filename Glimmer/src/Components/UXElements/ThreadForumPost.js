@@ -50,7 +50,7 @@ export default class ThreadForumPost extends React.Component {
                 </View>
 
                 <View style={pageStyles.thePost}>
-                    <ForumText webview={true} cut={false} text={this.props.data.body} images={true}
+                    <ForumText webview={true} cut={false} text={this.props.data.body} navigator={this.props.navigator} images={true}
                                style={{marginBottom: 10}}/>
                 </View>
 

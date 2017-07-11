@@ -23,6 +23,7 @@ const config = require("../config.js");
 
 //Some hacks
 //console.disableYellowBox = true;
+console.ignoredYellowBox = ['[xmldom'];
 
 const errorHandler = (e, isFatal) => {
     if (isFatal) {

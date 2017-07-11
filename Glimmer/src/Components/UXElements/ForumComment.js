@@ -52,7 +52,7 @@ export default class ForumComment extends React.Component {
                 </View>
 
                 <View style={pageStyles.comment}>
-                    <ForumText webview={true} cut={false} text={this.props.data.body}/>
+                    <ForumText webview={true} cut={false} text={this.props.data.body} navigator={this.props.navigator}/>
                 </View>
                 <View style={{flexDirection: "row", margin: 10, marginTop: 5, padding: 0}}>
                     {this.getKudosSection()}

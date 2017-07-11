@@ -29,14 +29,15 @@
     "react"
   ],
   "globals": {
-    "api": true,
-    "store": true,
-    "__DEV__": true,
-    "auth": true,
-    "firebaseApp": true,
-    "moment": true,
-    "helpers": true,
-    "arbeidsMaur": true
+    "api": false,
+    "store": false,
+    "__DEV__": false,
+    "auth": false,
+    "firebaseApp": false,
+    "moment": false,
+    "helpers": false,
+    "arbeidsMaur": false,
+    "fetch": false
   },
   "extends": [
     "eslint:recommended",
