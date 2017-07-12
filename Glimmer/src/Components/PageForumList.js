@@ -62,7 +62,7 @@ export default class PageForumList extends React.Component {
                 if (store.getState().AppStatus.activePostingForum !== null) {
                     this.props.navigator.push({
                         screen: 'glimmer.PageNewForumPost', // unique ID registered with Navigation.registerScreen
-                        title: "Nytt innlegg", // navigation bar title of the pushed screen (optional)
+                        title: "Post", // navigation bar title of the pushed screen (optional)
                         animated: true, // does the push have transition animation or does it happen immediately (optional)
                     });
                 }
@@ -123,6 +123,19 @@ export default class PageForumList extends React.Component {
 
     }
 
+    getFilterColor(key) {
+
+        if(key === this.state.filter)
+        {
+            return colors.COLOR_HIGHLIGHT
+        }
+        else
+        {
+            return colors.COLOR_BLACK
+        }
+
+    }
+
     getFilterList() {
 
         var out = [];
@@ -132,7 +145,7 @@ export default class PageForumList extends React.Component {
                 <View key={this.filters.special[key]}>
                     <TouchableOpacity
                         onPress={() => this.setFilter(this.filters.special[key])}>
-                        <Text style={pageStyles.selectionLetter}
+                        <Text style={[pageStyles.forumSelection, pageStyles.selectionSpecial, {color: this.getFilterColor(this.filters.special[key])}]}
                         >{this.filters.special[key]}</Text>
                     </TouchableOpacity>
                 </View>
@@ -145,7 +158,7 @@ export default class PageForumList extends React.Component {
                 <View key={this.filters.alpha[key]}>
                     <TouchableOpacity
                         onPress={() => this.setFilter(this.filters.alpha[key])}>
-                        <Text style={pageStyles.selectionLetter}
+                        <Text style={[pageStyles.forumSelection, pageStyles.selectionLetter, {color: this.getFilterColor(this.filters.alpha[key])}]}
                         >{this.filters.alpha[key]}</Text>
                     </TouchableOpacity>
                 </View>
@@ -158,7 +171,7 @@ export default class PageForumList extends React.Component {
                 <View key={this.filters.theEnd[key]}>
                     <TouchableOpacity
                         onPress={() => this.setFilter(this.filters.theEnd[key])}>
-                        <Text style={pageStyles.selectionLetter}
+                        <Text style={[pageStyles.forumSelection, pageStyles.selectionLetter, {color: this.getFilterColor(this.filters.theEnd[key])}]}
                         >{this.filters.theEnd[key]}</Text>
                     </TouchableOpacity>
                 </View>
@@ -205,7 +218,7 @@ export default class PageForumList extends React.Component {
         else if (this.state.filter === "#") {
 
             return arr.filter((forum) => {
-                return !this.filters.alpha.includes(forum.title.toLocaleLowerCase().substring(0,1));
+                return !this.filters.alpha.includes(forum.title.toLocaleLowerCase().substring(0, 1));
             })
 
         }
@@ -217,6 +230,10 @@ export default class PageForumList extends React.Component {
 
     }
 
+    _renderItem(item) {
+        let selected = (item.id === this.state.chosenForum);
+        return (<Forum forum={item} selected={selected}></Forum>)
+    }
 
     render() {
 
@@ -234,7 +251,7 @@ export default class PageForumList extends React.Component {
                     <FlatList style={pageStyles.container}
                               data={this.getFilteredForumList()}
                               keyExtractor={(item, index) => item.id}
-                              renderItem={({item}) => <Forum forum={item}></Forum>}
+                              renderItem={({item}) => this._renderItem(item)}
                     />
 
                 </View>
@@ -244,57 +261,6 @@ export default class PageForumList extends React.Component {
         );
     }
 }
-
-/*
-
- <View style={{height: 70, alignItems: "center", justifyContent: "center", margin: 0}}>
- <Text style={{fontSize: 20}}>{this._getChosenForumInfo()}</Text>
- </View>
-
- <View style={{flexDirection: "row", height: 50, backgroundColor: colors.COLOR_GRAD2}}>
-
- <View style={{flex: 1, padding: 10, flexDirection: "row", alignItems: "center"}}>
- <TextInput
- style={{
- height: 33,
- borderColor: colors.COLOR_LIGHT,
- color: colors.COLOR_DARKGREY,
- backgroundColor: colors.COLOR_WHITE,
- fontSize: 13,
- borderWidth: 1,
- padding: 5,
- paddingLeft: 10,
- paddingRight: 10,
- margin: 0,
- flex: 1
- }}
- onChangeText={(text) => this.setState({filterText: text})}
- value={this.state.text}
- placeholder="Filtrér"
- />
- </View>
-
- <View style={{
- flex: 1,
- padding: 10,
- flexDirection: "row",
- alignItems: "center",
- justifyContent: "space-around"
- }}>
-
- <Text style={{color: colors.COLOR_LIGHT, marginRight: 5}}>Kun velbrukte:</Text>
-
- <Switch
- onValueChange={(value) => this.setState({onlyMostUsed: value})}
- value={this.state.onlyMostUsed}
- />
-
- </View>
-
-
- </View>
-
- */
 
 PageForumList.propTypes = {
     navigator: PropTypes.object.isRequired,
@@ -323,12 +289,14 @@ class Forum extends React.Component {
 
     render() {
 
+        let style = (this.props.selected) ? this.styles.selectedText : this.styles.forumText;
+
         return (
             <TouchableOpacity onPress={() => {
                 store.dispatch(setActivePostingForum(this.props.forum.id));
             }}>
                 <View style={this.styles.forumContainer}>
-                    <Text style={this.styles.forumText}>{this.props.forum.title}</Text>
+                    <Text style={style}>{this.props.forum.title}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -336,8 +304,13 @@ class Forum extends React.Component {
     }
 }
 
+Forum.defaultProps = {
+    selected: false
+}
+
 Forum.propTypes = {
-    forum: PropTypes.object.isRequired
+    forum: PropTypes.object.isRequired,
+    selected: PropTypes.bool
 }
 
 const pageStyles = StyleSheet.create({
@@ -350,13 +323,25 @@ const pageStyles = StyleSheet.create({
         paddingRight: 0,
     },
 
+    forumSelection: {
+        padding: 3,
+        margin: 4,
+        fontSize: 15,
+        height: 22,
+        textAlignVertical: "center"
+    },
+
     selectionLetter: {
-        paddingTop: 3,
-        paddingBottom: 3,
+        paddingLeft: 3,
+        width: 26,
+        textAlign: "center",
+
+    },
+
+    selectionSpecial: {
+        textAlign: "left",
+        width: 94,
         paddingLeft: 6,
-        paddingRight: 6,
-        margin: 3,
-        fontSize: 16,
     }
 
 });

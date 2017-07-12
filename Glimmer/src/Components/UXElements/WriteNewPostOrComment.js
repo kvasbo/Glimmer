@@ -52,7 +52,7 @@ export default class WriteNewPostOrComment extends React.Component {
             this.itemKey = "@trash"
         }
 
-        this.state = {text: '', title: '', tags: [], images: {}, bodyCursorPosition: null};
+        this.state = {text: '', title: '', forumName: "", tags: [], images: {}, bodyCursorPosition: null};
 
         console.log("Writer props", this.props);
 
@@ -74,6 +74,16 @@ export default class WriteNewPostOrComment extends React.Component {
             }
 
         });
+
+        arbeidsMaur.forumListUpdater.getForumInfo(store.getState().AppStatus.activePostingForum).then((data)=>{
+
+            this.setState({forumName:data.title});
+
+            this.props.navigator.setTitle({
+                title: "Post i " + data.title, // the new title of the screen as appears in the nav bar
+            });
+
+        })
 
     }
 

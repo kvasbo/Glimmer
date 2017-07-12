@@ -20,8 +20,8 @@ let NavigatorStyles = {
         tabBarHidden: false, // make the screen content hide the tab bar (remembered across pushes)
         statusBarTextColorScheme: 'dark', // text color of status bar, 'dark' / 'light' (remembered across pushes)
         //statusBarTextColorSchemeSingleScreen: 'light', // same as statusBarTextColorScheme but does NOT remember across pushes
-        navBarSubtitleColor: colors.COLOR_LIGHT, // subtitle color
-        //navBarSubtitleFontFamily: 'font-name', // subtitle font
+        //navBarSubtitleColor: "red", // subtitle color
+        //navBarSubtitleFontFamily: 'system', // subtitle font
         screenBackgroundColor: colors.COLOR_LIGHT, // Default screen color, visible before the actual react view is rendered
         //orientation: 'portrait', // Sets a specific orientation to a modal and all screens pushed to it. Default: 'auto'. Supported values: 'auto', 'landscape', 'portrait'
         statusBarBackgroundColor: colors.COLOR_GRAD2,
@@ -48,7 +48,7 @@ let NavigatorStyles = {
         //navigationBarColor: '#000000', // change the background color of the bottom native navigation bar.
         //navBarTitleTextCentered: true, // default: false. centers the title.
         //topBarElevationShadowEnabled: false, // default: true. Disables TopBar elevation shadow on Lolipop and above
-        //statusBarColor: '#000000', // change the color of the status bar.
+        statusBarColor: colors.COLOR_GRAD2, // change the color of the status bar.
         //collapsingToolBarImage: "http://lorempixel.com/400/200/", // Collapsing Toolbar image.
         //collapsingToolBarImage: require('../../img/topbar.jpg'), // Collapsing Toolbar image. Either use a url or require a local image.
         //collapsingToolBarCollapsedColor: '#0f2362', // Collapsing Toolbar scrim color.
