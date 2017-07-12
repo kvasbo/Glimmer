@@ -4,7 +4,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {Alert, FlatList, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Alert, FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {setActivePostingForum} from "../Redux/actions";
 import * as colors from "../Styles/colorConstants";
 
@@ -12,19 +12,24 @@ export default class PageForumList extends React.Component {
 
     reduxUnsubscribe = null;
 
+    filters = {
+        special: ["populære"],
+        alpha: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "æ", "ø", "å"],
+        theEnd: ["#"],
+    }
+
     constructor(props) {
         super(props);
 
         this.forumsRef = firebaseApp.database().ref("forums");
         this.state = {
-            filterText: "",
+            filter: this.filters.special[0], //Hard coded as the first choice.
             loading: true,
             forums: [],
             chosenForum: store.getState().AppStatus.activePostingForum,
             chosenForumName: null,
             chosenForumBody: null,
-            mushUsedForums: [],
-            onlyMostUsed: true,
+            muchUsedForums: [],
         };
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
@@ -112,120 +117,119 @@ export default class PageForumList extends React.Component {
                     loading: false
                 });
 
-                //console.log("State set from db", this.state.forums, this.state.muchUsedForums, this.state.selectedForum);
-
             }
 
         });
 
     }
 
+    getFilterList() {
+
+        var out = [];
+
+        for (let key in this.filters.special) {
+            out.push(
+                <View key={this.filters.special[key]}>
+                    <TouchableOpacity
+                        onPress={() => this.setFilter(this.filters.special[key])}>
+                        <Text style={pageStyles.selectionLetter}
+                        >{this.filters.special[key]}</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+
+        for (let key in this.filters.alpha) {
+
+            out.push(
+                <View key={this.filters.alpha[key]}>
+                    <TouchableOpacity
+                        onPress={() => this.setFilter(this.filters.alpha[key])}>
+                        <Text style={pageStyles.selectionLetter}
+                        >{this.filters.alpha[key]}</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+
+        for (let key in this.filters.theEnd) {
+
+            out.push(
+                <View key={this.filters.theEnd[key]}>
+                    <TouchableOpacity
+                        onPress={() => this.setFilter(this.filters.theEnd[key])}>
+                        <Text style={pageStyles.selectionLetter}
+                        >{this.filters.theEnd[key]}</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+
+        return out;
+
+    }
+
+    setFilter(filter) {
+        this.setState({filter: filter});
+    }
+
     getFilteredForumList() {
 
         var arr = this.state.forums;
+        var filter = this.state.filter;
 
-        if (this.state.onlyMostUsed) {
-            var muchUsed = []; //= this.state.muchUsedForums;
-            //Lag array av mye brukte
-            for (let key in this.state.muchUsedForums) {
-                muchUsed.push(this.state.muchUsedForums[key]);
-            }
-        }
-
+        //Clean out null data due to quirk in Firebase
         arr = arr.filter((x) => {
-
             if (x == null) return false;
-
-            //Filtrer hvis vi skal dét.
-            if (this.state.onlyMostUsed) {
-                if (!muchUsed.includes(x.id)) return false;
-            }
-
             return true
-
         });
 
         arr.sort((x, y) => {
             return x.title.trim().localeCompare(y.title.trim());
         });
 
-        if (this.state.filterText === "") {
+        if (this.state.filter === "populære") {
+
+            var muchUsed = []; //= this.state.muchUsedForums;
+            //Lag array av mye brukte
+            for (let key in this.state.muchUsedForums) {
+                muchUsed.push(this.state.muchUsedForums[key]);
+            }
+
+            arr = arr.filter((x) => {
+                return (muchUsed.includes(x.id))
+            });
+
             return arr;
         }
-        else {
+        else if (this.state.filter === "#") {
 
             return arr.filter((forum) => {
-                return forum.title.toLocaleLowerCase().indexOf(this.state.filterText.toLocaleLowerCase()) !== -1;
+                return !this.filters.alpha.includes(forum.title.toLocaleLowerCase().substring(0,1));
             })
 
         }
-    }
-
-    _getChosenForumInfo() {
-
-        if (this.state.chosenForum === null) {
-            return "Intet forum valgt"
-        }
-
         else {
-            return this.state.chosenForumName;
+            return arr.filter((forum) => {
+                return forum.title.toLocaleLowerCase().indexOf(this.state.filter.toLocaleLowerCase()) === 0;
+            })
         }
 
     }
+
 
     render() {
 
         return (
             <View style={{flex: 1}}>
 
-                <View style={{height: 70, alignItems: "center", justifyContent: "center", margin: 0}}>
-                    <Text style={{fontSize: 20}}>{this._getChosenForumInfo()}</Text>
-                </View>
 
                 <View style={{flex: 1, paddingTop: 0}}>
 
-                    <View style={{flexDirection: "row", height: 50, backgroundColor: colors.COLOR_GRAD2}}>
-
-                        <View style={{flex: 1, padding: 10, flexDirection: "row", alignItems: "center"}}>
-                            <TextInput
-                                style={{
-                                    height: 33,
-                                    borderColor: colors.COLOR_LIGHT,
-                                    color: colors.COLOR_DARKGREY,
-                                    backgroundColor: colors.COLOR_WHITE,
-                                    fontSize: 13,
-                                    borderWidth: 1,
-                                    padding: 5,
-                                    paddingLeft: 10,
-                                    paddingRight: 10,
-                                    margin: 0,
-                                    flex: 1
-                                }}
-                                onChangeText={(text) => this.setState({filterText: text})}
-                                value={this.state.text}
-                                placeholder="Filtrér"
-                            />
-                        </View>
-
-                        <View style={{
-                            flex: 1,
-                            padding: 10,
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-around"
-                        }}>
-
-                            <Text style={{color: colors.COLOR_LIGHT, marginRight: 5}}>Kun velbrukte:</Text>
-
-                            <Switch
-                                onValueChange={(value) => this.setState({onlyMostUsed: value})}
-                                value={this.state.onlyMostUsed}
-                            />
-
-                        </View>
-
-
+                    <View style={{flexDirection: "row", flexWrap: "wrap"}}>
+                        {this.getFilterList()}
                     </View>
+
 
                     <FlatList style={pageStyles.container}
                               data={this.getFilteredForumList()}
@@ -240,6 +244,57 @@ export default class PageForumList extends React.Component {
         );
     }
 }
+
+/*
+
+ <View style={{height: 70, alignItems: "center", justifyContent: "center", margin: 0}}>
+ <Text style={{fontSize: 20}}>{this._getChosenForumInfo()}</Text>
+ </View>
+
+ <View style={{flexDirection: "row", height: 50, backgroundColor: colors.COLOR_GRAD2}}>
+
+ <View style={{flex: 1, padding: 10, flexDirection: "row", alignItems: "center"}}>
+ <TextInput
+ style={{
+ height: 33,
+ borderColor: colors.COLOR_LIGHT,
+ color: colors.COLOR_DARKGREY,
+ backgroundColor: colors.COLOR_WHITE,
+ fontSize: 13,
+ borderWidth: 1,
+ padding: 5,
+ paddingLeft: 10,
+ paddingRight: 10,
+ margin: 0,
+ flex: 1
+ }}
+ onChangeText={(text) => this.setState({filterText: text})}
+ value={this.state.text}
+ placeholder="Filtrér"
+ />
+ </View>
+
+ <View style={{
+ flex: 1,
+ padding: 10,
+ flexDirection: "row",
+ alignItems: "center",
+ justifyContent: "space-around"
+ }}>
+
+ <Text style={{color: colors.COLOR_LIGHT, marginRight: 5}}>Kun velbrukte:</Text>
+
+ <Switch
+ onValueChange={(value) => this.setState({onlyMostUsed: value})}
+ value={this.state.onlyMostUsed}
+ />
+
+ </View>
+
+
+ </View>
+
+ */
 
 PageForumList.propTypes = {
     navigator: PropTypes.object.isRequired,
@@ -258,6 +313,10 @@ class Forum extends React.Component {
 
         forumText: {
             color: colors.COLOR_WHITE,
+        },
+
+        selectedText: {
+            color: colors.COLOR_HIGHLIGHT,
         }
 
     });
@@ -290,4 +349,14 @@ const pageStyles = StyleSheet.create({
         paddingBottom: 30,
         paddingRight: 0,
     },
+
+    selectionLetter: {
+        paddingTop: 3,
+        paddingBottom: 3,
+        paddingLeft: 6,
+        paddingRight: 6,
+        margin: 3,
+        fontSize: 16,
+    }
+
 });

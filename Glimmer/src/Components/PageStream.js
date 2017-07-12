@@ -57,9 +57,7 @@ class PageStream extends React.Component {
 
         return (
 
-            <StreamForumPost navigator={this.props.navigator}
-                             cut={true} images={false} data={item.item}/>
-
+            <StreamForumPost navigator={this.props.navigator} data={item.item}/>
         )
     }
 

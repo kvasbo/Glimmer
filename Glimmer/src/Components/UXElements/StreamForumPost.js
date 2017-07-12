@@ -96,7 +96,7 @@ export default class StreamForumPost extends React.Component {
         if (this.state.showText) {
             return (
                 <View style={pageStyles.thePost}>
-                    <ForumText cut={false} text={this.props.data.body} images={true}
+                    <ForumText cut={false} key={this.props.data.id} text={this.props.data.body} navigator={this.props.navigator} images={true}
                                style={{flex: 1}}/>
                 </View>
             )
@@ -126,8 +126,8 @@ export default class StreamForumPost extends React.Component {
                             <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
                         </View>
 
-                        <View style={{margin: 4, marginLeft: 6, marginBottom: 2}}>
-                        <CommentMetadata  image={this.props.data.creator_image} showImage={false} name={this.props.data.creator_name}
+                        <View style={{margin: 4, marginLeft: 6, marginBottom: 2, marginRight: 6}}>
+                        <CommentMetadata  image={this.props.data.creator_image} showImage={true} name={this.props.data.creator_name}
                                          time={this.props.data.created_at} forum={this.props.data.forum_title}/>
 
                         </View>

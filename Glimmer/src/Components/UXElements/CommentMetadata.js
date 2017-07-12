@@ -29,7 +29,7 @@ export default class CommentMetadata extends React.Component {
 
         else {
             return (
-                <Text style={[this.styles.element, {color: colors.COLOR_MIDGREY}]}>{this.props.forum}</Text>
+                <Text style={[this.styles.element, {color: colors.COLOR_MIDGREY, fontSize: 12}]}>{this.props.forum}</Text>
             )
         }
 
@@ -51,6 +51,8 @@ export default class CommentMetadata extends React.Component {
 
     render() {
 
+        let forumText = (typeof this.props.forum === "undefined") ? "" : this.props.forum;
+
         return (
             <View style={{
                 flexDirection: "row",
@@ -63,11 +65,10 @@ export default class CommentMetadata extends React.Component {
 
                 {this.getPicture()}
 
-
-                <Text style={[this.styles.element, {color: colors.COLOR_MIDGREY}]}>{this.props.name}</Text>
-                <Text style={[this.styles.element, {color: colors.COLOR_MIDGREY}]}>{this.getTime()}</Text>
-
-                {this.getForumTitle()}
+                <View style={{flexDirection: "column"}}>
+                    <Text style={[{color: colors.COLOR_MIDGREY, fontSize: 12}]}>{this.props.name} {this.getTime()}</Text>
+                    {this.getForumTitle()}
+                </View>
 
             </View>
         )
