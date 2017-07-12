@@ -46,7 +46,7 @@ class PageFavorites extends React.Component {
     _refresh() {
 
         this.setState({refreshing: true});
-        global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then((data) => {
+        global.arbeidsMaur.forumUpdater.loadFirstFavorites(1).then((data) => {
             this.setState({refreshing: false});
         });
 

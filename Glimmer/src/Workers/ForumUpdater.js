@@ -28,14 +28,14 @@ export default class ForumUpdater {
     }
 
     loadFirstFavorites(depth = 5) {
-        return this.addFavorites(1, depth);
+        return this.addFavorites(1, depth, true);
     }
 
     addPagesToFavorites(numberOfPages) {
         this.addFavorites(this.lastpage_favs + 1, numberOfPages);
     }
 
-    addFavorites(from = 1, depth = 5) {
+    addFavorites(from = 1, depth = 5, flush=false) {
 
         return new Promise((resolve, reject) => {
 
@@ -75,7 +75,7 @@ export default class ForumUpdater {
                     }
                 }
 
-                global.store.dispatch(addFavoritesPostBatch(tmpPosts));
+                store.dispatch(addFavoritesPostBatch(tmpPosts, flush));
 
                 this.lastpage_favs = from + depth - 1;
 
@@ -88,7 +88,7 @@ export default class ForumUpdater {
     }
 
     loadFirstStream(depth = 5) {
-        return this.addStream(1, depth);
+        return this.addStream(1, depth, true);
     }
 
     addPagesToStream(numberOfPages) {
@@ -96,7 +96,7 @@ export default class ForumUpdater {
         this.addStream(this.lastpage_stream + 1, numberOfPages);
     }
 
-    addStream(from = 1, depth = 5) {
+    addStream(from = 1, depth = 5, flush = false) {
 
         return new Promise((resolve, reject) => {
 
@@ -140,7 +140,7 @@ export default class ForumUpdater {
 
                 }
 
-                store.dispatch(addStreamPostBatch(tmpPosts));
+                store.dispatch(addStreamPostBatch(tmpPosts, flush));
 
                 this.lastpage_stream = from + depth - 1;
 

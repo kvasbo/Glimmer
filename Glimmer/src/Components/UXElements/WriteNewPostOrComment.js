@@ -152,7 +152,7 @@ export default class WriteNewPostOrComment extends React.Component {
             arbeidsMaur.forumUpdater.postNewThread(forumId, this.state.title, body, []).then(() => {
 
                 this._doClear();
-                this.arbeidsMaur.forumUpdater.loadFirstStream(1);
+                arbeidsMaur.forumUpdater.loadFirstStream(1);
                 this.props.navigator.popToRoot();
 
             }).catch((error) => {

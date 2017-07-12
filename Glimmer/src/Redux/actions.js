@@ -38,17 +38,19 @@ export function addKretsPersonBatch(ids) {
     }
 }
 
-export function addFavoritesPostBatch(posts) {
+export function addFavoritesPostBatch(posts, replace = false) {
     return {
         type: ADD_POST_FAVORITES_BATCH,
-        posts
+        posts,
+        replace
     }
 }
 
-export function addStreamPostBatch(posts) {
+export function addStreamPostBatch(posts, replace = false) {
     return {
         type: ADD_POST_STREAM_BATCH,
-        posts
+        posts,
+        replace
     }
 }
 

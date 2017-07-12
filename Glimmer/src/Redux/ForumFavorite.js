@@ -5,15 +5,18 @@ function ForumFavorite(state = {}, action) {
 
         case ADD_POST_FAVORITES_BATCH:
 
-            var newState = Object.assign({}, state);
+            if (action.replace === true) {
+                var newState = Object.assign({});
+            }
+            else {
+                var newState = Object.assign({}, state);
+            }
 
-            for(var i = 0; i < action.posts.length; i++)
-            {
+            for (let i = 0; i < action.posts.length; i++) {
                 newState[action.posts[i].id] = action.posts[i];
             }
 
             return newState;
-
 
         default:
             return state
