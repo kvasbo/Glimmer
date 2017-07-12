@@ -27,7 +27,7 @@ export default class UserUpdater {
                     var tmpUser = new User(data.data.id, data.data.name, data.data.realname, data.data.image_url, data.data.friend);
                     store.dispatch(addUserBatch([tmpUser])); //ARRAy!
 
-                    resolve(data.data);
+                    resolve(tmpUser);
 
                 }).catch((err) => {
 

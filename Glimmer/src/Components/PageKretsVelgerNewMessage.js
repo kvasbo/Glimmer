@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {Alert, FlatList, StyleSheet, Text, TextInput, View} from "react-native";
 import PersonFace from "./UXElements/PersonFace";
 import NavigatorStyles from "../Styles/NavigatorStyles";
+import * as colors from "../Styles/colorConstants";
 
 //TODO sort by status and then name
 
@@ -88,7 +89,7 @@ class PageKretsVelger extends React.Component {
 
     _searchChanged(text) {
 
-        const searchDelay = 500;
+        const searchDelay = 600;
 
         clearTimeout(this.searchTimer);
 
@@ -102,14 +103,14 @@ class PageKretsVelger extends React.Component {
                 tmpTerms.push(text);
                 this.setState({performedSearches: tmpTerms});
 
-                api.makeApiGetCall("/users/" + text.toLowerCase()).then((data) => {
+                arbeidsMaur.userUpdater.getUserInfo(text.toLowerCase()).then((data) => {
 
                     var tmpHits = this.state.searchHits;
-                    tmpHits.push(data.data);
+                    tmpHits.push(data);
 
                     this.setState({searchHits: tmpHits, searching: false});
 
-                    console.log("new state", this.state.searchHits);
+                    //console.log("new state", this.state.searchHits);
 
                 }).catch((err) => {
                     this.setState({searching: false});
@@ -131,17 +132,24 @@ class PageKretsVelger extends React.Component {
             <View style={pageStyles.container}>
 
                 <View>
-                    <Text style={pageStyles.selectorHeader}>Søk blant alle</Text>
-                    <TextInput style={{
-                        margin: 10,
-                        padding: 10,
-                        height: 40,
-                        borderWidth: 1,
-                        color: "#ECF0F1",
-                        borderColor: "#ECF0F1",
-                        backgroundColor: "#2C3E50"
-                    }} autoCapitalize="none" multiline={false} spellCheck={false} autoFocus={false}
-                               onChangeText={(text) => this._searchChanged(text)}
+                    <Text style={pageStyles.selectorHeader}>Skriv inn bruker</Text>
+                    <TextInput
+                        style={{
+                            margin: 10,
+                            padding: 10,
+                            height: 40,
+                            borderWidth: 1,
+                            color: "#ECF0F1",
+                            borderColor: "#ECF0F1",
+                            backgroundColor: "#2C3E50",
+                        }}
+                        autoCapitalize="none"
+                        multiline={false}
+                        spellCheck={false}
+                        autoFocus={false}
+                        onChangeText={(text) => this._searchChanged(text)}
+                        placeholder="Du må skrive inn hele brukernavnet!"
+                        placeholderTextColor={colors.COLOR_LIGHTGREY}
                     />
                     <FlatList
                         style={{height: this._getSearchHeight()}}
@@ -159,7 +167,7 @@ class PageKretsVelger extends React.Component {
                     />
                 </View>
                 <View style={{paddingBottom: 50, marginBottom: 50}}>
-                    <Text style={pageStyles.selectorHeader}>Velg i krets</Text>
+                    <Text style={pageStyles.selectorHeader}>Velg fra krets</Text>
                     <FlatList
 
 
