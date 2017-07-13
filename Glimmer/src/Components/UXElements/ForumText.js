@@ -4,7 +4,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {Alert, Dimensions, Image, Linking, Platform, StyleSheet, View, WebView} from "react-native";
+import {Alert, Dimensions, Image, Linking, Platform, StyleSheet, View, WebView, Text} from "react-native";
 import HTMLView from "react-native-htmlview";
 import * as colors from "../../Styles/colorConstants";
 var DOMParser = require('xmldom').DOMParser;
@@ -91,6 +91,16 @@ export default class ForumText extends React.Component {
         const Dim = Dimensions.get("window");
         var maxWidth = Dim.width - 50;
 
+
+        if (node.name == 'blockquote') {
+
+            return (
+                <Text style={{padding: 10, color: colors.COLOR_MIDGREY, marginTop: 10, marginBottom: 10}} key={index}>
+                    {defaultRenderer(node.children, parent)}
+                </Text>
+            )
+        }
+
          if (node.name == 'iframe') {
 
             if (Platform.OS === "ios") {
@@ -129,8 +139,6 @@ export default class ForumText extends React.Component {
 
         if (node.name == "img") {
 
-            console.log("img", node);
-
             let frameW = Number(node.attribs.width);
             let frameH = Number(node.attribs.height);
 
@@ -152,9 +160,12 @@ export default class ForumText extends React.Component {
                     <Image source={{uri: node.attribs.src}}  resizeMode="contain" style={{width: width, height: height}}/>
                 </View>
             );
-
-
         }
+
+        /*if (node.type == "text")
+        {
+            return (<Text>{node.data}</Text>)
+        }*/
 
     }
 
@@ -189,9 +200,11 @@ export default class ForumText extends React.Component {
 
         return (
             <HTMLView
-                nodecomponent={View}
-                textcomponent={View}
-                paragraphBreak=''
+                NodeComponent={Text}
+                TextComponent={Text}
+                RootComponent={View}
+                paragraphBreak={"\n"}
+                lineBreak={"\n"}
                 value={this.parsed}
                 stylesheet={styles}
                 renderNode={this.renderNode}
