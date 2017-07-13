@@ -89,7 +89,12 @@ export default class ForumText extends React.Component {
     renderNode(node, index, siblings, parent, defaultRenderer) {
 
         const Dim = Dimensions.get("window");
-        var width = Dim.width - 30;
+        var maxWidth = Dim.width - 30;
+
+
+        console.log(node);
+
+
 
         if (node.name == 'iframe') {
 
@@ -97,9 +102,27 @@ export default class ForumText extends React.Component {
                 const a = node.attribs;
                 const iframeHtml = `<iframe src="${a.src}"></iframe>`;
 
+                let frameW = Number(node.attribs.width);
+                let frameH = Number(node.attribs.height);
+
+                let factor = frameW / maxWidth;
+
+                if(factor > 1)
+                {
+                    var width = Math.round(frameW / factor);
+                    var height = Math.round(frameH / factor);
+                }
+                else
+                {
+                    var width = node.attribs.width;
+                    var height = node.attribs.heigth;
+                }
+
+                console.log(frameW, frameH, width, factor);
+
                 return (
-                    <View style={{width: Number(width), height: Number(width)}}>
-                        <WebView key={index} source={{html: iframeHtml}}/>
+                    <View key={index} style={{width: width, height: height}}>
+                        <WebView  source={{html: iframeHtml}}/>
                     </View>
                 );
             }
@@ -107,20 +130,6 @@ export default class ForumText extends React.Component {
                 return null;
             }
 
-        }
-
-        if (node.name == 'img') {
-
-            try {
-
-                return (
-                    <Image key={index} resizeMode="contain" source={{uri: node.attribs.src}}
-                           style={{width: width, height: width}}/>
-                );
-            }
-            catch (err) {
-                return null;
-            }
         }
 
     }
@@ -180,4 +189,8 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: colors.COLOR_HIGHLIGHT,
     },
+
+    img: {
+        borderRadius: 100
+    }
 });
