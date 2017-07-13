@@ -53,6 +53,8 @@ export default class CommentMetadata extends React.Component {
 
         let forumText = (typeof this.props.forum === "undefined") ? "" : this.props.forum;
 
+        let color = (this.props.byStarter) ? colors.COLOR_GRAD2 : colors.COLOR_MIDGREY
+
         return (
             <View style={{
                 flexDirection: "row",
@@ -66,7 +68,7 @@ export default class CommentMetadata extends React.Component {
                 {this.getPicture()}
 
                 <View style={{flexDirection: "column"}}>
-                    <Text style={[{color: colors.COLOR_MIDGREY, fontSize: 12}]}>{this.props.name} {this.getTime()}</Text>
+                    <Text style={[{color: color, fontSize: 12}]}>{this.props.name} {this.getTime()}</Text>
                     {this.getForumTitle()}
                 </View>
 
@@ -78,7 +80,8 @@ export default class CommentMetadata extends React.Component {
 }
 
 CommentMetadata.defaultProps = {
-    showImage: true
+    showImage: true,
+    byStarter: false
 };
 
 CommentMetadata.propTypes = {
@@ -86,6 +89,7 @@ CommentMetadata.propTypes = {
     name: PropTypes.string.isRequired,
     time: PropTypes.string.isRequired,
     forum: PropTypes.string,
-    showImage: PropTypes.bool
+    showImage: PropTypes.bool,
+    byStarter: PropTypes.bool //Av trådstarter
 };
 
