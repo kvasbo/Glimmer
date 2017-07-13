@@ -89,14 +89,9 @@ export default class ForumText extends React.Component {
     renderNode(node, index, siblings, parent, defaultRenderer) {
 
         const Dim = Dimensions.get("window");
-        var maxWidth = Dim.width - 30;
+        var maxWidth = Dim.width - 50;
 
-
-        console.log(node);
-
-
-
-        if (node.name == 'iframe') {
+         if (node.name == 'iframe') {
 
             if (Platform.OS === "ios") {
                 const a = node.attribs;
@@ -115,7 +110,7 @@ export default class ForumText extends React.Component {
                 else
                 {
                     var width = node.attribs.width;
-                    var height = node.attribs.heigth;
+                    var height = node.attribs.height;
                 }
 
                 console.log(frameW, frameH, width, factor);
@@ -129,6 +124,35 @@ export default class ForumText extends React.Component {
             else {
                 return null;
             }
+
+        }
+
+        if (node.name == "img") {
+
+            console.log("img", node);
+
+            let frameW = Number(node.attribs.width);
+            let frameH = Number(node.attribs.height);
+
+            let factor = frameW / maxWidth;
+
+            if(factor > 1)
+            {
+                var width = Math.round(frameW / factor);
+                var height = Math.round(frameH / factor);
+            }
+            else
+            {
+                var width = node.attribs.width;
+                var height = node.attribs.height;
+            }
+
+            return (
+                <View key={index} style={{width: width, height: height + 20, paddingTop: 20, paddingBottom: 20, marginBottom: 20}}>
+                    <Image source={{uri: node.attribs.src}}  resizeMode="contain" style={{width: width, height: height}}/>
+                </View>
+            );
+
 
         }
 
@@ -190,7 +214,15 @@ const styles = StyleSheet.create({
         color: colors.COLOR_HIGHLIGHT,
     },
 
-    img: {
-        borderRadius: 100
+    p: {
+        marginTop: 5,
+        marginBottom: 5
+    },
+
+    blockquote: {
+        padding: 20,
+        borderWidth: 2,
+        borderColor: "red"
     }
+
 });
