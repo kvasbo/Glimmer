@@ -63,6 +63,10 @@ class PageThread extends React.Component {
         return pNumber
     }
 
+    getCurrentPageNumber() {
+        return this.findLastPageOfComments() - this.state.currentPage + 1;
+    }
+
     /**
      * Scroll to topish.
      * @returns {boolean}
@@ -117,6 +121,7 @@ class PageThread extends React.Component {
         const activeColor = colors.COLOR_GRAD1
         const size = 30;
 
+
         return (
 
             <View style={pageStyles.sideVelgerView}>
@@ -164,7 +169,7 @@ class PageThread extends React.Component {
                 <TouchableOpacity onPress={() => {
                 }}>
                     <View style={pageStyles.iconButton}>
-                        <Text style={pageStyles.pageNumberText}>{this.state.currentPage}</Text>
+                        <Text style={pageStyles.pageNumberText}>{this.getCurrentPageNumber()}</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -196,7 +201,7 @@ class PageThread extends React.Component {
     getComments() {
 
         if (this.state.loading) {
-            var loadText = "Laster side " + this.state.currentPage;
+            var loadText = "Laster side " + this.getCurrentPageNumber();
             return (<LoadingScreen text={loadText}/>);
         }
 
