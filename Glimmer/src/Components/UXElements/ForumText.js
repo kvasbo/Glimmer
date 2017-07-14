@@ -92,15 +92,6 @@ export default class ForumText extends React.Component {
         var maxWidth = Dim.width - 50;
 
 
-        if (node.name == 'blockquote') {
-
-            return (
-                <Text style={{padding: 10, color: colors.COLOR_MIDGREY, marginTop: 10, marginBottom: 10}} key={index}>
-                    {defaultRenderer(node.children, parent)}
-                </Text>
-            )
-        }
-
          if (node.name == 'iframe') {
 
             if (Platform.OS === "ios") {
@@ -137,7 +128,7 @@ export default class ForumText extends React.Component {
 
         }
 
-        if (node.name == "img") {
+        if (false && node.name == "img") {
 
             let frameW = Number(node.attribs.width);
             let frameH = Number(node.attribs.height);
