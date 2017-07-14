@@ -91,6 +91,8 @@ export default class ForumText extends React.Component {
         const Dim = Dimensions.get("window");
         var maxWidth = Dim.width - 50;
 
+        //console.log(Dim);
+
 
          if (node.name == 'iframe') {
 
@@ -128,7 +130,7 @@ export default class ForumText extends React.Component {
 
         }
 
-        if (false && node.name == "img") {
+        if (node.name == "img") {
 
             let frameW = Number(node.attribs.width);
             let frameH = Number(node.attribs.height);
@@ -147,9 +149,9 @@ export default class ForumText extends React.Component {
             }
 
             return (
-                <View key={index} style={{width: width, height: height + 20, paddingTop: 20, paddingBottom: 20, marginBottom: 20}}>
-                    <Image source={{uri: node.attribs.src}}  resizeMode="contain" style={{width: width, height: height}}/>
-                </View>
+                <Text key={index} style={{width: width, height: height + 20, paddingTop: 20, paddingBottom: 20, marginBottom: 20}}>
+                    {"\n"}<Image source={{uri: node.attribs.src}}  resizeMode="contain" style={{width: width, height: height}}/>
+                </Text>
             );
         }
 

@@ -52,7 +52,15 @@ export default class WriteNewPostOrComment extends React.Component {
             this.itemKey = "@trash"
         }
 
-        this.state = {text: '', title: '', forumName: "", tags: [], images: {}, bodyCursorPosition: null};
+        this.state = {
+            text: '',
+            title: '',
+            forumName: "",
+            tags: [],
+            images: {},
+            bodyCursorPosition: null,
+            buttonsActive: true
+        };
 
         console.log("Writer props", this.props);
 
@@ -75,15 +83,17 @@ export default class WriteNewPostOrComment extends React.Component {
 
         });
 
-        arbeidsMaur.forumListUpdater.getForumInfo(store.getState().AppStatus.activePostingForum).then((data)=>{
+        if (this.props.type === "post") {
+            arbeidsMaur.forumListUpdater.getForumInfo(store.getState().AppStatus.activePostingForum).then((data) => {
 
-            this.setState({forumName:data.title});
+                this.setState({forumName: data.title});
 
-            this.props.navigator.setTitle({
-                title: "Post i " + data.title, // the new title of the screen as appears in the nav bar
-            });
+                this.props.navigator.setTitle({
+                    title: "Post i " + data.title, // the new title of the screen as appears in the nav bar
+                });
 
-        })
+            })
+        }
 
     }
 
@@ -116,6 +126,8 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     _post() {
+
+        this.setState({buttonsActive: false});
 
         if (this.props.type === "comment") {
 
@@ -342,14 +354,11 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
-    _getPictureButton()
-    {
-        if(helpers.getPlatformDependentVars().platform === "ios")
-        {
-            return ( <Button onPress={() => this.addPictures()} title="Bilder"/>)
+    _getPictureButton() {
+        if (helpers.getPlatformDependentVars().platform === "ios") {
+            return ( <Button disabled={!this.state.buttonsActive} onPress={() => this.addPictures()} title="Bilder"/>)
         }
-        else
-        {
+        else {
             return null;
         }
     }
@@ -362,7 +371,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
                 <KeyboardAvoidingView behavior="padding"
                                       keyboardVerticalOffset={helpers.getPlatformDependentVars().keyboardAvoidingOffset}
-                                      style={{flex:1}}>
+                                      style={{flex: 1}}>
 
                     {this._getTitleBox()}
 
@@ -392,11 +401,12 @@ export default class WriteNewPostOrComment extends React.Component {
                         alignItems: "center",
                         padding: 3
                     }}>
-                        <Button onPress={() => this._clear()} title="Tøm" onLongPress={() => this.clear(true)}/>
+                        <Button disabled={!this.state.buttonsActive} onPress={() => this._clear()} title="Tøm"
+                                onLongPress={() => this.clear(true)}/>
 
                         {this._getPictureButton()}
 
-                        <Button onPress={() => this._post()} title="Send"/>
+                        <Button disabled={!this.state.buttonsActive} onPress={() => this._post()} title="Send"/>
                     </View>
 
                 </KeyboardAvoidingView>

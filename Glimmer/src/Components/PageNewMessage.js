@@ -14,7 +14,7 @@ export default class PageNewMessage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {text: null, receivers: []};
+        this.state = {text: null, receivers: [], buttonsActive: true};
         console.log(this.props);
     }
 
@@ -65,6 +65,8 @@ export default class PageNewMessage extends React.Component {
     sendMessage() {
         if (this.state.text != "" && this.state.receivers.length > 0) {
             let sending = [];
+
+            this.setState({buttonsActive: false});
 
             for (let key in this.state.receivers) {
                 sending.push(arbeidsMaur.messageUpdater.sendMessageToUser(this.state.receivers[key], this.state.text));
@@ -137,7 +139,7 @@ export default class PageNewMessage extends React.Component {
                     justifyContent: "space-around"
                 }}>
 
-                    <Button title="Avbryt" onPress={() => {
+                    <Button disabled={!this.state.buttonsActive} title="Avbryt" onPress={() => {
 
                         Alert.alert("Avbryt", "Vil du avbryte? Meldingen går tapt.", [
                                 {
@@ -163,7 +165,7 @@ export default class PageNewMessage extends React.Component {
 }
 
 PageNewMessage.propTypes = {
-    navigator: PropTypes.instanceOf("Navigator").isRequired
+    navigator: PropTypes.object.isRequired
 }
 
 const pageStyles = StyleSheet.create({
