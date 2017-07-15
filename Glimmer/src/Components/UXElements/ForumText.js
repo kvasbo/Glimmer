@@ -4,7 +4,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {Alert, Dimensions, Image, Linking, Platform, StyleSheet, View, WebView, Text} from "react-native";
+import {Alert, Dimensions, Image, Linking, Platform, StyleSheet, Text, View, WebView} from "react-native";
 import HTMLView from "react-native-htmlview";
 import * as colors from "../../Styles/colorConstants";
 var DOMParser = require('xmldom').DOMParser;
@@ -91,74 +91,132 @@ export default class ForumText extends React.Component {
         const Dim = Dimensions.get("window");
         var maxWidth = Dim.width - 50;
 
-        //console.log(Dim);
 
+        try {
+            if (node.name == 'iframe') {
 
-         if (node.name == 'iframe') {
-
-            if (Platform.OS === "ios") {
                 const a = node.attribs;
-                const iframeHtml = `<iframe src="${a.src}"></iframe>`;
 
-                let frameW = Number(node.attribs.width);
-                let frameH = Number(node.attribs.height);
+                if (Platform.OS === "ios") {
 
-                let factor = frameW / maxWidth;
+                    const iframeHtml = `<iframe src="${a.src}"></iframe>`;
 
-                if(factor > 1)
-                {
-                    var width = Math.round(frameW / factor);
-                    var height = Math.round(frameH / factor);
+                    let frameW = Number(node.attribs.width);
+                    let frameH = Number(node.attribs.height);
+
+                    let factor = frameW / maxWidth;
+
+                    if (factor > 1) {
+                        var width = Math.round(frameW / factor);
+                        var height = Math.round(frameH / factor);
+                    }
+                    else {
+                        var width = frameW;
+                        var height = frameH;
+                    }
+
+                    console.log(frameW, frameH, width, factor);
+
+                    return (
+                        <View key={index} style={{width: width, height: height}}>
+                            <WebView source={{html: iframeHtml}}/>
+                        </View>
+                    );
                 }
-                else
-                {
-                    var width = node.attribs.width;
-                    var height = node.attribs.height;
+                else {
+
+
+
+                    return (
+                        <Text key={index} style={{color:colors.COLOR_HIGHLIGHT}} onPress={() => {
+
+                            this.props.navigator.showLightBox({
+                                screen: "glimmer.PopupEmbedViewer", // unique ID registered with Navigation.registerScreen
+                                passProps: {uri:a.src}, // simple serializable object that will pass as props to the lightbox (optional)
+                                style: {
+                                    backgroundBlur: "light", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
+                                }
+                            });
+
+                        }}>Embed, trykk for å vise ({a.src})</Text>
+                    )
                 }
-
-                console.log(frameW, frameH, width, factor);
-
-                return (
-                    <View key={index} style={{width: width, height: height}}>
-                        <WebView  source={{html: iframeHtml}}/>
-                    </View>
-                );
-            }
-            else {
-                return null;
             }
 
+        }
+        catch (error) {
+            console.log(error);
         }
 
         if (node.name == "img") {
 
-            let frameW = Number(node.attribs.width);
-            let frameH = Number(node.attribs.height);
+            //console.log(node);
 
-            let factor = frameW / maxWidth;
+            try {
+                
+                var linkSrc = node.attribs.src;
 
-            if(factor > 1)
-            {
-                var width = Math.round(frameW / factor);
-                var height = Math.round(frameH / factor);
+                if(typeof node.attribs["data-image-url-large"] !== "undefined") linkSrc = node.attribs["data-image-url-large"];
+
+                if(typeof node.attribs.width !== "undefined")
+                {
+                    var frameW = Number(node.attribs.width);
+                }
+                else
+                {
+                    var frameW = maxWidth;
+                }
+
+                if(typeof node.attribs.height !== "undefined")
+                {
+                    var frameH = Number(node.attribs.height);
+                }
+                else {
+                    var frameH = maxWidth;
+                }
+
+                var factor = frameW / maxWidth;
+
+                if (factor > 1) {
+                    var width = Math.round(frameW / factor);
+                    var height = Math.round(frameH / factor);
+                }
+                else {
+                    var width = frameW;
+                    var height = frameH;
+                }
+
+                return (
+                    <Text key={index} style={{
+                        width: width,
+                        height: height + 20,
+                        paddingTop: 20,
+                        paddingBottom: 20,
+                        marginBottom: 20
+                    }}
+                    onPress={
+                        ()=>{
+                            this.props.navigator.showLightBox({
+                                screen: "glimmer.PopupEmbedViewer", // unique ID registered with Navigation.registerScreen
+                                passProps: {uri:linkSrc}, // simple serializable object that will pass as props to the lightbox (optional)
+                                style: {
+                                    backgroundBlur: "light", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
+                                }
+                            });
+                        }
+                    }
+                    >
+                        {"\n"}<Image source={{uri: node.attribs.src}} resizeMode="contain"
+                                     style={{width: width, height: height}}/>
+                    </Text>
+                );
+
             }
-            else
-            {
-                var width = node.attribs.width;
-                var height = node.attribs.height;
+            catch (error) {
+                console.log(error);
             }
-
-            return (
-                <Text key={index} style={{width: width, height: height + 20, paddingTop: 20, paddingBottom: 20, marginBottom: 20}}>
-                    {"\n"}<Image source={{uri: node.attribs.src}}  resizeMode="contain" style={{width: width, height: height}}/>
-                </Text>
-            );
         }
 
-        /*if (node.type == "text")
-        {
-            return (<Text>{node.data}</Text>)
-        }*/
 
     }
 

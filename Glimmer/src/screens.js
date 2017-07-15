@@ -15,6 +15,7 @@ import PageLogin from "./Components/PageLogin";
 import PageForumList from "./Components/PageForumList";
 
 import PersonPopup from "./Components/UXElements/PersonPopup";
+import PopupEmbedViewer from "./Components/UXElements/PopupEmbedViewer";
 
 export function registerScreens(store, Provider) {
 
@@ -39,6 +40,7 @@ export function registerScreens(store, Provider) {
 
             //Menus etc.
             Navigation.registerComponent('glimmer.PersonPopup', () => PersonPopup, store, Provider);
+            Navigation.registerComponent('glimmer.PopupEmbedViewer', () => PopupEmbedViewer, store, Provider);
 
             resolve();
         }
