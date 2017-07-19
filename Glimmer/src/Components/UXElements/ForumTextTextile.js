@@ -4,25 +4,22 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {Alert, Dimensions, Image, Linking, Platform, StyleSheet, Text, View, WebView} from "react-native";
+import {Alert, Dimensions, Image, Linking, Platform, StyleSheet, Text, View, WebView, TouchableOpacity} from "react-native";
 import textile from "textile-js";
 import HTMLView from "react-native-htmlview";
+import GlimmerImage from "./GlimmerImage";
 import * as colors from "../../Styles/colorConstants";
 
-const baseImageUrl = "https://images.underskog.no/versions/1250/versions/1250/XXXXX.jpeg";
+const baseImageUrl = "https://images.underskog.no/versions/1250/XXXXX.jpeg";
 
 export default class ForumTextTextile extends React.Component {
-
 
 
     constructor(props) {
         super(props);
 
-
         this.dim = Dimensions.get("window");
         this.parsed = this.parseText();//textile.parse(this.props.text);
-
-       // console.log("Textile", this.props.text, this.parsed);
 
     }
 
@@ -64,12 +61,12 @@ export default class ForumTextTextile extends React.Component {
                     return url;
                 });
 
-                outArray.push({type:"img", val:tmp});
+                outArray.push({type:"img", data:tmp});
 
             }
             else
             {
-                outArray.push({type:"txt", val:tmp});
+                outArray.push({type:"txt", data:textile.parse(tmp)});
             }
 
 
@@ -175,75 +172,6 @@ export default class ForumTextTextile extends React.Component {
             console.log(error);
         }
 
-        if (node.name == "img") {
-
-            //console.log(node);
-
-            try {
-
-                var linkSrc = node.attribs.src;
-
-                if(typeof node.attribs["data-image-url-large"] !== "undefined") linkSrc = node.attribs["data-image-url-large"];
-
-                if(typeof node.attribs.width !== "undefined")
-                {
-                    var frameW = Number(node.attribs.width);
-                }
-                else
-                {
-                    var frameW = maxWidth;
-                }
-
-                if(typeof node.attribs.height !== "undefined")
-                {
-                    var frameH = Number(node.attribs.height);
-                }
-                else {
-                    var frameH = maxWidth;
-                }
-
-                var factor = frameW / maxWidth;
-
-                if (factor > 1) {
-                    var width = Math.round(frameW / factor);
-                    var height = Math.round(frameH / factor);
-                }
-                else {
-                    var width = frameW;
-                    var height = frameH;
-                }
-
-                return (
-                    <Text key={index} style={{
-                        width: width,
-                        height: height + 20,
-                        paddingTop: 20,
-                        paddingBottom: 20,
-                        marginBottom: 20
-                    }}
-                          onPress={
-                              ()=>{
-                                  this.props.navigator.showLightBox({
-                                      screen: "glimmer.PopupEmbedViewer", // unique ID registered with Navigation.registerScreen
-                                      passProps: {uri:linkSrc}, // simple serializable object that will pass as props to the lightbox (optional)
-                                      style: {
-                                          backgroundBlur: "light", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
-                                      }
-                                  });
-                              }
-                          }
-                    >
-                        {"\n"}<Image source={{uri: node.attribs.src}} resizeMode="contain"
-                                     style={{width: width, height: height}}/>
-                    </Text>
-                );
-
-            }
-            catch (error) {
-                console.log(error);
-            }
-        }
-
 
     }
 
@@ -274,19 +202,74 @@ export default class ForumTextTextile extends React.Component {
 
     }
 
+    getContent()
+    {
+
+        /*
+         <HTMLView
+         NodeComponent={Text}
+         TextComponent={Text}
+         RootComponent={View}
+         value={this.props.text}
+         stylesheet={styles}
+         renderNode={this.renderNode}
+         onLinkPress={(url) => this._handleLink(url)}
+         onError={(err) => console.log(err)}
+         />
+         */
+
+        outArray = [];
+
+        for(key in this.parsed)
+        {
+            var node = this.parsed[key];
+
+            if(node.type === "txt")
+            {
+                outArray.push (
+                    <HTMLView
+                        key={key}
+                        NodeComponent={Text}
+                        TextComponent={Text}
+                        RootComponent={View}
+                        value={node.data}
+                        stylesheet={styles}
+                        renderNode={this.renderNode}
+                        onLinkPress={(url) => this._handleLink(url)}
+                        onError={(err) => console.log(err)}
+                    />
+                )
+            }
+            else if(node.type === "img")
+            {
+                outArray.push (
+                    <TouchableOpacity key={key} onPress={
+                        ()=>{
+                            this.props.navigator.showLightBox({
+                                screen: "glimmer.PopupEmbedViewer", // unique ID registered with Navigation.registerScreen
+                                passProps: {uri:node.data}, // simple serializable object that will pass as props to the lightbox (optional)
+                                style: {
+                                    backgroundBlur: "light", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
+                                }
+                            });
+                        }
+                    }>
+                        <GlimmerImage uri={node.data} />
+                    </TouchableOpacity>
+                )
+            }
+        }
+
+        return outArray;
+
+    }
+
     render() {
 
         return (
-            <HTMLView
-                NodeComponent={Text}
-                TextComponent={Text}
-                RootComponent={View}
-                value={this.props.text}
-                stylesheet={styles}
-                renderNode={this.renderNode}
-                onLinkPress={(url) => this._handleLink(url)}
-                onError={(err) => console.log(err)}
-            />
+            <View >
+                {this.getContent()}
+            </View>
         )
     }
 
