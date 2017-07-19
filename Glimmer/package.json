@@ -21,7 +21,7 @@
     "react-native-image-picker": "^0.26.3",
     "react-native-keychain": "^1.2.0",
     "react-native-lightbox": "^0.6.0",
-    "react-native-navigation": "^1.1.136",
+    "react-native-navigation": "^1.1.138",
     "react-native-reversed-flat-list": "^1.0.2",
     "react-native-vector-icons": "^4.2.0",
     "react-redux": "^5.0.5",
