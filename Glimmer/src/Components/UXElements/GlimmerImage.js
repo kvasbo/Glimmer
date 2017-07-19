@@ -35,7 +35,7 @@ export default class GlimmerImage extends React.Component {
                 var fixedHeight = height;
             }
 
-            console.log("dim", factor, width, height, fixedWidth, fixedHeight)
+       // console.log("dim", factor, width, height, fixedWidth, fixedHeight)
 
             this.setState({height: fixedHeight, width: fixedWidth})
         })

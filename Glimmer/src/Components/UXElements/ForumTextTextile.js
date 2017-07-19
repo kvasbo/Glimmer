@@ -4,7 +4,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {Alert, Dimensions, Image, Linking, Platform, StyleSheet, Text, View, WebView, TouchableOpacity} from "react-native";
+import {Alert, Dimensions, Linking, Platform, StyleSheet, Text, View, WebView} from "react-native";
 import textile from "textile-js";
 import HTMLView from "react-native-htmlview";
 import GlimmerImage from "./GlimmerImage";
@@ -13,7 +13,6 @@ import * as colors from "../../Styles/colorConstants";
 const baseImageUrl = "https://images.underskog.no/versions/1250/XXXXX.jpeg";
 
 export default class ForumTextTextile extends React.Component {
-
 
     constructor(props) {
         super(props);
@@ -27,8 +26,7 @@ export default class ForumTextTextile extends React.Component {
     //Regex bilde: (!bilde [0-9]*!)
     //regex lenke: (\"(.*?)\"\:[a-z:/.0-9-#]*)
 
-    parseText()
-    {
+    parseText() {
 
         var text = this.props.text;
         var outArray = [];
@@ -37,49 +35,47 @@ export default class ForumTextTextile extends React.Component {
         let underskogsBildeRegex = /(!bilde\s[\d]+!)/g;
 
         text = text.replace(underskogsBildeRegex, (match) => {
-            return "\n"+match+"\n";
+            return "\n" + match + "\n";
         })
 
         //Splitte ved newline
         var textArray = text.split(/\r?\n/);
 
         //Fjern tomme avsnitt
-        textArray = textArray.filter((x)=>{return x !== ""});
+        textArray = textArray.filter((x) => {
+            return x !== ""
+        });
 
         //Loope og parse
-        for(key in textArray)
-        {
+        for (key in textArray) {
             var tmp = textArray[key];
 
-            if(tmp.search(underskogsBildeRegex) !== -1)
-            {
+            if (tmp.search(underskogsBildeRegex) !== -1) {
                 //Bytte ut underskogs-bildekode
                 tmp = tmp.replace(underskogsBildeRegex, (match) => {
                     let arr = match.split(" ");
-                    let nr = arr[1].substring(0,arr[1].length-1);
+                    let nr = arr[1].substring(0, arr[1].length - 1);
                     let url = baseImageUrl.replace("XXXXX", nr);
                     return url;
                 });
 
-                outArray.push({type:"img", data:tmp});
+                outArray.push({type: "img", data: tmp});
 
             }
-            else
+            else if (tmp.indexOf("> ") === 0) //BQ
             {
-                outArray.push({type:"txt", data:textile.parse(tmp)});
+                outArray.push({type: "bq", data: textile.parse(tmp)});
             }
-
+            else {
+                outArray.push({type: "txt", data: textile.parse(tmp)});
+            }
 
         }
 
-        console.log(textArray, outArray);
+        console.log(outArray);
 
         return outArray;
 
-    }
-
-    replaceAll(str, find, replace) {
-        return str.replace(new RegExp(find, 'g'), replace);
     }
 
     _handleLink(url) {
@@ -115,7 +111,6 @@ export default class ForumTextTextile extends React.Component {
         const Dim = Dimensions.get("window");
         var maxWidth = Dim.width - 50;
 
-
         try {
             if (node.name == 'iframe') {
 
@@ -149,14 +144,12 @@ export default class ForumTextTextile extends React.Component {
                 }
                 else {
 
-
-
                     return (
-                        <Text key={index} style={{color:colors.COLOR_HIGHLIGHT}} onPress={() => {
+                        <Text key={index} style={{color: colors.COLOR_HIGHLIGHT}} onPress={() => {
 
                             this.props.navigator.showLightBox({
                                 screen: "glimmer.PopupEmbedViewer", // unique ID registered with Navigation.registerScreen
-                                passProps: {uri:a.src}, // simple serializable object that will pass as props to the lightbox (optional)
+                                passProps: {uri: a.src}, // simple serializable object that will pass as props to the lightbox (optional)
                                 style: {
                                     backgroundBlur: "light", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
                                 }
@@ -171,7 +164,6 @@ export default class ForumTextTextile extends React.Component {
         catch (error) {
             console.log(error);
         }
-
 
     }
 
@@ -202,31 +194,15 @@ export default class ForumTextTextile extends React.Component {
 
     }
 
-    getContent()
-    {
-
-        /*
-         <HTMLView
-         NodeComponent={Text}
-         TextComponent={Text}
-         RootComponent={View}
-         value={this.props.text}
-         stylesheet={styles}
-         renderNode={this.renderNode}
-         onLinkPress={(url) => this._handleLink(url)}
-         onError={(err) => console.log(err)}
-         />
-         */
+    getContent() {
 
         outArray = [];
 
-        for(key in this.parsed)
-        {
+        for (key in this.parsed) {
             var node = this.parsed[key];
 
-            if(node.type === "txt")
-            {
-                outArray.push (
+            if (node.type === "txt") {
+                outArray.push(
                     <HTMLView
                         key={key}
                         NodeComponent={Text}
@@ -240,22 +216,9 @@ export default class ForumTextTextile extends React.Component {
                     />
                 )
             }
-            else if(node.type === "img")
-            {
-                outArray.push (
-                    <TouchableOpacity key={key} onPress={
-                        ()=>{
-                            this.props.navigator.showLightBox({
-                                screen: "glimmer.PopupEmbedViewer", // unique ID registered with Navigation.registerScreen
-                                passProps: {uri:node.data}, // simple serializable object that will pass as props to the lightbox (optional)
-                                style: {
-                                    backgroundBlur: "light", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
-                                }
-                            });
-                        }
-                    }>
-                        <GlimmerImage uri={node.data} />
-                    </TouchableOpacity>
+            else if (node.type === "img") {
+                outArray.push(
+                    <GlimmerImage key={key} uri={node.data}/>
                 )
             }
         }
@@ -280,8 +243,4 @@ ForumTextTextile.propTypes = {
     navigator: PropTypes.object.isRequired,
 }
 
-const styles = StyleSheet.create({
-
-
-
-});
+const styles = StyleSheet.create({});
