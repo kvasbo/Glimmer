@@ -66,7 +66,7 @@ export default class ForumUpdater {
 
                         let p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
                             f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
-                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title);
+                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile);
 
                         tmpPosts.push(p);
                     }
@@ -130,7 +130,7 @@ export default class ForumUpdater {
 
                         var p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
                             f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
-                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title);
+                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile);
 
                         tmpPosts.push(p);
                     }
@@ -166,7 +166,7 @@ export default class ForumUpdater {
 
                     try {
                         let d = data.data[key];
-                        let tmpC = new ForumPostComment(d.id, postId, d.body, d.created_at, d.kudos, d.updated_at, d.creator.name, d.creator.id, d.creator.image_url);
+                        let tmpC = new ForumPostComment(d.id, postId, d.body, d.created_at, d.kudos, d.updated_at, d.creator.name, d.creator.id, d.creator.image_url, d.body_textile);
                         comments.push(tmpC);
                     }
                     catch (err) {

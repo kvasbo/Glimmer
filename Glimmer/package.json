@@ -30,6 +30,7 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^4.8.2",
     "shitty-qs": "^1.0.1",
+    "textile-js": "^2.0.3",
     "xmldom": "^0.1.27"
   },
   "devDependencies": {
