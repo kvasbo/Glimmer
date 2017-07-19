@@ -6,7 +6,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import CommentMetadata from "./CommentMetadata";
-import ForumText from "./ForumText.js";
+import ForumTextTextile from "./ForumTextTextile.js";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
 import * as colors from "../../Styles/colorConstants";
 var DomParser = require('xmldom').DOMParser;
@@ -96,7 +96,7 @@ export default class StreamForumPost extends React.Component {
         if (this.state.showText) {
             return (
                 <View style={pageStyles.thePost}>
-                    <ForumText cut={false} key={this.props.data.id} text={this.props.data.body} navigator={this.props.navigator} images={true}
+                    <ForumTextTextile cut={false} key={this.props.data.id} text={this.props.data.body_textile} navigator={this.props.navigator} images={true}
                                style={{flex: 1}}/>
                 </View>
             )

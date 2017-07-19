@@ -6,7 +6,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {StyleSheet, View} from "react-native";
 import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
-import ForumText from "./ForumText.js";
+import ForumTextTextile from "./ForumTextTextile.js";
 import CommentMetadata from "./CommentMetadata";
 import * as colors from "../../Styles/colorConstants";
 
@@ -50,7 +50,7 @@ export default class ThreadForumPost extends React.Component {
                 </View>
 
                 <View style={pageStyles.thePost}>
-                    <ForumText webview={true} cut={false} text={this.props.data.body} navigator={this.props.navigator} images={true}
+                    <ForumTextTextile cut={false} text={this.props.data.body_textile} navigator={this.props.navigator} images={true}
                                style={{marginBottom: 10}}/>
                 </View>
 

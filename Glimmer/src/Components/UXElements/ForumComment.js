@@ -5,7 +5,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {StyleSheet, View} from "react-native";
-import ForumText from "./ForumText.js";
+import ForumTextTextile from "./ForumTextTextile.js";
 import GiKudos from "./GiKudos";
 import VisKudos from "./VisKudos";
 import CommentMetadata from "./CommentMetadata";
@@ -52,7 +52,7 @@ export default class ForumComment extends React.Component {
                 </View>
 
                 <View style={pageStyles.comment}>
-                    <ForumText webview={true} cut={false} text={this.props.data.body} navigator={this.props.navigator}/>
+                    <ForumTextTextile webview={true} cut={false} text={this.props.data.body_textile} navigator={this.props.navigator}/>
                 </View>
                 <View style={{flexDirection: "row", margin: 10, marginTop: 5, padding: 0}}>
                     {this.getKudosSection()}
