@@ -15,7 +15,8 @@ import {
     MESSAGE_RECIPIENTS_REMOVE_PERSON,
     MESSAGE_MESSAGES_ADD_BATCH,
     USERS_ADD_USER_BATCH,
-    APPCONTROL_SET_ACTIVE_POSTING_FILTER
+    APPCONTROL_SET_ACTIVE_POSTING_FILTER,
+    ADD_POST_UNREAD_BATCH
 } from "./constants";
 
 export function replaceForumList(forums) {
@@ -50,6 +51,14 @@ export function addFavoritesPostBatch(posts, replace = false) {
 export function addStreamPostBatch(posts, replace = false) {
     return {
         type: ADD_POST_STREAM_BATCH,
+        posts,
+        replace
+    }
+}
+
+export function addUnreadPostBatch(posts, replace = false) {
+    return {
+        type: ADD_POST_UNREAD_BATCH,
         posts,
         replace
     }

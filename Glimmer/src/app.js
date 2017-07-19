@@ -72,7 +72,7 @@ const loggerMiddleware = createLogger();
 if (__DEV__) {
     global.store = createStore(glimmerReducers, applyMiddleware(
         //thunkMiddleware, // lets us dispatch() functions
-        //loggerMiddleware // neat middleware that logs actions
+        loggerMiddleware // neat middleware that logs actions
     ));
 }
 else {
@@ -194,9 +194,10 @@ class Glimmer extends React.Component {
             animationType: 'none', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
             passProps: {store: global.store}, //Pass the redux store.
             tabs: [{
-                label: 'Mine tråder', screen: 'glimmer.PageFavorites', // this is a registered name for a screen
+                label: 'Favoritter',
+                screen: 'glimmer.PageUnread', // this is a registered name for a screen
                 icon: iconsMap['ios-star'],//icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                title: 'Mine tråder',
+                title: 'Uleste tråder',
                 navigatorStyle: NavStyles.default,
             }, {
                 label: 'Forsiden',

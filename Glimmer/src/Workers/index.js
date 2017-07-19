@@ -21,7 +21,9 @@ export default class Workers {
 
     initData() {
 
-        var first = [this.forumUpdater.loadFirstFavorites(1), this.forumUpdater.loadFirstStream(1), this.messageUpdater.updateMessageThreads(1)];
+        this.forumUpdater.loadFirstUnread(1);
+
+        var first = [this.forumUpdater.loadFirstFavorites(1), this.forumUpdater.loadFirstStream(1),  this.messageUpdater.updateMessageThreads(1)];
 
         Promise.all(first).then(() => {
 
@@ -29,9 +31,9 @@ export default class Workers {
 
             this.forumListUpdater.reloadForums(false);
 
-        })
 
-        //setInterval(this.refreshForumData(), config.interval_forumrefresh * 1000);
+
+        })
 
     }
 

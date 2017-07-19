@@ -1,4 +1,4 @@
-import {addFavoritesPostBatch, addStreamPostBatch, addForumPostComments} from "../Redux/actions";
+import {addFavoritesPostBatch, addStreamPostBatch, addForumPostComments, addUnreadPostBatch} from "../Redux/actions";
 const ForumPost = require("../DataClasses/post").default;
 const ForumPostComment = require("../DataClasses/postComment").default;
 
@@ -6,15 +6,23 @@ export default class ForumUpdater {
 
     lastpage_favs = 0;
     lastpage_stream = 0;
+    lastpage_unread = 0;
 
     //Do the API lifting
-    loadPosts(favorites = false, page = 1) {
-        var uri = "/streams/posts?page=";
-        if (favorites) uri = "/streams/starred?page=";
-
-        uri += page;
+    loadPosts(type, page = 1) {
 
         return new Promise((resolve, reject) => {
+
+            var uri = null;
+
+            if(type === "favorites") uri = "/streams/starred?page=";
+            else if(type === "unread") uri = "/streams/unread?page=";
+            else if(type === "stream") uri = "/streams/posts?page=";
+            else reject("No stream selected")
+
+            uri += page;
+
+            console.log("loadPosts", uri);
 
             api.makeApiGetCall(uri).then((data) => {
 
@@ -43,7 +51,7 @@ export default class ForumUpdater {
 
             //Get promises for all
             for (let i = from; i < depth + from; i++) {
-                let p = this.loadPosts(true, i);
+                let p = this.loadPosts("favorites", i);
                 proms.push(p);
             }
 
@@ -87,6 +95,66 @@ export default class ForumUpdater {
 
     }
 
+    loadFirstUnread(depth = 5) {
+        return this.addUnread(1, depth, true);
+    }
+
+    addPagesToUnread(numberOfPages) {
+        this.addUnread(this.lastpage_unread + 1, numberOfPages);
+    }
+
+    addUnread(from = 1, depth = 5, flush=false) {
+
+        return new Promise((resolve, reject) => {
+
+            let proms = [];
+
+            //Get promises for all
+            for (let i = from; i < depth + from; i++) {
+                let p = this.loadPosts("unread", i);
+                proms.push(p);
+            }
+
+            //Resolve all the promises! This is nice. And needs some error handling I guess.
+            Promise.all(proms).then(values => {
+
+                let fetchedPosts = [];
+
+                for (var key in values) {
+                    fetchedPosts = fetchedPosts.concat(values[key].data);
+                }
+
+                let tmpPosts = [];
+
+                for (key in fetchedPosts) {
+
+                    let f = fetchedPosts[key].bulletin;
+
+                    try {
+
+                        let p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
+                            f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
+                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count);
+
+                        tmpPosts.push(p);
+                    }
+                    catch (error) {
+                        //Could not parse, oh well.
+                    }
+                }
+
+                store.dispatch(addUnreadPostBatch(tmpPosts, flush));
+
+                this.lastpage_unread = from + depth - 1;
+
+                resolve();
+
+            }).catch((err) => reject(err));
+
+        });
+
+    }
+
     loadFirstStream(depth = 5) {
         return this.addStream(1, depth, true);
     }
@@ -104,7 +172,7 @@ export default class ForumUpdater {
 
             //Get promises for all
             for (var i = from; i < depth + from; i++) {
-                var p = this.loadPosts(false, i);
+                var p = this.loadPosts("stream", i);
                 proms.push(p);
             }
 
@@ -236,6 +304,37 @@ export default class ForumUpdater {
 
         })
 
+    }
+
+    markThreadAsRead(postId)
+    {
+        var uri = "/posts/"+postId+"/mark_read";
+
+        return new Promise((resolve,reject) => {
+
+            api.makeApiPostCall(uri).then(() =>{
+                resolve();
+            }).catch((err)=>{
+                reject(err);
+            })
+
+        })
+
+    }
+
+    markEventAsRead(eventId)
+    {
+        var uri = "/events/"+eventId+"/mark_read";
+
+        return new Promise((resolve,reject) => {
+
+            api.makeApiPostCall(uri).then(() =>{
+                resolve();
+            }).catch((err)=>{
+                reject(err);
+            })
+
+        })
     }
 
     giveKudosToPost(postId) {
