@@ -194,7 +194,7 @@ class Glimmer extends React.Component {
             animationType: 'none', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
             passProps: {store: global.store}, //Pass the redux store.
             tabs: [{
-                label: 'Favoritter',
+                label: 'Mine tråder',
                 screen: 'glimmer.PageUnread', // this is a registered name for a screen
                 icon: iconsMap['ios-star'],//icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                 title: 'Uleste tråder',

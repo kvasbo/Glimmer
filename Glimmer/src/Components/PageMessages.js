@@ -40,10 +40,12 @@ class PageMessages extends React.Component {
         switch (event.id) {
             case 'willAppear':
                 arbeidsMaur.messageUpdater.updateMessageThreads(1);
+
                 break;
             case 'didAppear':
                 break;
             case 'willDisappear':
+
                 break;
             case 'didDisappear':
                 break;
@@ -75,6 +77,7 @@ class PageMessages extends React.Component {
 
     componentWillMount() {
         arbeidsMaur.messageUpdater.updateMessageThreads(1);
+
     }
 
     _onRefresh() {
@@ -89,6 +92,14 @@ class PageMessages extends React.Component {
 
     _renderItem(item) {
         return (<Conversation data={item.item} navigator={this.props.navigator}/>)
+    }
+
+    _getUnread()
+    {
+        for(key in this.props.conversations)
+        {
+            console.log("convo", this.props.conversations[key]);
+        }
     }
 
     _getConversations() {

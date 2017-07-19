@@ -29,12 +29,40 @@ class PageUnread extends React.Component {
 
     }
 
+    static navigatorButtons = {
+        rightButtons: [
+            {
+                title: 'Alle', // for a textual button, provide the button title (label)
+                id: 'alle', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+                showAsAction: 'ifRoom', // optional, Android only. Control how the button is displayed in the Toolbar. Accepted valued: 'ifRoom' (default) - Show this item as a button in an Action Bar if the system decides there is room for it. 'always' - Always show this item as a button in an Action Bar. 'withText' - When this item is in the action bar, always show it with a text label even if it also has an icon specified. 'never' - Never show this item as a button in an Action Bar.
+            }/*,
+            {
+                icon: require('../../img/navicon_add.png'), // for icon button, provide the local image asset name
+                id: 'add' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+            }*/
+        ]
+    };
+
+
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
                 this._silentRefresh();
                 break;
+            case "alle":
+
+
+                this.props.navigator.push({
+                    screen: 'glimmer.PageFavorites', // unique ID registered with Navigation.registerScreen
+                    title: "Mine tråder", // navigation bar title of the pushed screen (optional)
+                    animated: true, // does the push have transition animation or does it happen immediately (optional)
+                    backButtonTitle: "Uleste",
+                });
+
+                break;
+
         }
+
     }
 
     _silentRefresh() {
@@ -94,22 +122,22 @@ class PageUnread extends React.Component {
         </TouchableOpacity>
     )
 
-    _loadMoreItems(distance) {
-
-        global.arbeidsMaur.forumUpdater.addPagesToUnread(1);
-
-    }
 
     _getHeader() {
         return (<Divider/>)
     }
+
+    _getFooter() {
+        return (<Text style={{margin:0, textAlign: "center", padding: 15, color: colors.COLOR_LIGHTGREY}}>Les noen tråder for å se flere uleste.</Text>)
+    }
+
 
     render() {
 
         var data = this.getData();
 
         if (data.length === 0 || this.state.loading === true) {
-            return <LoadingScreen text="Laster trådene dine..."/>
+            return <LoadingScreen text="Laster tråder med uleste innlegg"/>
         }
         else {
 
@@ -122,10 +150,9 @@ class PageUnread extends React.Component {
                     refreshing={this.state.refreshing}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => item.id}
-                    onEndReached={this._loadMoreItems}
-                    onEndReachedThreshold={0.5}
                     initialNumToRender={15}
                     ListHeaderComponent={this._getHeader}
+                    ListFooterComponent={this._getFooter}
                     scrollsToTop={true}
                 />
             );

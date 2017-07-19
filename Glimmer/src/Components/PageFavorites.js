@@ -109,7 +109,7 @@ class PageFavorites extends React.Component {
         var data = this.getData();
 
         if (data.length === 0 || this.state.loading === true) {
-            return <LoadingScreen text="Laster trådene dine..."/>
+            return <LoadingScreen text="Laster alle tråder du følger"/>
         }
         else {
 

@@ -91,7 +91,7 @@ class PageStream extends React.Component {
         var data = this.getData();
 
         if (data.length === 0 || this.state.loading) {
-            return <LoadingScreen text="Laster forsiden..."/>
+            return <LoadingScreen text="Laster forsiden"/>
         } else {
 
             return (
