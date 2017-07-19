@@ -56,7 +56,7 @@ export default class ForumTextTextile extends React.Component {
                     let arr = match.split(" ");
                     let nr = arr[1].substring(0, arr[1].length - 1);
                     let url = baseImageUrl.replace("XXXXX", nr);
-                    return url;
+                    return nr;
                 });
 
                 outArray.push({type: "img", data: tmp});
@@ -204,6 +204,7 @@ export default class ForumTextTextile extends React.Component {
             if (node.type === "txt") {
                 outArray.push(
                     <HTMLView
+                        style={styles.paragraph}
                         key={key}
                         NodeComponent={Text}
                         TextComponent={Text}
@@ -218,7 +219,7 @@ export default class ForumTextTextile extends React.Component {
             }
             else if (node.type === "img") {
                 outArray.push(
-                    <GlimmerImage key={key} uri={node.data}/>
+                    <GlimmerImage style={styles.paragraph} key={key} id={node.data}/>
                 )
             }
         }
@@ -243,4 +244,9 @@ ForumTextTextile.propTypes = {
     navigator: PropTypes.object.isRequired,
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    paragraph: {
+        marginTop: 3,
+        marginBottom: 3
+    }
+});

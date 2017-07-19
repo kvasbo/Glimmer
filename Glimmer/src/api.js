@@ -81,19 +81,35 @@ export default class glimmerAPI {
 
                     //All is fine
                     if (response.ok === true) {
-                        response.json().then((data) => {
 
-                            if (__DEV__) {
-                                const end = new Date();
-                                console.log("API OK", type, url, end - start);
-                            }
-                            resolve(data);
+                        //JSON
+                        if(response.headers.get("content-type").indexOf("application/json") !== -1)
+                        {
+                            response.json().then((data) => {
 
-                        }).catch((error) => {
-                            console.log("JSON error", error);
+                                if (__DEV__) {
+                                    const end = new Date();
+                                    console.log("API OK", type, url, end - start);
+                                }
+                                resolve(data);
 
+                            }).catch((error) => {
+                                console.log("JSON error", error);
+
+                                resolve("API OK, but could not parse JSON.");
+                            })
+                        }
+                        else if(response.headers.get("content-type").indexOf("image") !== -1)
+                        {
+                            let url = response.url;
+                            resolve(url);
+                        }
+                        else
+                        {
                             resolve("API OK, but could not parse JSON.");
-                        })
+                        }
+
+
 
                     }
                     else if (response.status === 403) {
@@ -125,7 +141,7 @@ export default class glimmerAPI {
                     else {
 
                         response.text().then((data) => {
-                            console.log("Unhandled server error", data);
+                            console.log("Unhandled server error", data, url, type);
                             reject("Unhandled server error");
                         })
                     }
