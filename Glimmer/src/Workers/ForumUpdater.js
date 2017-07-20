@@ -95,8 +95,8 @@ export default class ForumUpdater {
 
     }
 
-    loadFirstUnread(depth = 1) {
-        return this.addUnread(1, depth, true);
+    loadFirstUnread() {
+        return this.addUnread(1, 1, true);
     }
 
     addUnread(from = 1, depth = 5, flush=false) {
