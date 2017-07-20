@@ -72,7 +72,7 @@ export default class ForumTextTextile extends React.Component {
 
         }
 
-        console.log(outArray);
+        //console.log(outArray);
 
         return outArray;
 

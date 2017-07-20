@@ -158,6 +158,13 @@ dependencies {
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-navigation')
 
+      // For animated GIF support
+      compile 'com.facebook.fresco:animated-gif:1.0.1'
+
+      // For WebP support, including animated WebP
+      compile 'com.facebook.fresco:animated-webp:1.0.1'
+      compile 'com.facebook.fresco:webpsupport:1.0.1'
+
     //Firebase change start
 
     // RNFirebase Required dependencies

@@ -20,6 +20,7 @@ export default class GlimmerImage extends React.Component {
         this.componentWillMount = this.componentWillMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
 
+        this.uri = "/images/redirect/" + this.props.id + "?size=large";
 
     }
 
@@ -30,41 +31,47 @@ export default class GlimmerImage extends React.Component {
         arbeidsMaur.imageGetter.getImage(this.props.id, "large").then((data) => {
             //Check if we are mounted
             if (this._isMounted) {
-                this.setState({uri: data});
-                this.getSize();
+
+                //console.log("Image read", data);
+
+                this.setState({uri: data.data.uri});
+                this.getSize(data.data);
             }
 
         });
 
     }
 
-    componentWillUnmount()
-    {
+    componentWillUnmount() {
         this._isMounted = false;
     }
 
-    getSize() {
+    getSize(data) {
 
-        Image.getSize(this.state.uri, (width, height) => {
+        try {
 
             const dim = Dimensions.get("window");
             const maxWidth = this.dim.width - 50;
 
-            var factor = width / maxWidth;
+            var factor = data.width / maxWidth;
 
             if (factor > 1) {
-                var fixedWidth = Math.round(width / factor);
-                var fixedHeight = Math.round(height / factor);
+                var fixedWidth = Math.round(data.width / factor);
+                var fixedHeight = Math.round(data.height / factor);
             }
             else {
-                var fixedWidth = width;
-                var fixedHeight = height;
+                var fixedWidth = data.width;
+                var fixedHeight = data.height;
             }
+
             if (this._isMounted) {
                 this.setState({height: fixedHeight, width: fixedWidth})
             }
+        }
+        catch (err) {
+            console.log(err);
+        }
 
-        })
     }
 
     render() {

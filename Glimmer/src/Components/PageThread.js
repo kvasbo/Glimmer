@@ -38,13 +38,12 @@ class PageThread extends React.Component {
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
-                this.loadCommentPage(1);
-                arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id);
-                arbeidsMaur.forumUpdater.loadFirstUnread();
                 break;
             case 'didAppear':
+                this.loadCommentPage(1);
                 break;
             case 'willDisappear':
+                arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id);
                 break;
             case 'didDisappear':
                 break;
@@ -250,6 +249,7 @@ class PageThread extends React.Component {
             <View style={pageStyles.container}>
 
                 <View style={{flex: 1}}>
+
                     <ScrollView ref={component => this.scrollbar = component} style={{flex: 1}}>
 
                         <ThreadForumPost data={this.props.post} navigator={this.props.navigator} metaData={false}
@@ -259,6 +259,7 @@ class PageThread extends React.Component {
                         {this.getComments()}
 
                     </ScrollView>
+
                 </View>
 
                 <View style={pageStyles.navBar}>
