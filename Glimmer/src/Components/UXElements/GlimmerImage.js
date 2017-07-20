@@ -16,19 +16,31 @@ export default class GlimmerImage extends React.Component {
         this.maxWidth = this.dim.width - 50;
         this.state = {height: 0, width: 0, uri: null}
 
-       // this.uri = config.base_url + "/images/redirect/"+this.props.id+"?size=large";
+        this._isMounted = false;
+        this.componentWillMount = this.componentWillMount.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
 
-       // console.log(this.uri);
 
     }
 
     componentWillMount() {
 
-       arbeidsMaur.imageGetter.getImage(this.props.id, "large").then((data) => {
-           this.setState({uri: data});
-           this.getSize();
-       });
+        this._isMounted = true;
 
+        arbeidsMaur.imageGetter.getImage(this.props.id, "large").then((data) => {
+            //Check if we are mounted
+            if (this._isMounted) {
+                this.setState({uri: data});
+                this.getSize();
+            }
+
+        });
+
+    }
+
+    componentWillUnmount()
+    {
+        this._isMounted = false;
     }
 
     getSize() {
@@ -48,17 +60,20 @@ export default class GlimmerImage extends React.Component {
                 var fixedWidth = width;
                 var fixedHeight = height;
             }
+            if (this._isMounted) {
+                this.setState({height: fixedHeight, width: fixedWidth})
+            }
 
-            this.setState({height: fixedHeight, width: fixedWidth})
         })
     }
 
     render() {
 
-        if(this.state.uri === null) return null;
+        if (this.state.uri === null) return null;
 
         return (
-            <Image resizeMode="contain" source={{uri: this.state.uri}} style={{height: this.state.height, width: this.state.width}}/>
+            <Image resizeMode="contain" source={{uri: this.state.uri}}
+                   style={{height: this.state.height, width: this.state.width}}/>
         );
     }
 }

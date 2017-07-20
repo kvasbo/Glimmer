@@ -42,18 +42,25 @@ export default class WriteNewPostOrComment extends React.Component {
         super(props);
 
         //Set key for storing the temp data.
-        if (this.props.type === "comment") {
+        if (!this.props.edit && this.props.type === "comment") {
             this.itemKey = "@tmp_comment_" + this.props.postId;
         }
-        else if (this.props.type === "post") {
+        else if (!this.props.edit && this.props.type === "post") {
             this.ItemKey = "@tmp_newPost";
         }
         else {
             this.itemKey = "@trash"
         }
 
+        //get existing text if we are editing!
+        var existingText = "";
+        if(this.props.type === "comment" && this.props.edit)
+        {
+            existingText = this.props.existingText;
+        }
+
         this.state = {
-            text: '',
+            text: existingText,
             title: '',
             forumName: "",
             tags: [],
@@ -62,7 +69,7 @@ export default class WriteNewPostOrComment extends React.Component {
             buttonsActive: true
         };
 
-        console.log("Writer props", this.props);
+       // console.log("Writer props", this.props);
 
     }
 
@@ -129,7 +136,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
         this.setState({buttonsActive: false});
 
-        if (this.props.type === "comment") {
+        if (!this.props.edit && this.props.type === "comment") {
 
             var posttext = "";
             if (this.state.text !== "") {
@@ -155,7 +162,11 @@ export default class WriteNewPostOrComment extends React.Component {
             });
 
         }
-        else if (this.props.type === "post") {
+        else if (this.props.edit && this.props.type === "comment")
+        {
+            console.log("Edit comment");
+        }
+        else if (!this.props.edit && this.props.type === "post") {
             var forumId = store.getState().AppStatus.activePostingForum;
 
             var body = ""
@@ -311,7 +322,7 @@ export default class WriteNewPostOrComment extends React.Component {
                 <View key={key} style={{justifyContent: 'flex-start', margin: 10}}>
                     <TouchableOpacity
                         onPress={() => this.insertIntoBodyText("!" + this.state.images[key].uri + "!")}>
-                        <Image key={Math.random()} source={{uri: this.state.images[key].orig_uri}}
+                        <Image source={{uri: this.state.images[key].orig_uri}}
                                style={{height: 75, width: 75, margin: 5, borderRadius: 0}}>
                             {this.getLoadingIndicator(!this.state.images[key].done)}
                         </Image>
@@ -420,12 +431,20 @@ export default class WriteNewPostOrComment extends React.Component {
 
 }
 
+WriteNewPostOrComment.defaultProps = {
+    edit: false
+}
+
 WriteNewPostOrComment.propTypes = {
 
     type: PropTypes.oneOf(['comment', 'post']).isRequired,
     postId: PropTypes.number,
     navigator: PropTypes.object,
-    title: PropTypes.string
+    title: PropTypes.string,
+    edit: PropTypes.bool,
+    existingText: PropTypes.string,
+    existingTitle: PropTypes.string,
+    commentId: PropTypes.number
 
 }
 

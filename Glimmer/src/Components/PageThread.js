@@ -28,6 +28,11 @@ class PageThread extends React.Component {
         };
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
+        this._isMounted = false;
+        this.componentWillMount = this.componentWillMount.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
+        this.loadCommentPage = this.loadCommentPage.bind(this);
+
     }
 
     onNavigatorEvent(event) {
@@ -45,12 +50,23 @@ class PageThread extends React.Component {
         }
     }
 
+    componentWillMount() {
+        this._isMounted = true;
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     loadCommentPage(page) {
 
         this.setState({currentPage: page, loading: true});
 
         arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page).then((data) => {
-            this.setState({comments: data, loading: false});
+
+            if (this._isMounted) {
+                this.setState({comments: data, loading: false});
+            }
         });
 
     }
@@ -121,7 +137,6 @@ class PageThread extends React.Component {
 
         const activeColor = colors.COLOR_GRAD1
         const size = 30;
-
 
         return (
 
@@ -216,9 +231,10 @@ class PageThread extends React.Component {
         for (let i = 0; i < tmpPosts.length; i++) {
 
             let byStarter = false;
-            if(tmpPosts[i].creator_id === this.props.post.creator_id) byStarter = true;
+            if (tmpPosts[i].creator_id === this.props.post.creator_id) byStarter = true;
 
-            out.push(<ForumComment key={tmpPosts[i].id} byStarter={byStarter} navigator={this.props.navigator} data={tmpPosts[i]}/>);
+            out.push(<ForumComment key={tmpPosts[i].id} byStarter={byStarter} navigator={this.props.navigator}
+                                   data={tmpPosts[i]}/>);
         }
 
         return out;
@@ -236,7 +252,7 @@ class PageThread extends React.Component {
                     <ScrollView ref={component => this.scrollbar = component} style={{flex: 1}}>
 
                         <ThreadForumPost data={this.props.post} navigator={this.props.navigator} metaData={false}
-                                         cut={false} />
+                                         cut={false}/>
                         <View ref={component => this.firstpost = component}/>
 
                         {this.getComments()}

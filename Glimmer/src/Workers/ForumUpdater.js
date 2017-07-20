@@ -95,12 +95,8 @@ export default class ForumUpdater {
 
     }
 
-    loadFirstUnread(depth = 5) {
+    loadFirstUnread(depth = 1) {
         return this.addUnread(1, depth, true);
-    }
-
-    addPagesToUnread(numberOfPages) {
-        this.addUnread(this.lastpage_unread + 1, numberOfPages);
     }
 
     addUnread(from = 1, depth = 5, flush=false) {

@@ -4,11 +4,12 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, TouchableOpacity} from "react-native";
 import ForumTextTextile from "./ForumTextTextile.js";
 import GiKudos from "./GiKudos";
 import VisKudos from "./VisKudos";
 import CommentMetadata from "./CommentMetadata";
+import Badge from "./Badge";
 import * as colors from "../../Styles/colorConstants";
 
 export default class ForumComment extends React.Component {
@@ -41,6 +42,39 @@ export default class ForumComment extends React.Component {
         }
     }
 
+    getEditSection()
+    {
+        if(!this.byMe) return null;
+
+        let editWindow = 15;
+        let now = new moment();
+        let created = new moment(this.props.data.updated_at);
+
+        let diff = now.diff(created, "minutes");
+        let rest = editWindow - diff;
+
+        if(diff < editWindow)
+        {
+            return (
+                <TouchableOpacity
+                 onPress={()=>{
+                     this.props.navigator.push({
+                         screen: 'glimmer.PageForumCommentEdit',
+                         title: "Redigér kommentar",
+                         passProps: {commentId: this.props.data.id, bodyTextile: this.props.data.body_textile},
+                         animated: true,
+                     });
+
+                 }}>
+                    <Badge text="Redigér" />
+                </TouchableOpacity>
+            )
+        }
+
+       // console.log("geteditSection", diff)
+
+    }
+
     render() {
 
         return (
@@ -56,6 +90,7 @@ export default class ForumComment extends React.Component {
                 </View>
                 <View style={{flexDirection: "row", margin: 10, marginTop: 5, padding: 0}}>
                     {this.getKudosSection()}
+                    {this.getEditSection()}
                 </View>
             </View>
         )
