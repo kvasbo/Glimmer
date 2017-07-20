@@ -68,13 +68,13 @@ class PageUnread extends React.Component {
     _silentRefresh() {
         this.setState({silentLoading: true});
 
-        if (!this.state.loading) global.arbeidsMaur.forumUpdater.addUnread(1, 1).then(() => this.setState({silentLoading: false}));
+        if (!this.state.loading) global.arbeidsMaur.forumUpdater.loadFirstUnread().then(() => this.setState({silentLoading: false}));
     }
 
     _refresh() {
 
         this.setState({refreshing: true});
-        global.arbeidsMaur.forumUpdater.loadFirstUnread(1).then((data) => {
+        global.arbeidsMaur.forumUpdater.loadFirstUnread().then((data) => {
             this.setState({refreshing: false});
         });
 

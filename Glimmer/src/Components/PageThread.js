@@ -40,6 +40,7 @@ class PageThread extends React.Component {
             case 'willAppear':
                 this.loadCommentPage(1);
                 arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id);
+                arbeidsMaur.forumUpdater.loadFirstUnread();
                 break;
             case 'didAppear':
                 break;
