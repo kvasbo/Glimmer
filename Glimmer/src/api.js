@@ -37,6 +37,37 @@ export default class glimmerAPI {
     }
 
     /**
+     * Payload is an object. Yes it is. key:value becomes &key=value; urlencoded.
+     * @param call
+     * @param payload
+     * @param callback
+     */
+    makeApiPutCall(kall, payload = null, body = null) {
+
+        var data = "";
+
+        for (let element in payload) {
+            var tempStr = encodeURIComponent(element) + "=" + encodeURIComponent(payload[element]) + "&"
+            data += tempStr;
+        }
+
+        var theContent = JSON.stringify(body);
+
+        var url = config.base_url + kall;
+
+        if(payload !== null) url += "?" + data;
+
+        return new Promise((resolve, reject) => {
+            this.makeApiCall(url, "PUT", theContent).then((data) => {
+                resolve(data);
+            }).catch((error) => {
+                reject(error);
+            })
+        })
+
+    }
+
+    /**
      * Make Get call to the API.
      * @param kall
      * @returns {Promise}

@@ -54,8 +54,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
         //get existing text if we are editing!
         var existingText = "";
-        if(this.props.type === "comment" && this.props.edit)
-        {
+        if (this.props.type === "comment" && this.props.edit) {
             existingText = this.props.existingText;
         }
 
@@ -69,26 +68,29 @@ export default class WriteNewPostOrComment extends React.Component {
             buttonsActive: true
         };
 
-       // console.log("Writer props", this.props);
+        // console.log("Writer props", this.props);
 
     }
 
     componentWillMount() {
 
-        AsyncStorage.getItem(this.itemKey + "_text").then((data) => {
+        //Only load previous edit if needed.
+        if (!this.props.edit) {
+            AsyncStorage.getItem(this.itemKey + "_text").then((data) => {
 
-            if (data !== null) {
-                this.setState({text: data});
-            }
-        });
+                if (data !== null) {
+                    this.setState({text: data});
+                }
+            });
 
-        AsyncStorage.getItem(this.itemKey + "_title").then((data) => {
+            AsyncStorage.getItem(this.itemKey + "_title").then((data) => {
 
-            if (data !== null) {
-                this.setState({title: data});
-            }
+                if (data !== null) {
+                    this.setState({title: data});
+                }
 
-        });
+            });
+        }
 
         if (this.props.type === "post") {
             arbeidsMaur.forumListUpdater.getForumInfo(store.getState().AppStatus.activePostingForum).then((data) => {
@@ -146,6 +148,7 @@ export default class WriteNewPostOrComment extends React.Component {
                 Alert.alert(
                     'Trist og uproft',
                     'Kommentaren din er tom.');
+                this.setState({buttonsActive: true});
                 return false;
             }
 
@@ -158,13 +161,36 @@ export default class WriteNewPostOrComment extends React.Component {
 
             }).catch((error) => {
                 Alert.alert("Noe gikk galt :(");
+                this.setState({buttonsActive: true});
                 console.log(error);
             });
 
         }
-        else if (this.props.edit && this.props.type === "comment")
-        {
-            console.log("Edit comment");
+        else if (this.props.edit && this.props.type === "comment") {
+
+            var posttext = "";
+            if (this.state.text !== "") {
+                posttext = this.parseAndReplaceImages(this.state.text);
+            }
+            else {
+                Alert.alert(
+                    'Trist og uproft',
+                    'Kommentaren din er tom. Det var den ikke før.');
+                this.setState({buttonsActive: true});
+                return false;
+            }
+
+            arbeidsMaur.forumUpdater.editPostComment(this.props.commentId, posttext).then(() => {
+
+                this._doClear();
+                this.props.navigator.pop();
+
+            }).catch((error) => {
+                Alert.alert("Noe gikk galt :(");
+                this.setState({buttonsActive: true});
+                console.log(error);
+            });
+
         }
         else if (!this.props.edit && this.props.type === "post") {
             var forumId = store.getState().AppStatus.activePostingForum;
@@ -177,6 +203,7 @@ export default class WriteNewPostOrComment extends React.Component {
                 Alert.alert(
                     'Trist og uproft',
                     'Kommentaren eller tittelen din er tom.');
+                this.setState({buttonsActive: true});
                 return false;
             }
 
@@ -186,10 +213,12 @@ export default class WriteNewPostOrComment extends React.Component {
 
                 this._doClear();
                 arbeidsMaur.forumUpdater.loadFirstStream(1);
+                this.setState({buttonsActive: true});
                 this.props.navigator.popToRoot();
 
             }).catch((error) => {
                 Alert.alert("Noe gikk galt :(");
+                this.setState({buttonsActive: true});
                 console.log(error);
             });
 

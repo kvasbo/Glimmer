@@ -333,6 +333,21 @@ export default class ForumUpdater {
         })
     }
 
+    editPostComment(commentId, body)
+    {
+        return new Promise((resolve,reject) => {
+
+            var uri = "/comments/"+commentId;
+
+            uri += "?comment="+encodeURIComponent(JSON.stringify({body:body, comment:{body:body}}));
+
+            api.makeApiPutCall(uri,null,null).then((data)=>{
+                resolve(data);
+            }).catch((err) => reject(err));
+
+        })
+    }
+
     giveKudosToPost(postId) {
 
         return new Promise((resolve, reject) => {
