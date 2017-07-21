@@ -113,7 +113,7 @@ class PageUnread extends React.Component {
 
                 <View style={[listStyles.whiteBox, {justifyContent: "space-between"}]}>
                     <View style={listStyles.textBlock}>
-                        <Text style={listStyles.listTitle}>{item.title}</Text>
+                        <Text style={[listStyles.listTitle,{fontWeight: '600'}]}>{item.title}</Text>
                         <Text style={listStyles.listSubtitle}>{this.getSubtitle(item)}</Text>
                     </View>
                     <View style={listStyles.iconBlock}>

@@ -4,7 +4,7 @@
 
 import {Linking} from "react-native";
 import * as Keychain from "react-native-keychain";
-import {setLoginStatus, setActiveUserId} from "./Redux/actions";
+import {setLoginStatus, setActiveUserId, setToken} from "./Redux/actions";
 
 const shittyQs = require("shitty-qs");
 
@@ -17,6 +17,8 @@ global.log = [];
 
 export default class glimmerAuth {
 
+    token = null;
+
     /** Test if we are connected **/
     checkAuth() {
 
@@ -26,6 +28,11 @@ export default class glimmerAuth {
 
                 store.dispatch(setActiveUserId(data.data.id));
                 store.dispatch(setLoginStatus(true));
+
+                this.getToken().then((token) => {
+                    store.dispatch(setToken(token));
+                    this.token = token;
+                })
 
                 resolve("Logged in");
 
@@ -70,7 +77,7 @@ export default class glimmerAuth {
                         console.log("Storetoken", query);
                     }
 
-                    let password = query.access_token;
+                    var password = query.access_token;
 
                     Keychain
                     .setInternetCredentials(server, username, password)
@@ -80,6 +87,8 @@ export default class glimmerAuth {
 
                             store.dispatch(setActiveUserId(data.data.id));
                             store.dispatch(setLoginStatus(true));
+                            store.dispatch(setToken(password));
+                            this.token = password;
 
                             resolve();
 

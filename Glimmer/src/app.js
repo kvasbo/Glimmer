@@ -20,10 +20,11 @@ global.moment = require('moment');
 moment.locale('nb')
 
 const config = require("../config.js");
+global.config = config;
 
 //Some hacks
 //console.disableYellowBox = true;
-console.ignoredYellowBox = ['[xmldom'];
+console.ignoredYellowBox = ['[xmldom', 'Received data was not a string, or was not a recognised encoding.'];
 
 const errorHandler = (e, isFatal) => {
     if (isFatal) {

@@ -4,6 +4,7 @@ import {
     APPCONTROL_SET_ACTIVE_POSTING_FORUM,
     APPCONTROL_SET_CURRENT_USER,
     APPCONTROL_USER_LOGIN,
+    APPCONTROL_SET_CURRENT_TOKEN,
     FORUMLIST_ADD_FORUM,
     FORUMLIST_REPLACE,
     FORUMPOST_COMMENTS_ADD,
@@ -95,6 +96,13 @@ export function setLoginStatus(status) {
     return {
         type: APPCONTROL_USER_LOGIN,
         status
+    }
+}
+
+export function setToken(token) {
+    return {
+        type: APPCONTROL_SET_CURRENT_TOKEN,
+        token
     }
 }
 

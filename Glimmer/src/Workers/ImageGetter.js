@@ -1,4 +1,5 @@
 import {Image} from "react-native";
+import axios from "axios";
 
 export default class ImageGetter {
 
@@ -19,6 +20,12 @@ export default class ImageGetter {
 
     getImage(id, size = "large") {
 
+        var headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': 'glimmer',
+            "Authorization": "Bearer " + store.getState().AppStatus.token
+        }
+
         return new Promise((resolve, reject) => {
 
             if (typeof this.imageData[id] !== "undefined" && typeof this.imageData[id][size] !== "undefined") {
@@ -26,17 +33,22 @@ export default class ImageGetter {
             }
             else {
 
-                let uri = "/images/redirect/" + id + "?size=" + size;
+                let uri = config.base_url + "/images/redirect/" + id + "?size=" + size;
 
-                api.makeApiGetCall(uri).then((data) => {
+                axios.get(uri, {headers: headers})
+                .then((response) => {
 
-                    this.getAndStoreImageData(data, id, size).then((data) => {
+                    let uri = response.request.responseURL;
+
+                    this.getAndStoreImageData(uri, id, size).then((data) => {
                         resolve({type: "api", data: data});
                     }).catch((err) => {
                         reject(err);
                     });
-
                 })
+                .catch(function (error) {
+                    reject(error);
+                });
             }
 
         });
