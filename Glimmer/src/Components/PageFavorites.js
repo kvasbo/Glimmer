@@ -25,29 +25,74 @@ class PageFavorites extends React.Component {
             silentLoading: false
         };
 
+        this._isMounted = false;
+
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
+
+    componentWillMount()
+    {
+        this._isMounted = true;
+    }
+
+    componentWillUnmount()
+    {
+        this._isMounted = false;
+    }
+
+    static navigatorButtons = {
+        rightButtons: [
+            {
+                title: 'Uleste', // for a textual button, provide the button title (label)
+                id: 'alle', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+                showAsAction: 'ifRoom', // optional, Android only. Control how the button is displayed in the Toolbar. Accepted valued: 'ifRoom' (default) - Show this item as a button in an Action Bar if the system decides there is room for it. 'always' - Always show this item as a button in an Action Bar. 'withText' - When this item is in the action bar, always show it with a text label even if it also has an icon specified. 'never' - Never show this item as a button in an Action Bar.
+            }/*,
+             {
+             icon: require('../../img/navicon_add.png'), // for icon button, provide the local image asset name
+             id: 'add' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+             }*/
+        ]
+    };
 
     onNavigatorEvent(event) {
         switch (event.id) {
             case 'willAppear':
                 this._silentRefresh();
                 break;
+            case "alle":
+
+                this.props.navigator.push({
+                    screen: 'glimmer.PageUnread', // unique ID registered with Navigation.registerScreen
+                    title: "Mine uleste tråder", // navigation bar title of the pushed screen (optional)
+                    animated: true, // does the push have transition animation or does it happen immediately (optional)
+                    backButtonTitle: "Mine tråder",
+                });
+
+                break;
+
         }
+
     }
 
     _silentRefresh() {
+
         this.setState({silentLoading: true});
 
-        if (!this.state.loading) global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then(() => this.setState({silentLoading: false}));
+        if (!this.state.loading) global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then(() => {
+            if(this._isMounted) {
+                this.setState({silentLoading: false})
+            }});
     }
 
     _refresh() {
 
         this.setState({refreshing: true});
+
         global.arbeidsMaur.forumUpdater.loadFirstFavorites(1).then((data) => {
-            this.setState({refreshing: false});
+            if(this._isMounted){
+                this.setState({refreshing: false});
+            }
         });
 
     }
@@ -64,7 +109,26 @@ class PageFavorites extends React.Component {
     }
 
     getSubtitle(data) {
-        return helpers.getCalendarTime(data.updated_at);
+
+        var outString = helpers.getCalendarTime(data.updated_at);
+
+        if(data.unread_comment_count === 1)
+        {
+            outString += ", én ulest kommentar"
+        }
+        else if (data.unread_comment_count > 1)
+        {
+            outString += ", "+data.unread_comment_count+" uleste kommentarer"
+        }
+
+        return outString;
+    }
+
+    getUnreadStyle(data) {
+        if(data.unread_comment_count > 0)
+        {
+            return {fontWeight: '600'}
+        }
     }
 
     _renderItem = ({item}) => (
@@ -80,7 +144,7 @@ class PageFavorites extends React.Component {
 
                 <View style={[listStyles.whiteBox, {justifyContent: "space-between"}]}>
                     <View style={listStyles.textBlock}>
-                        <Text style={listStyles.listTitle}>{item.title}</Text>
+                        <Text style={[listStyles.listTitle, this.getUnreadStyle(item)]}>{item.title}</Text>
                         <Text style={listStyles.listSubtitle}>{this.getSubtitle(item)}</Text>
                     </View>
                     <View style={listStyles.iconBlock}>

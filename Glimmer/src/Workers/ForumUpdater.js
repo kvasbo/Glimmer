@@ -74,7 +74,7 @@ export default class ForumUpdater {
 
                         let p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
                             f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
-                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile);
+                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count);
 
                         tmpPosts.push(p);
                     }
@@ -194,7 +194,7 @@ export default class ForumUpdater {
 
                         var p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
                             f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
-                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile);
+                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count);
 
                         tmpPosts.push(p);
                     }

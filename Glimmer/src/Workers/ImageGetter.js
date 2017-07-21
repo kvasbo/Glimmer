@@ -25,7 +25,7 @@ export default class ImageGetter {
                 resolve({type: "cache", data: this.imageData[id][size]});
             }
             else {
-                
+
                 let uri = "/images/redirect/" + id + "?size=" + size;
 
                 api.makeApiGetCall(uri).then((data) => {

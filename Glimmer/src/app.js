@@ -195,9 +195,9 @@ class Glimmer extends React.Component {
             passProps: {store: global.store}, //Pass the redux store.
             tabs: [{
                 label: 'Mine tråder',
-                screen: 'glimmer.PageUnread', // this is a registered name for a screen
+                screen: 'glimmer.PageFavorites', // this is a registered name for a screen
                 icon: iconsMap['ios-star'],//icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                title: 'Uleste tråder',
+                title: 'Mine tråder',
                 navigatorStyle: NavStyles.default,
             }, {
                 label: 'Forsiden',
