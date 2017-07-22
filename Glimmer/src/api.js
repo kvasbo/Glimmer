@@ -51,7 +51,7 @@ export default class glimmerAPI {
             data += tempStr;
         }
 
-        var theContent = JSON.stringify(body);
+        var theContent =  JSON.stringify(body);
 
         var url = config.base_url + kall;
 

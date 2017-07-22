@@ -46,7 +46,7 @@ export default class ForumComment extends React.Component {
     {
 
         //Disabled for now
-        if(true || !this.byMe) return null;
+        if(!this.byMe) return null;
 
         let editWindow = 15;
         let now = new moment();

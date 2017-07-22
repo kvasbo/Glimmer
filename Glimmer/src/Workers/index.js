@@ -7,6 +7,7 @@ import KretsUpdater from "./KretsUpdater";
 import UserUpdater from "./UserUpdater";
 import MessageUpdater from "./MessageUpdater";
 import ImageGetter from "./ImageGetter";
+import ForumGetter from "./ForumGetter";
 
 export default class Workers {
 
@@ -17,6 +18,7 @@ export default class Workers {
         this.userUpdater = new UserUpdater();
         this.messageUpdater = new MessageUpdater();
         this.imageGetter = new ImageGetter();
+        this.forumGetter = new ForumGetter();
     }
 
     initData() {

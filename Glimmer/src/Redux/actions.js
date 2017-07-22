@@ -17,7 +17,8 @@ import {
     MESSAGE_MESSAGES_ADD_BATCH,
     USERS_ADD_USER_BATCH,
     APPCONTROL_SET_ACTIVE_POSTING_FILTER,
-    ADD_POST_UNREAD_BATCH
+    ADD_POST_UNREAD_BATCH,
+    ADD_POST_BATCH
 } from "../constants";
 
 export function replaceForumList(forums) {
@@ -46,6 +47,12 @@ export function addFavoritesPostBatch(posts, replace = false) {
         type: ADD_POST_FAVORITES_BATCH,
         posts,
         replace
+    }
+}
+export function addPostBatch(posts) {
+    return {
+        type: ADD_POST_BATCH,
+        posts
     }
 }
 

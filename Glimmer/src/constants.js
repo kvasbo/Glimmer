@@ -1,6 +1,7 @@
 export const FORUMLIST_REPLACE = 'FORUMLIST_REPLACE'
 export const FORUMLIST_ADD_FORUM = 'FORUMLIST_ADD_FORUM'
 
+export const ADD_POST_BATCH = 'ADD_POST_BATCH'
 export const ADD_POST_FAVORITES = 'ADD_POST_FAVORITES'
 export const ADD_POST_FAVORITES_BATCH = 'ADD_POST_FAVORITES_BATCH'
 export const ADD_POST_STREAM = 'ADD_POST_STREAM'
@@ -28,9 +29,9 @@ export const FORUMPOST_COMMENTS_SET_ACTIVE_PAGE = 'FORUMPOST_COMMENTS_SET_ACTIVE
 export const USERS_ADD_USER_BATCH = 'USERS_ADD_USER_BATCH'
 
 
-export const REGEX_LINK_USER = 'USERS_ADD_USER_BATCH'
-export const REGEX_LINK_THREAD = 'USERS_ADD_USER_BATCH'
-export const REGEX_LINK_IMAGE = 'USERS_ADD_USER_BATCH'
+export const REGEX_LINK_USER = ''
+export const REGEX_LINK_THREAD = /https?:\/\/.*underskog\.no\/samtale\/[0-9]*/g
+export const REGEX_LINK_IMAGE = ''
 export const REGEX_TEXTILE_INTERNAL_IMAGE = /(!bilde\s[\d]+!)/g
 
 

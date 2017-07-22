@@ -1,4 +1,10 @@
-import {addFavoritesPostBatch, addStreamPostBatch, addForumPostComments, addUnreadPostBatch} from "../Redux/actions";
+import {
+    addFavoritesPostBatch,
+    addForumPostComments,
+    addPostBatch,
+    addStreamPostBatch,
+    addUnreadPostBatch
+} from "../Redux/actions";
 const ForumPost = require("../DataClasses/post").default;
 const ForumPostComment = require("../DataClasses/postComment").default;
 
@@ -15,14 +21,12 @@ export default class ForumUpdater {
 
             var uri = null;
 
-            if(type === "favorites") uri = "/streams/starred?page=";
-            else if(type === "unread") uri = "/streams/unread?page=";
-            else if(type === "stream") uri = "/streams/posts?page=";
+            if (type === "favorites") uri = "/streams/starred?page=";
+            else if (type === "unread") uri = "/streams/unread?page=";
+            else if (type === "stream") uri = "/streams/posts?page=";
             else reject("No stream selected")
 
             uri += page;
-
-            console.log("loadPosts", uri);
 
             api.makeApiGetCall(uri).then((data) => {
 
@@ -35,6 +39,41 @@ export default class ForumUpdater {
         });
     }
 
+    loadPost(id) {
+        return new Promise((resolve, reject) => {
+
+            var uri = "/posts/" + id;
+
+            api.makeApiGetCall(uri).then((data) => {
+
+                let tmpPosts = [];
+
+                try {
+
+                    let f = data.data;
+
+                    var p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
+                        f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
+                        f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count);
+
+                    tmpPosts.push(p);
+
+                    store.dispatch(addPostBatch(tmpPosts));
+
+                    resolve(p);
+
+                }
+                catch (error) {
+                    //Could not parse, oh well.
+                }
+
+            }).catch((err) => {
+                reject(err);
+            })
+
+        })
+    }
+
     loadFirstFavorites(depth = 5) {
         return this.addFavorites(1, depth, true);
     }
@@ -43,7 +82,7 @@ export default class ForumUpdater {
         this.addFavorites(this.lastpage_favs + 1, numberOfPages);
     }
 
-    addFavorites(from = 1, depth = 5, flush=false) {
+    addFavorites(from = 1, depth = 5, flush = false) {
 
         return new Promise((resolve, reject) => {
 
@@ -84,6 +123,7 @@ export default class ForumUpdater {
                 }
 
                 store.dispatch(addFavoritesPostBatch(tmpPosts, flush));
+                store.dispatch(addPostBatch(tmpPosts));
 
                 this.lastpage_favs = from + depth - 1;
 
@@ -99,7 +139,7 @@ export default class ForumUpdater {
         return this.addUnread(1, 1, true);
     }
 
-    addUnread(from = 1, depth = 5, flush=false) {
+    addUnread(from = 1, depth = 5, flush = false) {
 
         return new Promise((resolve, reject) => {
 
@@ -140,6 +180,7 @@ export default class ForumUpdater {
                 }
 
                 store.dispatch(addUnreadPostBatch(tmpPosts, flush));
+                store.dispatch(addPostBatch(tmpPosts));
 
                 this.lastpage_unread = from + depth - 1;
 
@@ -205,6 +246,7 @@ export default class ForumUpdater {
                 }
 
                 store.dispatch(addStreamPostBatch(tmpPosts, flush));
+                store.dispatch(addPostBatch(tmpPosts));
 
                 this.lastpage_stream = from + depth - 1;
 
@@ -234,7 +276,7 @@ export default class ForumUpdater {
                         comments.push(tmpC);
                     }
                     catch (err) {
-                       
+
                     }
                 }
 
@@ -302,15 +344,14 @@ export default class ForumUpdater {
 
     }
 
-    markThreadAsRead(postId)
-    {
-        var uri = "/posts/"+postId+"/mark_read";
+    markThreadAsRead(postId) {
+        var uri = "/posts/" + postId + "/mark_read";
 
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
 
-            api.makeApiPostCall(uri).then(() =>{
+            api.makeApiPostCall(uri).then(() => {
                 resolve();
-            }).catch((err)=>{
+            }).catch((err) => {
                 reject(err);
             })
 
@@ -318,30 +359,30 @@ export default class ForumUpdater {
 
     }
 
-    markEventAsRead(eventId)
-    {
-        var uri = "/events/"+eventId+"/mark_read";
+    markEventAsRead(eventId) {
+        var uri = "/events/" + eventId + "/mark_read";
 
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
 
-            api.makeApiPostCall(uri).then(() =>{
+            api.makeApiPostCall(uri).then(() => {
                 resolve();
-            }).catch((err)=>{
+            }).catch((err) => {
                 reject(err);
             })
 
         })
     }
 
-    editPostComment(commentId, body)
-    {
-        return new Promise((resolve,reject) => {
+    editPostComment(commentId, body) {
+        return new Promise((resolve, reject) => {
 
-            var uri = "/comments/"+commentId;
+            var body = {comment: {body: body}}
 
-            uri += "?comment="+encodeURIComponent(JSON.stringify({body:body, comment:{body:body}}));
+            var uri = "/comments/" + commentId;
 
-            api.makeApiPutCall(uri,null,null).then((data)=>{
+            //uri += "?comment="+encodeURIComponent(JSON.stringify({body:body, comment:{body:body}}));
+
+            api.makeApiPutCall(uri, null, body).then((data) => {
                 resolve(data);
             }).catch((err) => reject(err));
 

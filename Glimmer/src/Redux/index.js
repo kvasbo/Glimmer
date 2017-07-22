@@ -9,6 +9,7 @@ import ForumPostComment from "./ForumPostComment";
 import User from "./User";
 import Conversation from "./Conversation";
 import Message from "./Message";
+import ForumPosts from "./ForumPosts";
 
 const glimmerReducers = combineReducers({
 
@@ -21,7 +22,8 @@ const glimmerReducers = combineReducers({
     ForumPostComment,
     User,
     Conversation,
-    Message
+    Message,
+    ForumPosts
 
 })
 

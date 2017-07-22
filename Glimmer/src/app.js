@@ -148,6 +148,9 @@ class Glimmer extends React.Component {
 
             global.arbeidsMaur.initData();
 
+            //Test
+            arbeidsMaur.forumUpdater.loadPost(1234);
+
             iconsLoaded.then(() => {
                 this.startMainApp();
             })

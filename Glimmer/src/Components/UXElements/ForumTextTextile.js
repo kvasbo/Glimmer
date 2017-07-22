@@ -9,6 +9,7 @@ import textile from "textile-js";
 import HTMLView from "react-native-htmlview";
 import GlimmerImage from "./GlimmerImage";
 import * as colors from "../../Styles/colorConstants";
+import {REGEX_LINK_THREAD, REGEX_TEXTILE_INTERNAL_IMAGE} from "../../constants";
 
 const baseImageUrl = "https://images.underskog.no/versions/1250/XXXXX.jpeg";
 
@@ -32,9 +33,8 @@ export default class ForumTextTextile extends React.Component {
         var outArray = [];
 
         //Newline før og etter bilde
-        let underskogsBildeRegex = /(!bilde\s[\d]+!)/g;
 
-        text = text.replace(underskogsBildeRegex, (match) => {
+        text = text.replace(REGEX_TEXTILE_INTERNAL_IMAGE, (match) => {
             return "\n" + match + "\n";
         })
 
@@ -50,9 +50,9 @@ export default class ForumTextTextile extends React.Component {
         for (key in textArray) {
             var tmp = textArray[key];
 
-            if (tmp.search(underskogsBildeRegex) !== -1) {
+            if (tmp.search(REGEX_TEXTILE_INTERNAL_IMAGE) !== -1) {
                 //Bytte ut underskogs-bildekode
-                tmp = tmp.replace(underskogsBildeRegex, (match) => {
+                tmp = tmp.replace(REGEX_TEXTILE_INTERNAL_IMAGE, (match) => {
                     let arr = match.split(" ");
                     let nr = arr[1].substring(0, arr[1].length - 1);
                     let url = baseImageUrl.replace("XXXXX", nr);
@@ -179,9 +179,27 @@ export default class ForumTextTextile extends React.Component {
             Alert.alert("Dette er litt flaut...", "Lenker internt på Underskog er ikke implementert ennå");
             console.log("brukerlenke");
         }
-        else if (url.includes("underskog.no/samtale/")) {
-            Alert.alert("Dette er litt flaut...", "Lenker internt på Underskog er ikke implementert ennå");
-            console.log("samtalelenke");
+        else if (url.search(REGEX_LINK_THREAD) !== -1) {
+
+            var id = null;
+
+            url.replace(/[0-9]+/, (match) => {
+                id = match;
+            });
+
+            arbeidsMaur.forumGetter.getPost(id).then((data) => {
+
+                console.log("post", data);
+
+                this.props.navigator.push({
+                    screen: 'glimmer.PageThread',
+                    title: data.title,
+                    passProps: {post: data}
+                })
+            }).catch((err)=>{
+               console.log(err);
+            })
+
         }
         else if (url.includes("http") && url.includes("://")) {
 
