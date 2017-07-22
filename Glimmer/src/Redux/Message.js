@@ -1,4 +1,4 @@
-import {MESSAGE_MESSAGES_ADD_BATCH} from "./constants";
+import {MESSAGE_MESSAGES_ADD_BATCH} from "../constants";
 
 function Message(state = {}, action) {
 

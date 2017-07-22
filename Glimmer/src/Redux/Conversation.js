@@ -1,4 +1,4 @@
-import {MESSAGE_CONVERSATON_ADD_BATCH} from "./constants";
+import {MESSAGE_CONVERSATON_ADD_BATCH} from "../constants";
 
 function Conversation(state = {}, action) {
     switch (action.type) {

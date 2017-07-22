@@ -4,7 +4,7 @@ import {
     APPCONTROL_SET_CURRENT_USER,
     APPCONTROL_USER_LOGIN,
     APPCONTROL_SET_CURRENT_TOKEN
-} from "./constants";
+} from "../constants";
 
 const initialState = {
     loggedIn: null,

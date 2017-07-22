@@ -18,7 +18,7 @@ import {
     USERS_ADD_USER_BATCH,
     APPCONTROL_SET_ACTIVE_POSTING_FILTER,
     ADD_POST_UNREAD_BATCH
-} from "./constants";
+} from "../constants";
 
 export function replaceForumList(forums) {
     return {

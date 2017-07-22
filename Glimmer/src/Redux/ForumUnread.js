@@ -1,4 +1,4 @@
-import {ADD_POST_UNREAD_BATCH} from "./constants";
+import {ADD_POST_UNREAD_BATCH} from "../constants";
 
 function ForumUnread(state = {}, action) {
     switch (action.type) {

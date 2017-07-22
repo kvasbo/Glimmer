@@ -1,4 +1,4 @@
-import {FORUMPOST_COMMENTS_ADD, FORUMPOST_COMMENTS_SET_ACTIVE_PAGE} from "./constants";
+import {FORUMPOST_COMMENTS_ADD, FORUMPOST_COMMENTS_SET_ACTIVE_PAGE} from "../constants";
 
 const initialState = {}
 

@@ -1,4 +1,4 @@
-import {USERS_ADD_USER_BATCH} from "./constants";
+import {USERS_ADD_USER_BATCH} from "../constants";
 
 const initialState = {
 

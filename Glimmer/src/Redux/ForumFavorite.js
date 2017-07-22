@@ -1,4 +1,4 @@
-import {ADD_POST_FAVORITES_BATCH} from "./constants";
+import {ADD_POST_FAVORITES_BATCH} from "../constants";
 
 function ForumFavorite(state = {}, action) {
     switch (action.type) {

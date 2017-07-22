@@ -1,4 +1,4 @@
-import {FORUMLIST_ADD_FORUM, FORUMLIST_REPLACE} from "./constants";
+import {FORUMLIST_ADD_FORUM, FORUMLIST_REPLACE} from "../constants";
 
 function ForumList(state = {forums:[]}, action) {
     switch (action.type) {

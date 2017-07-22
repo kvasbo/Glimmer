@@ -1,4 +1,4 @@
-import {ADD_POST_STREAM_BATCH} from "./constants";
+import {ADD_POST_STREAM_BATCH} from "../constants";
 
 function ForumStream(state = {}, action) {
     switch (action.type) {
