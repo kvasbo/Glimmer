@@ -4,6 +4,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import ThreadForumPost from "./UXElements/ThreadForumPost";
@@ -33,6 +34,8 @@ class PageThread extends React.Component {
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
         this.loadCommentPage = this.loadCommentPage.bind(this);
 
+        this.isEvent = (this.props.post.type === "event") ? true : false;
+
     }
 
     onNavigatorEvent(event) {
@@ -43,7 +46,7 @@ class PageThread extends React.Component {
                 this.loadCommentPage(1);
                 break;
             case 'willDisappear':
-                arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id);
+                arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
                 break;
             case 'didDisappear':
                 break;
@@ -62,7 +65,7 @@ class PageThread extends React.Component {
 
         this.setState({currentPage: page, loading: true});
 
-        arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page).then((data) => {
+        arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent).then((data) => {
 
             if (this._isMounted) {
                 this.setState({comments: data, loading: false});
@@ -167,7 +170,7 @@ class PageThread extends React.Component {
                     this.props.navigator.push({
                         screen: 'glimmer.PageNewForumComment', // unique ID registered with Navigation.registerScreen
                         title: "Ny kommentar", // navigation bar title of the pushed screen (optional)
-                        passProps: {postId: this.props.post.id}, // Object that will be passed as props to the pushed screen (optional)
+                        passProps: {postId: this.props.post.id, isEvent: this.isEvent}, // Object that will be passed as props to the pushed screen (optional)
                         animated: true, // does the push have transition animation or does it happen immediately (optional),
                     });
 
@@ -218,7 +221,7 @@ class PageThread extends React.Component {
 
         if (this.state.loading) {
             var loadText = "Laster side " + this.getCurrentPageNumber();
-            return (<LoadingScreen text={loadText}/>);
+            return (<View style={{paddingTop: 50, justifyContent: "center", alignItems: "center"}}><LoadingScreen text={loadText}/></View>);
         }
 
         var tmpPosts = this.state.comments;
@@ -241,6 +244,22 @@ class PageThread extends React.Component {
 
     }
 
+    getPost()
+    {
+        if(this.isEvent)
+        {
+            return null;
+        }
+        else
+        {
+            return (
+
+                <ThreadForumPost data={this.props.post} navigator={this.props.navigator} metaData={false}
+                                 cut={false}/>
+            )
+        }
+    }
+
     render() {
 
         return (
@@ -252,8 +271,8 @@ class PageThread extends React.Component {
 
                     <ScrollView ref={component => this.scrollbar = component} style={{flex: 1}}>
 
-                        <ThreadForumPost data={this.props.post} navigator={this.props.navigator} metaData={false}
-                                         cut={false}/>
+                        {this.getPost()}
+
                         <View ref={component => this.firstpost = component}/>
 
                         {this.getComments()}
@@ -317,9 +336,21 @@ const pageStyles = StyleSheet.create({
     }
 });
 
+
+
 PageThread.propTypes = {
     navigator: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired
 }
 
-export default PageThread;
+
+function mapStateToProps(state) {
+    return {
+        appStatus: state.AppStatus
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(PageThread)
+
