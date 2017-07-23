@@ -3,9 +3,11 @@ import {
     addForumPostComments,
     addPostBatch,
     addStreamPostBatch,
-    addUnreadPostBatch
+    addUnreadPostBatch,
+    addEventBatch
 } from "../Redux/actions";
 const ForumPost = require("../DataClasses/post").default;
+const ForumEvent = require("../DataClasses/event").default;
 const ForumPostComment = require("../DataClasses/postComment").default;
 
 export default class ForumUpdater {
@@ -51,8 +53,16 @@ export default class ForumUpdater {
         }
     }
 
-    parseApiEvent(event) {
+    parseAPIEvent(f) {
 
+        try {
+            return new ForumEvent(f.id, f.title, f.body, f.private, f.time, f.canceled, f.venue.city, f.venue, f.comment_count, f.created_at,
+                f.follower_count, f.following, f.tags, f.updated_at, f.view_count,
+                f.creator.name, f.creator.id, f.creator.image_url, f.body_textile, f.unread_comment_count);
+        }
+        catch (err) {
+            console.log("Error parsing event", err);
+        }
     }
 
     loadPost(id) {
@@ -115,15 +125,23 @@ export default class ForumUpdater {
                     fetchedPosts = fetchedPosts.concat(values[key].data);
                 }
 
-                let tmpPosts = [];
+                var tmpPosts = [];
+                var tmpEvents = [];
 
                 for (key in fetchedPosts) {
 
                     try {
 
-                        let p = this.parseAPIForumPost(fetchedPosts[key].bulletin);
-
-                        tmpPosts.push(p);
+                        if(typeof fetchedPosts[key].bulletin !== "undefined")
+                        {
+                            let p = this.parseAPIForumPost(fetchedPosts[key].bulletin);
+                            tmpPosts.push(p);
+                        }
+                        else if (typeof fetchedPosts[key].event !== "undefined")
+                        {
+                            let tmpE= this.parseAPIEvent(fetchedPosts[key].event);
+                            tmpEvents.push(tmpE);
+                        }
 
                     }
                     catch (error) {
@@ -132,7 +150,9 @@ export default class ForumUpdater {
                 }
 
                 store.dispatch(addFavoritesPostBatch(tmpPosts, flush));
-                store.dispatch(addPostBatch(tmpPosts));
+                
+                if(tmpPosts.length > 0) store.dispatch(addPostBatch(tmpPosts));
+                if(tmpEvents.length > 0) store.dispatch(addEventBatch(tmpEvents));
 
                 this.lastpage_favs = from + depth - 1;
 
@@ -169,17 +189,24 @@ export default class ForumUpdater {
                     fetchedPosts = fetchedPosts.concat(values[key].data);
                 }
 
-                let tmpPosts = [];
+                var tmpPosts = [];
+                var tmpEvents = [];
 
                 for (key in fetchedPosts) {
 
-                    let f = fetchedPosts[key].bulletin;
-
                     try {
 
-                        let p = this.parseAPIForumPost(fetchedPosts[key].bulletin);
+                        if(typeof fetchedPosts[key].bulletin !== "undefined")
+                        {
+                            let p = this.parseAPIForumPost(fetchedPosts[key].bulletin);
+                            tmpPosts.push(p);
+                        }
+                        else if (typeof fetchedPosts[key].event !== "undefined")
+                        {
+                            let tmpE= this.parseAPIEvent(fetchedPosts[key].event);
+                            tmpEvents.push(tmpE);
+                        }
 
-                        tmpPosts.push(p);
                     }
                     catch (error) {
                         //Could not parse, oh well.
@@ -187,7 +214,9 @@ export default class ForumUpdater {
                 }
 
                 store.dispatch(addUnreadPostBatch(tmpPosts, flush));
-                store.dispatch(addPostBatch(tmpPosts));
+
+                if(tmpPosts.length > 0) store.dispatch(addPostBatch(tmpPosts));
+                if(tmpEvents.length > 0) store.dispatch(addEventBatch(tmpEvents));
 
                 this.lastpage_unread = from + depth - 1;
 
@@ -235,6 +264,8 @@ export default class ForumUpdater {
                 var tmpPosts = [];
 
                 for (let key in fetchedPosts) {
+
+
 
                     try {
 

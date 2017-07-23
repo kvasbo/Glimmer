@@ -18,7 +18,8 @@ import {
     USERS_ADD_USER_BATCH,
     APPCONTROL_SET_ACTIVE_POSTING_FILTER,
     ADD_POST_UNREAD_BATCH,
-    ADD_POST_BATCH
+    ADD_POST_BATCH,
+    ADD_EVENT_BATCH
 } from "../constants";
 
 export function replaceForumList(forums) {
@@ -49,10 +50,18 @@ export function addFavoritesPostBatch(posts, replace = false) {
         replace
     }
 }
+
 export function addPostBatch(posts) {
     return {
         type: ADD_POST_BATCH,
         posts
+    }
+}
+
+export function addEventBatch(events) {
+    return {
+        type: ADD_EVENT_BATCH,
+        events
     }
 }
 
