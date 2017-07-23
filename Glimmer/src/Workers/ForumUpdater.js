@@ -1,10 +1,10 @@
 import {
+    addEventBatch,
     addFavoritesPostBatch,
     addForumPostComments,
     addPostBatch,
     addStreamPostBatch,
-    addUnreadPostBatch,
-    addEventBatch
+    addUnreadPostBatch
 } from "../Redux/actions";
 const ForumPost = require("../DataClasses/post").default;
 const ForumEvent = require("../DataClasses/event").default;
@@ -50,6 +50,7 @@ export default class ForumUpdater {
         }
         catch (err) {
             console.log("Error parsing forum post", err);
+            return null;
         }
     }
 
@@ -62,6 +63,7 @@ export default class ForumUpdater {
         }
         catch (err) {
             console.log("Error parsing event", err);
+            return null;
         }
     }
 
@@ -127,20 +129,27 @@ export default class ForumUpdater {
 
                 var tmpPosts = [];
                 var tmpEvents = [];
+                var tmpAll = [];
 
                 for (key in fetchedPosts) {
 
                     try {
 
-                        if(typeof fetchedPosts[key].bulletin !== "undefined")
-                        {
+                        if (typeof fetchedPosts[key].bulletin !== "undefined") {
                             let p = this.parseAPIForumPost(fetchedPosts[key].bulletin);
-                            tmpPosts.push(p);
+
+                            if (p !== null) {
+                                tmpPosts.push(p);
+                                tmpAll.push(p);
+                            }
+
                         }
-                        else if (typeof fetchedPosts[key].event !== "undefined")
-                        {
-                            let tmpE= this.parseAPIEvent(fetchedPosts[key].event);
-                            tmpEvents.push(tmpE);
+                        else if (typeof fetchedPosts[key].event !== "undefined") {
+                            let tmpE = this.parseAPIEvent(fetchedPosts[key].event);
+                            if (tmpE !== null) {
+                                tmpEvents.push(tmpE);
+                                tmpAll.push(tmpE);
+                            }
                         }
 
                     }
@@ -149,10 +158,10 @@ export default class ForumUpdater {
                     }
                 }
 
-                store.dispatch(addFavoritesPostBatch(tmpPosts, flush));
-                
-                if(tmpPosts.length > 0) store.dispatch(addPostBatch(tmpPosts));
-                if(tmpEvents.length > 0) store.dispatch(addEventBatch(tmpEvents));
+                store.dispatch(addFavoritesPostBatch(tmpAll, flush));
+
+                if (tmpPosts.length > 0) store.dispatch(addPostBatch(tmpPosts));
+                if (tmpEvents.length > 0) store.dispatch(addEventBatch(tmpEvents));
 
                 this.lastpage_favs = from + depth - 1;
 
@@ -191,20 +200,25 @@ export default class ForumUpdater {
 
                 var tmpPosts = [];
                 var tmpEvents = [];
+                var tmpAll = [];
 
                 for (key in fetchedPosts) {
 
                     try {
 
-                        if(typeof fetchedPosts[key].bulletin !== "undefined")
-                        {
+                        if (typeof fetchedPosts[key].bulletin !== "undefined") {
                             let p = this.parseAPIForumPost(fetchedPosts[key].bulletin);
-                            tmpPosts.push(p);
+                            if (p !== null) {
+                                tmpPosts.push(p);
+                                tmpAll.push(p);
+                            }
                         }
-                        else if (typeof fetchedPosts[key].event !== "undefined")
-                        {
-                            let tmpE= this.parseAPIEvent(fetchedPosts[key].event);
-                            tmpEvents.push(tmpE);
+                        else if (typeof fetchedPosts[key].event !== "undefined") {
+                            let tmpE = this.parseAPIEvent(fetchedPosts[key].event);
+                            if (tmpE !== null) {
+                                tmpEvents.push(tmpE);
+                                tmpAll.push(tmpE);
+                            }
                         }
 
                     }
@@ -213,10 +227,10 @@ export default class ForumUpdater {
                     }
                 }
 
-                store.dispatch(addUnreadPostBatch(tmpPosts, flush));
+                store.dispatch(addUnreadPostBatch(tmpAll, flush));
 
-                if(tmpPosts.length > 0) store.dispatch(addPostBatch(tmpPosts));
-                if(tmpEvents.length > 0) store.dispatch(addEventBatch(tmpEvents));
+                if (tmpPosts.length > 0) store.dispatch(addPostBatch(tmpPosts));
+                if (tmpEvents.length > 0) store.dispatch(addEventBatch(tmpEvents));
 
                 this.lastpage_unread = from + depth - 1;
 
@@ -264,8 +278,6 @@ export default class ForumUpdater {
                 var tmpPosts = [];
 
                 for (let key in fetchedPosts) {
-
-
 
                     try {
 
