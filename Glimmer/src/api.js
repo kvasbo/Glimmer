@@ -51,14 +51,14 @@ export default class glimmerAPI {
             data += tempStr;
         }
 
-        var theContent =  JSON.stringify(body);
+        var putBody = JSON.stringify(body);
 
         var url = config.base_url + kall;
-
+        
         if(payload !== null) url += "?" + data;
 
         return new Promise((resolve, reject) => {
-            this.makeApiCall(url, "PUT", theContent).then((data) => {
+            this.makeApiCall(url, "PUT", putBody).then((data) => {
                 resolve(data);
             }).catch((error) => {
                 reject(error);

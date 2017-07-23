@@ -435,13 +435,11 @@ export default class ForumUpdater {
     editPostComment(commentId, body) {
         return new Promise((resolve, reject) => {
 
-            var body = {comment: {body: body}}
+            const theBody = {"comment": {"body": body}};
 
             var uri = "/comments/" + commentId;
 
-            //uri += "?comment="+encodeURIComponent(JSON.stringify({body:body, comment:{body:body}}));
-
-            api.makeApiPutCall(uri, null, body).then((data) => {
+            api.makeApiPutCall(uri, {}, theBody).then((data) => {
                 resolve(data);
             }).catch((err) => reject(err));
 
