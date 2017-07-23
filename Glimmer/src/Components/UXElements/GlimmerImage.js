@@ -4,7 +4,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {Dimensions, Image} from "react-native";
+import {Dimensions, Image, TouchableOpacity, Linking} from "react-native";
 const config = require("../../../config");
 
 export default class GlimmerImage extends React.Component {
@@ -79,8 +79,13 @@ export default class GlimmerImage extends React.Component {
         if (this.state.uri === null) return null;
 
         return (
-            <Image resizeMode="contain" source={{uri: this.state.uri}}
-                   style={{height: this.state.height, width: this.state.width}}/>
+            <TouchableOpacity
+                onPress={() => {
+                    Linking.openURL(this.state.uri);
+                }}>
+                <Image resizeMode="contain" source={{uri: this.state.uri}}
+                       style={{height: this.state.height, width: this.state.width}}/>
+            </TouchableOpacity>
         );
     }
 }
