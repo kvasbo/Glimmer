@@ -19,6 +19,7 @@ export default class ForumTextTextile extends React.Component {
         super(props);
 
         this.dim = Dimensions.get("window");
+
         this.parsed = this.parseText();//textile.parse(this.props.text);
 
     }

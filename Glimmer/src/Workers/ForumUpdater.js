@@ -58,7 +58,7 @@ export default class ForumUpdater {
 
         try {
             return new ForumEvent(f.id, f.title, f.body, f.private, f.time, f.canceled, f.venue.city, f.venue, f.comment_count, f.created_at,
-                f.follower_count, f.following, f.tags, f.updated_at, f.view_count,
+                f.follower_count, f.following, f.tags, f.updated_at,
                 f.creator.name, f.creator.id, f.creator.image_url, f.body_textile, f.unread_comment_count);
         }
         catch (err) {
@@ -309,11 +309,10 @@ export default class ForumUpdater {
     loadCommentsForPost(postId, page = 1, event = false) {
         return new Promise((resolve, reject) => {
 
-            if(event){
+            if (event) {
                 var uri = "/events/" + postId + "/comments?page=" + page;
             }
-            else
-            {
+            else {
                 var uri = "/posts/" + postId + "/comments?page=" + page;
             }
 
@@ -398,8 +397,7 @@ export default class ForumUpdater {
 
     markThreadAsRead(postId, event = false) {
 
-        if(event)
-        {
+        if (event) {
             var uri = "/events/" + postId + "/mark_read";
         }
         else {

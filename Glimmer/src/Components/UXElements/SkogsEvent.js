@@ -10,7 +10,7 @@ import ForumTextTextile from "./ForumTextTextile.js";
 import CommentMetadata from "./CommentMetadata";
 import * as colors from "../../Styles/colorConstants";
 
-export default class Event extends React.Component {
+export default class SkogsEvent extends React.Component {
 
     byMe = false;
 
@@ -27,6 +27,8 @@ export default class Event extends React.Component {
         catch (err) {
             console.log("error parsing", this.props);
         }
+
+        console.log("Event", this.props.data);
 
     }
 
@@ -77,7 +79,7 @@ export default class Event extends React.Component {
  time={this.props.data.created_at} forum={this.props.data.forum_title}/>
  */
 
-Event.propTypes = {
+SkogsEvent.propTypes = {
 
     data: PropTypes.object.isRequired,
     navigator: PropTypes.object.isRequired,

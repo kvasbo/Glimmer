@@ -54,7 +54,7 @@ export default class glimmerAPI {
         var putBody = JSON.stringify(body);
 
         var url = config.base_url + kall;
-        
+
         if(payload !== null) url += "?" + data;
 
         return new Promise((resolve, reject) => {

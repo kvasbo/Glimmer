@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import ThreadForumPost from "./UXElements/ThreadForumPost";
+import SkogsEvent from "./UXElements/SkogsEvent";
 import ForumComment from "./UXElements/ForumComment";
 import * as colors from "../Styles/colorConstants";
 import LoadingScreen from "./UXElements/LoadingScreen";
@@ -35,6 +36,8 @@ class PageThread extends React.Component {
         this.loadCommentPage = this.loadCommentPage.bind(this);
 
         this.isEvent = (this.props.post.type === "event") ? true : false;
+
+        console.log("isEvent", this.isEvent);
 
     }
 
@@ -248,14 +251,15 @@ class PageThread extends React.Component {
     {
         if(this.isEvent)
         {
-            return null;
+            return (
+                <SkogsEvent data={this.props.post} navigator={this.props.navigator}/>
+            )
         }
         else
         {
             return (
 
-                <ThreadForumPost data={this.props.post} navigator={this.props.navigator} metaData={false}
-                                 cut={false}/>
+                <ThreadForumPost data={this.props.post} navigator={this.props.navigator}/>
             )
         }
     }

@@ -1,4 +1,4 @@
-export default class Event {
+export default class ForumEvent {
 
     constructor(id, title, body, privateEvent, time, canceled, city, venue, comment_count, created_at, follower_count, following, tags, updated_at, creator_name, creator_id, creator_image, body_textile = null, unread_comment_count = null) {
 
