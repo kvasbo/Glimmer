@@ -28,7 +28,10 @@ class PageConversation extends React.Component {
 
         arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);
 
+
     }
+
+
 
     componentDidMount() {
 

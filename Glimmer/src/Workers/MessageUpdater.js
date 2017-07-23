@@ -4,6 +4,8 @@ import {addConversationBatch,addMessageBatch} from "../Redux/actions";
 
 export default class MessageUpdater {
 
+
+
     setMessageAsRead(messageId) {
 
         return new Promise((resolve, reject) => {

@@ -25,6 +25,29 @@ class PageMessages extends React.Component {
 
     }
 
+    updateUnreadCount() {
+
+        let convos = this.props.conversations;
+
+        var unread = null;
+
+        for (key in convos) {
+            if (convos[key].user_id !== 0 && convos[key].unread > 0) {
+                unread += convos[key].unread;
+            }
+
+        }
+
+        this.props.navigator.setTabBadge({
+            badge: unread
+        });
+
+    }
+
+    onRender() {
+
+    }
+
     static navigatorButtons = {
         rightButtons: [
             {
@@ -40,6 +63,7 @@ class PageMessages extends React.Component {
         switch (event.id) {
             case 'willAppear':
                 arbeidsMaur.messageUpdater.updateMessageThreads(1);
+                this.updateUnreadCount();
 
                 break;
             case 'didAppear':
@@ -78,6 +102,8 @@ class PageMessages extends React.Component {
     componentWillMount() {
         arbeidsMaur.messageUpdater.updateMessageThreads(1);
 
+        this.updateUnreadCount();
+
     }
 
     _onRefresh() {
@@ -94,10 +120,8 @@ class PageMessages extends React.Component {
         return (<Conversation data={item.item} navigator={this.props.navigator}/>)
     }
 
-    _getUnread()
-    {
-        for(key in this.props.conversations)
-        {
+    _getUnread() {
+        for (key in this.props.conversations) {
             console.log("convo", this.props.conversations[key]);
         }
     }
@@ -115,6 +139,8 @@ class PageMessages extends React.Component {
     }
 
     render() {
+
+        this.updateUnreadCount();
 
         return (
             <FlatList
