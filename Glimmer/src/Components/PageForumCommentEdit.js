@@ -22,7 +22,7 @@ export default class PageForumCommentEdit extends React.Component {
         else {
 
             return (
-                <WriteNewPostOrComment type="comment" edit={true} existingText={this.props.bodyTextile} commentId={this.props.commentId} navigator={this.props.navigator}/>
+                <WriteNewPostOrComment type="comment" edit={true} comment={this.props.comment} existingText={this.props.bodyTextile} commentId={this.props.commentId} navigator={this.props.navigator}/>
             );
         }
     }

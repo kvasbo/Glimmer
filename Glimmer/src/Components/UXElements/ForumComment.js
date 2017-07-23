@@ -48,7 +48,7 @@ export default class ForumComment extends React.Component {
         //Disabled for now
         if(!this.byMe) return null;
 
-        let editWindow = 15;
+        let editWindow = 14;
         let now = new moment();
         let created = new moment(this.props.data.updated_at);
 
@@ -63,7 +63,7 @@ export default class ForumComment extends React.Component {
                      this.props.navigator.push({
                          screen: 'glimmer.PageForumCommentEdit',
                          title: "Redigér kommentar",
-                         passProps: {commentId: this.props.data.id, bodyTextile: this.props.data.body_textile},
+                         passProps: {commentId: this.props.data.id, comment: this.props.data, bodyTextile: this.props.data.body_textile},
                          animated: true,
                      });
 

@@ -12,6 +12,7 @@ import {
     KeyboardAvoidingView,
     ScrollView,
     StyleSheet,
+    Text,
     TextInput,
     TouchableOpacity,
     View
@@ -65,14 +66,43 @@ export default class WriteNewPostOrComment extends React.Component {
             tags: [],
             images: {},
             bodyCursorPosition: null,
-            buttonsActive: true
+            buttonsActive: true,
+            timeRemaining: null
         };
 
-        // console.log("Writer props", this.props);
+        this.tick = this.tick.bind(this);
+
+        this._isMounted = false;
 
     }
 
-    componentWillMount() {
+    tick() {
+
+        if (this._isMounted) {
+
+            let now = new moment();
+            let editEnd = new moment(this.props.comment.updated_at).add(14, "m");
+
+            let diff = editEnd.diff(now, "s");
+
+            this.setState({timeRemaining: diff});
+
+            if(diff < 0)
+            {
+                this.setState({buttonsActive: false});
+            }
+
+        }
+    }
+
+    componentDidMount() {
+
+        this._isMounted = true;
+
+        //Countdown if edit
+        if (this.props.edit) {
+            this.interval = setInterval(this.tick, 1000);
+        }
 
         //Only load previous edit if needed.
         if (!this.props.edit) {
@@ -95,15 +125,21 @@ export default class WriteNewPostOrComment extends React.Component {
         if (this.props.type === "post") {
             arbeidsMaur.forumListUpdater.getForumInfo(store.getState().AppStatus.activePostingForum).then((data) => {
 
-                this.setState({forumName: data.title});
+                if (this._isMounted) {
+                    this.setState({forumName: data.title});
 
-                this.props.navigator.setTitle({
-                    title: "Post i " + data.title, // the new title of the screen as appears in the nav bar
-                });
+                    this.props.navigator.setTitle({
+                        title: "Post i " + data.title, // the new title of the screen as appears in the nav bar
+                    });
+                }
 
             })
         }
 
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     _clear(force) {
@@ -131,7 +167,10 @@ export default class WriteNewPostOrComment extends React.Component {
     _doClear() {
         AsyncStorage.setItem(this.itemKey + "_text", "");
         AsyncStorage.setItem(this.itemKey + "_title", "");
-        this.setState({text: "", title: "", tags: []});
+
+        if (this._isMounted) {
+            this.setState({text: "", title: "", tags: []});
+        }
     }
 
     _post() {
@@ -148,7 +187,9 @@ export default class WriteNewPostOrComment extends React.Component {
                 Alert.alert(
                     'Trist og uproft',
                     'Kommentaren din er tom.');
-                this.setState({buttonsActive: true});
+                if (this._isMounted) {
+                    this.setState({buttonsActive: true});
+                }
                 return false;
             }
 
@@ -161,7 +202,9 @@ export default class WriteNewPostOrComment extends React.Component {
 
             }).catch((error) => {
                 Alert.alert("Noe gikk galt :(");
-                this.setState({buttonsActive: true});
+                if (this._isMounted) {
+                    this.setState({buttonsActive: true});
+                }
                 console.log(error);
             });
 
@@ -176,7 +219,9 @@ export default class WriteNewPostOrComment extends React.Component {
                 Alert.alert(
                     'Trist og uproft',
                     'Kommentaren din er tom. Det var den ikke før.');
-                this.setState({buttonsActive: true});
+                if (this._isMounted) {
+                    this.setState({buttonsActive: true});
+                }
                 return false;
             }
 
@@ -187,7 +232,9 @@ export default class WriteNewPostOrComment extends React.Component {
 
             }).catch((error) => {
                 Alert.alert("Noe gikk galt :(");
-                this.setState({buttonsActive: true});
+                if (this._isMounted) {
+                    this.setState({buttonsActive: true});
+                }
                 console.log(error);
             });
 
@@ -203,7 +250,9 @@ export default class WriteNewPostOrComment extends React.Component {
                 Alert.alert(
                     'Trist og uproft',
                     'Kommentaren eller tittelen din er tom.');
-                this.setState({buttonsActive: true});
+                if (this._isMounted) {
+                    this.setState({buttonsActive: true});
+                }
                 return false;
             }
 
@@ -213,12 +262,16 @@ export default class WriteNewPostOrComment extends React.Component {
 
                 this._doClear();
                 arbeidsMaur.forumUpdater.loadFirstStream(1);
-                this.setState({buttonsActive: true});
+                if (this._isMounted) {
+                    this.setState({buttonsActive: true});
+                }
                 this.props.navigator.popToRoot();
 
             }).catch((error) => {
                 Alert.alert("Noe gikk galt :(");
-                this.setState({buttonsActive: true});
+                if (this._isMounted) {
+                    this.setState({buttonsActive: true});
+                }
                 console.log(error);
             });
 
@@ -228,13 +281,17 @@ export default class WriteNewPostOrComment extends React.Component {
 
     textChanged(text) {
 
-        this.setState({text: text});
+        if (this._isMounted) {
+            this.setState({text: text});
+        }
         AsyncStorage.setItem(this.itemKey + "_text", text);
     }
 
     titleChanged(text) {
 
-        this.setState({title: text});
+        if (this._isMounted) {
+            this.setState({title: text});
+        }
         AsyncStorage.setItem(this.itemKey + "_title", text);
     }
 
@@ -306,7 +363,9 @@ export default class WriteNewPostOrComment extends React.Component {
 
                     //console.log(imageList);
 
-                    this.setState({images: imageList});
+                    if (this._isMounted) {
+                        this.setState({images: imageList});
+                    }
 
                     //console.log("Uploaded", uploadedFile);
                 })
@@ -335,7 +394,9 @@ export default class WriteNewPostOrComment extends React.Component {
         var tmpText = this.state.text;
         var start = tmpText.substring(0, this.state.bodyCursorPosition);
         var tail = tmpText.substring(this.state.bodyCursorPosition, tmpText.length);
-        this.setState({text: start + text + tail});
+        if (this._isMounted) {
+            this.setState({text: start + text + tail});
+        }
 
     }
 
@@ -361,6 +422,29 @@ export default class WriteNewPostOrComment extends React.Component {
         }
 
         return outImg;
+
+    }
+
+    _getTimer() {
+        if (!this.props.edit || this.state.timeRemaining === null) return null;
+
+        if (this.state.timeRemaining < 0) {
+            var outText = "For sent, du får ikke endre :("
+        }
+        else {
+
+            let t = new moment(this.props.comment.updated_at);
+
+            t.add(14, "m");
+
+            let fromNow = t.fromNow(true);
+
+            var outText = fromNow + " igjen før endringer låses";
+        }
+
+        return (
+            <View style={{height: 30, alignItems: "center", justifyContent: "center"}}><Text>{outText}</Text></View>
+        )
 
     }
 
@@ -414,6 +498,8 @@ export default class WriteNewPostOrComment extends React.Component {
                                       style={{flex: 1}}>
 
                     {this._getTitleBox()}
+
+                    {this._getTimer()}
 
                     <View style={{flex: 1}}>
 

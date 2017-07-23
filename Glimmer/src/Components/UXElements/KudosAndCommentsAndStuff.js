@@ -67,18 +67,6 @@ export default class KudosAndCommentsAndStuff extends React.Component {
             </TouchableOpacity>
         )
 
-        /*
-         return (
-
-         <Badge
-         value={this.props.post.comment_count + " " + comText}
-         textStyle={{color: colors.COLOR_WHITE}}
-         containerStyle={{backgroundColor: colors.COLOR_ORANGE}}
-
-         />
-
-         )
-         */
     }
 
     render() {

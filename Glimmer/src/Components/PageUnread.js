@@ -141,7 +141,7 @@ class PageUnread extends React.Component {
 
         var data = this.getData();
 
-        if (data.length === 0 || this.state.loading === true) {
+        if (this.state.loading === true) {
             return <LoadingScreen text="Laster tråder med uleste innlegg"/>
         }
         else {
