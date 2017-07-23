@@ -65,17 +65,43 @@ export default class ForumTextTextile extends React.Component {
             }
             else if (tmp.indexOf("> ") === 0) //BQ
             {
-                outArray.push({type: "bq", data: textile.parse(tmp)});
+                outArray.push({type: "bq", data: tmp.substring(2)});
+            }
+            else if (tmp.indexOf("bq. ") === 0) //BQ
+            {
+                outArray.push({type: "bq", data: tmp.substring(3)});
             }
             else {
-                outArray.push({type: "txt", data: textile.parse(tmp)});
+                outArray.push({type: "txt", data: tmp});
             }
 
         }
 
-        //console.log(outArray);
+        var mergedArray = [];
 
-        return outArray;
+        for(let i = 0; i < outArray.length; i++)
+        {
+            if(typeof(outArray[i+1]) !== "undefined" && outArray[i].type == "txt" && outArray[i+1].type == "txt")
+            {
+                outArray[i+1].data = outArray[i].data + "\n" + outArray[i+1].data;
+            }
+            else
+            {
+                mergedArray.push(outArray[i]);
+            }
+        }
+
+        for(let i = 0; i < mergedArray.length; i++)
+        {
+            if(mergedArray[i].type === "txt")
+            {
+                mergedArray[i].data = textile.parse(mergedArray[i].data);
+            }
+        }
+
+        //console.log("outArray", outArray, "merged array", mergedArray);
+
+        return mergedArray;
 
     }
 
@@ -197,8 +223,8 @@ export default class ForumTextTextile extends React.Component {
                     title: data.title,
                     passProps: {post: data}
                 })
-            }).catch((err)=>{
-               console.log(err);
+            }).catch((err) => {
+                console.log(err);
             })
 
         }
@@ -224,6 +250,22 @@ export default class ForumTextTextile extends React.Component {
                 outArray.push(
                     <HTMLView
                         style={styles.paragraph}
+                        key={key}
+                        NodeComponent={Text}
+                        TextComponent={Text}
+                        RootComponent={View}
+                        value={node.data}
+                        stylesheet={styles}
+                        renderNode={this.renderNode}
+                        onLinkPress={(url) => this._handleLink(url)}
+                        onError={(err) => console.log(err)}
+                    />
+                )
+            }
+            else if (node.type === "bq") {
+                outArray.push(
+                    <HTMLView
+                        style={styles.bq}
                         key={key}
                         NodeComponent={Text}
                         TextComponent={Text}
@@ -267,5 +309,14 @@ const styles = StyleSheet.create({
     paragraph: {
         marginTop: 3,
         marginBottom: 3
+    },
+
+    bq: {
+        marginTop: 3,
+        marginBottom: 3,
+        marginLeft: 5,
+        paddingLeft: 5,
+        borderLeftWidth: 3,
+        borderLeftColor: colors.COLOR_LIGHTGREY
     }
 });
