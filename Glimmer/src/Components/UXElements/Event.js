@@ -49,8 +49,7 @@ export default class Event extends React.Component {
                 </View>
 
                 <View style={pageStyles.thePost}>
-                    <ForumTextTextile cut={false} text={this.props.data.body_textile} navigator={this.props.navigator} images={true}
-                               style={{marginBottom: 10}}/>
+                    <ForumTextTextile text={this.props.data.body_textile} navigator={this.props.navigator} style={{marginBottom: 10}}/>
                 </View>
 
                 <View style={pageStyles.metaData}>

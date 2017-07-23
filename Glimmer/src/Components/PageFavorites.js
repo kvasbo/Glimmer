@@ -133,8 +133,6 @@ class PageFavorites extends React.Component {
 
     _renderItem = ({item}) => {
 
-        console.log(item);
-
         if(item.type === "post")
         {
            var nav = {

@@ -306,10 +306,16 @@ export default class ForumUpdater {
 
     }
 
-    loadCommentsForPost(postId, page = 1) {
+    loadCommentsForPost(postId, page = 1, event = false) {
         return new Promise((resolve, reject) => {
 
-            var uri = "/posts/" + postId + "/comments?page=" + page;
+            if(event){
+                var uri = "/events/" + postId + "/comments?page=" + page;
+            }
+            else
+            {
+                var uri = "/posts/" + postId + "/comments?page=" + page;
+            }
 
             api.makeApiGetCall(uri).then((data) => {
 
@@ -390,8 +396,15 @@ export default class ForumUpdater {
 
     }
 
-    markThreadAsRead(postId) {
-        var uri = "/posts/" + postId + "/mark_read";
+    markThreadAsRead(postId, event = false) {
+
+        if(event)
+        {
+            var uri = "/events/" + postId + "/mark_read";
+        }
+        else {
+            var uri = "/posts/" + postId + "/mark_read";
+        }
 
         return new Promise((resolve, reject) => {
 

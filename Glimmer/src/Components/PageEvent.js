@@ -43,7 +43,7 @@ class PageEvent extends React.Component {
                 this.loadCommentPage(1);
                 break;
             case 'willDisappear':
-                //arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id);
+                arbeidsMaur.forumUpdater.markThreadAsRead(this.props.event.id, true);
                 break;
             case 'didDisappear':
                 break;
@@ -62,12 +62,12 @@ class PageEvent extends React.Component {
 
         this.setState({currentPage: page, loading: true});
 
-        /*arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page).then((data) => {
+        arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.event.id, page, true).then((data) => {
 
             if (this._isMounted) {
                 this.setState({comments: data, loading: false});
             }
-        });*/
+        });
 
     }
 
