@@ -131,14 +131,35 @@ class PageFavorites extends React.Component {
         }
     }
 
-    _renderItem = ({item}) => (
+    _renderItem = ({item}) => {
+
+        console.log(item);
+
+        if(item.type === "post")
+        {
+           var nav = {
+               screen: 'glimmer.PageThread',
+               title: item.title,
+               passProps: {post: item}
+           }
+        }
+        else if(item.type === "event")
+        {
+            var nav = {
+                screen: 'glimmer.PageEvent',
+                title: item.title,
+                passProps: {event: item}
+            }
+        }
+        else {
+            return null;
+        }
+
+
+        return (
 
         <TouchableOpacity onPress={() =>
-            this.props.navigator.push({
-                screen: 'glimmer.PageThread',
-                title: item.title,
-                passProps: {post: item}
-            })
+            this.props.navigator.push(nav)
         }>
             <View>
 
@@ -156,7 +177,7 @@ class PageFavorites extends React.Component {
                 <Divider />
             </View>
         </TouchableOpacity>
-    )
+    )}
 
     _loadMoreItems(distance) {
 
