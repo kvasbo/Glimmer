@@ -39,6 +39,22 @@ export default class ForumUpdater {
         });
     }
 
+    parseAPIForumPost(f) {
+
+        try {
+            return new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
+                f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
+                f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count);
+        }
+        catch (err) {
+            console.log("Error parsing forum post", err);
+        }
+    }
+
+    parseApiEvent(event) {
+
+    }
+
     loadPost(id) {
         return new Promise((resolve, reject) => {
 
@@ -50,11 +66,7 @@ export default class ForumUpdater {
 
                 try {
 
-                    let f = data.data;
-
-                    var p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
-                        f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
-                        f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count);
+                    let p = this.parseAPIForumPost(data.data);
 
                     tmpPosts.push(p);
 
@@ -107,15 +119,12 @@ export default class ForumUpdater {
 
                 for (key in fetchedPosts) {
 
-                    let f = fetchedPosts[key].bulletin;
-
                     try {
 
-                        let p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
-                            f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
-                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count);
+                        let p = this.parseAPIForumPost(fetchedPosts[key].bulletin);
 
                         tmpPosts.push(p);
+
                     }
                     catch (error) {
                         //Could not parse, oh well.
@@ -168,9 +177,7 @@ export default class ForumUpdater {
 
                     try {
 
-                        let p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
-                            f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
-                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count);
+                        let p = this.parseAPIForumPost(fetchedPosts[key].bulletin);
 
                         tmpPosts.push(p);
                     }
@@ -229,13 +236,9 @@ export default class ForumUpdater {
 
                 for (let key in fetchedPosts) {
 
-                    var f = fetchedPosts[key];
-
                     try {
 
-                        var p = new ForumPost(f.id, f.title, f.body, f.comment_count, f.created_at,
-                            f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
-                            f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count);
+                        let p = this.parseAPIForumPost(fetchedPosts[key]);
 
                         tmpPosts.push(p);
                     }
