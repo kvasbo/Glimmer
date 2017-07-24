@@ -9,7 +9,7 @@ import textile from "textile-js";
 import HTMLView from "react-native-htmlview";
 import GlimmerImage from "./GlimmerImage";
 import * as colors from "../../Styles/colorConstants";
-import {REGEX_LINK_THREAD, REGEX_TEXTILE_INTERNAL_IMAGE,REGEX_VALID_URL} from "../../constants";
+import {REGEX_EXTERNAL_IMAGE, REGEX_LINK_THREAD, REGEX_TEXTILE_INTERNAL_IMAGE, REGEX_VALID_URL} from "../../constants";
 
 const baseImageUrl = "https://images.underskog.no/versions/1250/XXXXX.jpeg";
 
@@ -39,6 +39,10 @@ export default class ForumTextTextile extends React.Component {
             return "\n" + match + "\n";
         })
 
+        text = text.replace(REGEX_EXTERNAL_IMAGE, (match) => {
+            return "\n" + match + "\n";
+        })
+
         //Splitte ved newline
         var textArray = text.split(/\r?\n/);
 
@@ -63,7 +67,9 @@ export default class ForumTextTextile extends React.Component {
                 outArray.push({type: "img", data: tmp});
 
             }
-            //else if()
+            else if (REGEX_EXTERNAL_IMAGE.test(tmp)) {
+                console.log("external image", tmp);
+            }
             else if (tmp.indexOf("> ") === 0) //BQ
             {
                 outArray.push({type: "bq", data: tmp.substring(2)});
@@ -80,22 +86,17 @@ export default class ForumTextTextile extends React.Component {
 
         var mergedArray = [];
 
-        for(let i = 0; i < outArray.length; i++)
-        {
-            if(typeof(outArray[i+1]) !== "undefined" && outArray[i].type == "txt" && outArray[i+1].type == "txt")
-            {
-                outArray[i+1].data = outArray[i].data + "\n" + outArray[i+1].data;
+        for (let i = 0; i < outArray.length; i++) {
+            if (typeof(outArray[i + 1]) !== "undefined" && outArray[i].type == "txt" && outArray[i + 1].type == "txt") {
+                outArray[i + 1].data = outArray[i].data + "\n" + outArray[i + 1].data;
             }
-            else
-            {
+            else {
                 mergedArray.push(outArray[i]);
             }
         }
 
-        for(let i = 0; i < mergedArray.length; i++)
-        {
-            if(mergedArray[i].type === "txt")
-            {
+        for (let i = 0; i < mergedArray.length; i++) {
+            if (mergedArray[i].type === "txt") {
                 mergedArray[i].data = textile.parse(mergedArray[i].data);
             }
         }
@@ -142,9 +143,10 @@ export default class ForumTextTextile extends React.Component {
         try {
             if (node.name == 'img') {
 
-                if(REGEX_VALID_URL.test(node.attribs.src))
-                {
-                    {defaultRenderer(node, parent)}
+                if (REGEX_VALID_URL.test(node.attribs.src)) {
+                    {
+                        defaultRenderer(node, parent)
+                    }
                 }
                 else {
                     return null;
