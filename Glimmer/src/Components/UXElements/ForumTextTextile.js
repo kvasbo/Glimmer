@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import {Alert, Dimensions, Linking, Platform, StyleSheet, Text, View, WebView} from "react-native";
 import textile from "textile-js";
 import HTMLView from "react-native-htmlview";
+import ExternalImage from "./ExternalImage";
 import GlimmerImage from "./GlimmerImage";
 import * as colors from "../../Styles/colorConstants";
 import {REGEX_EXTERNAL_IMAGE, REGEX_LINK_THREAD, REGEX_TEXTILE_INTERNAL_IMAGE, REGEX_VALID_URL} from "../../constants";
@@ -64,11 +65,15 @@ export default class ForumTextTextile extends React.Component {
                     return nr;
                 });
 
-                outArray.push({type: "img", data: tmp});
+                outArray.push({type: "img", data: tmp, internal:true});
 
             }
             else if (REGEX_EXTERNAL_IMAGE.test(tmp)) {
-                console.log("external image", tmp);
+
+                tmp = tmp.substring(1, tmp.length-1);
+
+                outArray.push({type: "img", data: tmp, internal:false});
+
             }
             else if (tmp.indexOf("> ") === 0) //BQ
             {
@@ -101,7 +106,7 @@ export default class ForumTextTextile extends React.Component {
             }
         }
 
-        //console.log("outArray", outArray, "merged array", mergedArray);
+        console.log("outArray", outArray, "merged array", mergedArray);
 
         return mergedArray;
 
@@ -291,10 +296,20 @@ export default class ForumTextTextile extends React.Component {
                     />
                 )
             }
-            else if (node.type === "img") {
+            else if (node.type === "img" && node.internal === true) {
                 outArray.push(
                     <GlimmerImage style={styles.paragraph} key={key} id={node.data}/>
                 )
+            }
+            else if (node.type === "img" && node.internal === false) {
+                outArray.push(
+                    <ExternalImage style={styles.paragraph} key={key} uri={node.data}/>
+                )
+            }
+            else
+            {
+                //Unknown node
+                console.log("Unknown node", node);
             }
         }
 

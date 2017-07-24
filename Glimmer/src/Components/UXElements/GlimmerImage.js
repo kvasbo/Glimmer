@@ -50,7 +50,6 @@ export default class GlimmerImage extends React.Component {
 
         try {
 
-            const dim = Dimensions.get("window");
             const maxWidth = this.dim.width - 50;
 
             var factor = data.width / maxWidth;
