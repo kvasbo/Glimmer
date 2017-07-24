@@ -9,7 +9,7 @@ import textile from "textile-js";
 import HTMLView from "react-native-htmlview";
 import GlimmerImage from "./GlimmerImage";
 import * as colors from "../../Styles/colorConstants";
-import {REGEX_LINK_THREAD, REGEX_TEXTILE_INTERNAL_IMAGE} from "../../constants";
+import {REGEX_LINK_THREAD, REGEX_TEXTILE_INTERNAL_IMAGE,REGEX_VALID_URL} from "../../constants";
 
 const baseImageUrl = "https://images.underskog.no/versions/1250/XXXXX.jpeg";
 
@@ -51,7 +51,7 @@ export default class ForumTextTextile extends React.Component {
         for (key in textArray) {
             var tmp = textArray[key];
 
-            if (tmp.search(REGEX_TEXTILE_INTERNAL_IMAGE) !== -1) {
+            if (REGEX_TEXTILE_INTERNAL_IMAGE.test(tmp)) {
                 //Bytte ut underskogs-bildekode
                 tmp = tmp.replace(REGEX_TEXTILE_INTERNAL_IMAGE, (match) => {
                     let arr = match.split(" ");
@@ -63,6 +63,7 @@ export default class ForumTextTextile extends React.Component {
                 outArray.push({type: "img", data: tmp});
 
             }
+            //else if()
             else if (tmp.indexOf("> ") === 0) //BQ
             {
                 outArray.push({type: "bq", data: tmp.substring(2)});
@@ -139,6 +140,16 @@ export default class ForumTextTextile extends React.Component {
         var maxWidth = Dim.width - 50;
 
         try {
+            if (node.name == 'img') {
+
+                if(REGEX_VALID_URL.test(node.attribs.src))
+                {
+                    {defaultRenderer(node, parent)}
+                }
+                else {
+                    return null;
+                }
+            }
             if (node.name == 'iframe') {
 
                 const a = node.attribs;

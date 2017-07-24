@@ -1,5 +1,6 @@
 import {Image} from "react-native";
 import axios from "axios";
+import {REGEX_VALID_URL} from "../constants";
 
 export default class ImageGetter {
 
@@ -58,21 +59,36 @@ export default class ImageGetter {
 
         return new Promise((resolve, reject) => {
 
-            Image.getSize(uri, (width, height) => {
+            if(!REGEX_VALID_URL.test(uri))
+            {
+                reject("Invalid url");
+            }
+            else
+            {
+                try {
 
-                let data = {id: id, uri: uri, size: size, width: width, height: height, time: new Date().getTime()};
+                    Image.getSize(uri, (width, height) => {
 
-                this.database()
-                .ref('imagemeta/' + id + "/" + size)
-                .set(data);
+                        let data = {id: id, uri: uri, size: size, width: width, height: height, time: new Date().getTime()};
 
-                //console.log("Getsize", width, height, id, size);
+                        this.database()
+                        .ref('imagemeta/' + id + "/" + size)
+                        .set(data);
 
-                resolve(data);
+                        //console.log("Getsize", width, height, id, size);
 
-            }, (err) => {
-                reject(err);
-            });
+                        resolve(data);
+
+                    }, (err) => {
+                        reject(err);
+                    });
+                }
+                catch(err)
+                {
+                    console.log(err);
+                    reject(err);
+                }
+            }
 
         })
 

@@ -35,5 +35,4 @@ export const REGEX_LINK_THREAD = /https?:\/\/.*underskog\.no\/samtale\/[0-9]*/g
 export const REGEX_LINK_IMAGE = ''
 export const REGEX_TEXTILE_INTERNAL_IMAGE = /(!bilde\s[\d]+!)/g
 
-
-
+export const REGEX_VALID_URL = /@(https?|ftp):\/\/(-\.)?([^\s/?\.#-]+\.?)+(\/[^\s]*)?$@iS/
