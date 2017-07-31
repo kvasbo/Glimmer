@@ -13,7 +13,10 @@ function ForumStream(state = {}, action) {
             }
 
             for (let i = 0; i < action.posts.length; i++) {
-                newState[action.posts[i].id] = action.posts[i];
+                if(action.posts[i] !== null)
+                {
+                    newState[action.posts[i].id] = action.posts[i];
+                }
             }
 
             return newState;
