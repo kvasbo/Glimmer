@@ -1,10 +1,12 @@
 import React from "react";
 import {Provider} from "react-redux";
+import {persistStore, autoRehydrate} from 'redux-persist'
 import {Alert, AppState} from "react-native";
+import {AsyncStorage} from 'react-native';
 import {registerScreens} from "./screens";
 import {Navigation} from "react-native-navigation";
 import Workers from "./Workers/index.js";
-import {applyMiddleware, createStore} from "redux";
+import {applyMiddleware, compose, createStore} from "redux";
 import {createLogger} from "redux-logger";
 import glimmerReducers from "./Redux/index";
 import RNFirebase from "react-native-firebase";
@@ -71,17 +73,15 @@ firebaseApp.auth().onAuthStateChanged(function (user) {
 const loggerMiddleware = createLogger();
 
 if (__DEV__) {
-    global.store = createStore(glimmerReducers, applyMiddleware(
-        //thunkMiddleware, // lets us dispatch() functions
-        loggerMiddleware // neat middleware that logs actions
-    ));
+    var store = createStore(glimmerReducers, undefined, compose(applyMiddleware(loggerMiddleware),autoRehydrate()));
 }
 else {
-    global.store = createStore(glimmerReducers, applyMiddleware(
-        //thunkMiddleware, // lets us dispatch() functions
-        //loggerMiddleware // neat middleware that logs actions
-    ));
+    var store = createStore(glimmerReducers, undefined, compose(applyMiddleware(),autoRehydrate()));
 }
+
+global.store = store;
+
+persistStore(store, {storage: AsyncStorage, whitelist: ['Krets', 'Conversation', 'ForumPosts']})
 
 //Make root navigation callable from anywhere. Should be cleaned up and done via store!
 global.rootNavigation = Navigation;
@@ -100,6 +100,7 @@ class Glimmer extends React.Component {
         super(props);
         this.init();
         this.store = global.store;
+
     }
 
     //To keep track of changes in state, should be done with react
