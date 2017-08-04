@@ -149,7 +149,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-image-picker')
+
     compile project(':react-native-firebase')
     compile project(':react-native-vector-icons')
     compile project(':react-native-keychain')

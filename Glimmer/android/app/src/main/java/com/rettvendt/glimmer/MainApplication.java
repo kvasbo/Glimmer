@@ -3,7 +3,6 @@ package com.rettvendt.glimmer;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.facebook.react.ReactNativeHost;
@@ -64,8 +63,7 @@ public class MainApplication extends NavigationApplication {
                  new RNFirebaseDatabasePackage(),
                  new RNFirebaseMessagingPackage(),
                  new RNFirebasePerformancePackage(),
-                 new RNFirebaseStoragePackage(),
-                 new ImagePickerPackage()
+                 new RNFirebaseStoragePackage()
 
 
 

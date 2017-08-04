@@ -6,7 +6,6 @@ import React from "react";
 import {Button, Modal, StyleSheet, View} from "react-native";
 import WriteNewPostOrComment from "./WriteNewPostOrComment";
 import PropTypes from "prop-types";
-var ImagePicker = require('react-native-image-picker');
 
 export default class AddCommentBlock extends React.Component {
 

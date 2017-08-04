@@ -20,19 +20,6 @@ import {
 import PropTypes from "prop-types";
 import InputStyles from "../../Styles/InputStyles";
 import * as colors from "../../Styles/colorConstants";
-const ImagePicker = require('react-native-image-picker');
-
-const imagePickerOptions = {
-    title: 'Velg bilde',
-    storageOptions: {
-        skipBackup: true,
-        path: 'images'
-    },
-    mediaType: 'photo',
-    maxWidth: '1200',
-    maxHeight: '1200'
-
-};
 
 export default class WriteNewPostOrComment extends React.Component {
 
@@ -301,80 +288,8 @@ export default class WriteNewPostOrComment extends React.Component {
 
     addPictures() {
 
-        ImagePicker.launchImageLibrary(imagePickerOptions, (response) => {
 
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            }
-            else {
 
-                //Check and set mimetype / rotation /metadata.
-                //console.log('Response = ', response);
-
-                var metadata = {};
-
-                try {
-
-                    let filename = response.fileName.toLowerCase();
-                    let filenameArr = filename.split(".");
-                    var extension = filenameArr.slice(-1)[0];
-
-                    //console.log(filename, filenameArr, extension);
-
-                    if (extension === "jpg" || extension === "jpeg") {
-                        metadata.contentType = 'image/jpeg';
-                    }
-                    else if (extension === "png") {
-                        metadata.contentType = 'image/png';
-                    }
-                    else if (extension === "gif") {
-                        metadata.contentType = 'image/gif';
-                    }
-                    else if (extension === "webp") {
-                        metadata.contentType = 'image/webp';
-                    }
-                }
-                catch (err) {
-                    console.log(err);
-                }
-
-                let fileName = (new Date().getTime() + "_" + response.fileName).toLowerCase();
-
-                //tmp state
-                let tmpImages = this.state.images;
-                tmpImages[fileName] = {orig_uri: response.uri, uri: null, done: false}
-
-                this.setState({images: tmpImages});
-
-                //Upload
-                firebaseApp.storage()
-                .ref('/postImages/' + fileName)
-                .putFile(response.origURL, metadata)
-                .then(uploadedFile => {
-
-                    let imageList = this.state.images;
-                    imageList[fileName] = {orig_uri: response.uri, uri: uploadedFile.downloadUrl, done: true};
-
-                    //console.log(imageList);
-
-                    if (this._isMounted) {
-                        this.setState({images: imageList});
-                    }
-
-                    //console.log("Uploaded", uploadedFile);
-                })
-                .catch(err => {
-                    Alert.alert("Noe gikk galt med opplastingen. Pokker ta.", err)
-                });
-
-            }
-        });
     }
 
     //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed.
@@ -483,7 +398,7 @@ export default class WriteNewPostOrComment extends React.Component {
             return ( <Button disabled={!this.state.buttonsActive} onPress={() => this.addPictures()} title="Bilder"/>)
         }
         else {
-            return null;
+            return ( <Button disabled={!this.state.buttonsActive} onPress={() => this.addPictures()} title="Bilder"/>)
         }
     }
 
