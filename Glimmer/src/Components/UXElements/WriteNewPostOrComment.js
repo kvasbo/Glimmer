@@ -6,12 +6,12 @@ import React from "react";
 import {
     ActivityIndicator,
     Alert,
-    CameraRoll,
     AsyncStorage,
     Button,
+    CameraRoll,
     Image,
-    Modal,
     KeyboardAvoidingView,
+    Modal,
     ScrollView,
     StyleSheet,
     Text,
@@ -78,8 +78,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
             this.setState({timeRemaining: diff});
 
-            if(diff < 0)
-            {
+            if (diff < 0) {
                 this.setState({buttonsActive: false});
             }
 
@@ -290,7 +289,6 @@ export default class WriteNewPostOrComment extends React.Component {
         return text;
     }
 
-
     //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed.
     getLoadingIndicator(loading) {
         if (loading) {
@@ -338,8 +336,6 @@ export default class WriteNewPostOrComment extends React.Component {
         return outImg;
 
     }
-
-
 
     _getTimer() {
         if (!this.props.edit || this.state.timeRemaining === null) return null;
@@ -394,8 +390,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
-    _initPicturesForModal()
-    {
+    _initPicturesForModal() {
 
         CameraRoll.getPhotos({
             first: 50,
@@ -405,18 +400,16 @@ export default class WriteNewPostOrComment extends React.Component {
 
             var tmpPhotos = [];
 
-            for(let i = 0; i < r.edges.length; i++)
-            {
+            for (let i = 0; i < r.edges.length; i++) {
                 tmpPhotos.push(r.edges[i].node.image);
             }
 
-            this.setState({photos:tmpPhotos});
+            this.setState({photos: tmpPhotos});
 
         })
     }
 
-    _showImagePickerModal()
-    {
+    _showImagePickerModal() {
         //Last inn bildesettet, spør evt. om tillatelse
         this._initPicturesForModal();
 
@@ -425,11 +418,10 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
-    _uploadAndAddPicture(pictureData)
-    {
+    _uploadAndAddPicture(pictureData) {
 
         //Hide modal
-        this.setState({modalVisible:false});
+        this.setState({modalVisible: false});
 
         var metadata = {};
 
@@ -456,7 +448,7 @@ export default class WriteNewPostOrComment extends React.Component {
                 metadata.contentType = 'image/webp';
             }
 
-            metadata.fileName = new Date().getTime() + "_" +  pictureData.filename.toLowerCase();
+            metadata.fileName = new Date().getTime() + "_" + pictureData.filename.toLowerCase();
 
             let tmpImages = this.state.images;
             tmpImages[metadata.fileName] = {orig_uri: metadata.uri, uri: null, done: false}
@@ -481,8 +473,6 @@ export default class WriteNewPostOrComment extends React.Component {
                 Alert.alert("Noe gikk galt med opplastingen. Pokker ta.", err)
             });
 
-
-
         }
         catch (err) {
             console.log(err);
@@ -491,15 +481,15 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     //New image picker modal.
-    _getImagePickerModal()
-    {
+    _getImagePickerModal() {
         var out = [];
 
-        for(let i = 0; i < this.state.photos.length; i++)
-        {
+        for (let i = 0; i < this.state.photos.length; i++) {
             out.push(
-                <TouchableOpacity key={this.state.photos[i].filename} onLongPress={() => this._uploadAndAddPicture(this.state.photos[i])}>
-                    <Image source={{uri:this.state.photos[i].uri}} resizeMode="contain" style={{height: 100, width: 100}} />
+                <TouchableOpacity key={this.state.photos[i].filename}
+                                  onLongPress={() => this._uploadAndAddPicture(this.state.photos[i])}>
+                    <Image source={{uri: this.state.photos[i].uri}} resizeMode="contain"
+                           style={{height: 100, width: 100, margin: 10}}/>
                 </TouchableOpacity>
             );
         }
@@ -510,7 +500,8 @@ export default class WriteNewPostOrComment extends React.Component {
 
     _getPictureButton() {
 
-        return ( <Button disabled={!this.state.buttonsActive} onPress={() => this._showImagePickerModal()} title="Bilder"/>)
+        return (
+            <Button disabled={!this.state.buttonsActive} onPress={() => this._showImagePickerModal()} title="Bilder"/>)
     }
 
     render() {
@@ -524,25 +515,40 @@ export default class WriteNewPostOrComment extends React.Component {
                     transparent={false}
                     visible={this.state.modalVisible}
                 >
-                    <ScrollView style={{margin: 0, padding: 10, paddingTop: 22, backgroundColor: "white", flexWrap: "wrap", flexDirection: "row"}}>
+                    <View style={{
+                        margin: 0,
+                        padding: 10,
+                        paddingTop: 22,
+                        backgroundColor: "black",
+                        flex: 1,
+                        flexDirection: "column"
+                    }}>
                         <View>
-                            <Text>Trykk lenge på et bilde for å laste det opp</Text>
-                        </View>
+                            <View style={{height: "10%"}}>
+                                <Text style={{color: colors.COLOR_WHITE}}>Trykk lenge på et bilde for å laste det
+                                    opp</Text>
+                            </View>
 
-                        <View>
-                            {this._getImagePickerModal()}
-                        </View>
-
-                        <View>
-                            <TouchableOpacity onPress={() => {
-                                this.setState({modalVisible:false})
+                            <ScrollView style={{height: "80%"}} contentContainerStyle={{
+                                justifyContent: 'center',
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                alignItems: 'flex-start'
                             }}>
-                                <Text>Lukk</Text>
-                            </TouchableOpacity>
+                                {this._getImagePickerModal()}
+                            </ScrollView>
+
+                            <View style={{height: "10%"}}>
+                                <TouchableOpacity onPress={() => {
+                                    this.setState({modalVisible: false})
+                                }}>
+                                    <Text style={{color: colors.COLOR_WHITE}}>Lukk</Text>
+                                </TouchableOpacity>
+
+                            </View>
 
                         </View>
-
-                    </ScrollView>
+                    </View>
                 </Modal>
 
                 <KeyboardAvoidingView behavior="padding"
