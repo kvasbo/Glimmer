@@ -53,6 +53,7 @@
 		AD6689E01F174F1100900869 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD6689DF1F174F1100900869 /* GoogleService-Info.plist */; };
 		ADC28FBC1F0B9F68005CD37E /* GlimmerLaunch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBA1F0B9F68005CD37E /* GlimmerLaunch.storyboard */; };
 		ADC28FBE1F0BA582005CD37E /* stol.png in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBD1F0BA582005CD37E /* stol.png */; };
+		ADFD57B11F348CF600F497AF /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD61A56A1F348B08006963C0 /* libRCTCameraRoll.a */; };
 		BC3777E7D2AB4E9384289430 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25AED8EBEA97437FA7C5F443 /* MaterialCommunityIcons.ttf */; };
 		E17D73F2E10A750449EB2143 /* libPods-Glimmer-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 018CD41F5F34A87F85D99E0C /* libPods-Glimmer-tvOSTests.a */; };
 		FFDF7BB6978F4DFFB4536FB0 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D30772D1B1094A3CABAC8DCF /* Zocial.ttf */; };
@@ -262,6 +263,13 @@
 			remoteGlobalIDString = 5D82366F1B0CE05B005A9EF3;
 			remoteInfo = RNKeychain;
 		};
+		AD61A5691F348B08006963C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD61A5621F348B08006963C0 /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
+		};
 		AD61B0681F0B6EB5000C25C5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B5682EEB817140BC9D910756 /* RNFirebase.xcodeproj */;
@@ -360,6 +368,7 @@
 		A4855BFCE8AE4AFE9547F71F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		AD134FF21EF9B77800ED5A39 /* Glimmer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Glimmer.entitlements; path = Glimmer/Glimmer.entitlements; sourceTree = "<group>"; };
+		AD61A5621F348B08006963C0 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		AD6689DF1F174F1100900869 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ADC28FBB1F0B9F68005CD37E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Glimmer/Base.lproj/GlimmerLaunch.storyboard; sourceTree = "<group>"; };
 		ADC28FBD1F0BA582005CD37E /* stol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stol.png; path = ../icons/stol.png; sourceTree = "<group>"; };
@@ -388,6 +397,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADFD57B11F348CF600F497AF /* libRCTCameraRoll.a in Frameworks */,
 				AD134F8F1EF9042900ED5A39 /* libReactNativeNavigation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -579,6 +589,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				AD61A5621F348B08006963C0 /* RCTCameraRoll.xcodeproj */,
 				AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -675,6 +686,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		AD61A5631F348B08006963C0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD61A56A1F348B08006963C0 /* libRCTCameraRoll.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AD61B0471F0B6EB5000C25C5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -736,8 +755,8 @@
 			buildPhases = (
 				8E685F9628A967ADEEFDC2C4 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
-				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				E671B719084B68FE32048A48 /* [CP] Embed Pods Frameworks */,
 				8D40202C4D237E3608B11DD2 /* [CP] Copy Pods Resources */,
@@ -852,6 +871,10 @@
 				{
 					ProductGroup = 5E91572E1DD0AC6500FF2AA8 /* Products */;
 					ProjectRef = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
+				},
+				{
+					ProductGroup = AD61A5631F348B08006963C0 /* Products */;
+					ProjectRef = AD61A5621F348B08006963C0 /* RCTCameraRoll.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -1104,6 +1127,13 @@
 			fileType = archive.ar;
 			path = libRNKeychain.a;
 			remoteRef = AD134FEF1EF9B73D00ED5A39 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD61A56A1F348B08006963C0 /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = AD61A5691F348B08006963C0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AD61B0691F0B6EB5000C25C5 /* libRNFirebase.a */ = {
