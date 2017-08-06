@@ -6,9 +6,11 @@ import React from "react";
 import {
     ActivityIndicator,
     Alert,
+    CameraRoll,
     AsyncStorage,
     Button,
     Image,
+    Modal,
     KeyboardAvoidingView,
     ScrollView,
     StyleSheet,
@@ -54,7 +56,9 @@ export default class WriteNewPostOrComment extends React.Component {
             images: {},
             bodyCursorPosition: null,
             buttonsActive: true,
-            timeRemaining: null
+            timeRemaining: null,
+            modalVisible: false,
+            photos: []
         };
 
         this.tick = this.tick.bind(this);
@@ -286,11 +290,6 @@ export default class WriteNewPostOrComment extends React.Component {
         return text;
     }
 
-    addPictures() {
-
-
-
-    }
 
     //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed.
     getLoadingIndicator(loading) {
@@ -393,13 +392,56 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
+    _initPicturesForModal()
+    {
+
+        CameraRoll.getPhotos({
+            first: 30,
+            assetType: 'Photos'
+        })
+        .then((r) => {
+
+            var tmpPhotos = [];
+
+            for(let i = 0; i < r.edges.length; i++)
+            {
+                tmpPhotos.push(r.edges[i].node.image);
+                console.log("Bilde", r.edges[i].node.image);
+            }
+
+            this.setState({photos:tmpPhotos});
+
+        })
+    }
+
+    _showImagePickerModal()
+    {
+        //Last inn bildesettet, spør evt. om tillatelse
+        this._initPicturesForModal();
+
+        //Vis modal
+        this.setState({modalVisible: true});
+
+    }
+
+    //New image picker modal.
+    _getImagePickerModal()
+    {
+        var out = [];
+
+        for(let i = 0; i < this.state.photos.length; i++)
+        {
+            console.log(this.state.photos[i]);
+            out.push(<Image key={this.state.photos[i].filename} source={{uri:this.state.photos[i].uri}} resizeMode="contain" style={{height: 100, width: 100}} />);
+        }
+
+        return out;
+
+    }
+
     _getPictureButton() {
-        if (helpers.getPlatformDependentVars().platform === "ios") {
-            return ( <Button disabled={!this.state.buttonsActive} onPress={() => this.addPictures()} title="Bilder"/>)
-        }
-        else {
-            return ( <Button disabled={!this.state.buttonsActive} onPress={() => this.addPictures()} title="Bilder"/>)
-        }
+
+        return ( <Button disabled={!this.state.buttonsActive} onPress={() => this._showImagePickerModal()} title="Bilder"/>)
     }
 
     render() {
@@ -407,6 +449,30 @@ export default class WriteNewPostOrComment extends React.Component {
         return (
 
             <View style={pageStyles.container}>
+
+                /* Bildevelger */
+                <Modal
+                    animationType={"slide"}
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                >
+                    <View style={{marginTop: 22}}>
+                        <View>
+                            <Text>Trykk på et bilde for å laste opp</Text>
+                        </View>
+                        <View>
+                            {this._getImagePickerModal()}
+                        </View>
+                        <View>
+                            <TouchableOpacity onPress={() => {
+                                this.setState({modalVisible:false})
+                            }}>
+                                <Text>Gjem</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                    </View>
+                </Modal>
 
                 <KeyboardAvoidingView behavior="padding"
                                       keyboardVerticalOffset={helpers.getPlatformDependentVars().keyboardAvoidingOffset}
