@@ -339,6 +339,8 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
+
+
     _getTimer() {
         if (!this.props.edit || this.state.timeRemaining === null) return null;
 
@@ -396,7 +398,7 @@ export default class WriteNewPostOrComment extends React.Component {
     {
 
         CameraRoll.getPhotos({
-            first: 30,
+            first: 50,
             assetType: 'Photos'
         })
         .then((r) => {
@@ -406,7 +408,6 @@ export default class WriteNewPostOrComment extends React.Component {
             for(let i = 0; i < r.edges.length; i++)
             {
                 tmpPhotos.push(r.edges[i].node.image);
-                console.log("Bilde", r.edges[i].node.image);
             }
 
             this.setState({photos:tmpPhotos});
@@ -424,6 +425,71 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
+    _uploadAndAddPicture(pictureData)
+    {
+
+        //Hide modal
+        this.setState({modalVisible:false});
+
+        var metadata = {};
+
+        try {
+
+            metadata.uri = pictureData.uri;
+
+            let filename = pictureData.filename.toLowerCase();
+            let filenameArr = filename.split(".");
+            var extension = filenameArr.slice(-1)[0];
+
+            //console.log(filename, filenameArr, extension);
+
+            if (extension === "jpg" || extension === "jpeg") {
+                metadata.contentType = 'image/jpeg';
+            }
+            else if (extension === "png") {
+                metadata.contentType = 'image/png';
+            }
+            else if (extension === "gif") {
+                metadata.contentType = 'image/gif';
+            }
+            else if (extension === "webp") {
+                metadata.contentType = 'image/webp';
+            }
+
+            metadata.fileName = new Date().getTime() + "_" +  pictureData.filename.toLowerCase();
+
+            let tmpImages = this.state.images;
+            tmpImages[metadata.fileName] = {orig_uri: metadata.uri, uri: null, done: false}
+
+            this.setState({images: tmpImages});
+
+            //Upload
+            firebaseApp.storage()
+            .ref('/postImages/' + metadata.fileName)
+            .putFile(metadata.uri, metadata)
+            .then(uploadedFile => {
+
+                let imageList = this.state.images;
+                imageList[metadata.fileName] = {orig_uri: metadata.uri, uri: uploadedFile.downloadUrl, done: true};
+
+                if (this._isMounted) {
+                    this.setState({images: imageList});
+                }
+
+            })
+            .catch(err => {
+                Alert.alert("Noe gikk galt med opplastingen. Pokker ta.", err)
+            });
+
+
+
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+    }
+
     //New image picker modal.
     _getImagePickerModal()
     {
@@ -431,8 +497,11 @@ export default class WriteNewPostOrComment extends React.Component {
 
         for(let i = 0; i < this.state.photos.length; i++)
         {
-            console.log(this.state.photos[i]);
-            out.push(<Image key={this.state.photos[i].filename} source={{uri:this.state.photos[i].uri}} resizeMode="contain" style={{height: 100, width: 100}} />);
+            out.push(
+                <TouchableOpacity key={this.state.photos[i].filename} onLongPress={() => this._uploadAndAddPicture(this.state.photos[i])}>
+                    <Image source={{uri:this.state.photos[i].uri}} resizeMode="contain" style={{height: 100, width: 100}} />
+                </TouchableOpacity>
+            );
         }
 
         return out;
@@ -450,28 +519,30 @@ export default class WriteNewPostOrComment extends React.Component {
 
             <View style={pageStyles.container}>
 
-                /* Bildevelger */
                 <Modal
                     animationType={"slide"}
                     transparent={false}
                     visible={this.state.modalVisible}
                 >
-                    <View style={{marginTop: 22}}>
+                    <ScrollView style={{margin: 0, padding: 10, paddingTop: 22, backgroundColor: "white", flexWrap: "wrap", flexDirection: "row"}}>
                         <View>
-                            <Text>Trykk på et bilde for å laste opp</Text>
+                            <Text>Trykk lenge på et bilde for å laste det opp</Text>
                         </View>
+
                         <View>
                             {this._getImagePickerModal()}
                         </View>
+
                         <View>
                             <TouchableOpacity onPress={() => {
                                 this.setState({modalVisible:false})
                             }}>
-                                <Text>Gjem</Text>
+                                <Text>Lukk</Text>
                             </TouchableOpacity>
 
                         </View>
-                    </View>
+
+                    </ScrollView>
                 </Modal>
 
                 <KeyboardAvoidingView behavior="padding"
