@@ -1,6 +1,7 @@
 import React from "react";
 import {Provider} from "react-redux";
 import {persistStore, autoRehydrate} from 'redux-persist'
+import { composeWithDevTools } from 'remote-redux-devtools';
 import {Alert, AppState} from "react-native";
 import {AsyncStorage} from 'react-native';
 import {registerScreens} from "./screens";
@@ -72,16 +73,12 @@ firebaseApp.auth().onAuthStateChanged(function (user) {
 //Create the Redux Store. Saving disabled for now
 const loggerMiddleware = createLogger();
 
-if (__DEV__) {
-    var store = createStore(glimmerReducers, undefined, compose(applyMiddleware(loggerMiddleware),autoRehydrate()));
-}
-else {
-    var store = createStore(glimmerReducers, undefined, compose(applyMiddleware(),autoRehydrate()));
-}
+// Create redux store, with logging only for dev env
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(glimmerReducers, undefined, composeEnhancers(applyMiddleware()));
 
 global.store = store;
-
-persistStore(store, {storage: AsyncStorage, whitelist: ['Krets', 'Conversation', 'ForumPosts']})
 
 //Make root navigation callable from anywhere. Should be cleaned up and done via store!
 global.rootNavigation = Navigation;
@@ -250,5 +247,3 @@ function mapStateToProps(state) {
 }
 
 export default Glimmer
-
-

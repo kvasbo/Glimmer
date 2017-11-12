@@ -43,6 +43,13 @@ export function addKretsPersonBatch(ids) {
     }
 }
 
+export function addKudosBatch(kudos) {
+    return {
+        type: KUDOS_ADD_BATCH,
+        kudos
+    }
+}
+
 export function addFavoritesPostBatch(posts, replace = false) {
     return {
         type: ADD_POST_FAVORITES_BATCH,
@@ -172,4 +179,3 @@ export function setActiveUserId(userId) {
         userId
     }
 }
-
