@@ -4115,7 +4115,7 @@ react-native-firebase@^3.1.0:
     opencollective "^1.0.3"
     prop-types "^15.6.0"
 
-react-native-htmlview@^0.12.0:
+react-native-htmlview@^0.12.1:
   version "0.12.1"
   resolved "https://registry.yarnpkg.com/react-native-htmlview/-/react-native-htmlview-0.12.1.tgz#4b987f1f34fae89f7bbd3c478f8f20d601019639"
   dependencies:
@@ -4132,7 +4132,7 @@ react-native-lightbox@^0.7.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-navigation@^1.1.179:
+react-native-navigation@^1.1:
   version "1.1.268"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.268.tgz#6651c58c0dcabfb64e03aa21532788772f2b4908"
   dependencies:
