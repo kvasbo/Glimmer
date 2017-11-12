@@ -1,29 +1,19 @@
+import _ from 'lodash';
 import {KUDOS_ADD_BATCH} from "../constants";
 
-const initialState = [];
+function Kudos(state = {}, action) {
 
-function Kudos(state = initialState, action) {
+  switch (action.type) {
 
-    switch (action.type) {
-
-        case KUDOS_ADD_BATCH:
-
-            var newState = [...state];
-
-            for(var i=0;i<action.ids.length;i++)
-            {
-                if(newState.indexOf(action.ids[i]) === -1)
-                {
-                    newState.push(action.ids[i]);
-                }
-            }
-
-            return newState;
-
-
-        default:
-            return state
-    }
+    case KUDOS_ADD_BATCH:
+      var newState = _.clone(state);
+      action.kudos.forEach((k) => {
+        newState[k.uniqueId] = k;
+      })
+      return newState;
+    default:
+        return state
+  }
 
 }
 

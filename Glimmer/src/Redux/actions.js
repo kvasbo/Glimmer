@@ -19,7 +19,8 @@ import {
     APPCONTROL_SET_ACTIVE_POSTING_FILTER,
     ADD_POST_UNREAD_BATCH,
     ADD_POST_BATCH,
-    ADD_EVENT_BATCH
+    ADD_EVENT_BATCH,
+    KUDOS_ADD_BATCH,
 } from "../constants";
 
 export function replaceForumList(forums) {

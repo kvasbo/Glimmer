@@ -1,4 +1,5 @@
 import Moment from 'moment';
+import {addKudosBatch} from '../Redux/actions';
 
 export default class Kudos {
 
@@ -8,19 +9,21 @@ export default class Kudos {
    * @returns {Promise}
    */
   async getKudos(page) {
-    console.log("getting kudos page", 1);
-    const url = '/kudos/received';
+    console.log("getting kudos page", page);
+    const url = `/kudos/received?page=${page}`;
     const kudos = await api.makeApiGetCall(url);
-
     const kudi = kudos.data.map(k => parseKudos(k));
-
-    console.log("kudos", kudos, kudi);
+    store.dispatch(addKudosBatch(kudi));
   }
 
 }
 
 function parseKudos(data) {
+
+  const uniqueId = `${data.subject.id}_${data.creator.id}`;
+
   return {
+    uniqueId,
     created: new Moment(data.created_at),
     creatorId: data.creator.id,
     creatorName: data.creator.name,

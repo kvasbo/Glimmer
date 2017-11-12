@@ -31,6 +31,8 @@ export default class Workers {
         this.forumListUpdater.reloadForums(false);
         this.forumUpdater.loadFirstUnread(1);
         this.kudos.getKudos(1);
+        this.kudos.getKudos(2);
+        this.kudos.getKudos(3);
     });
   }
 
