@@ -24,7 +24,7 @@ function parseKudos(data) {
 
   return {
     uniqueId,
-    created: new Moment(data.created_at),
+    createdAt: new Moment(data.created_at),
     creatorId: data.creator.id,
     creatorName: data.creator.name,
     creatorImage: data.creator.image_url,

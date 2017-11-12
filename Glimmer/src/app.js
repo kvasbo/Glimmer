@@ -1,6 +1,5 @@
 import React from "react";
 import {Provider} from "react-redux";
-import {persistStore, autoRehydrate} from 'redux-persist'
 import { composeWithDevTools } from 'remote-redux-devtools';
 import {Alert, AppState} from "react-native";
 import {AsyncStorage} from 'react-native';
@@ -219,6 +218,13 @@ class Glimmer extends React.Component {
                     title: 'Samtaler',
                     navigatorStyle: NavStyles.default,
                 },
+                {
+                    label: 'Kudos',
+                    screen: 'glimmer.PageKudos',
+                    icon: iconsMap['ios-ribbon'], //require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                    title: 'Kudos',
+                    navigatorStyle: NavStyles.default,
+                },
                 /*{
                  label: 'Mer',
                  screen: 'glimmer.MenuLeft',
@@ -231,7 +237,8 @@ class Glimmer extends React.Component {
                  }*/
             ],
             tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
-                tabBarSelectedButtonColor: '#3499DB', // optional, change the color of the selected tab icon and text (only selected)
+                tabBarSelectedButtonColor: '#3499DB',
+                initialTabIndex: 1,
             },
 
         });

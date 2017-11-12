@@ -22,6 +22,9 @@ const icons = {
     "ios-paper": [25, "#bbb"],
     "ios-paper--active": [30, "#fff"],
 
+    "ios-ribbon": [25, "#bbb"],
+    "ios-ribbon--active": [30, "#fff"],
+
     // Use other Icon provider, see the logic at L39
     //"facebook": [30, "#bbb", FontAwesome],
     //"facebook--active": [30, "#fff", FontAwesome],

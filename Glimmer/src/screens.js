@@ -12,6 +12,7 @@ import PageKretsVelger from "./Components/PageKretsVelgerNewMessage";
 import PageNewMessage from "./Components/PageNewMessage";
 import PageNewForumPost from "./Components/PageNewForumPost";
 import PageForumCommentEdit from "./Components/PageForumCommentEdit";
+import PageKudos from "./Components/PageKudos";
 
 
 import PageLogin from "./Components/PageLogin";
@@ -37,6 +38,7 @@ export function registerScreens(store, Provider) {
             Navigation.registerComponent('glimmer.PageNewForumComment', () => PageNewForumComment, store, Provider);
             Navigation.registerComponent('glimmer.PageForumList', () => PageForumList, store, Provider);
             Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
+            Navigation.registerComponent('glimmer.PageKudos', () => PageKudos, store, Provider);
             Navigation.registerComponent('glimmer.PageForumCommentEdit', () => PageForumCommentEdit, store, Provider);
 
 
