@@ -14,6 +14,7 @@ export default class Kudos {
     const kudos = await api.makeApiGetCall(url);
     const kudi = kudos.data.map(k => parseKudos(k));
     store.dispatch(addKudosBatch(kudi));
+    return true;
   }
 
 }
