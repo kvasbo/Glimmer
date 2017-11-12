@@ -101,8 +101,8 @@ android {
         applicationId "com.rettvendt.glimmer"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 19
-        versionName "1.0 alpha 19"
+        versionCode 20
+        versionName "1.0 alpha 20"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -150,7 +150,9 @@ android {
 
 dependencies {
 
-    compile project(':react-native-firebase')
+    compile(project(':react-native-firebase')) {
+        transitive = false
+    }
     compile project(':react-native-vector-icons')
     compile project(':react-native-keychain')
     compile fileTree(dir: "libs", include: ["*.jar"])
