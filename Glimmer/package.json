@@ -21,6 +21,7 @@
     "react-native-exception-handler": "^2.3.0",
     "react-native-firebase": "^3.1.0",
     "react-native-htmlview": "^0.12.1",
+    "react-native-image-picker": "^0.26.7",
     "react-native-keychain": "^1.2.0",
     "react-native-lightbox": "^0.7.0",
     "react-native-navigation": "^1.1",
@@ -32,6 +33,7 @@
     "redux-persist": "4.10",
     "remote-redux-devtools": "^0.5.12",
     "shitty-qs": "^1.0.1",
+    "striptags": "^3.1.0",
     "textile-js": "^2.0.3",
     "xmldom": "^0.1.27"
   },

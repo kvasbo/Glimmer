@@ -22,6 +22,7 @@ import {
 import PropTypes from "prop-types";
 import InputStyles from "../../Styles/InputStyles";
 import * as colors from "../../Styles/colorConstants";
+const ImagePicker = require('react-native-image-picker');
 
 export default class WriteNewPostOrComment extends React.Component {
 
@@ -498,10 +499,37 @@ export default class WriteNewPostOrComment extends React.Component {
 
     }
 
+    pickPictures() {
+      const options = {
+        title: 'Velg bilde',
+        storageOptions: {
+          skipBackup: false,
+        }
+      };
+
+      ImagePicker.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        }
+        else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        }
+        else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        }
+        else {
+          let source = { uri: response.uri };
+        }
+      });
+
+    }
+
     _getPictureButton() {
 
         return (
-            <Button disabled={!this.state.buttonsActive} onPress={() => this._showImagePickerModal()} title="Bilder"/>)
+            <Button disabled={!this.state.buttonsActive} onPress={() => this.pickPictures()} title="Bilder"/>)
     }
 
     render() {

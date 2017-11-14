@@ -29,6 +29,8 @@ target 'Glimmer' do
 
   # Pods for Glimmer
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'GlimmerTests' do
     inherit! :search_paths
     # Pods for testing
