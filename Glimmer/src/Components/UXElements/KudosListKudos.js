@@ -22,7 +22,7 @@ export default class KudosListKudos extends React.Component {
 
         return (
             <View style={pageStyles.container}>
-              <Image style={{width: 60, height: 60}} source={{url: this.props.kudos.creatorImage}} />
+              <Image style={{ width: 60, height: 60, borderRadius: 10 }} source={{url: this.props.kudos.creatorImage}} />
               <View style={{flexDirection: 'column', flex: 1, marginLeft: 10}}>
                 <Text>{this.props.kudos.creatorName}</Text>
                 <Text>{this.props.kudos.createdAt.fromNow()}</Text>

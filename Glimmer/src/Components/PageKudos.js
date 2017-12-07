@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {View, ScrollView, StyleSheet, Text, ActivityIndicator} from "react-native";
+import {View, ScrollView, StyleSheet, Text, RefreshControl} from "react-native";
 import KudosListKudos from './UXElements/KudosListKudos';
 
 class PageKudos extends React.Component {
@@ -15,12 +15,12 @@ class PageKudos extends React.Component {
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
-          this.silentRefresh();
+          this.onRefresh();
           break;
       }
     }
 
-    async silentRefresh(){
+    async onRefresh() {
       this.setState({refreshing: true});
       await global.arbeidsMaur.kudos.getKudos(1);
       this.setState({refreshing: false});
@@ -50,19 +50,17 @@ class PageKudos extends React.Component {
       }
     }
 
-    getLoading() {
-
-      if(!this.state.refreshing) return null;
-
-      return (
-        <ActivityIndicator />
-      )
-    }
-
     render() {
         return (
-            <ScrollView style={pageStyles.container}>
-              <View style={{marginLeft: 0, marginRight:0, height: 20}}>{this.getLoading()}</View>
+            <ScrollView
+              style={pageStyles.container}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.onRefresh.bind(this)}
+                />
+              }
+            >
               {this.getKudos()}
               {this.getFooter()}
             </ScrollView>
