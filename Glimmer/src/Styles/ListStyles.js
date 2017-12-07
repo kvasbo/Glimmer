@@ -28,10 +28,9 @@ module.exports = StyleSheet.create({
 
     iconBlock: {
         padding: 10,
-        paddingRight: 0,
+        paddingRight: 15,
         flex: 1,
     },
-
 
     listTitle: {
         fontSize: 16,

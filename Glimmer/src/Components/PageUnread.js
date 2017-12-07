@@ -117,7 +117,7 @@ class PageUnread extends React.Component {
                         <Text style={listStyles.listSubtitle}>{this.getSubtitle(item)}</Text>
                     </View>
                     <View style={listStyles.iconBlock}>
-                        <Icon name="ios-arrow-forward" color={colors.COLOR_LIGHTGREY} size={30}/>
+                        <Icon name="ios-arrow-forward" style={{ textAlign: 'right' }} color={colors.COLOR_LIGHTGREY} size={30}/>
                     </View>
                 </View>
 

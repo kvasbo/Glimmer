@@ -64,7 +64,7 @@ class PageFavorites extends React.Component {
 
                 this.props.navigator.push({
                     screen: 'glimmer.PageUnread', // unique ID registered with Navigation.registerScreen
-                    title: "Mine uleste tråder", // navigation bar title of the pushed screen (optional)
+                    title: "Uleste tråder", // navigation bar title of the pushed screen (optional)
                     animated: true, // does the push have transition animation or does it happen immediately (optional)
                     backButtonTitle: "Mine tråder",
                 });
@@ -150,7 +150,7 @@ class PageFavorites extends React.Component {
                         <Text style={listStyles.listSubtitle}>{this.getSubtitle(item)}</Text>
                     </View>
                     <View style={listStyles.iconBlock}>
-                        <Icon name="ios-arrow-forward" color={colors.COLOR_LIGHTGREY} size={30}/>
+                        <Icon name="ios-arrow-forward" style={{ textAlign: 'right' }} color={colors.COLOR_LIGHTGREY} size={30}/>
                     </View>
                 </View>
 
