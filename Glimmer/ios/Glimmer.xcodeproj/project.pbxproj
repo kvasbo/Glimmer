@@ -51,7 +51,7 @@
 		95EA88F75C5047928A495D52 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88C82DC48E6F4952B9368E1A /* EvilIcons.ttf */; };
 		9CC498E2DB60446BA853D8DB /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 858E1F5BC0464323919BAA63 /* libRNKeychain.a */; };
 		AD134F8F1EF9042900ED5A39 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD134F8D1EF9040B00ED5A39 /* libReactNativeNavigation.a */; };
-		AD6689E01F174F1100900869 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD6689DF1F174F1100900869 /* GoogleService-Info.plist */; };
+		AD39F7A31FD97C680001322F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD39F77C1FD97C680001322F /* GoogleService-Info.plist */; };
 		ADC28FBC1F0B9F68005CD37E /* GlimmerLaunch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBA1F0B9F68005CD37E /* GlimmerLaunch.storyboard */; };
 		ADC28FBE1F0BA582005CD37E /* stol.png in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBD1F0BA582005CD37E /* stol.png */; };
 		ADFD57B11F348CF600F497AF /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD61A56A1F348B08006963C0 /* libRCTCameraRoll.a */; };
@@ -398,8 +398,8 @@
 		A4855BFCE8AE4AFE9547F71F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		AD134FF21EF9B77800ED5A39 /* Glimmer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Glimmer.entitlements; path = Glimmer/Glimmer.entitlements; sourceTree = "<group>"; };
+		AD39F77C1FD97C680001322F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Glimmer/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AD61A5621F348B08006963C0 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
-		AD6689DF1F174F1100900869 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ADC28FBB1F0B9F68005CD37E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Glimmer/Base.lproj/GlimmerLaunch.storyboard; sourceTree = "<group>"; };
 		ADC28FBD1F0BA582005CD37E /* stol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stol.png; path = ../icons/stol.png; sourceTree = "<group>"; };
 		B5682EEB817140BC9D910756 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
@@ -567,7 +567,7 @@
 		13B07FAE1A68108700A75B9A /* Glimmer */ = {
 			isa = PBXGroup;
 			children = (
-				AD6689DF1F174F1100900869 /* GoogleService-Info.plist */,
+				AD39F77C1FD97C680001322F /* GoogleService-Info.plist */,
 				AD134FF21EF9B77800ED5A39 /* Glimmer.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -1266,7 +1266,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADC28FBE1F0BA582005CD37E /* stol.png in Resources */,
-				AD6689E01F174F1100900869 /* GoogleService-Info.plist in Resources */,
 				ADC28FBC1F0B9F68005CD37E /* GlimmerLaunch.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				BC3777E7D2AB4E9384289430 /* MaterialCommunityIcons.ttf in Resources */,
@@ -1274,6 +1273,7 @@
 				95EA88F75C5047928A495D52 /* EvilIcons.ttf in Resources */,
 				27D4F0BA234F4C5598264B7C /* FontAwesome.ttf in Resources */,
 				28A1967D205E4D9C94A74839 /* Foundation.ttf in Resources */,
+				AD39F7A31FD97C680001322F /* GoogleService-Info.plist in Resources */,
 				3DCAE7038E634EFBA2911EF0 /* Ionicons.ttf in Resources */,
 				39CDDDD451C84653B68FD5E2 /* MaterialIcons.ttf in Resources */,
 				535D4A85C1EB41359C992C0B /* Octicons.ttf in Resources */,
@@ -1671,7 +1671,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = Glimmer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = I;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1681,7 +1681,7 @@
 				PRODUCT_NAME = Glimmer;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1706,7 +1706,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = Glimmer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = I;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1716,7 +1716,7 @@
 				PRODUCT_NAME = Glimmer;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
