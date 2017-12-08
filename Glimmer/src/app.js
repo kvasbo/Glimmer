@@ -44,12 +44,7 @@ const errorHandler = (e, isFatal) => {
 
 setJSExceptionHandler(errorHandler, true);
 
-const fbConfigurationOptions = {
-    debug: __DEV__,
-    persistence: true
-};
-
-const firebaseApp = RNFirebase.initializeApp(fbConfigurationOptions);
+const firebaseApp = RNFirebase.app();
 
 global.firebaseApp = firebaseApp;
 
@@ -60,9 +55,7 @@ global.arbeidsMaur = new Workers();
 
 firebaseApp.auth().onAuthStateChanged(function (user) {
     if (user) {
-
         //console.log("Firebase signed in", user)
-
     } else {
         // User is signed out.
         //console.log("Firebase signed out", user)

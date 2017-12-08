@@ -11,10 +11,11 @@ pod 'Firebase/Analytics'
 pod 'Firebase/Auth'
 pod 'Firebase/Crash'
 pod 'Firebase/Database'
-pod 'Firebase/DynamicLinks'
+# pod 'Firebase/DynamicLinks'
 # pod 'Firebase/Messaging'
-pod 'Firebase/RemoteConfig'
+# pod 'Firebase/RemoteConfig'
 pod 'Firebase/Storage'
+pod 'Firebase/Firestore'
 
 pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
 pod 'React', :path => '../node_modules/react-native', :subspecs => [

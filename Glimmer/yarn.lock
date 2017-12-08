@@ -4163,7 +4163,7 @@ react-native-exception-handler@^2.3.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.6.0.tgz#4ae337126137a6b12f002ce4c490d71512fdc1bb"
 
-react-native-firebase@^3.1.0:
+react-native-firebase@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-3.1.1.tgz#82d8fdb0abe1a9140101b75fb8b6a5094ea2e99d"
   dependencies:

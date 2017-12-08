@@ -19,7 +19,7 @@
     "react": "16.0.0",
     "react-native": "0.50.3",
     "react-native-exception-handler": "^2.3.0",
-    "react-native-firebase": "^3.1.0",
+    "react-native-firebase": "^3.1.1",
     "react-native-htmlview": "^0.12.1",
     "react-native-image-picker": "^0.26.7",
     "react-native-keychain": "^1.2.0",
