@@ -1,5 +1,6 @@
 import {addUserBatch} from "../Redux/actions";
 const User = require("../DataClasses/user").default;
+const CacheUser = require("../DataClasses/cacheUser").default;
 
 export default class UserUpdater {
 
@@ -25,8 +26,8 @@ export default class UserUpdater {
 
                     //Save to cache
                     var tmpUser = new User(data.data.id, data.data.name, data.data.realname, data.data.image_url, data.data.friend);
-                    store.dispatch(addUserBatch([tmpUser])); //ARRAy!
-
+                    var cacheToStore = new CacheUser(data.data.id, data.data.name, data.data.realname, data.data.image_url);
+                    store.dispatch(addUserBatch([tmpUser]));
                     resolve(tmpUser);
 
                 }).catch((err) => {

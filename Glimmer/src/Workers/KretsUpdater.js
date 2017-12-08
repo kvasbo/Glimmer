@@ -1,10 +1,15 @@
 import {addKretsPersonBatch, addUserBatch} from "../Redux/actions";
 const User = require("../DataClasses/user").default;
+const CacheUser = require("../DataClasses/cacheUser").default;
 
 export default class KretsUpdater {
 
-    krets = {folk: [], updated: null};
+    constructor() {
+        
+    }
 
+    krets = {folk: [], updated: null};
+    
     initKrets() {
         this._getKretsPagesRecursive(1);
     }
@@ -21,7 +26,8 @@ export default class KretsUpdater {
             for (let key in data.data) {
 
                 let tmpUser = new User(data.data[key].id, data.data[key].name, data.data[key].realname, data.data[key].image_url, data.data[key].friend);
-
+                let cacheToStore = new CacheUser(data.data[key].id, data.data[key].name, data.data[key].realname, data.data[key].image_url);
+                global.firebaseApp.database().ref('userInfo/' + data.data[key].id).set(cacheToStore);
                 krets.push(tmpUser.id);
                 users.push(tmpUser);
 
