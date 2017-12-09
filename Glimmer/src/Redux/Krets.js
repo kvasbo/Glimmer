@@ -1,30 +1,25 @@
-import {KRETS_ADD_PERSON_BATCH} from "../constants";
+import { KRETS_ADD_PERSON_BATCH } from '../constants';
 
 const initialState = [];
 
 function Krets(state = initialState, action) {
+  switch (action.type) {
+    case KRETS_ADD_PERSON_BATCH:
 
-    switch (action.type) {
+      var newState = [...state];
 
-        case KRETS_ADD_PERSON_BATCH:
+      for (let i = 0; i < action.ids.length; i++) {
+        if (newState.indexOf(action.ids[i]) === -1) {
+          newState.push(action.ids[i]);
+        }
+      }
 
-            var newState = [...state];
-
-            for(var i=0;i<action.ids.length;i++)
-            {
-                if(newState.indexOf(action.ids[i]) === -1)
-                {
-                    newState.push(action.ids[i]);
-                }
-            }
-
-            return newState;
+      return newState;
 
 
-        default:
-            return state
-    }
-
+    default:
+      return state;
+  }
 }
 
-export default Krets
+export default Krets;

@@ -1,29 +1,25 @@
-import {USERS_ADD_USER_BATCH} from "../constants";
+import { USERS_ADD_USER_BATCH } from '../constants';
 
 const initialState = {
 
-}
+};
 
 function User(state = initialState, action) {
+  switch (action.type) {
+    case USERS_ADD_USER_BATCH:
 
-    switch (action.type) {
+      var newState = Object.assign({}, state);
 
-        case USERS_ADD_USER_BATCH:
+      for (let i = 0; i < action.users.length; i++) {
+        newState[action.users[i].id] = action.users[i];
+      }
 
-            var newState = Object.assign({}, state);
-
-            for(var i = 0; i < action.users.length; i++)
-            {
-                newState[action.users[i].id] = action.users[i];
-            }
-
-            return newState;
+      return newState;
 
 
-        default:
-            return state
-    }
-
+    default:
+      return state;
+  }
 }
 
-export default User
+export default User;

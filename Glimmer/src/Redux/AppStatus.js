@@ -1,71 +1,68 @@
 import {
-    APPCONTROL_SET_ACTIVE_POSTING_FILTER,
-    APPCONTROL_SET_ACTIVE_POSTING_FORUM,
-    APPCONTROL_SET_CURRENT_USER,
-    APPCONTROL_USER_LOGIN,
-    APPCONTROL_SET_CURRENT_TOKEN
-} from "../constants";
+  APPCONTROL_SET_ACTIVE_POSTING_FILTER,
+  APPCONTROL_SET_ACTIVE_POSTING_FORUM,
+  APPCONTROL_SET_CURRENT_USER,
+  APPCONTROL_USER_LOGIN,
+  APPCONTROL_SET_CURRENT_TOKEN,
+} from '../constants';
 
 const initialState = {
-    loggedIn: null,
-    activePostingForum: null,
-    activeUserId: null,
-    activePostingFilter: null,
-    token: null,
-}
+  loggedIn: null,
+  activePostingForum: null,
+  activeUserId: null,
+  activePostingFilter: null,
+  token: null,
+};
 
 function AppStatus(state = initialState, action) {
+  switch (action.type) {
+    case APPCONTROL_USER_LOGIN:
 
-    switch (action.type) {
+      var newLoginState = Object.assign({}, state);
 
-        case APPCONTROL_USER_LOGIN:
+      newLoginState.loggedIn = action.status;
 
-            var newLoginState = Object.assign({}, state);
-
-            newLoginState.loggedIn = action.status;
-
-            return newLoginState;
+      return newLoginState;
 
 
-        case APPCONTROL_SET_ACTIVE_POSTING_FORUM:
+    case APPCONTROL_SET_ACTIVE_POSTING_FORUM:
 
-            var newForumState = Object.assign({}, state);
+      var newForumState = Object.assign({}, state);
 
-            newForumState.activePostingForum = action.forumId;
+      newForumState.activePostingForum = action.forumId;
 
-            return newForumState;
-
-
-        case APPCONTROL_SET_ACTIVE_POSTING_FILTER:
-
-            var newForumState = Object.assign({}, state);
-
-            newForumState.activePostingFilter = action.filter;
-
-            return newForumState;
+      return newForumState;
 
 
-        case APPCONTROL_SET_CURRENT_USER:
+    case APPCONTROL_SET_ACTIVE_POSTING_FILTER:
 
-            var userState = Object.assign({}, state);
+      var newForumState = Object.assign({}, state);
 
-            userState.activeUserId = action.userId;
+      newForumState.activePostingFilter = action.filter;
 
-            return userState;
+      return newForumState;
 
 
-        case APPCONTROL_SET_CURRENT_TOKEN:
+    case APPCONTROL_SET_CURRENT_USER:
 
-            var tokenState = Object.assign({}, state);
+      var userState = Object.assign({}, state);
 
-            tokenState.token = action.token;
+      userState.activeUserId = action.userId;
 
-            return tokenState;
+      return userState;
 
-        default:
-            return state
-    }
 
+    case APPCONTROL_SET_CURRENT_TOKEN:
+
+      var tokenState = Object.assign({}, state);
+
+      tokenState.token = action.token;
+
+      return tokenState;
+
+    default:
+      return state;
+  }
 }
 
-export default AppStatus
+export default AppStatus;

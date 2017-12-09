@@ -1,25 +1,22 @@
-import {ADD_POST_BATCH} from "../constants";
+import { ADD_POST_BATCH } from '../constants';
 
 function ForumPosts(state = {}, action) {
-    switch (action.type) {
+  switch (action.type) {
+    case ADD_POST_BATCH:
 
-        case ADD_POST_BATCH:
+      var newState = Object.assign({}, state);
 
-            var newState = Object.assign({}, state);
+      for (let i = 0; i < action.posts.length; i++) {
+        if (action.posts[i] !== null) {
+          newState[action.posts[i].id] = action.posts[i];
+        }
+      }
 
-            for (let i = 0; i < action.posts.length; i++) {
-                if(action.posts[i] !== null)
-                {
-                    newState[action.posts[i].id] = action.posts[i];
-                }
-            }
+      return newState;
 
-            return newState;
-
-        default:
-            return state
-    }
-
+    default:
+      return state;
+  }
 }
 
-export default ForumPosts
+export default ForumPosts;

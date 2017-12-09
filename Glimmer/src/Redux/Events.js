@@ -1,22 +1,20 @@
-import {ADD_EVENT_BATCH} from "../constants";
+import { ADD_EVENT_BATCH } from '../constants';
 
 function Events(state = {}, action) {
-    switch (action.type) {
+  switch (action.type) {
+    case ADD_EVENT_BATCH:
 
-        case ADD_EVENT_BATCH:
+      var newState = Object.assign({}, state);
 
-            var newState = Object.assign({}, state);
+      for (let i = 0; i < action.events.length; i++) {
+        newState[action.events[i].id] = action.events[i];
+      }
 
-            for (let i = 0; i < action.events.length; i++) {
-                newState[action.events[i].id] = action.events[i];
-            }
+      return newState;
 
-            return newState;
-
-        default:
-            return state
-    }
-
+    default:
+      return state;
+  }
 }
 
-export default Events
+export default Events;

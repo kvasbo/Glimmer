@@ -2,34 +2,30 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React from "react";
-import PropTypes from "prop-types";
-import {StyleSheet, View} from "react-native";
-import KudosAndCommentsAndStuff from "./KudosAndCommentsAndStuff";
-import ForumTextTextile from "./ForumTextTextile.js";
-import CommentMetadata from "./CommentMetadata";
-import * as colors from "../../Styles/colorConstants";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { StyleSheet, View } from 'react-native';
+import KudosAndCommentsAndStuff from './KudosAndCommentsAndStuff';
+import ForumTextTextile from './ForumTextTextile.js';
+import CommentMetadata from './CommentMetadata';
+import * as colors from '../../Styles/colorConstants';
 
 export default class SkogsEvent extends React.Component {
-
     byMe = false;
 
     constructor(props) {
+      super(props);
+      this.state = {};
 
-        super(props);
-        this.state = {};
-
-        try {
-            if (this.props.data.creator_id === store.getState().AppStatus.activeUserId) {
-                this.byMe = true;
-            }
+      try {
+        if (this.props.data.creator_id === store.getState().AppStatus.activeUserId) {
+          this.byMe = true;
         }
-        catch (err) {
-            console.log("error parsing", this.props);
-        }
+      } catch (err) {
+        console.log('error parsing', this.props);
+      }
 
-        console.log("Event", this.props.data);
-
+      console.log('Event', this.props.data);
     }
 
     componentDidMount() {
@@ -37,35 +33,27 @@ export default class SkogsEvent extends React.Component {
     }
 
     getTime() {
-        return helpers.getCalendarTime(this.props.data.created_at);
+      return helpers.getCalendarTime(this.props.data.created_at);
     }
 
     render() {
+      return (
 
-        return (
+        <View style={pageStyles.container}>
 
-            <View style={pageStyles.container}>
+          <View style={pageStyles.creatorInfo} />
 
-                <View style={pageStyles.creatorInfo}>
+          <View style={pageStyles.thePost}>
+            <ForumTextTextile text={this.props.data.body_textile} navigator={this.props.navigator} style={{ marginBottom: 10 }} />
+          </View>
 
-                </View>
+          <View style={pageStyles.metaData}>
+            <View style={{ flexDirection: 'row' }} />
+          </View>
 
-                <View style={pageStyles.thePost}>
-                    <ForumTextTextile text={this.props.data.body_textile} navigator={this.props.navigator} style={{marginBottom: 10}}/>
-                </View>
-
-                <View style={pageStyles.metaData}>
-                    <View style={{flexDirection: "row"}}>
-
-
-
-                    </View>
-                </View>
-
-            </View>
-        );
+        </View>
+      );
     }
-
 }
 
 /*
@@ -81,37 +69,37 @@ export default class SkogsEvent extends React.Component {
 
 SkogsEvent.propTypes = {
 
-    data: PropTypes.object.isRequired,
-    navigator: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  navigator: PropTypes.object.isRequired,
 
-}
+};
 
 const pageStyles = StyleSheet.create({
-    container: {
-        backgroundColor: colors.COLOR_WHITE,
-        padding: 0,
-        marginBottom: 2,
-        borderBottomWidth: 5,
-        borderBottomColor: colors.COLOR_GRAD2
+  container: {
+    backgroundColor: colors.COLOR_WHITE,
+    padding: 0,
+    marginBottom: 2,
+    borderBottomWidth: 5,
+    borderBottomColor: colors.COLOR_GRAD2,
 
-    },
-    creatorInfo: {
-        marginTop: 15,
-        marginBottom: 10,
-        marginLeft: 10,
-        marginRight: 15,
-    },
-    thePost: {
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 20,
-        marginRight: 20,
-    },
-    metaData: {
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 20,
-        marginRight: 20,
-    }
+  },
+  creatorInfo: {
+    marginTop: 15,
+    marginBottom: 10,
+    marginLeft: 10,
+    marginRight: 15,
+  },
+  thePost: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  metaData: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+  },
 
 });

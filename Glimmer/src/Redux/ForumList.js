@@ -1,25 +1,25 @@
-import {FORUMLIST_ADD_FORUM, FORUMLIST_REPLACE} from "../constants";
+import { FORUMLIST_ADD_FORUM, FORUMLIST_REPLACE } from '../constants';
 
-function ForumList(state = {forums:[]}, action) {
-    switch (action.type) {
-        case FORUMLIST_ADD_FORUM:
+function ForumList(state = { forums: [] }, action) {
+  switch (action.type) {
+    case FORUMLIST_ADD_FORUM:
 
-            return {
-                ...state,
-                forums: [...state.forums, action.forum]
-            }
+      return {
+        ...state,
+        forums: [...state.forums, action.forum],
+      };
 
-        case FORUMLIST_REPLACE:
+    case FORUMLIST_REPLACE:
 
-            return {
-                ...state,
-                forums: action.forums
-            }
+      return {
+        ...state,
+        forums: action.forums,
+      };
 
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
 
-export default ForumList
+export default ForumList;

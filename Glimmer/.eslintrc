@@ -40,7 +40,6 @@
     "fetch": false
   },
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
+    "airbnb"
   ]
 }

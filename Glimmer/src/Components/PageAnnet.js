@@ -2,49 +2,47 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React from "react";
-import {ScrollView, StyleSheet} from "react-native";
-import { List, ListItem } from 'react-native-elements'
+import React from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import { List, ListItem } from 'react-native-elements';
 
 export default class PageAnnet extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-    constructor(props) {
-        super(props);
-    }
+  loadKudos() {
+    this.props.navigator.push({
+      screen: 'glimmer.PageKudos',
+      title: 'Kudos',
+    });
+  }
 
-    loadKudos() {
-        this.props.navigator.push({
-            screen: 'glimmer.PageKudos',
-            title: 'Kudos',
-        });
-    }
+  loadSettings() {
+    this.props.navigator.push({
+      screen: 'glimmer.PageSettings',
+      title: 'Innstillinger',
+    });
+  }
 
-    loadSettings(){
-        this.props.navigator.push({
-            screen: 'glimmer.PageSettings',
-            title: 'Innstillinger',
-        });
-    }
+  componentDidMount() {
 
-    componentDidMount() {
+  }
 
-    }
-
-    render() {
-          return(
-          <List>
-          <ListItem
-                key='kudos'
-                title='Kudos'
-                onPress={()=>{this.loadKudos()}}
-            />
-            <ListItem
-                key='settings'
-                title='Innstillinger'
-                onPress={()=>{this.loadSettings()}}
-            />
-          </List>
-        );
-          
-    }
+  render() {
+    return (
+      <List>
+        <ListItem
+          key="kudos"
+          title="Kudos"
+          onPress={() => { this.loadKudos(); }}
+        />
+        <ListItem
+          key="settings"
+          title="Innstillinger"
+          onPress={() => { this.loadSettings(); }}
+        />
+      </List>
+    );
+  }
 }

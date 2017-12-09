@@ -1,55 +1,45 @@
-import {Platform} from "react-native";
+import { Platform } from 'react-native';
 
 export default class Helpers {
-
-
-
-    arrayUnique(array) {
-        var a = array.concat();
-        for (var i = 0; i < a.length; ++i) {
-            for (var j = i + 1; j < a.length; ++j) {
-                if (a[i] === a[j])
-                    a.splice(j--, 1);
-            }
-        }
-
-        return a;
+  arrayUnique(array) {
+    const a = array.concat();
+    for (let i = 0; i < a.length; ++i) {
+      for (let j = i + 1; j < a.length; ++j) {
+        if (a[i] === a[j]) { a.splice(j--, 1); }
+      }
     }
 
-    getCalendarTime(time) {
+    return a;
+  }
 
-        let m = new moment(time);
+  getCalendarTime(time) {
+    const m = new moment(time);
 
-        if (new moment().diff(m, "hours") < 7) {
-            return m.fromNow();
-        }
-        else {
-            return m.calendar();
-        }
-
+    if (new moment().diff(m, 'hours') < 7) {
+      return m.fromNow();
     }
 
-    log() {
+    return m.calendar();
+  }
 
-    }
+  log() {
 
-    getPersonById(id) {
-        var tmp = global.store.getState().Krets;
-        return tmp.filter((item) => id == item.person.id)
-    }
+  }
 
-    getPlatformDependentVars() {
+  getPersonById(id) {
+    const tmp = global.store.getState().Krets;
+    return tmp.filter(item => id == item.person.id);
+  }
 
-        let platform = Platform.OS;
+  getPlatformDependentVars() {
+    const platform = Platform.OS;
 
-        var out = {};
+    const out = {};
 
-        out.platform = platform;
+    out.platform = platform;
 
-        out.keyboardAvoidingOffset = (platform === "ios") ? 64 : -150;
+    out.keyboardAvoidingOffset = (platform === 'ios') ? 64 : -150;
 
-        return out;
-
-    }
-
+    return out;
+  }
 }

@@ -1,97 +1,91 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {TouchableOpacity, View} from "react-native";
-//import {Badge} from "react-native-elements";
-import GiKudos from "./GiKudos";
-import VisKudos from "./VisKudos";
-import * as colors from "../../Styles/colorConstants";
-import Badge from "./Badge";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TouchableOpacity, View } from 'react-native';
+// import {Badge} from "react-native-elements";
+import GiKudos from './GiKudos';
+import VisKudos from './VisKudos';
+import * as colors from '../../Styles/colorConstants';
+import Badge from './Badge';
 
 export default class KudosAndCommentsAndStuff extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-    constructor(props) {
-        super(props);
+  // Switch kudos section based on who created the post
+  getKudosSection() {
+    if (this.props.byMe) {
+      let kudos = [];
+
+      if (typeof this.props.post.kudos.from !== 'undefined') {
+        kudos = this.props.post.kudos.from;
+      }
+
+      return (<VisKudos kudos={kudos} />);
     }
 
-    //Switch kudos section based on who created the post
-    getKudosSection() {
-        if (this.props.byMe) {
-            var kudos = [];
+    let given = false;
+    if (typeof (this.props.post.kudos.given) !== 'undefined' && this.props.post.kudos.given) {
+      given = true;
+    }
+    return (<GiKudos id={this.props.post.id} type="post" given={given} />);
+  }
 
-            if (typeof this.props.post.kudos.from !== "undefined") {
-                kudos = this.props.post.kudos.from;
-            }
+  getCommentThing() {
+    // If disabled, hide. Cause that's what you do.
+    if (!this.props.showCommentBadge) return false;
 
-            return (<VisKudos kudos={kudos}/>)
+    let comColor = colors.COLOR_ORANGE;
 
-        }
-        else {
-            var given = false;
-            if (typeof(this.props.post.kudos.given) !== "undefined" && this.props.post.kudos.given) {
-                given = true;
-            }
-            return (<GiKudos id={this.props.post.id} type="post" given={given}/>)
-        }
+    if (this.props.post.comment_count === 0) {
+      comColor = colors.COLOR_LIGHTGREY;
     }
 
-    getCommentThing() {
-        //If disabled, hide. Cause that's what you do.
-        if (!this.props.showCommentBadge) return false;
+    let comText = 'kommentar';
 
-        var comColor = colors.COLOR_ORANGE;
+    if (this.props.post.comment_count !== 1) {
+      comText = 'kommentarer';
+    }
 
-        if(this.props.post.comment_count === 0)
-        {
-            comColor = colors.COLOR_LIGHTGREY;
-        }
-
-        var comText = "kommentar";
-
-        if (this.props.post.comment_count !== 1) {
-            comText = "kommentarer";
-        }
-
-        return (
-            <TouchableOpacity
-                onPress={() => this.props.navigator.push({
+    return (
+      <TouchableOpacity
+        onPress={() => this.props.navigator.push({
                     screen: 'glimmer.PageThread',
                     title: this.props.post.title,
-                    passProps: {post: this.props.post}
+                    passProps: { post: this.props.post },
                 })}
-            >
-                <Badge
-                    text={this.props.post.comment_count + " " + comText}
-                    color={comColor}
-                    textColor={colors.COLOR_WHITE}
-                />
-            </TouchableOpacity>
-        )
+      >
+        <Badge
+          text={`${this.props.post.comment_count} ${comText}`}
+          color={comColor}
+          textColor={colors.COLOR_WHITE}
+        />
+      </TouchableOpacity>
+    );
+  }
 
-    }
+  render() {
+    return (
 
-    render() {
+      <View style={{ flexDirection: 'row' }}>
 
-        return (
+        {this.getKudosSection()}
 
-            <View style={{flexDirection: "row"}}>
+        {this.getCommentThing()}
 
-                {this.getKudosSection()}
-
-                {this.getCommentThing()}
-
-            </View>
-        )
-    }
+      </View>
+    );
+  }
 }
 
 KudosAndCommentsAndStuff.defaultProps = {
-    byMe: false,
-}
+  byMe: false,
+};
 
 
 KudosAndCommentsAndStuff.propTypes = {
-    post: PropTypes.object.isRequired,
-    showCommentBadge: PropTypes.bool,
-    byMe: PropTypes.bool,
-    navigator: PropTypes.object.isRequired
-}
+  post: PropTypes.object.isRequired,
+  showCommentBadge: PropTypes.bool,
+  byMe: PropTypes.bool,
+  navigator: PropTypes.object.isRequired,
+};

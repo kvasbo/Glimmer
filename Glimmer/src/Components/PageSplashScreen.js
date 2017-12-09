@@ -2,37 +2,33 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React from "react";
-import {StyleSheet, View} from "react-native";
-import * as colors from "../Styles/colorConstants";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import * as colors from '../Styles/colorConstants';
 
 export default class PageSplashScreen extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-    constructor(props) {
-        super(props);
-    }
+  componentDidMount() {
 
-    componentDidMount() {
+  }
 
-    }
-
-    render() {
-
-        return (
-            <View style={pageStyles.container}>
-
-            </View>
-        );
-    }
+  render() {
+    return (
+      <View style={pageStyles.container} />
+    );
+  }
 }
 
 const pageStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.COLOR_LIGHT,
-        paddingLeft: 0,
-        paddingTop: 0,
-        paddingBottom: 0,
-        paddingRight: 0,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: colors.COLOR_LIGHT,
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingRight: 0,
+  },
 });
