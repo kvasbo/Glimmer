@@ -9,6 +9,7 @@ import MessageUpdater from './MessageUpdater';
 import ImageGetter from './ImageGetter';
 import ForumGetter from './ForumGetter';
 import Kudos from './Kudos';
+import Gjemsel from './Gjemsel';
 
 export default class Workers {
   constructor() {
@@ -20,6 +21,7 @@ export default class Workers {
     this.imageGetter = new ImageGetter();
     this.forumGetter = new ForumGetter();
     this.kudos = new Kudos();
+    this.gjemsel = new Gjemsel();
   }
 
   initData() {

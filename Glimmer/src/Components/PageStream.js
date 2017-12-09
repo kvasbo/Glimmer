@@ -15,13 +15,19 @@ class PageStream extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = { loading: false, refreshing: false, hide_nsfw: false };
+      this.state = { loading: false, refreshing: false, hide_nsfw: false, skammekrok: [] };
       this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
       this._onRefresh = this._onRefresh.bind(this);
     }
 
     componentWillMount() {
       this.getNsfw();
+      this.updateSkammekrok();
+    }
+
+    updateSkammekrok = () => {
+      const skammekrok = global.arbeidsMaur.gjemsel.getKrok();
+      this.setState({ skammekrok });
     }
 
     readSetting = async (key) => {
@@ -29,7 +35,6 @@ class PageStream extends React.Component {
       if (value !== null) {
         return value;
       }
-      this.writeSetting(key, '0');
       return false;
     }
 
@@ -97,6 +102,12 @@ class PageStream extends React.Component {
           return true;
         });
       }
+
+      // Skammekrok
+      out = out.filter((p) => {
+        if (this.state.skammekrok.indexOf(p.creator_id) !== -1) return false;
+        return true;
+      });
 
       out.sort((x, y) => (new Date(y.created_at) - new Date(x.created_at)));
 

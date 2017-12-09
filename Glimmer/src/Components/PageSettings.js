@@ -35,6 +35,13 @@ export default class PageAnnet extends React.Component {
       else this.setState({ nsfw: true });
     }
 
+    loadGjemsel() {
+      this.props.navigator.push({
+        screen: 'glimmer.PageGjemsel',
+        title: 'Skammekroken',
+      });
+    }
+
     toggleNsfw = async () => {
       if (this.state.nsfw === true) {
         this.setState({ nsfw: false });
@@ -59,6 +66,11 @@ export default class PageAnnet extends React.Component {
               switchOnValueChange={this.toggleNsfw}
               hasSwitch
               title="Skjul NSFW"
+            />
+            <SettingsList.Item
+              hasNavArrow
+              onPress={() => this.loadGjemsel()}
+              title="Skammekroken"
             />
             <SettingsList.Item
               hasNavArrow={false}

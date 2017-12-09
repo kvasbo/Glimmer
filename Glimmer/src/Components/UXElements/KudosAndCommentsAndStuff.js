@@ -4,6 +4,7 @@ import { TouchableOpacity, View } from 'react-native';
 // import {Badge} from "react-native-elements";
 import GiKudos from './GiKudos';
 import VisKudos from './VisKudos';
+import PostMoreStuffButton from './PostMoreStuffButton';
 import * as colors from '../../Styles/colorConstants';
 import Badge from './Badge';
 
@@ -64,15 +65,19 @@ export default class KudosAndCommentsAndStuff extends React.Component {
     );
   }
 
+  getMoreStuff() {
+    return (
+      <View style={{ marginRight: 10, marginLeft: 10 }}><PostMoreStuffButton itemId={this.props.post.id} itemType="post" itemAuthorId={this.props.post.creator_id} /></View>
+    )
+  }
+
   render() {
     return (
 
-      <View style={{ flexDirection: 'row' }}>
-
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginLeft: 0, marginRight: 0 }}>
         {this.getKudosSection()}
-
         {this.getCommentThing()}
-
+        {this.getMoreStuff()}
       </View>
     );
   }

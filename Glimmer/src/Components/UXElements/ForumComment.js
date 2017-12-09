@@ -5,7 +5,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import ForumTextTextile from './ForumTextTextile.js';
+import ForumTextTextile from './ForumTextTextile';
+import PostMoreStuffButton from './PostMoreStuffButton';
 import GiKudos from './GiKudos';
 import VisKudos from './VisKudos';
 import CommentMetadata from './CommentMetadata';
@@ -67,7 +68,12 @@ export default class ForumComment extends React.Component {
         );
       }
 
-      // console.log("geteditSection", diff)
+    }
+
+    getMoreStuff() {
+      return (
+        <View style={{ marginRight: 10, marginLeft: 10 }}><PostMoreStuffButton itemId={this.props.data.id} itemType="comment" itemAuthorId={this.props.data.creator_id} /></View>
+      );
     }
 
     render() {
@@ -92,6 +98,8 @@ flexDirection: 'row', margin: 10, marginTop: 5, padding: 0,
           >
             {this.getKudosSection()}
             {this.getEditSection()}
+            {this.getMoreStuff()}
+            
           </View>
         </View>
       );

@@ -88,7 +88,7 @@ export default class ForumTextTextile extends React.Component {
       }
     }
 
-    console.log('outArray', outArray, 'merged array', mergedArray);
+    //console.log('outArray', outArray, 'merged array', mergedArray);
 
     return mergedArray;
   }

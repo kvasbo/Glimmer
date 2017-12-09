@@ -15,6 +15,7 @@ import PageForumCommentEdit from './Components/PageForumCommentEdit';
 import PageKudos from './Components/PageKudos';
 import PageAnnet from './Components/PageAnnet';
 import PageSettings from './Components/PageSettings';
+import PageGjemsel from './Components/PageGjemsel';
 
 
 import PageLogin from './Components/PageLogin';
@@ -42,6 +43,7 @@ export function registerScreens(store, Provider) {
       Navigation.registerComponent('glimmer.PageForumCommentEdit', () => PageForumCommentEdit, store, Provider);
       Navigation.registerComponent('glimmer.PageAnnet', () => PageAnnet, store, Provider);
       Navigation.registerComponent('glimmer.PageSettings', () => PageSettings, store, Provider);
+      Navigation.registerComponent('glimmer.PageGjemsel', () => PageGjemsel, store, Provider);
 
       // Helper pages
       Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
