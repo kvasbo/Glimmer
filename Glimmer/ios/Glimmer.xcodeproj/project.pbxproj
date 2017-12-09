@@ -1720,6 +1720,25 @@
 				INFOPLIST_FILE = Glimmer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/BoringSSL\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GTMSessionFetcher\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GoogleToolboxForMac\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Protobuf\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/RNFirebase\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/React\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/gRPC\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/gRPC-Core\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/gRPC-ProtoRPC\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/gRPC-RxLibrary\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/leveldb-library\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/nanopb\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/react-native-image-picker\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/react-native-safari-view\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/yoga\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/iGTMSessionFetcher\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1756,6 +1775,25 @@
 				INFOPLIST_FILE = Glimmer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/BoringSSL\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GTMSessionFetcher\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GoogleToolboxForMac\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Protobuf\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/RNFirebase\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/React\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/gRPC\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/gRPC-Core\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/gRPC-ProtoRPC\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/gRPC-RxLibrary\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/leveldb-library\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/nanopb\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/react-native-image-picker\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/react-native-safari-view\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/yoga\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/iGTMSessionFetcher\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",

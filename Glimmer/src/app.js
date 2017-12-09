@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import { Alert, AppState, AsyncStorage } from 'react-native';
 import { registerScreens } from './screens';
@@ -82,7 +82,7 @@ global.store = store;
 global.rootNavigation = Navigation;
 
 // Reload stuff on wake.
-const _handleAppStateChange = (nextAppState) => {
+const handleAppStateChange = (nextAppState) => {
   if (nextAppState === 'active') {
     console.log('App has come to the foreground!');
     arbeidsMaur.refreshForumData();
@@ -93,7 +93,6 @@ class Glimmer extends React.Component {
   constructor(props) {
     super(props);
     this.init();
-    this.store = global.store;
   }
 
     // To keep track of changes in state, should be done with react
@@ -101,10 +100,11 @@ class Glimmer extends React.Component {
 
     attachStoreListener() {
       // Listen to state changes. This really needs to change at some later point.
-      store.subscribe(() => {
+      global.store.subscribe(() => {
         // Login state has changed, switch context (and start app, if first time)
-        if (store.getState().AppStatus.loggedIn !== this.loggedIn) {
-          this.loggedIn = store.getState().AppStatus.loggedIn;
+        const loggedInNew = global.store.getState().AppStatus.loggedIn;
+        if (loggedInNew !== this.loggedIn) {
+          this.loggedIn = loggedInNew;
           this.startAppBasedOnLoginStatus();
         }
       });
@@ -112,32 +112,28 @@ class Glimmer extends React.Component {
 
     init() {
       // function to attach listener to app state change
-      AppState.addEventListener('change', _handleAppStateChange);
-
+      AppState.addEventListener('change', handleAppStateChange);
       this.attachStoreListener();
-
       registerScreens(store, Provider);
-
-      this.startAppBasedOnLoginStatus();
-
       firebaseApp.auth().signInAnonymously();
 
       // This function will set the loggedin state to true or false in the store, which in term will trigger the store subscription.
       // Then the app starts. I know.
       auth.checkAuth().then(() => {
-        // Logged in, app will start
+        this.startAppBasedOnLoginStatus();
       }).catch((err) => {
         // Not logged in
       });
     }
 
     startAppBasedOnLoginStatus() {
+      console.log('starting app based on status', this.loggedIn);
       if (this.loggedIn === true) {
         global.arbeidsMaur.initData();
         // global.arbeidsMaur.forumListUpdater.reloadForums(true);
 
         iconsLoaded.then(() => {
-          this.startMainApp();
+          setTimeout(() => { this.startMainApp(); }, 500);
         });
       } else if (this.loggedIn === false) {
         this.startLoginApp();
@@ -152,7 +148,7 @@ class Glimmer extends React.Component {
           screen: 'glimmer.PageSplashScreen', // unique ID registered with Navigation.registerScreen
           navigatorStyle: { navBarHidden: true },
         },
-        animationType: 'none', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
+        animationType: 'fade', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
       });
     }
 
@@ -164,7 +160,7 @@ class Glimmer extends React.Component {
           navigatorStyle: { navBarHidden: true },
         },
         passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
-        animationType: 'none', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
+        animationType: 'slide-down', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
 
       });
     }
@@ -225,12 +221,6 @@ class Glimmer extends React.Component {
 
       });
     }
-}
-
-function mapStateToProps(state) {
-  return {
-    appState: state.AppState,
-  };
 }
 
 export default Glimmer;
