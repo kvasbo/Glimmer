@@ -5,7 +5,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {FlatList, StyleSheet} from "react-native";
+import {FlatList, StyleSheet, AsyncStorage} from "react-native";
 import LoadingScreen from "./UXElements/LoadingScreen";
 import StreamForumPost from "./UXElements/StreamForumPost";
 import * as colors from "../Styles/colorConstants";
@@ -17,10 +17,29 @@ class PageStream extends React.Component {
     constructor(props) {
 
         super(props);
-        this.state = {loading: false, refreshing: false};
+        this.state = {loading: false, refreshing: false, hide_nsfw: false };
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this._onRefresh = this._onRefresh.bind(this);
 
+    }
+
+    componentWillMount() {
+        this.getNsfw();
+    }
+
+    readSetting = async (key) => {
+        const value = await AsyncStorage.getItem(`settings_${key}`);
+        if (value !== null) {
+            return value;
+        } else {
+            this.writeSetting(key, '0');
+            return false;
+        }
+    }
+
+    getNsfw = async () => {
+        const nsfw = await this.readSetting('hide_nsfw');
+        if (nsfw === "1") this.setState({ hide_nsfw: true })
     }
 
     onNavigatorEvent(event) {
@@ -78,6 +97,13 @@ class PageStream extends React.Component {
 
     getData() {
         let out = Object.values(this.props.posts);
+
+        if(this.state.hide_nsfw) {
+            out = out.filter((p) => {
+                if(p.title.toLowerCase().indexOf('vagina') !== -1 || p.title.toLowerCase().indexOf('nsfw') !== -1) return false;
+                return true;
+            })
+        }
 
         out.sort((x, y) => {
             return (new Date(y.created_at) - new Date(x.created_at));

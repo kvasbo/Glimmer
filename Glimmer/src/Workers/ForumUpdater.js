@@ -6,9 +6,11 @@ import {
     addStreamPostBatch,
     addUnreadPostBatch
 } from "../Redux/actions";
+
 const ForumPost = require("../DataClasses/post").default;
 const ForumEvent = require("../DataClasses/event").default;
 const ForumPostComment = require("../DataClasses/postComment").default;
+
 
 export default class ForumUpdater {
 

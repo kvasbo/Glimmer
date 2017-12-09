@@ -34,7 +34,7 @@ export default class PageAnnet extends React.Component {
     getNsfw = async () => {
         const nsfw = await this.readSetting('hide_nsfw');
         if (nsfw === "0") this.setState({ nsfw:false })
-        this.setState({ nsfw: true });
+        else this.setState({ nsfw: true });
     }
 
     toggleNsfw = async () => {

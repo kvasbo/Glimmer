@@ -1,8 +1,7 @@
 import React from "react";
 import {Provider} from "react-redux";
 import { composeWithDevTools } from 'remote-redux-devtools';
-import {Alert, AppState} from "react-native";
-import {AsyncStorage} from 'react-native';
+import {Alert, AppState, AsyncStorage} from "react-native";
 import {registerScreens} from "./screens";
 import {Navigation} from "react-native-navigation";
 import Workers from "./Workers/index.js";
@@ -103,16 +102,13 @@ class Glimmer extends React.Component {
 
         //Listen to state changes. This really needs to change at some later point.
         store.subscribe(() => {
-
                 //Login state has changed, switch context (and start app, if first time)
                 if (store.getState().AppStatus.loggedIn !== this.loggedIn) {
                     this.loggedIn = store.getState().AppStatus.loggedIn;
                     this.startAppBasedOnLoginStatus();
                 }
-
             }
         )
-
     }
 
     init() {
