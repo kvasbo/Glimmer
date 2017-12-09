@@ -17,6 +17,9 @@ import GlimmerAPI from "./api";
 import Helpers from "./helpers";
 import NavStyles from "./Styles/NavigatorStyles";
 import {iconsLoaded, iconsMap} from "./Components/UXElements/Icons";
+import SafariView from 'react-native-safari-view';
+
+console.log("SafariView", SafariView)
 
 global.moment = require('moment');
 moment.locale('nb')
@@ -52,6 +55,7 @@ global.auth = new GlimmerAuth();
 global.api = new GlimmerAPI();
 global.helpers = new Helpers();
 global.arbeidsMaur = new Workers();
+global.SafariView = SafariView;
 
 firebaseApp.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -137,6 +141,7 @@ class Glimmer extends React.Component {
         if (this.loggedIn === true) {
 
             global.arbeidsMaur.initData();
+            // global.arbeidsMaur.forumListUpdater.reloadForums(true);
 
             iconsLoaded.then(() => {
                 this.startMainApp();
@@ -210,12 +215,11 @@ class Glimmer extends React.Component {
                     icon: iconsMap['ios-chatbubbles'], //require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
                     title: 'Samtaler',
                     navigatorStyle: NavStyles.default,
-                },
-                {
-                    label: 'Kudos',
-                    screen: 'glimmer.PageKudos',
-                    icon: iconsMap['ios-ribbon'], //require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                    title: 'Kudos',
+                }, {
+                    label: 'Røkla',
+                    screen: 'glimmer.PageAnnet',
+                    icon: iconsMap['ios-settings'], //require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+                    title: 'Røkla',
                     navigatorStyle: NavStyles.default,
                 },
                 /*{

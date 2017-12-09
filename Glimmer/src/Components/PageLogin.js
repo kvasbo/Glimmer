@@ -4,13 +4,14 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {Button, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Button, ScrollView, StyleSheet, Text, View, Modal, Switch} from "react-native";
 import * as colors from "../Styles/colorConstants";
 
 export default class PageLogin extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = { eulaAccepted: false, eulaVisible: false }
         console.log("Pagelogin loading");
     }
 
@@ -30,46 +31,53 @@ export default class PageLogin extends React.Component {
         });
     }
 
+    checkStateLoop() {
+
+    }
+
+    getEula() {
+        return (
+            <View style={[pageStyles.container, { margin: 20, alignItems: 'flex-start' }]}>
+                <Text style={pageStyles.header}>Sluttbrukeravtale for Glimmer</Text>
+                <Text style={pageStyles.mainText}>Ved å benytte denne appen godtar du at du må følge Underskogs medlemsavtale til punkt og prikke, inkludert reglene om hva som er tillatt å poste.</Text>
+                <Text style={pageStyles.mainText}>Vi som lager appen har ikke noe ansvar for hva du måtte finne på av tøys, og står ikke ansvarlig for eventuelle feil som måtte oppstå.</Text>
+                <Text style={pageStyles.mainText}>Vi lagrer ingen form for data om deg i våre systemer, og om vi en gang ved uhell skulle gjøre det vil vi slette dem så fort som mulig</Text>
+                <View style={{height: 20}} />
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Switch value={this.state.eulaAccepted} onValueChange={()=>{this.setState({ eulaAccepted: !this.state.eulaAccepted })}} />
+                <Text style={{marginLeft: 20}} >Jeg godtar sluttbrukeravtalen</Text>
+                </View>
+                <View style={{height: 20}} />
+                <Button title="Lukk" onPress={() => {this.setState({ eulaVisible: false })}} />
+            </View>
+        )
+    }
+
     render() {
 
         return (
 
             <View style={pageStyles.container}>
-
+                <View style={{height: 500, width: 320}}>
                 <ScrollView style={{margin: 0, flex: 1, alignContent: "center",}}>
-
-
                     <View style={pageStyles.paragraph}>
                         <Text style={pageStyles.header}>Velkommen til Glimmer</Text>
                     </View>
-
                     <View style={pageStyles.paragraph}>
-                        <Button title="Gi tilgang" onPress={() => this.doTheLoginThing()}/>
-                    </View>
-
-                    <View style={pageStyles.paragraph}>
-
                         <Text style={pageStyles.mainText}>For å bruke denne appen må du gi den tilgang til din
                             Underskogkonto.</Text>
-
-                        <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen over og gi tillatelse når
+                        <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen og gi tillatelse når
                             Underskog åpner seg i din nettleser.</Text>
-
-                        <View style={{height: 40}}/>
-
-                        <Text style={pageStyles.smallText}>Dette er ikke farlig - vi stjeler ikke data og benytter ingen
-                            tredjepartstjenester til å lagre personlige data. Faktisk forlater ingen personlige data
-                            noensinne telefonen din.</Text>
-
-                        <Text style={pageStyles.smallText}>Innlogginga skjer ved hjelp av noe som heter Oauth som gjør
-                            at
-                            appen aldri får vite passordet ditt. Du kan når som helst inndra tilgangen på
-                            Underskog.no</Text>
-
+                        <Text style={pageStyles.mainText}>Før du gjør dette må du også lese og godta sluttbrukeravtalen, som du kan se ved å trykke på knappen under.</Text>
+                        <View style={{height: 20}} />
+                        <Button title="Vis sluttbrukeravtale" onPress={() => this.setState({ eulaVisible: true })}/>
+                        <Button title="Logg inn på Underskog" disabled={!this.state.eulaAccepted} onPress={() => this.doTheLoginThing()}/>
                     </View>
-
-
                 </ScrollView>
+                </View>
+                <Modal visible={this.state.eulaVisible}>
+                    {this.getEula()}
+                </Modal>
             </View>
         );
     }
@@ -82,7 +90,7 @@ PageLogin.propTypes = {
 const pageStyles = StyleSheet.create({
 
     container: {
-        backgroundColor: colors.COLOR_LIGHT,
+        backgroundColor: colors.WHITE,
         flex: 1,
         margin: 0,
         alignItems: "center",
@@ -105,14 +113,14 @@ const pageStyles = StyleSheet.create({
     header: {
         textAlign: "center",
         fontSize: 26,
-        color: colors.COLOR_DARKGREY,
+        color: colors.COLOR_BLACK,
         marginTop: 30,
         marginBottom: 7,
         fontWeight: "300"
     },
 
     mainText: {
-        color: colors.COLOR_DARKGREY,
+        color: colors.COLOR_BLACK,
         textAlign: "left",
         marginTop: 7,
         marginBottom: 7,
@@ -120,7 +128,7 @@ const pageStyles = StyleSheet.create({
 
     smallText: {
         textAlign: "left",
-        fontSize: 12, color: colors.COLOR_DARKGREY,
+        fontSize: 12, color: colors.COLOR_BLACK,
         marginTop: 7,
         marginBottom: 7,
     }

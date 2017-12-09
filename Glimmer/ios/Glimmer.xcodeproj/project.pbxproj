@@ -5,6 +5,7 @@
 	};
 	objectVersion = 48;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -55,9 +56,9 @@
 		ADC28FBE1F0BA582005CD37E /* stol.png in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBD1F0BA582005CD37E /* stol.png */; };
 		ADFD57B11F348CF600F497AF /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD61A56A1F348B08006963C0 /* libRCTCameraRoll.a */; };
 		BC3777E7D2AB4E9384289430 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25AED8EBEA97437FA7C5F443 /* MaterialCommunityIcons.ttf */; };
+		BD6F32D92F474FB39B14E111 /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 940A2A8D5B694DFB9BFEC76E /* libReactNativeExceptionHandler.a */; };
 		E17D73F2E10A750449EB2143 /* libPods-Glimmer-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 018CD41F5F34A87F85D99E0C /* libPods-Glimmer-tvOSTests.a */; };
 		FFDF7BB6978F4DFFB4536FB0 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D30772D1B1094A3CABAC8DCF /* Zocial.ttf */; };
-		BD6F32D92F474FB39B14E111 /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 940A2A8D5B694DFB9BFEC76E /* libReactNativeExceptionHandler.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -341,6 +342,13 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		ADE80D391FDB2E170098EA1A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92676A91D9A142318DEF3645 /* ReactNativeExceptionHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = ReactNativeExceptionHandler;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -391,7 +399,9 @@
 		858E1F5BC0464323919BAA63 /* libRNKeychain.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNKeychain.a; sourceTree = "<group>"; };
 		88C82DC48E6F4952B9368E1A /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		8FD51A3F74481C493C5D6CD7 /* libPods-Glimmer-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Glimmer-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		92676A91D9A142318DEF3645 /* ReactNativeExceptionHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeExceptionHandler.xcodeproj; path = "../node_modules/react-native-exception-handler/ios/ReactNativeExceptionHandler.xcodeproj"; sourceTree = "<group>"; };
 		93FE6D7AF9794776C92F4814 /* Pods-Glimmer-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Glimmer-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Glimmer-tvOSTests/Pods-Glimmer-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		940A2A8D5B694DFB9BFEC76E /* libReactNativeExceptionHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeExceptionHandler.a; sourceTree = "<group>"; };
 		958328A2B0CA4F00BC4BB360 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		9CEB3A8337EA6E6E3DA6CF7B /* Pods-GlimmerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlimmerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlimmerTests/Pods-GlimmerTests.release.xcconfig"; sourceTree = "<group>"; };
 		9E20DCD087A94743BACE2CEA /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -411,8 +421,6 @@
 		DB6D5277DA5542A8B1101D74 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		F23CB97A625348AF955E3078 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		FFE1E5A2E91109F3949BDB9F /* Pods-GlimmerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlimmerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GlimmerTests/Pods-GlimmerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		92676A91D9A142318DEF3645 /* ReactNativeExceptionHandler.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeExceptionHandler.xcodeproj"; path = "../node_modules/react-native-exception-handler/ios/ReactNativeExceptionHandler.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		940A2A8D5B694DFB9BFEC76E /* libReactNativeExceptionHandler.a */ = {isa = PBXFileReference; name = "libReactNativeExceptionHandler.a"; path = "libReactNativeExceptionHandler.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -756,8 +764,17 @@
 				77229A6FB3E74DFD9712AF6B /* libRNVectorIcons.a */,
 				858E1F5BC0464323919BAA63 /* libRNKeychain.a */,
 				F23CB97A625348AF955E3078 /* libRNFirebase.a */,
+				940A2A8D5B694DFB9BFEC76E /* libReactNativeExceptionHandler.a */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		ADE80D361FDB2E170098EA1A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ADE80D3A1FDB2E170098EA1A /* libReactNativeExceptionHandler.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		EFBC7D0FFE92A44DED2D8667 /* Pods */ = {
@@ -960,6 +977,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = ADE80D361FDB2E170098EA1A /* Products */;
+					ProjectRef = 92676A91D9A142318DEF3645 /* ReactNativeExceptionHandler.xcodeproj */;
 				},
 				{
 					ProductGroup = AD134F701EF9040B00ED5A39 /* Products */;
@@ -1255,6 +1276,13 @@
 			remoteRef = ADC791801FB8662800CC3CAC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		ADE80D3A1FDB2E170098EA1A /* libReactNativeExceptionHandler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeExceptionHandler.a;
+			remoteRef = ADE80D391FDB2E170098EA1A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1418,7 +1446,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Glimmer/Pods-Glimmer-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/gRPC/gRPCCertificates.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/gRPC/gRPCCertificates.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -1469,7 +1497,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Glimmer-tvOS/Pods-Glimmer-tvOS-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/gRPC/gRPCCertificates.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/gRPC/gRPCCertificates.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (

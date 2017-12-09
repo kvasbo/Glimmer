@@ -6,6 +6,7 @@ import {Linking} from "react-native";
 import * as Keychain from "react-native-keychain";
 import {setLoginStatus, setActiveUserId, setToken} from "./Redux/actions";
 
+
 const shittyQs = require("shitty-qs");
 
 const config = require("../config.js");
@@ -46,6 +47,11 @@ export default class glimmerAuth {
             })
 
         })
+    }
+
+    logOut = async () => {
+        await Keychain.resetInternetCredentials(server);
+        store.dispatch(setLoginStatus(false));
     }
 
 
@@ -105,9 +111,9 @@ export default class glimmerAuth {
                 Linking.removeEventListener("url", handleUrl);
             }
 
+            global.SafariView.show({ url: oauthUrl });
 
-
-            Linking.openURL(oauthUrl);
+            //Linking.openURL(oauthUrl);
 
         });
 
