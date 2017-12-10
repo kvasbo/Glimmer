@@ -219,9 +219,15 @@ class PageThread extends React.Component {
         return (<View style={{ paddingTop: 50, justifyContent: 'center', alignItems: 'center' }}><LoadingScreen text={loadText} /></View>);
       }
 
-      const tmpPosts = this.state.comments;
+      let tmpPosts = this.state.comments;
 
       tmpPosts.sort((x, y) => (new Date(x.created_at) - new Date(y.created_at)));
+
+      // Skammekrok
+      tmpPosts = tmpPosts.filter((c) => {
+        if (this.state.skammekrok.indexOf(c.creator_id) !== -1) return false;
+        return true;
+      });
 
       let out = [];
       for (let i = 0; i < tmpPosts.length; i++) {
@@ -235,8 +241,6 @@ class PageThread extends React.Component {
           data={tmpPosts[i]}
         />);
       }
-
-      //out = out.filter()
 
       return out;
     }
