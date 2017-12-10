@@ -22,7 +22,7 @@ export default class PostMoreStuffButton extends React.Component {
   reportItem() {
     AlertIOS.prompt(
       'Rapportér innlegg',
-      'Dersom du ønsker det kan du skrive en begrunnelse her.',
+      'Dersom du ønsker det kan du skrive en begrunnelse her. OBS: Rapporter sendt herfra går foreløpig til @kvasbo, ikke til gartnerne.',
       [
         {
           text: 'Avbryt',
@@ -31,7 +31,11 @@ export default class PostMoreStuffButton extends React.Component {
         },
         {
           text: 'Rapportér',
-          onPress: password => console.log('OK Pressed, password: ' + password),
+          onPress: (rapport) => {
+            const message = `Rapport fra Glimmer.\r\nType: ${this.props.itemType}\r\nId: ${this.props.itemId}\r\nMelding: ${rapport}`;
+            global.arbeidsMaur.messageUpdater.sendMessageToUser(6619, message);
+            this.setState({ visible: false });
+          },
         },
       ],
     );
@@ -49,7 +53,10 @@ export default class PostMoreStuffButton extends React.Component {
         },
         {
           text: 'Skammekrok',
-          onPress: () => global.arbeidsMaur.gjemsel.addToKrok(this.props.itemAuthorId),
+          onPress: () => {
+            global.arbeidsMaur.gjemsel.addToKrok(this.props.itemAuthorId);
+            this.setState({ visible: false });
+          },
         },
       ],
     );
