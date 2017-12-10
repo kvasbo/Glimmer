@@ -24,6 +24,8 @@ global.moment = require('moment');
 
 moment.locale('nb');
 
+console.disableYellowBox = true;
+
 const config = require('../config.js');
 
 global.config = config;
@@ -171,15 +173,21 @@ class Glimmer extends React.Component {
         animationType: 'none', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
         passProps: { store: global.store }, // Pass the redux store.
         tabs: [{
+          label: 'Aktivitet',
+          screen: 'glimmer.PageFirst', // this is a registered name for a screen
+          icon: iconsMap['ios-list'], // icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+          title: 'Aktivitet',
+          navigatorStyle: NavStyles.default,
+        }, {
           label: 'Mine tråder',
           screen: 'glimmer.PageFavorites', // this is a registered name for a screen
           icon: iconsMap['ios-star'], // icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
           title: 'Mine tråder',
           navigatorStyle: NavStyles.default,
         }, {
-          label: 'Forsiden',
+          label: 'Strøm',
           screen: 'glimmer.PageStream',
-          icon: iconsMap['ios-paper'], // selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+          icon: iconsMap['ios-home'], // selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
           title: 'Forsiden',
           navigatorStyle: NavStyles.default,
         }, /* {
@@ -199,7 +207,7 @@ class Glimmer extends React.Component {
         }, {
           label: 'Røkla',
           screen: 'glimmer.PageAnnet',
-          icon: iconsMap['ios-settings'], // require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+          icon: iconsMap['ios-more'], // require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
           title: 'Røkla',
           navigatorStyle: NavStyles.default,
         },
@@ -216,7 +224,7 @@ class Glimmer extends React.Component {
         ],
         tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
           tabBarSelectedButtonColor: '#3499DB',
-          initialTabIndex: 1,
+          initialTabIndex: 0,
         },
 
       });

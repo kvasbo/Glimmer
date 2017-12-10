@@ -42,16 +42,19 @@ export default class PageAnnet extends React.Component {
         <ListItem
           key="kudos"
           title="Kudos"
+          leftIcon={{ name: 'award', type: 'feather' }}
           onPress={() => { this.loadKudos(); }}
         />
         <ListItem
           key="settings"
           title="Innstillinger"
+          leftIcon={{ name: 'ios-settings', type: 'ionicon' }}
           onPress={() => { this.loadSettings(); }}
         />
         <ListItem
           key="about"
           title="Om Glimmer"
+          leftIcon={{ name: 'ios-information-circle', type: 'ionicon' }}
           onPress={() => { this.loadAbout(); }}
         />
       </List>

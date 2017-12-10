@@ -10,6 +10,7 @@ import ImageGetter from './ImageGetter';
 import ForumGetter from './ForumGetter';
 import Kudos from './Kudos';
 import Gjemsel from './Gjemsel';
+import Settings from './Settings';
 
 export default class Workers {
   constructor() {
@@ -22,6 +23,7 @@ export default class Workers {
     this.forumGetter = new ForumGetter();
     this.kudos = new Kudos();
     this.gjemsel = new Gjemsel();
+    this.settings = new Settings();
   }
 
   initData() {

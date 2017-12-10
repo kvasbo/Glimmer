@@ -3,34 +3,20 @@
 // and use everywhere
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // define your suffixes by yourself..
 // here we use active, big, small, very-big..
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
   'ios-star': [25, '#bbb'],
-  'ios-star--big': [50, '#bbb'],
-
   'ios-chatbubbles': [25, '#fff'],
-  'ios-chatbubbles--big': [50, '#fff'],
-  'ios-chatbubbles--very-big': [100, '#fff'],
-
   'ios-people': [30, '#bbb'],
-  'ios-people--active': [30, '#fff'],
-
   'ios-paper': [25, '#bbb'],
-  'ios-paper--active': [30, '#fff'],
-
   'ios-ribbon': [25, '#bbb'],
-  'ios-ribbon--active': [30, '#fff'],
-
   'ios-settings': [25, '#bbb'],
-  'ios-settings--active': [30, '#fff'],
-
-  // Use other Icon provider, see the logic at L39
-  // "facebook": [30, "#bbb", FontAwesome],
-  // "facebook--active": [30, "#fff", FontAwesome],
+  'ios-list': [25, '#bbb'],
+  'ios-home': [25, '#bbb'],
+  'ios-more': [25, '#bbb'],
 };
 
 const defaultIconProvider = Ionicons;
