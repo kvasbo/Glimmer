@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, LayoutAnimation } from 'react-native';
 import PropTypes from 'prop-types';
 import * as colors from '../../Styles/colorConstants';
 import Badge from './Badge';
@@ -38,6 +38,11 @@ export default class VisKudos extends React.Component {
     return out;
   }
 
+  showList() {
+    LayoutAnimation.spring();
+    this.setState({ showList: true });
+  }
+
   render() {
     if (this.state.showList === true) {
       return (
@@ -48,7 +53,7 @@ export default class VisKudos extends React.Component {
     }
 
     return (
-      <TouchableOpacity onLongPress={() => this.setState({ showList: true })}>
+      <TouchableOpacity onPress={() => this.showList()}>
         <View style={pageStyles.container}>
           <Badge
             text={`${this.getKudosCount()} kudos`}
@@ -68,7 +73,7 @@ VisKudos.propTypes = {
 
 const pageStyles = StyleSheet.create({
 
-  container: { flexDirection: 'row', flexWrap: 'wrap' },
+  container: { flexDirection: 'row', flexWrap: 'wrap', maxWidth: 250 },
 
   badgeStyle: { marginRight: 5, marginBottom: 5 },
 

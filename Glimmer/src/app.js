@@ -147,84 +147,65 @@ class Glimmer extends React.Component {
     showSplashScreen() {
       Navigation.startSingleScreenApp({
         screen: {
-          screen: 'glimmer.PageSplashScreen', // unique ID registered with Navigation.registerScreen
+          screen: 'glimmer.PageSplashScreen',
           navigatorStyle: { navBarHidden: true },
         },
-        animationType: 'fade', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
+        animationType: 'fade',
       });
     }
 
     startLoginApp() {
       Navigation.startSingleScreenApp({
         screen: {
-          screen: 'glimmer.PageLogin', // unique ID registered with Navigation.registerScreen
-          title: 'Velkommen til Glimmer', // title of the screen as appears in the nav bar (optional)
+          screen: 'glimmer.PageLogin',
+          title: 'Velkommen til Glimmer',
           navigatorStyle: { navBarHidden: true },
         },
-        passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
-        animationType: 'slide-down', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
+        passProps: {},
+        animationType: 'slide-down',
 
       });
     }
 
     startMainApp() {
-      // Start the actual app
       Navigation.startTabBasedApp({
-        animationType: 'none', // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
-        passProps: { store: global.store }, // Pass the redux store.
+        animationType: 'none',
+        passProps: { store: global.store },
         tabs: [{
           label: 'Aktivitet',
-          screen: 'glimmer.PageFirst', // this is a registered name for a screen
-          icon: iconsMap['ios-list'], // icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+          screen: 'glimmer.PageFirst',
+          icon: iconsMap['ios-list'],
           title: 'Aktivitet',
           navigatorStyle: NavStyles.default,
         }, {
           label: 'Mine tråder',
-          screen: 'glimmer.PageFavorites', // this is a registered name for a screen
-          icon: iconsMap['ios-star'], // icon: require('./icons/star.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+          screen: 'glimmer.PageFavorites',
+          icon: iconsMap['ios-star'],
           title: 'Mine tråder',
           navigatorStyle: NavStyles.default,
         }, {
-          label: 'Strøm',
+          label: 'Forsiden',
           screen: 'glimmer.PageStream',
-          icon: iconsMap['ios-home'], // selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+          icon: iconsMap['ios-home'],
           title: 'Forsiden',
           navigatorStyle: NavStyles.default,
-        }, /* {
-             label: 'Kalender',
-             screen: 'glimmer.PageCalendar',
-             icon: require('./icons/calendar.png'),
-             //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-             title: 'Kalender'
-             }
-             , */
-        {
+        }, {
           label: 'Samtaler',
           screen: 'glimmer.PageMessages',
-          icon: iconsMap['ios-chatbubbles'], // require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+          icon: iconsMap['ios-chatbubbles'],
           title: 'Samtaler',
           navigatorStyle: NavStyles.default,
         }, {
           label: 'Røkla',
           screen: 'glimmer.PageAnnet',
-          icon: iconsMap['ios-more'], // require('./icons/chat.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
+          icon: iconsMap['ios-more'],
           title: 'Røkla',
           navigatorStyle: NavStyles.default,
         },
-          /* {
-                 label: 'Mer',
-                 screen: 'glimmer.MenuLeft',
-                 icon: require('./icons/more.png'), //selectedIcon: require('./icons/ionicons/alert.png'), // iOS only
-                 title: 'Andre greier',
-                 iconInsets: { // add this to change icon position (optional, iOS only).
-                 right: 1, // optional, default is 0.
-                 left: -1
-                 },
-                 } */
         ],
-        tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
+        tabsStyle: { 
           tabBarSelectedButtonColor: '#3499DB',
-          initialTabIndex: 0,
+          initialTabIndex: 2,
         },
 
       });

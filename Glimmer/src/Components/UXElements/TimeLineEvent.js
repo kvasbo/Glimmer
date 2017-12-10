@@ -29,8 +29,7 @@ export default class TimeLineEvent extends React.Component {
     } else if (this.props.item.type === 'stream') {
       return this.props.item.item.title;
     } else if (this.props.item.type === 'message') {
-      console.log('item', this.props.item);
-      return "melding";
+      return this.props.item.item.user;
     }
   }
 

@@ -47,6 +47,7 @@ class PageStream extends React.Component {
       switch (event.id) {
         case 'willAppear':
           this._silentRefresh();
+          this.updateSkammekrok();
           break;
       }
 

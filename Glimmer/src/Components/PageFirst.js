@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import { CheckBox } from 'react-native-elements'
-import { StyleSheet, View } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { CheckBox, Icon } from 'react-native-elements';
+import { NativeModules, StyleSheet, View, LayoutAnimation } from 'react-native';
 import Timeline from 'react-native-timeline-listview';
 import TimeLineEvent from './UXElements/TimeLineEvent';
 import * as colors from '../Styles/colorConstants';
@@ -104,12 +103,16 @@ class PageFirst extends React.Component {
         passProps: { post: event.item },
       });
     } else if (event.type === 'message') {
-
+      this.props.navigator.push({
+        screen: 'glimmer.PageConversation',
+        title: `Samtale med ${event.item.user}`,
+        passProps: { user_id: event.item.user_id },
+      });
     }
-   
   }
 
   toggleKudos() {
+    LayoutAnimation.spring();
     const nySetting = !this.state.visKudos;
     this.setState({ visKudos: nySetting });
     global.arbeidsMaur.settings.setActivityKudos(nySetting);
@@ -125,7 +128,7 @@ class PageFirst extends React.Component {
         <Timeline
           style={pageStyles.container}
           data={this.getData()}
-          innerCircle={'icon'}
+          
           renderDetail={this.renderDetail}
           separator={false}
           lineColor={colors.COLOR_HIGHLIGHT}

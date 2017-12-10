@@ -25,6 +25,7 @@ class PageThread extends React.Component {
         loading: true,
         currentPage: 1,
         comments: [],
+        skammekrok: [],
       };
       this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
@@ -41,16 +42,23 @@ class PageThread extends React.Component {
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
+          
           break;
         case 'didAppear':
           this.loadCommentPage(1);
+          this.updateSkammekrok();
+          arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
           break;
         case 'willDisappear':
-          arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
           break;
         case 'didDisappear':
           break;
       }
+    }
+
+    updateSkammekrok = () => {
+      const skammekrok = global.arbeidsMaur.gjemsel.getKrok();
+      this.setState({ skammekrok });
     }
 
     componentWillMount() {
@@ -215,7 +223,7 @@ class PageThread extends React.Component {
 
       tmpPosts.sort((x, y) => (new Date(x.created_at) - new Date(y.created_at)));
 
-      const out = [];
+      let out = [];
       for (let i = 0; i < tmpPosts.length; i++) {
         let byStarter = false;
         if (tmpPosts[i].creator_id === this.props.post.creator_id) byStarter = true;
@@ -227,6 +235,8 @@ class PageThread extends React.Component {
           data={tmpPosts[i]}
         />);
       }
+
+      //out = out.filter()
 
       return out;
     }

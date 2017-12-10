@@ -111,7 +111,7 @@ class PageMessages extends React.Component {
 
     _getUnread() {
       for (key in this.props.conversations) {
-        console.log('convo', this.props.conversations[key]);
+        //console.log('convo', this.props.conversations[key]);
       }
     }
 
