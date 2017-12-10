@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { ScrollView, StyleSheet, AsyncStorage, View } from 'react-native';
-import SettingsList from 'react-native-settings-list';
+import { List, ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as colors from '../Styles/colorConstants';
 
@@ -60,45 +60,31 @@ export default class PageAnnet extends React.Component {
 
     render() {
       return (
+       
         <ScrollView style={pageStyles.container}>
-          <SettingsList
-            backgroundColor={colors.COLOR_WHITE}
-            borderColor={colors.COLOR_LIGHTGREY}
-            defaultItemSize={50}
-          >
-            <SettingsList.Item
-              hasNavArrow={false}
-              switchState={this.state.nsfw}
-              switchOnValueChange={this.toggleNsfw}
-              hasSwitch
-              title="Skjul NSFW"
-              icon={
-                <View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                  <Icon name="ios-nuclear" size={30} style={{ alignSelf: 'center', width: 30, height: 40, color: colors.COLOR_MIDGREY }} />
-                </View>
-              }
+          <List>
+            <ListItem
+              key="nsfw"
+              title="Skjul voksent innhold"
+              hideChevron
+              switchButton
+              switched={this.state.nsfw}
+              onSwitch={this.toggleNsfw}
+              // leftIcon={{ name: 'award', type: 'feather' }}
+              // onPress={() => { this.loadKudos(); }}
             />
-            <SettingsList.Item
-              hasNavArrow
-              onPress={() => this.loadGjemsel()}
+            <ListItem
+              key="skammekrok"
               title="Skammekroken"
-              icon={
-                <View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                  <Icon name="ios-outlet" size={30} style={{ alignSelf: 'center', width: 30, height: 40, color: colors.COLOR_MIDGREY }} />
-                </View>
-              }
+              onPress={() => { this.loadGjemsel(); }}
             />
-            <SettingsList.Item
-              hasNavArrow={false}
-              onPress={() => this.logOut()}
+            <ListItem
+              key="logout"
               title="Logg ut"
-              icon={
-                <View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                  <Icon name="ios-close-circle" size={30} style={{ alignSelf: 'center', width: 30, height: 40, color: colors.COLOR_MIDGREY }} />
-                </View>
-              }
+              hideChevron
+              onPress={() => { this.logOut(); }}
             />
-          </SettingsList>
+          </List>
         </ScrollView>
       );
     }

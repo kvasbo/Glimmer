@@ -1406,7 +1406,7 @@ create-error-class@^3.0.0:
   dependencies:
     capture-stack-trace "^1.0.0"
 
-create-react-class@^15.5.2, create-react-class@^15.6.2:
+create-react-class@^15.5.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.2.tgz#cf1ed15f12aad7f14ef5f2dfe05e6c42f91ef02a"
   dependencies:
@@ -4328,13 +4328,6 @@ react-native-reversed-flat-list@^1.0.2:
 react-native-safari-view@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-native-safari-view/-/react-native-safari-view-2.1.0.tgz#1e0cd12c62bce79bc1759c7e281646b08b61c959"
-
-react-native-settings-list@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-settings-list/-/react-native-settings-list-1.8.0.tgz#89089546e84e6fdf3b9e421fe870f0c2626868da"
-  dependencies:
-    create-react-class "^15.6.2"
-    prop-types "^15.5.10"
 
 react-native-timeline-listview@^0.2.2:
   version "0.2.2"
