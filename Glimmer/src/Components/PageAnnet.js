@@ -25,6 +25,13 @@ export default class PageAnnet extends React.Component {
     });
   }
 
+  loadAbout() {
+    this.props.navigator.push({
+      screen: 'glimmer.PageAbout',
+      title: 'Om Glimmer',
+    });
+  }
+
   componentDidMount() {
 
   }
@@ -41,6 +48,11 @@ export default class PageAnnet extends React.Component {
           key="settings"
           title="Innstillinger"
           onPress={() => { this.loadSettings(); }}
+        />
+        <ListItem
+          key="about"
+          title="Om Glimmer"
+          onPress={() => { this.loadAbout(); }}
         />
       </List>
     );

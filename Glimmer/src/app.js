@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider, connect } from 'react-redux';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import { Alert, AppState, AsyncStorage } from 'react-native';
-import { registerScreens } from './screens';
+import registerScreens from './screens';
 import { Navigation } from 'react-native-navigation';
 import Workers from './Workers/index.js';
 import { applyMiddleware, compose, createStore } from 'redux';

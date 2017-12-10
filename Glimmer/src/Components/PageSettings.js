@@ -3,8 +3,10 @@
  */
 
 import React from 'react';
-import { ScrollView, StyleSheet, AsyncStorage } from 'react-native';
+import { ScrollView, StyleSheet, AsyncStorage, View } from 'react-native';
 import SettingsList from 'react-native-settings-list';
+import Icon from 'react-native-vector-icons/Ionicons';
+import * as colors from '../Styles/colorConstants';
 
 export default class PageAnnet extends React.Component {
   constructor(props) {
@@ -59,23 +61,42 @@ export default class PageAnnet extends React.Component {
     render() {
       return (
         <ScrollView style={pageStyles.container}>
-          <SettingsList>
+          <SettingsList
+            backgroundColor={colors.COLOR_WHITE}
+            borderColor={colors.COLOR_LIGHTGREY}
+            defaultItemSize={50}
+          >
             <SettingsList.Item
               hasNavArrow={false}
               switchState={this.state.nsfw}
               switchOnValueChange={this.toggleNsfw}
               hasSwitch
               title="Skjul NSFW"
+              icon={
+                <View style={{height:30,marginLeft:10,alignSelf:'center'}}>
+                  <Icon name="ios-nuclear" size={30} style={{ alignSelf: 'center', width: 30, height: 40, color: colors.COLOR_MIDGREY }} />
+                </View>
+              }
             />
             <SettingsList.Item
               hasNavArrow
               onPress={() => this.loadGjemsel()}
               title="Skammekroken"
+              icon={
+                <View style={{height:30,marginLeft:10,alignSelf:'center'}}>
+                  <Icon name="ios-outlet" size={30} style={{ alignSelf: 'center', width: 30, height: 40, color: colors.COLOR_MIDGREY }} />
+                </View>
+              }
             />
             <SettingsList.Item
               hasNavArrow={false}
               onPress={() => this.logOut()}
               title="Logg ut"
+              icon={
+                <View style={{height:30,marginLeft:10,alignSelf:'center'}}>
+                  <Icon name="ios-close-circle" size={30} style={{ alignSelf: 'center', width: 30, height: 40, color: colors.COLOR_MIDGREY }} />
+                </View>
+              }
             />
           </SettingsList>
         </ScrollView>
@@ -86,7 +107,7 @@ export default class PageAnnet extends React.Component {
 const pageStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#CCCCCC',
+    backgroundColor: colors.COLOR_LIGHT,
     paddingLeft: 0,
     paddingTop: 0,
     paddingBottom: 30,

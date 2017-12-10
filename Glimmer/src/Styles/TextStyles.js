@@ -1,7 +1,7 @@
-import * as colors from './colorConstants';
 import { StyleSheet } from 'react-native';
+import * as colors from './colorConstants';
 
-module.exports = StyleSheet.create({
+const textStyles = StyleSheet.create({
 
   uxTitle: {
     fontSize: 16,
@@ -16,4 +16,12 @@ module.exports = StyleSheet.create({
     marginBottom: 3,
   },
 
+  paragraph: {
+    margin: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+
 });
+
+export default textStyles;

@@ -16,7 +16,7 @@ import PageKudos from './Components/PageKudos';
 import PageAnnet from './Components/PageAnnet';
 import PageSettings from './Components/PageSettings';
 import PageGjemsel from './Components/PageGjemsel';
-
+import PageAbout from './Components/PageAbout';
 
 import PageLogin from './Components/PageLogin';
 import PageForumList from './Components/PageForumList';
@@ -24,7 +24,7 @@ import PageForumList from './Components/PageForumList';
 import PersonPopup from './Components/UXElements/PersonPopup';
 import PopupEmbedViewer from './Components/UXElements/PopupEmbedViewer';
 
-export function registerScreens(store, Provider) {
+export default function registerScreens(store, Provider) {
   return new Promise((resolve, reject) => {
     try {
       // Proper pages
@@ -44,6 +44,7 @@ export function registerScreens(store, Provider) {
       Navigation.registerComponent('glimmer.PageAnnet', () => PageAnnet, store, Provider);
       Navigation.registerComponent('glimmer.PageSettings', () => PageSettings, store, Provider);
       Navigation.registerComponent('glimmer.PageGjemsel', () => PageGjemsel, store, Provider);
+      Navigation.registerComponent('glimmer.PageAbout', () => PageAbout, store, Provider);
 
       // Helper pages
       Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);

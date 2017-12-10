@@ -59,7 +59,7 @@ export default class PageGjemsel extends React.Component {
         </List>
         <View style={{ paddingTop: 30 }}>
           <Text style={pageStyles.paragraf}>Dette er siden der de du ikke vil se i skogen er listet opp.</Text>
-          <Text style={pageStyles.paragraf}>Merk: Denne listen synkroniseres ikke mellom enheter - fordi jeg (@kvasbo) ikke vil ha tilgang til å se dette.</Text>
+          <Text style={pageStyles.paragraf}>Merk: Denne listen synkroniseres ikke mellom enheter - fordi jeg (@kvasbo) ikke vil ha tilgang til å se dette. Av samme grunn er den heller ikke synkronisert med eventuell bruk av Gjemsel i Underskog.</Text>
           <Text style={pageStyles.paragraf}>For å legge til noen i lista, trykk på ... ved et innlegg de har laget og velg "blokkér".</Text>
           <Text style={pageStyles.paragraf}>For å fjerne, trykk på et navn.</Text>
         </View>
@@ -79,7 +79,7 @@ const pageStyles = StyleSheet.create({
   },
   paragraf: {
     margin: 5,
-    marginLeft: 10,
-    marginRight: 10,
+    marginLeft: 20,
+    marginRight: 20,
   },
 });

@@ -1,9 +1,6 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import * as colors from '../Styles/colorConstants';
 
 export default class EmptyPage extends React.Component {
   constructor(props) {
@@ -24,7 +21,7 @@ export default class EmptyPage extends React.Component {
 const pageStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#CCCCCC',
+    backgroundColor: colors.COLOR_LIGHT,
     paddingLeft: 0,
     paddingTop: 0,
     paddingBottom: 30,
