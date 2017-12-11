@@ -39,6 +39,12 @@ export default class Workers {
     });
   }
 
+  refreshAppData() {
+    this.refreshForumData();
+    this.kudos.getKudos(1);
+    this.messageUpdater.updateMessageThreads(1);
+  }
+
   refreshForumData() {
     this.forumUpdater.loadFirstFavorites(1);
     this.forumUpdater.loadFirstStream(1);

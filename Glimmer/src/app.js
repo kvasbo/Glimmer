@@ -86,8 +86,7 @@ global.rootNavigation = Navigation;
 // Reload stuff on wake.
 const handleAppStateChange = (nextAppState) => {
   if (nextAppState === 'active') {
-    console.log('App has come to the foreground!');
-    arbeidsMaur.refreshForumData();
+    arbeidsMaur.refreshAppData();
   }
 };
 
@@ -135,81 +134,81 @@ class Glimmer extends React.Component {
         // global.arbeidsMaur.forumListUpdater.reloadForums(true);
 
         iconsLoaded.then(() => {
-          setTimeout(() => { this.startMainApp(); }, 500);
+          setTimeout(() => { startMainApp(); }, 500);
         });
       } else if (this.loggedIn === false) {
-        this.startLoginApp();
+        startLoginApp();
       } else {
-        this.showSplashScreen();
+        showSplashScreen();
       }
-    }
-
-    showSplashScreen() {
-      Navigation.startSingleScreenApp({
-        screen: {
-          screen: 'glimmer.PageSplashScreen',
-          navigatorStyle: { navBarHidden: true },
-        },
-        animationType: 'fade',
-      });
-    }
-
-    startLoginApp() {
-      Navigation.startSingleScreenApp({
-        screen: {
-          screen: 'glimmer.PageLogin',
-          title: 'Velkommen til Glimmer',
-          navigatorStyle: { navBarHidden: true },
-        },
-        passProps: {},
-        animationType: 'slide-down',
-
-      });
-    }
-
-    startMainApp() {
-      Navigation.startTabBasedApp({
-        animationType: 'none',
-        passProps: { store: global.store },
-        tabs: [{
-          label: 'Aktivitet',
-          screen: 'glimmer.PageFirst',
-          icon: iconsMap['ios-list'],
-          title: 'Aktivitet',
-          navigatorStyle: NavStyles.default,
-        }, {
-          label: 'Mine tråder',
-          screen: 'glimmer.PageFavorites',
-          icon: iconsMap['ios-star'],
-          title: 'Mine tråder',
-          navigatorStyle: NavStyles.default,
-        }, {
-          label: 'Forsiden',
-          screen: 'glimmer.PageStream',
-          icon: iconsMap['ios-home'],
-          title: 'Forsiden',
-          navigatorStyle: NavStyles.default,
-        }, {
-          label: 'Samtaler',
-          screen: 'glimmer.PageMessages',
-          icon: iconsMap['ios-chatbubbles'],
-          title: 'Samtaler',
-          navigatorStyle: NavStyles.default,
-        }, {
-          label: 'Røkla',
-          screen: 'glimmer.PageAnnet',
-          icon: iconsMap['ios-more'],
-          title: 'Røkla',
-          navigatorStyle: NavStyles.default,
-        },
-        ],
-        tabsStyle: { 
-          tabBarSelectedButtonColor: '#3499DB',
-          initialTabIndex: 2,
-        },
-
-      });
     }
 }
 
 export default Glimmer;
+
+function showSplashScreen() {
+  Navigation.startSingleScreenApp({
+    screen: {
+      screen: 'glimmer.PageSplashScreen',
+      navigatorStyle: { navBarHidden: true },
+    },
+    animationType: 'fade',
+  });
+}
+
+function startLoginApp() {
+  Navigation.startSingleScreenApp({
+    screen: {
+      screen: 'glimmer.PageLogin',
+      title: 'Velkommen til Glimmer',
+      navigatorStyle: { navBarHidden: true },
+    },
+    passProps: {},
+    animationType: 'slide-down',
+
+  });
+}
+
+function startMainApp() {
+  Navigation.startTabBasedApp({
+    animationType: 'none',
+    passProps: { store: global.store },
+    tabs: [{
+      label: 'Aktivitet',
+      screen: 'glimmer.PageFirst',
+      icon: iconsMap['ios-list'],
+      title: 'Aktivitet',
+      navigatorStyle: NavStyles.default,
+    }, {
+      label: 'Mine tråder',
+      screen: 'glimmer.PageFavorites',
+      icon: iconsMap['ios-star'],
+      title: 'Mine tråder',
+      navigatorStyle: NavStyles.default,
+    }, {
+      label: 'Forsiden',
+      screen: 'glimmer.PageStream',
+      icon: iconsMap['ios-home'],
+      title: 'Forsiden',
+      navigatorStyle: NavStyles.default,
+    }, {
+      label: 'Samtaler',
+      screen: 'glimmer.PageMessages',
+      icon: iconsMap['ios-chatbubbles'],
+      title: 'Samtaler',
+      navigatorStyle: NavStyles.default,
+    }, {
+      label: 'Røkla',
+      screen: 'glimmer.PageAnnet',
+      icon: iconsMap['ios-more'],
+      title: 'Røkla',
+      navigatorStyle: NavStyles.default,
+    },
+    ],
+    tabsStyle: { 
+      tabBarSelectedButtonColor: '#3499DB',
+      initialTabIndex: 1,
+    },
+
+  });
+}

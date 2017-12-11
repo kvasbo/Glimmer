@@ -14,6 +14,15 @@ class PageFirst extends React.Component {
     this.state = { visKudos: global.arbeidsMaur.settings.getSettings().activityShowKudos };
     this.renderDetail = this.renderDetail.bind(this);
     this.eventPressed = this.eventPressed.bind(this);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        global.arbeidsMaur.refreshAppData();
+        break;
+    }
   }
 
   getData() {
