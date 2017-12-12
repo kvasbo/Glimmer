@@ -18,8 +18,6 @@ import NavStyles from './Styles/NavigatorStyles';
 import { iconsLoaded, iconsMap } from './Components/UXElements/Icons';
 import SafariView from 'react-native-safari-view';
 
-console.log('SafariView', SafariView);
-
 global.moment = require('moment');
 
 moment.locale('nb');
@@ -173,13 +171,13 @@ function startMainApp() {
   Navigation.startTabBasedApp({
     animationType: 'none',
     passProps: { store: global.store },
-    tabs: [{
+    tabs: [/*{
       label: 'Aktivitet',
       screen: 'glimmer.PageFirst',
       icon: iconsMap['ios-list'],
       title: 'Aktivitet',
       navigatorStyle: NavStyles.default,
-    }, {
+    },*/ {
       label: 'Mine tråder',
       screen: 'glimmer.PageFavorites',
       icon: iconsMap['ios-star'],

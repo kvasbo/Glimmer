@@ -310,9 +310,8 @@ export default class WriteNewPostOrComment extends React.Component {
 
         for (let key in this.state.images) {
             outImg.push(
-                <TouchableOpacity key={key}>
-                    <View style={{justifyContent: 'flex-start', margin: 10, width: 75, height: 75}}
-                        onPress={() => this.insertIntoBodyText("!" + this.state.images[key].uri + "!")}>
+                <TouchableOpacity key={key} onPress={() => this.insertIntoBodyText("!" + this.state.images[key].uri + "!")}>
+                    <View style={{justifyContent: 'flex-start', margin: 10, width: 75, height: 75}}>
                             <Image source={{uri: this.state.images[key].orig_uri}}
                                 style={{height: 75, width: 75, position: 'absolute', top: 0, left: 0, borderRadius: 0}} />
                                 {this.getLoadingIndicator(!this.state.images[key].done)}
