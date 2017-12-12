@@ -412,8 +412,6 @@ export default class WriteNewPostOrComment extends React.Component {
             let filenameArr = filename.split(".");
             var extension = filenameArr.slice(-1)[0];
 
-            //console.log(filename, filenameArr, extension);
-
             if (extension === "jpg" || extension === "jpeg") {
                 metadata.contentType = 'image/jpeg';
             }
@@ -431,7 +429,7 @@ export default class WriteNewPostOrComment extends React.Component {
 
             let tmpImages = this.state.images;
             tmpImages[metadata.fileName] = {orig_uri: metadata.uri, uri: null, done: false}
-            console.log("imagelist before", tmpImages);
+
             this.setState({images: tmpImages});
 
             //Upload
@@ -439,31 +437,33 @@ export default class WriteNewPostOrComment extends React.Component {
             .ref('/postImages/' + metadata.fileName)
             .putFile(metadata.uri, metadata)
             .then(uploadedFile => {
-                console.log("upøoaded", uploadedFile);
                 let imageList = this.state.images;
                 imageList[metadata.fileName] = {orig_uri: metadata.uri, uri: uploadedFile.downloadURL, done: true};
-
-                console.log("imagelist afer", imageList);
                 if (this._isMounted) {
                     this.setState({images: imageList});
                 }
-
             })
             .catch(err => {
                 Alert.alert("Noe gikk galt med opplastingen. Pokker ta.", err)
             });
-
         }
         catch (err) {
             console.log(err);
         }
-
     }
 
     pickPictures() {
 
       const options = {
-        title: 'Velg bilde',
+        title: 'Hvor skal vi finne et bilde?',
+        cancelButtonTitle: 'Avbryt',
+        takePhotoButtonTitle: 'Ta nytt',
+        chooseFromLibraryButtonTitle: 'Velg fra bibliotek',
+        mediaType: 'photo',
+        maxWidth: 2000,
+        maxHeight: 2000,
+        quality: 0.85,
+        noData: true,
         storageOptions: {
           skipBackup: false,
         }
@@ -471,7 +471,6 @@ export default class WriteNewPostOrComment extends React.Component {
 
       ImagePicker.showImagePicker(options, (response) => {
         
-        console.log('Response = ', response);
         this._uploadAndAddPicture(response);
 
         if (response.didCancel) {
