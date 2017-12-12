@@ -1,2 +1,0 @@
-cd android 
-./gradlew assembleRelease
