@@ -70,25 +70,25 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.3)
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
-  - gRPC (1.7.1):
-    - gRPC-RxLibrary (= 1.7.1)
-    - gRPC/Main (= 1.7.1)
-  - gRPC-Core (1.7.1):
-    - gRPC-Core/Implementation (= 1.7.1)
-    - gRPC-Core/Interface (= 1.7.1)
-  - gRPC-Core/Implementation (1.7.1):
+  - gRPC (1.8.0):
+    - gRPC-RxLibrary (= 1.8.0)
+    - gRPC/Main (= 1.8.0)
+  - gRPC-Core (1.8.0):
+    - gRPC-Core/Implementation (= 1.8.0)
+    - gRPC-Core/Interface (= 1.8.0)
+  - gRPC-Core/Implementation (1.8.0):
     - BoringSSL (~> 9.0)
-    - gRPC-Core/Interface (= 1.7.1)
+    - gRPC-Core/Interface (= 1.8.0)
     - nanopb (~> 0.3)
-  - gRPC-Core/Interface (1.7.1)
-  - gRPC-ProtoRPC (1.7.1):
-    - gRPC (= 1.7.1)
-    - gRPC-RxLibrary (= 1.7.1)
+  - gRPC-Core/Interface (1.8.0)
+  - gRPC-ProtoRPC (1.8.0):
+    - gRPC (= 1.8.0)
+    - gRPC-RxLibrary (= 1.8.0)
     - Protobuf (~> 3.0)
-  - gRPC-RxLibrary (1.7.1)
-  - gRPC/Main (1.7.1):
-    - gRPC-Core (= 1.7.1)
-    - gRPC-RxLibrary (= 1.7.1)
+  - gRPC-RxLibrary (1.8.0)
+  - gRPC/Main (1.8.0):
+    - gRPC-Core (= 1.8.0)
+    - gRPC-RxLibrary (= 1.8.0)
   - GTMSessionFetcher/Core (1.1.12)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
@@ -111,7 +111,7 @@ PODS:
   - React/cxxreact_legacy (0.50.3):
     - React/jschelpers_legacy
   - React/jschelpers_legacy (0.50.3)
-  - RNFirebase (3.1.1):
+  - RNFirebase (3.2.0):
     - React
   - yoga (0.50.3.React)
 
@@ -127,7 +127,7 @@ DEPENDENCIES:
   - react-native-safari-view (from `../node_modules/react-native-safari-view`)
   - React/BatchedBridge (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
-  - RNFirebase (from `../node_modules/react-native-firebase`)
+  - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
@@ -138,7 +138,7 @@ EXTERNAL SOURCES:
   react-native-safari-view:
     :path: ../node_modules/react-native-safari-view
   RNFirebase:
-    :path: ../node_modules/react-native-firebase
+    :path: ../node_modules/react-native-firebase/ios
   yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga
 
@@ -154,10 +154,10 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
   FirebaseStorage: 0930e97994dc79b404179bdfafb6b16f59433a82
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  gRPC: b56decfd0094854d2ccfe80c8fb767237dace3be
-  gRPC-Core: 95c4968ae43d29219226f22b656d9f625904281e
-  gRPC-ProtoRPC: b7259f51cbc19b77c7a38d96f52a00c3a4ea1637
-  gRPC-RxLibrary: 4f46343e74e74a7ee8373ffeeaf772dfb330cbd7
+  gRPC: cc3f797b97bf221a9e535e8e012a6f99b1d7f797
+  gRPC-Core: 250fd60016c4e4c413279f4002679b0e14e7df26
+  gRPC-ProtoRPC: 5b934b29a95b94b0f871d4fc361ff52269476765
+  gRPC-RxLibrary: 7c57a1b2ff2f9cafb0face35bbfa0a326281295d
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
@@ -165,9 +165,9 @@ SPEC CHECKSUMS:
   React: 0ba6cae888dc82dc47d6d5f3090615e1b5f6f3e7
   react-native-image-picker: 3693786b3d5958c8f71deed66ec068b323565e0d
   react-native-safari-view: 955d7160d159241b8e9395d12d10ea0ef863dcdd
-  RNFirebase: 30522211772f22affff6f3a61981110852d2668b
+  RNFirebase: 22b1917fec663706907bc901ed665ac4f8b9bfd6
   yoga: faecc6be81ca7823ccbb470b93a1b228499fa1c0
 
-PODFILE CHECKSUM: 2665a8a0b7e1c0a0a5264b0b6481074c4b94b96b
+PODFILE CHECKSUM: c44320a8b1111f62b1c3bc97ded1c289bee320cc
 
 COCOAPODS: 1.3.1

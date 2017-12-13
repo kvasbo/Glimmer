@@ -1388,9 +1388,13 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.2.2, core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
+core-js@^2.2.2, core-js@^2.4.1, core-js@^2.5.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
+
+core-js@^2.4.0:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -1809,8 +1813,8 @@ eslint-plugin-import@^2.7.0:
     read-pkg-up "^2.0.0"
 
 eslint-plugin-jsx-a11y@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.0.2.tgz#659277a758b036c305a7e4a13057c301cd3be73f"
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.0.3.tgz#54583d1ae442483162e040e13cc31865465100e5"
   dependencies:
     aria-query "^0.7.0"
     array-includes "^3.0.3"
@@ -1818,7 +1822,7 @@ eslint-plugin-jsx-a11y@^6.0.2:
     axobject-query "^0.1.0"
     damerau-levenshtein "^1.0.0"
     emoji-regex "^6.1.0"
-    jsx-ast-utils "^1.4.0"
+    jsx-ast-utils "^2.0.0"
 
 eslint-plugin-react@^7.1.0:
   version "7.5.1"
@@ -1841,8 +1845,8 @@ eslint-scope@^3.7.1:
     estraverse "^4.1.1"
 
 eslint@^4.4.0:
-  version "4.13.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.13.0.tgz#1991aa359586af83877bde59de9d41f53e20826d"
+  version "4.13.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.13.1.tgz#0055e0014464c7eb7878caf549ef2941992b444f"
   dependencies:
     ajv "^5.3.0"
     babel-code-frame "^6.22.0"
@@ -2781,10 +2785,8 @@ is-regex@^1.0.4:
     has "^1.0.1"
 
 is-resolvable@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/is-resolvable/-/is-resolvable-1.0.0.tgz#8df57c61ea2e3c501408d100fb013cf8d6e0cc62"
-  dependencies:
-    tryit "^1.0.1"
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-resolvable/-/is-resolvable-1.0.1.tgz#acca1cd36dbe44b974b924321555a70ba03b1cf4"
 
 is-retry-allowed@^1.0.0:
   version "1.1.0"
@@ -3222,10 +3224,6 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
-
-jsx-ast-utils@^1.4.0:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-1.4.1.tgz#3867213e8dd79bf1e8f2300c0cfc1efb182c0df1"
 
 jsx-ast-utils@^2.0.0:
   version "2.0.1"
@@ -3667,8 +3665,8 @@ mkdirp@0.5.0:
     minimist "0.0.8"
 
 moment@^2.18.1:
-  version "2.19.3"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
+  version "2.19.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.4.tgz#17e5e2c6ead8819c8ecfad83a0acccb312e94682"
 
 morgan@~1.6.1:
   version "1.6.1"
@@ -4113,6 +4111,10 @@ pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
 
+postinstall-build@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/postinstall-build/-/postinstall-build-5.0.1.tgz#b917a9079b26178d9a24af5a5cd8cb4a991d11b9"
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -4273,6 +4275,10 @@ react-devtools@3:
     react-devtools-core "^3.0.0"
     update-notifier "^2.1.0"
 
+react-native-confetti@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-confetti/-/react-native-confetti-0.0.6.tgz#a505e4e5a23bcb2cf554ba51362dfaf3ac17a100"
+
 react-native-elements@^0.18.5:
   version "0.18.5"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-0.18.5.tgz#9d9a584395fea63f8cad7904fb21c1eac7cc63cf"
@@ -4283,15 +4289,16 @@ react-native-elements@^0.18.5:
     prop-types "^15.5.8"
 
 react-native-exception-handler@^2.3.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.6.0.tgz#4ae337126137a6b12f002ce4c490d71512fdc1bb"
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.6.2.tgz#67369de9dfe3c827112decf322f3461a542f4327"
 
 react-native-firebase@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-3.1.1.tgz#82d8fdb0abe1a9140101b75fb8b6a5094ea2e99d"
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-3.2.0.tgz#2d1283fae073353a374f640d51eb8537acabe24a"
   dependencies:
     bows "^1.6.0"
     opencollective "^1.0.3"
+    postinstall-build "^5.0.1"
     prop-types "^15.6.0"
 
 react-native-htmlview@^0.12.1:
@@ -4316,8 +4323,8 @@ react-native-lightbox@^0.7.0:
     prop-types "^15.5.10"
 
 react-native-navigation@^1.1:
-  version "1.1.300"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.300.tgz#0086f55a1bcd48010d43d12218de8e017f144937"
+  version "1.1.311"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.311.tgz#4892af13bdd111dc92424ec4e268ba8180ac1839"
   dependencies:
     lodash "4.x.x"
 
@@ -4536,8 +4543,8 @@ regenerator-runtime@^0.10.0:
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
 
 regenerator-runtime@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.0.tgz#7e54fe5b5ccd5d6624ea6255c3473be090b802e1"
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
 regenerator-runtime@^0.9.5:
   version "0.9.6"
@@ -5306,10 +5313,6 @@ trim-newlines@^1.0.0:
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
-
-tryit@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tryit/-/tryit-1.0.3.tgz#393be730a9446fd1ead6da59a014308f36c289cb"
 
 tsscmp@1.0.5:
   version "1.0.5"

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View, ScrollView, StyleSheet, Text, RefreshControl } from 'react-native';
+import Confetti from 'react-native-confetti';
 import KudosListKudos from './UXElements/KudosListKudos';
 
 class PageKudos extends React.Component {
@@ -10,15 +11,7 @@ class PageKudos extends React.Component {
     this.state = { refreshing: false };
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
-
-  onNavigatorEvent(event) {
-    switch (event.id) {
-      case 'willAppear':
-        this.onRefresh();
-        break;
-    }
-  }
-
+  
   async onRefresh() {
     this.setState({ refreshing: true });
     await global.arbeidsMaur.kudos.getKudos(1);
@@ -26,7 +19,26 @@ class PageKudos extends React.Component {
   }
 
   componentDidMount() {
+    this.confettiTimeout = setTimeout(() => { 
+      if (this.confettiView) {
+        this.confettiView.startConfetti();
+      }
+    }, 15000);
+  }
 
+  componentWillUnmount() {
+    clearTimeout(this.confettiTimeout);
+    if (this.confettiView) {
+      this.confettiView.stopConfetti();
+    }
+  }
+
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        this.onRefresh();
+        break;
+    }
   }
 
   getKudos() {
@@ -64,6 +76,7 @@ class PageKudos extends React.Component {
       >
         {this.getKudos()}
         {this.getFooter()}
+        <Confetti ref={(node) => this.confettiView = node}/>
       </ScrollView>
     );
   }
