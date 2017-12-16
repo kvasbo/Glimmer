@@ -68,10 +68,8 @@ export default class SkogsEvent extends React.Component {
  */
 
 SkogsEvent.propTypes = {
-
   data: PropTypes.object.isRequired,
   navigator: PropTypes.object.isRequired,
-
 };
 
 const pageStyles = StyleSheet.create({

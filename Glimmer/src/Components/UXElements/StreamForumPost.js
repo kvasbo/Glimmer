@@ -118,7 +118,7 @@ export default class StreamForumPost extends React.Component {
                 <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
               </View>
               <View style={{ margin: 4, marginLeft: 6, marginBottom: 2, marginRight: 6 }}>
-                <PostControls post={this.props.data} showControls={false} />
+                <PostControls post={this.props.data} showControls={false} navigator={this.props.navigator} />
               </View>
               {this.getFirstImage()}
             </View>

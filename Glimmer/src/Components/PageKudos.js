@@ -65,19 +65,22 @@ class PageKudos extends React.Component {
 
   render() {
     return (
-      <ScrollView
-        style={pageStyles.container}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh.bind(this)}
-          />
-              }
-      >
-        {this.getKudos()}
-        {this.getFooter()}
+      <View style={pageStyles.container}>
+        <ScrollView
+          style={pageStyles.container}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh.bind(this)}
+            />
+                }
+        >
+          {this.getKudos()}
+          {this.getFooter()}
+          
+        </ScrollView>
         <Confetti ref={(node) => this.confettiView = node}/>
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -87,7 +90,7 @@ const pageStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
     padding: 10,
-    paddingBottom: 50,
+    paddingBottom: 0,
     margin: 0,
   },
 });

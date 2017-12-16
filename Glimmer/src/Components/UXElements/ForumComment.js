@@ -84,6 +84,7 @@ export default class ForumComment extends React.Component {
             <CommentMetadata
               post={this.props.data}
               byStarter={this.props.byStarter}
+              navigator={this.props.navigator}
             />
           </View>
 

@@ -60,6 +60,7 @@ export default class PostControls extends React.Component {
         <View style={pageStyles.container}>
           <CommentMetadata
             post={this.props.post}
+            navigator={this.props.navigator}
           />
           <View>
             {this.getMoreControls()}
@@ -77,6 +78,7 @@ PostControls.defaultProps = {
 
 PostControls.propTypes = {
   showControls: PropTypes.bool,
+  navigator: PropTypes.object.isRequired,
 };
 
 const pageStyles = StyleSheet.create({

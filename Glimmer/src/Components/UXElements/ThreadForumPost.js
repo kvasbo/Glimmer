@@ -39,11 +39,9 @@ export default class ThreadForumPost extends React.Component {
       return (
 
         <View style={pageStyles.container}>
-
           <View style={pageStyles.creatorInfo}>
-            <PostControls post={this.props.data} />
+            <PostControls post={this.props.data} navigator={this.props.navigator} />
           </View>
-
           <View style={pageStyles.thePost}>
             <ForumTextTextile
               cut={false}
@@ -53,17 +51,14 @@ export default class ThreadForumPost extends React.Component {
               style={{ marginBottom: 10 }}
             />
           </View>
-
           <View style={pageStyles.metaData}>
             <View style={{ flexDirection: 'row' }}>
-
               <KudosAndCommentsAndStuff
                 showCommentBadge={false}
                 navigator={this.props.navigator}
                 post={this.props.data}
                 byMe={this.byMe}
               />
-
             </View>
           </View>
 
@@ -73,10 +68,8 @@ export default class ThreadForumPost extends React.Component {
 }
 
 ThreadForumPost.propTypes = {
-
   data: PropTypes.object.isRequired,
   navigator: PropTypes.object.isRequired,
-
 };
 
 const pageStyles = StyleSheet.create({

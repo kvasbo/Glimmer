@@ -21,7 +21,7 @@ export default class PageAbout extends React.Component {
           SLAen for denne appen kan dermed oppsummeres med "Trist og uproft, sees på Underskog".
         </Text>
         <Text style={textStyles.paragraph}>
-          Å lage software er også jobben min, så graden av tiltakslyst vil variere med arbeidsbelastnig, vær, etc.
+          Å lage software er også jobben min, så graden av tiltakslyst vil variere med arbeidsbelastning, vær, etc.
         </Text>
         <Text style={textStyles.paragraph}>
           Har du tilbakemelding? Send meg en melding på Underskog da vel!
