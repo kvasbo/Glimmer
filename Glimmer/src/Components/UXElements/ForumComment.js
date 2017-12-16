@@ -82,10 +82,8 @@ export default class ForumComment extends React.Component {
 
           <View>
             <CommentMetadata
-              name={this.props.data.creator_name}
+              post={this.props.data}
               byStarter={this.props.byStarter}
-              time={this.props.data.created_at}
-              image={this.props.data.creator_image}
             />
           </View>
 

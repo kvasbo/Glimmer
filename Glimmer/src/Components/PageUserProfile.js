@@ -2,13 +2,15 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import * as colors from '../Styles/colorConstants';
 
-export default class EmptyPage extends React.Component {
+export default class PageUserProfile extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { loading: true, user: undefined }
   }
 
-  componentDidMount() {
-
+  async componentWillMount() {
+    const user = await global.arbeidsMaur.userUpdater.getUserInfo(this.props.userId);
+    this.setState({ user, loading: false });
   }
 
   render() {

@@ -6,7 +6,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CommentMetadata from './CommentMetadata';
-import ForumTextTextile from './ForumTextTextile.js';
+import ForumTextTextile from './ForumTextTextile';
+import PostControls from './PostControls';
 import KudosAndCommentsAndStuff from './KudosAndCommentsAndStuff';
 import * as colors from '../../Styles/colorConstants';
 
@@ -105,59 +106,36 @@ export default class StreamForumPost extends React.Component {
       return (
 
         <View style={pageStyles.container}>
-
           <TouchableOpacity
             onPress={() => this.props.navigator.push({
                         screen: 'glimmer.PageThread',
                         title: this.props.data.title,
                         passProps: { post: this.props.data },
                     })}
-            onLongPress={() => this.setState({ showText: !this.state.showText })}
-          >
+            onLongPress={() => this.setState({ showText: !this.state.showText })}>
             <View>
-
               <View style={pageStyles.title}>
                 <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
               </View>
-
-              <View style={{
-margin: 4, marginLeft: 6, marginBottom: 2, marginRight: 6,
-}}
-              >
-                <CommentMetadata
-                  image={this.props.data.creator_image}
-                  showImage
-                  name={this.props.data.creator_name}
-                  time={this.props.data.created_at}
-                  forum={this.props.data.forum_title}
-                />
-
+              <View style={{ margin: 4, marginLeft: 6, marginBottom: 2, marginRight: 6 }}>
+                <PostControls post={this.props.data} showControls={false} />
               </View>
-
               {this.getFirstImage()}
-
             </View>
-
           </TouchableOpacity>
-
           {this.getTextSection()}
-
           <View style={pageStyles.metaDataBox}>
-
             <View style={pageStyles.metaData}>
               <View style={{ flexDirection: 'row' }}>
-
                 <KudosAndCommentsAndStuff
                   showCommentBadge
                   navigator={this.props.navigator}
                   post={this.props.data}
                   byMe={this.byMe}
                 />
-
               </View>
             </View>
           </View>
-
         </View>
       );
     }

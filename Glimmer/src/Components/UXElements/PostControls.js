@@ -41,6 +41,13 @@ export default class PostControls extends React.Component {
     LayoutAnimation.spring();
     this.setState({ expanded: !this.state.expanded });
   }
+  
+  getMoreControls() {
+    if (!this.props.showControls) return null;
+    return (
+      <Icon name={this.getArrow()} color={colors.COLOR_MIDGREY} size={20} onPress={() => { this.toggleExtended(); }} />
+    );
+  }
 
   getArrow() {
     if (this.state.expanded) return 'ios-arrow-up';
@@ -52,13 +59,10 @@ export default class PostControls extends React.Component {
       <View>
         <View style={pageStyles.container}>
           <CommentMetadata
-            image={this.props.post.creator_image}
-            name={this.props.post.creator_name}
-            time={this.props.post.created_at}
-            forum={this.props.post.forum_title}
+            post={this.props.post}
           />
           <View>
-            <Icon name={this.getArrow()} size={20} onPress={() => { this.toggleExtended(); }} />
+            {this.getMoreControls()}
           </View>
         </View>
         { this.getExtendedView() }
@@ -67,8 +71,12 @@ export default class PostControls extends React.Component {
   }
 }
 
-PostControls.propTypes = {
+PostControls.defaultProps = {
+  showControls: true,
+};
 
+PostControls.propTypes = {
+  showControls: PropTypes.bool,
 };
 
 const pageStyles = StyleSheet.create({
