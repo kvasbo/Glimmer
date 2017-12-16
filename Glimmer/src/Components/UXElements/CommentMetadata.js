@@ -10,6 +10,7 @@ import * as colors from '../../Styles/colorConstants';
 export default class CommentMetadata extends React.Component {
   constructor(props) {
     super(props);
+    this.showUser = this.showUser.bind(this);
   }
 
   getTime() {
@@ -34,13 +35,15 @@ export default class CommentMetadata extends React.Component {
   getPicture() {
     if (!this.props.showImage) return null;
 
+    /*
     return (
       <Image
         style={[styles.element, { width: 24, height: 24, borderRadius: 12 }]}
         source={{ uri: this.props.post.creator_image }}
       />
     );
-    /*
+    */
+    
     return (
       <TouchableOpacity onPress={() => { this.showUser(); }}>
         <Image
@@ -49,7 +52,6 @@ export default class CommentMetadata extends React.Component {
         />
       </TouchableOpacity>
     );
-    */
   }
 
   render() {

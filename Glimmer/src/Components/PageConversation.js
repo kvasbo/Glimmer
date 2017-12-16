@@ -142,6 +142,7 @@ const pageStyles = StyleSheet.create({
     padding: 10,
     borderTopWidth: 2,
     fontSize: 14,
+    marginBottom: 10,
     borderTopColor: colors.COLOR_LIGHT,
   },
 });
