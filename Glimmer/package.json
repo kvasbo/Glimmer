@@ -17,7 +17,7 @@
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
     "react": "16.0.0",
-    "react-native": "0.50.3",
+    "react-native": "0.51.0",
     "react-native-confetti": "^0.0.6",
     "react-native-elements": "^0.18.5",
     "react-native-exception-handler": "^2.3.0",

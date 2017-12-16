@@ -10,7 +10,6 @@ import * as colors from '../../Styles/colorConstants';
 export default class CommentMetadata extends React.Component {
   constructor(props) {
     super(props);
-    this.showUser = this.showUser.bind(this);
   }
 
   getTime() {
@@ -18,11 +17,7 @@ export default class CommentMetadata extends React.Component {
   }
 
   showUser() {
-    this.props.navigator.push({
-      screen: 'glimmer.pageUserProfile',
-      passProps: { userId: this.props.post.creator_id },
-      title: "User profile",
-    })
+    
   }
 
   getForumTitle() {
@@ -32,27 +27,6 @@ export default class CommentMetadata extends React.Component {
     );
   }
 
-  getPicture() {
-    if (!this.props.showImage) return null;
-
-    /*
-    return (
-      <Image
-        style={[styles.element, { width: 24, height: 24, borderRadius: 12 }]}
-        source={{ uri: this.props.post.creator_image }}
-      />
-    );
-    */
-    
-    return (
-      <TouchableOpacity onPress={() => { this.showUser(); }}>
-        <Image
-          style={[styles.element, { width: 24, height: 24, borderRadius: 12 }]}
-          source={{ uri: this.props.post.creator_image }}
-        />
-      </TouchableOpacity>
-    );
-  }
 
   render() {
     const forumText = (typeof this.props.post.forum_title === 'undefined') ? '' : this.props.post.forum_title;
@@ -68,7 +42,16 @@ export default class CommentMetadata extends React.Component {
               flex: 1,
           }}
       >
-        {this.getPicture()}
+      <TouchableOpacity onPress={() => this.props.navigator.push({
+        screen: 'glimmer.PageUserProfile',
+        title: '...',
+        passProps: { userId: this.props.post.creator_id },
+        })} >
+            <Image
+              style={[styles.element, { width: 24, height: 24, borderRadius: 12 }]}
+              source={{ uri: this.props.post.creator_image }}
+            />
+        </TouchableOpacity>
         <View style={{ flexDirection: 'column' }}>
           <Text style={[{ color, fontSize: 12 }]}>{this.props.post.creator_name} {this.getTime()}</Text>
           {this.getForumTitle()}

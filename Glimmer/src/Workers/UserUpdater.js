@@ -9,27 +9,16 @@ export default class UserUpdater {
      * @param user
      * @returns {Promise}
      */
-  getUserInfo(user) {
-    return new Promise((resolve, reject) => {
-      // Read from store. //TODO keep in memory?
-      // let users = store.getState().Users;
+  async getUserInfo(user) {
+    const data = await api.makeApiGetCall(`/users/${user}`);
+    const tmpUser = new User(data.data.id, data.data.name, data.data.realname, data.data.image_url, data.data.friend);
+    const cacheToStore = new CacheUser(data.data.id, data.data.name, data.data.realname, data.data.image_url);
+    store.dispatch(addUserBatch([tmpUser]));
+    return tmpUser;
+  }
 
-      // Get from local cache
-      // if (false && typeof(users[user] !== "undefined")) {
-      //    resolve(users[user]);
-      // }
-      // else {
-
-      api.makeApiGetCall(`/users/${user}`).then((data) => {
-        // Save to cache
-        const tmpUser = new User(data.data.id, data.data.name, data.data.realname, data.data.image_url, data.data.friend);
-        const cacheToStore = new CacheUser(data.data.id, data.data.name, data.data.realname, data.data.image_url);
-        store.dispatch(addUserBatch([tmpUser]));
-        resolve(tmpUser);
-      }).catch((err) => {
-        reject(err);
-      });
-      // }
-    });
+  async getUserRawData(user) {
+    const data = await api.makeApiGetCall(`/users/${user}`);
+    return data.data;
   }
 }

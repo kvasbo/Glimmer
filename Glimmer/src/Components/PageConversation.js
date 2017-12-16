@@ -80,7 +80,7 @@ class PageConversation extends React.Component {
       return (
         <View style={pageStyles.container}>
 
-          <KeyboardAvoidingView keyboardVerticalOffset={64} behavior="padding" style={{ flex: 1 }}>
+          <KeyboardAvoidingView keyboardVerticalOffset={helpers.getPlatformDependentVars().keyboardAvoidingOffset} behavior="padding" style={{ flex: 1 }}>
 
             <ReversedFlatList
               style={pageStyles.chatWindow}

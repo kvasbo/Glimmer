@@ -38,7 +38,7 @@ export default class Helpers {
 
     out.platform = platform;
 
-    out.keyboardAvoidingOffset = (platform === 'ios') ? 64 : -150;
+    out.keyboardAvoidingOffset = (platform === 'ios') ? 80 : -150;
 
     return out;
   }
