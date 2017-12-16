@@ -99,6 +99,18 @@ export default class ForumUpdater {
       return result.message;
     }
 
+    async followEvent(postId) {
+      const uri = `/events/${postId}/follow`;
+      const result = await api.makeApiPostCall(uri);
+      return result.message;
+    }
+
+    async unfollowEvent(postId) {
+      const uri = `/events/${postId}/unfollow`;
+      const result = await api.makeApiPostCall(uri);
+      return result.message;
+    }
+
     loadFirstFavorites(depth = 5) {
       return this.addFavorites(1, depth, true);
     }
