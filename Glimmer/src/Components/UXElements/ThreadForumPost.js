@@ -6,7 +6,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import KudosAndCommentsAndStuff from './KudosAndCommentsAndStuff';
-import ForumTextTextile from './ForumTextTextile.js';
+import ForumTextTextile from './ForumTextTextile';
+import PostControls from './PostControls';
 import CommentMetadata from './CommentMetadata';
 import * as colors from '../../Styles/colorConstants';
 
@@ -40,12 +41,7 @@ export default class ThreadForumPost extends React.Component {
         <View style={pageStyles.container}>
 
           <View style={pageStyles.creatorInfo}>
-            <CommentMetadata
-              image={this.props.data.creator_image}
-              name={this.props.data.creator_name}
-              time={this.props.data.created_at}
-              forum={this.props.data.forum_title}
-            />
+            <PostControls post={this.props.data} />
           </View>
 
           <View style={pageStyles.thePost}>

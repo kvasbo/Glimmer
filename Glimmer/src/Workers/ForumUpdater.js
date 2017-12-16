@@ -87,6 +87,18 @@ export default class ForumUpdater {
       });
     }
 
+    async followPost(postId) {
+      const uri = `/posts/${postId}/follow`;
+      const result = await api.makeApiPostCall(uri);
+      return result.message;
+    }
+
+    async unfollowPost(postId) {
+      const uri = `/posts/${postId}/unfollow`;
+      const result = await api.makeApiPostCall(uri);
+      return result.message;
+    }
+
     loadFirstFavorites(depth = 5) {
       return this.addFavorites(1, depth, true);
     }
