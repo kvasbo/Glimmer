@@ -18,13 +18,12 @@ class PageConversation extends React.Component {
       super(props);
       this.onSend = this.onSend.bind(this);
       this.state = { refreshing: null, text: null, lastPage: 1 };
-      this._loadMoreItems = this._loadMoreItems.bind(this);
+      this.loadMoreItems = this.loadMoreItems.bind(this);
     }
 
     componentWillMount() {
       arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);
     }
-
 
     componentDidMount() {
       this.reloadTimer = setInterval(() => { arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1); }, 5000);
@@ -34,46 +33,29 @@ class PageConversation extends React.Component {
       clearInterval(this.reloadTimer);
     }
 
-
-    parseMessage(mess) {
-      // Mark as read!
-      if (mess.dismissed_at === null) {
-        arbeidsMaur.messageUpdater.setMessageAsRead(mess.id);
-      }
-
-      return mess;
-    }
-
-    _getMessages() {
+    getMessages() {
       // No messages, or none loaded yet
       if (typeof this.props.messages[this.props.user_id] === 'undefined') return [];
-
       const tmpMsgs = Object.values(this.props.messages[this.props.user_id]);
-
       tmpMsgs.sort((x, y) => (new Date(x.sent_at) - new Date(y.sent_at)));
-
-      const out = tmpMsgs.map(this.parseMessage);
-
-      // console.log("m3ssages", out);
-
+      const out = tmpMsgs.map(parseMessage);
       return out;
     }
 
-    _loadMoreItems(distance) {
+    loadMoreItems(distance) {
       const nextPage = this.state.lastPage + 1;
       arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, nextPage).then(() => {
         this.setState({ lastPage: nextPage });
       });
     }
 
-    _renderItem(item) {
-      // console.log("Item", item);
+    renderItem(item) {
       return (
         <ChatBubble message={item.item} />
       );
     }
 
-    _refresh() {
+    refresh() {
 
     }
 
@@ -98,16 +80,16 @@ class PageConversation extends React.Component {
       return (
         <View style={pageStyles.container}>
 
-          <KeyboardAvoidingView keyboardVerticalOffset={helpers.getPlatformDependentVars().keyboardAvoidingOffset} behavior="padding" style={{ flex: 1 }}>
+          <KeyboardAvoidingView keyboardVerticalOffset={64} behavior="padding" style={{ flex: 1 }}>
 
             <ReversedFlatList
               style={pageStyles.chatWindow}
-              data={this._getMessages()}
-              onRefresh={() => this._refresh()}
+              data={this.getMessages()}
+              onRefresh={() => this.refresh()}
               refreshing={this.state.refreshing}
-              renderItem={this._renderItem}
+              renderItem={this.renderItem}
               keyExtractor={(item, index) => item.id}
-              onEndReached={this._loadMoreItems}
+              onEndReached={this.loadMoreItems}
               onEndReachedThreshold={0.5}
               initialNumToRender={15}
               ref={item => this.setRef(item)}
@@ -116,7 +98,7 @@ class PageConversation extends React.Component {
             <TextInput
               style={pageStyles.textWindow}
               multiline={false}
-              autoFocus={false}
+              autoFocus={true}
               autoCapitalize="sentences"
               onSubmitEditing={() => this.onSend()}
               returnKeyType="send"
@@ -132,16 +114,14 @@ class PageConversation extends React.Component {
     }
 }
 
-/*
- <GiftedChat
- locale="nb"
- messages={this._getMessages()}
- onSend={this.onSend}
- user={{
- _id: store.getState().AppStatus.activeUserId,
- }}
- />
- */
+function parseMessage(mess) {
+  // Mark as read!
+  if (mess.dismissed_at === null) {
+    global.arbeidsMaur.messageUpdater.setMessageAsRead(mess.id);
+  }
+  return mess;
+}
+
 
 const pageStyles = StyleSheet.create({
   container: {
