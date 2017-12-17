@@ -53,8 +53,8 @@ class PageThread extends React.Component {
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
-          this.loadCommentPage(1);
-          if (this.state.currentPage !== 1) this.loadCommentPage(this.state.currentPage);
+          this.silentlyLoadCommentPage(1);
+          if (this.state.currentPage !== 1) this.silentlyLoadCommentPage(this.state.currentPage);
           break;
         case 'didAppear':
           this.updateSkammekrok();
@@ -70,6 +70,10 @@ class PageThread extends React.Component {
     updateSkammekrok = () => {
       const skammekrok = global.arbeidsMaur.gjemsel.getKrok();
       this.setState({ skammekrok });
+    }
+
+    silentlyLoadCommentPage(page) {
+      arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent);
     }
 
     async loadCommentPage(page) {
@@ -204,7 +208,7 @@ class PageThread extends React.Component {
 
     getComments() {
 
-      if (this.state.loading) {
+      if (false && this.state.loading) {
         const loadText = `Laster side ${this.getCurrentPageNumber()}`;
         return (<View style={{ paddingTop: 50, justifyContent: 'center', alignItems: 'center' }}><LoadingScreen text={loadText} /></View>);
       }

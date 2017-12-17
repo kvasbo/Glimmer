@@ -12,13 +12,11 @@ function ForumPostComment(state = initialState, action) {
 
       // Remove existing posts for that page!
       newCommentsState = filter(newCommentsState, (c) => {
-        console.log('filter', c);
         if (c.postId === action.postId && c.page === action.page) return false;
         return true;
       });
 
       const outState = newCommentsState.concat(action.comments);
-      
       // Return
       return outState;
     }
