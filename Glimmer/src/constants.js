@@ -27,10 +27,8 @@ export const APPCONTROL_SET_CURRENT_USER = 'APPCONTROL_SET_CURRENT_USER';
 export const APPCONTROL_SET_CURRENT_TOKEN = 'APPCONTROL_SET_CURRENT_TOKEN';
 
 export const FORUMPOST_COMMENTS_ADD = 'FORUMPOST_COMMENTS_ADD';
-export const FORUMPOST_COMMENTS_SET_ACTIVE_PAGE = 'FORUMPOST_COMMENTS_SET_ACTIVE_PAGE';
 
 export const USERS_ADD_USER_BATCH = 'USERS_ADD_USER_BATCH';
-
 
 export const REGEX_LINK_USER = /(https?:\/\/(www\.)?underskog.no\/medlem\/vis\/\w*)/gi;
 export const REGEX_LINK_THREAD = /https?:\/\/.*underskog\.no\/samtale\/[0-9]*/gi;

@@ -297,7 +297,7 @@ export default class ForumUpdater {
           for (const key in data.data) {
             try {
               const d = data.data[key];
-              const tmpC = new ForumPostComment(d.id, postId, d.body, d.created_at, d.kudos, d.updated_at, d.creator.name, d.creator.id, d.creator.image_url, d.body_textile);
+              const tmpC = new ForumPostComment(d.id, postId, d.body, d.created_at, d.kudos, d.updated_at, d.creator.name, d.creator.id, d.creator.image_url, d.body_textile, page);
               comments.push(tmpC);
             } catch (err) {
 

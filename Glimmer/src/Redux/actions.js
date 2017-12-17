@@ -8,7 +8,6 @@ import {
   FORUMLIST_ADD_FORUM,
   FORUMLIST_REPLACE,
   FORUMPOST_COMMENTS_ADD,
-  FORUMPOST_COMMENTS_SET_ACTIVE_PAGE,
   KRETS_ADD_PERSON_BATCH,
   MESSAGE_CONVERSATON_ADD_BATCH,
   MESSAGE_RECIPIENTS_ADD_PERSON,
@@ -136,14 +135,6 @@ export function addForumPostComments(postId, page, comments) {
     postId,
     page,
     comments,
-  };
-}
-
-export function setForumPostCommentActivePage(postId, activePage) {
-  return {
-    type: FORUMPOST_COMMENTS_SET_ACTIVE_PAGE,
-    postId,
-    activePage,
   };
 }
 

@@ -1,6 +1,7 @@
 export default class ForumPostComment {
-  constructor(id, postId, body, created_at, kudos, updated_at, creator_name, creator_id, creator_image, body_textile = null) {
+  constructor(id, postId, body, created_at, kudos, updated_at, creator_name, creator_id, creator_image, body_textile, page) {
     this.postId = postId;
+    this.page = page;
     this.id = id;
     this.body = body;
     this.body_textile = body_textile;

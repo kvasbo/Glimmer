@@ -5,6 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { filter } from 'lodash';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThreadForumPost from './UXElements/ThreadForumPost';
@@ -29,7 +30,7 @@ class PageThread extends React.Component {
       };
       this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
-      this._isMounted = false;
+      this.isMounted = false;
       this.componentWillMount = this.componentWillMount.bind(this);
       this.componentWillUnmount = this.componentWillUnmount.bind(this);
       this.loadCommentPage = this.loadCommentPage.bind(this);
@@ -39,10 +40,21 @@ class PageThread extends React.Component {
       console.log('isEvent', this.isEvent);
     }
 
+    componentWillMount() {
+      this.isMounted = true;
+      this.loadCommentPage(1);
+      arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
+    }
+
+    componentWillUnmount() {
+      this.isMounted = false;
+    }
+
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
-          
+          this.loadCommentPage(1);
+          if (this.state.currentPage !== 1) this.loadCommentPage(this.state.currentPage);
           break;
         case 'didAppear':
           this.updateSkammekrok();
@@ -60,31 +72,17 @@ class PageThread extends React.Component {
       this.setState({ skammekrok });
     }
 
-    componentWillMount() {
-      this._isMounted = true;
-      this.loadCommentPage(1);
-      arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
-    }
-
-    componentWillUnmount() {
-      this._isMounted = false;
-    }
-
-    loadCommentPage(page) {
+    async loadCommentPage(page) {
       this.setState({ currentPage: page, loading: true });
-
-      arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent).then((data) => {
-        if (this._isMounted) {
-          this.setState({ comments: data, loading: false });
-        }
-      });
+      await arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent);
+      if (this.isMounted) {
+        this.setState({ loading: false });
+      }
     }
 
     findLastPageOfComments() {
       const cCount = parseInt(this.props.post.comment_count);
-
       const pNumber = parseInt((Math.ceil(cCount / commentsInPage)));
-
       return pNumber;
     }
 
@@ -139,9 +137,7 @@ class PageThread extends React.Component {
       const size = 30;
 
       return (
-
         <View style={pageStyles.sideVelgerView}>
-
           <TouchableOpacity onPress={() => this._gotoTop()}>
             <View style={pageStyles.iconButton}>
               <Icon
@@ -151,7 +147,6 @@ class PageThread extends React.Component {
               />
             </View>
           </TouchableOpacity>
-
           <TouchableOpacity onPress={() => this._gotoBottom()}>
             <View style={pageStyles.iconButton}>
               <Icon
@@ -161,7 +156,6 @@ class PageThread extends React.Component {
               />
             </View>
           </TouchableOpacity>
-
           <TouchableOpacity onPress={() => {
                     this.props.navigator.push({
                         screen: 'glimmer.PageNewForumComment', // unique ID registered with Navigation.registerScreen
@@ -179,8 +173,6 @@ class PageThread extends React.Component {
               />
             </View>
           </TouchableOpacity>
-
-
           <TouchableOpacity onPress={() => {
                 }}
           >
@@ -188,8 +180,6 @@ class PageThread extends React.Component {
               <Text style={pageStyles.pageNumberText}>{this.getCurrentPageNumber()}</Text>
             </View>
           </TouchableOpacity>
-
-
           <TouchableOpacity onLongPress={() => this._oldestPage()} onPress={() => this._prevPage()}>
             <View style={pageStyles.iconButton}>
               <Icon
@@ -199,7 +189,6 @@ class PageThread extends React.Component {
               />
             </View>
           </TouchableOpacity>
-
           <TouchableOpacity onLongPress={() => this._newestPage()} onPress={() => this._nextPage()}>
             <View style={pageStyles.iconButton}>
               <Icon
@@ -209,18 +198,21 @@ class PageThread extends React.Component {
               />
             </View>
           </TouchableOpacity>
-
         </View>
       );
     }
 
     getComments() {
+
       if (this.state.loading) {
         const loadText = `Laster side ${this.getCurrentPageNumber()}`;
         return (<View style={{ paddingTop: 50, justifyContent: 'center', alignItems: 'center' }}><LoadingScreen text={loadText} /></View>);
       }
 
-      let tmpPosts = this.state.comments;
+      let tmpPosts = filter(this.props.comments, (c) => {
+        if (c.postId === this.props.post.id && c.page === this.state.currentPage) return true;
+        return false;
+      });
 
       tmpPosts.sort((x, y) => (new Date(x.created_at) - new Date(y.created_at)));
 
@@ -242,7 +234,6 @@ class PageThread extends React.Component {
           data={tmpPosts[i]}
         />);
       }
-
       return out;
     }
 
@@ -254,39 +245,24 @@ class PageThread extends React.Component {
       }
 
       return (
-
         <ThreadForumPost data={this.props.post} navigator={this.props.navigator} />
       );
     }
 
     render() {
       return (
-
-
         <View style={pageStyles.container}>
-
           <View style={{ flex: 1 }}>
-
             <ScrollView ref={component => this.scrollbar = component} style={{ flex: 1 }}>
-
               {this.getPost()}
-
               <View ref={component => this.firstpost = component} />
-
               {this.getComments()}
-
             </ScrollView>
-
           </View>
-
           <View style={pageStyles.navBar}>
-
             {this._getSidevelger()}
-
           </View>
-
         </View>
-
       );
     }
 }
@@ -332,18 +308,17 @@ const pageStyles = StyleSheet.create({
   },
 });
 
-
 PageThread.propTypes = {
   navigator: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
+  comments: PropTypes.array.isRequired,
 };
-
 
 function mapStateToProps(state) {
   return {
     appStatus: state.AppStatus,
+    comments: state.ForumPostComment,
   };
 }
 
 export default connect(mapStateToProps)(PageThread);
-
