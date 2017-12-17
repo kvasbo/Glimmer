@@ -34,18 +34,20 @@ export default class PageLogin extends React.Component {
 
   getEula() {
     return (
-      <View style={[pageStyles.container, { margin: 20, alignItems: 'flex-start' }]}>
-        <Text style={pageStyles.header}>Sluttbrukeravtale for Glimmer</Text>
-        <Text style={pageStyles.mainText}>Ved å benytte denne appen godtar du at du må følge Underskogs medlemsavtale til punkt og prikke, inkludert reglene om hva som er tillatt å poste.</Text>
-        <Text style={pageStyles.mainText}>Vi som lager appen har ikke noe ansvar for hva du måtte finne på av tøys, og står ikke ansvarlig for eventuelle feil som måtte oppstå.</Text>
-        <Text style={pageStyles.mainText}>Vi lagrer ingen form for data om deg i våre systemer, og om vi en gang ved uhell skulle gjøre det vil vi slette dem så fort som mulig</Text>
-        <View style={{ height: 20 }} />
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Switch value={this.state.eulaAccepted} onValueChange={() => { this.setState({ eulaAccepted: !this.state.eulaAccepted }); }} />
-          <Text style={{ marginLeft: 20 }} >Jeg godtar sluttbrukeravtalen</Text>
+      <View style={[pageStyles.container, { alignItems: 'flex-start' }]}>
+        <View style={pageStyles.paragraph}>
+          <Text style={pageStyles.header}>Sluttbrukeravtale for Glimmer</Text>
+          <Text style={pageStyles.mainText}>Ved å benytte denne appen godtar du at du må følge Underskogs medlemsavtale til punkt og prikke, inkludert reglene om hva som er tillatt å poste.</Text>
+          <Text style={pageStyles.mainText}>Vi som lager appen har ikke noe ansvar for hva du måtte finne på av tøys, og står ikke ansvarlig for eventuelle feil som måtte oppstå.</Text>
+          <Text style={pageStyles.mainText}>Vi lagrer ingen form for data om deg i våre systemer, og om vi en gang ved uhell skulle gjøre det vil vi slette dem så fort som mulig</Text>
+          <View style={{ height: 20 }} />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Switch value={this.state.eulaAccepted} onValueChange={() => { this.setState({ eulaAccepted: !this.state.eulaAccepted }); }} />
+            <Text style={{ marginLeft: 20 }} >Jeg godtar sluttbrukeravtalen</Text>
+          </View>
+          <View style={{ height: 20 }} />
+          <Button title="Lukk" onPress={() => { this.setState({ eulaVisible: false }); }} />
         </View>
-        <View style={{ height: 20 }} />
-        <Button title="Lukk" onPress={() => { this.setState({ eulaVisible: false }); }} />
       </View>
     );
   }
@@ -54,8 +56,7 @@ export default class PageLogin extends React.Component {
     return (
 
       <View style={pageStyles.container}>
-        <View style={{ height: 500, width: 320 }}>
-          <ScrollView style={{ margin: 0, flex: 1, alignContent: 'center' }}>
+        <View style={{  }}>
             <View style={pageStyles.paragraph}>
               <Text style={pageStyles.header}>Velkommen til Glimmer</Text>
             </View>
@@ -71,7 +72,7 @@ export default class PageLogin extends React.Component {
               <Button title="Vis sluttbrukeravtale" onPress={() => this.setState({ eulaVisible: true })} />
               <Button title="Logg inn på Underskog" disabled={!this.state.eulaAccepted} onPress={() => this.doTheLoginThing()} />
             </View>
-          </ScrollView>
+          
         </View>
         <Modal visible={this.state.eulaVisible}>
           {this.getEula()}
@@ -100,8 +101,8 @@ const pageStyles = StyleSheet.create({
 
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 40,
+    marginRight: 40,
     padding: 0,
 
   },
@@ -110,7 +111,7 @@ const pageStyles = StyleSheet.create({
 
   header: {
     textAlign: 'center',
-    fontSize: 26,
+    fontSize: 24,
     color: colors.COLOR_BLACK,
     marginTop: 30,
     marginBottom: 7,

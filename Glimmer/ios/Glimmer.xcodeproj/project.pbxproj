@@ -51,6 +51,8 @@
 		95EA88F75C5047928A495D52 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88C82DC48E6F4952B9368E1A /* EvilIcons.ttf */; };
 		9CC498E2DB60446BA853D8DB /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 858E1F5BC0464323919BAA63 /* libRNKeychain.a */; };
 		AD134F8F1EF9042900ED5A39 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD134F8D1EF9040B00ED5A39 /* libReactNativeNavigation.a */; };
+		AD2D11061FE66E7200633350 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD2D11051FE66E7200633350 /* Stickers.xcassets */; };
+		AD2D110A1FE66E7200633350 /* Glimmer Stickers.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AD2D11031FE66E7100633350 /* Glimmer Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AD39F7A31FD97C680001322F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD39F77C1FD97C680001322F /* GoogleService-Info.plist */; };
 		ADC28FBC1F0B9F68005CD37E /* GlimmerLaunch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBA1F0B9F68005CD37E /* GlimmerLaunch.storyboard */; };
 		ADC28FBE1F0BA582005CD37E /* stol.png in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBD1F0BA582005CD37E /* stol.png */; };
@@ -265,6 +267,13 @@
 			remoteGlobalIDString = 5D82366F1B0CE05B005A9EF3;
 			remoteInfo = RNKeychain;
 		};
+		AD2D11081FE66E7200633350 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD2D11021FE66E7100633350;
+			remoteInfo = "Glimmer Stickers";
+		};
 		AD61A5691F348B08006963C0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AD61A5621F348B08006963C0 /* RCTCameraRoll.xcodeproj */;
@@ -351,6 +360,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		AD2D11351FE66E7200633350 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AD2D110A1FE66E7200633350 /* Glimmer Stickers.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
@@ -408,6 +431,9 @@
 		A4855BFCE8AE4AFE9547F71F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		AD134FF21EF9B77800ED5A39 /* Glimmer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Glimmer.entitlements; path = Glimmer/Glimmer.entitlements; sourceTree = "<group>"; };
+		AD2D11031FE66E7100633350 /* Glimmer Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Glimmer Stickers.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD2D11051FE66E7200633350 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
+		AD2D11071FE66E7200633350 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD39F77C1FD97C680001322F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Glimmer/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AD61A5621F348B08006963C0 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		ADC28FBB1F0B9F68005CD37E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Glimmer/Base.lproj/GlimmerLaunch.storyboard; sourceTree = "<group>"; };
@@ -670,6 +696,7 @@
 				13B07FAE1A68108700A75B9A /* Glimmer */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* GlimmerTests */,
+				AD2D11041FE66E7200633350 /* Glimmer Stickers */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				A2DF4553F9DC4CCF8495927D /* Resources */,
 				EFBC7D0FFE92A44DED2D8667 /* Pods */,
@@ -687,6 +714,7 @@
 				00E356EE1AD99517003FC87E /* GlimmerTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* Glimmer-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Glimmer-tvOSTests.xctest */,
+				AD2D11031FE66E7100633350 /* Glimmer Stickers.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -732,6 +760,15 @@
 				AD134FF01EF9B73D00ED5A39 /* libRNKeychain.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		AD2D11041FE66E7200633350 /* Glimmer Stickers */ = {
+			isa = PBXGroup;
+			children = (
+				AD2D11051FE66E7200633350 /* Stickers.xcassets */,
+				AD2D11071FE66E7200633350 /* Info.plist */,
+			);
+			path = "Glimmer Stickers";
 			sourceTree = "<group>";
 		};
 		AD61A5631F348B08006963C0 /* Products */ = {
@@ -827,10 +864,12 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				E671B719084B68FE32048A48 /* [CP] Embed Pods Frameworks */,
 				8D40202C4D237E3608B11DD2 /* [CP] Copy Pods Resources */,
+				AD2D11351FE66E7200633350 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AD2D11091FE66E7200633350 /* PBXTargetDependency */,
 			);
 			name = Glimmer;
 			productName = "Hello World";
@@ -879,6 +918,21 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* Glimmer-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		AD2D11021FE66E7100633350 /* Glimmer Stickers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD2D11341FE66E7200633350 /* Build configuration list for PBXNativeTarget "Glimmer Stickers" */;
+			buildPhases = (
+				AD2D11011FE66E7100633350 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Glimmer Stickers";
+			productName = "Glimmer Stickers";
+			productReference = AD2D11031FE66E7100633350 /* Glimmer Stickers.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -915,6 +969,10 @@
 						DevelopmentTeam = E554988WL6;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					AD2D11021FE66E7100633350 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1005,6 +1063,7 @@
 				00E356ED1AD99517003FC87E /* GlimmerTests */,
 				2D02E47A1E0B4A5D006451C7 /* Glimmer-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* Glimmer-tvOSTests */,
+				AD2D11021FE66E7100633350 /* Glimmer Stickers */,
 			);
 		};
 /* End PBXProject section */
@@ -1330,6 +1389,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD2D11011FE66E7100633350 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD2D11061FE66E7200633350 /* Stickers.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1608,6 +1675,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* Glimmer-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		AD2D11091FE66E7200633350 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD2D11021FE66E7100633350 /* Glimmer Stickers */;
+			targetProxy = AD2D11081FE66E7200633350 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2026,6 +2098,74 @@
 			};
 			name = Release;
 		};
+		AD2D110B1FE66E7200633350 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = E554988WL6;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Glimmer Stickers/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rettvendt.Glimmer.Glimmer-Stickers";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AD2D110C1FE66E7200633350 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = E554988WL6;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Glimmer Stickers/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rettvendt.Glimmer.Glimmer-Stickers";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2070,6 +2210,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD2D11341FE66E7200633350 /* Build configuration list for PBXNativeTarget "Glimmer Stickers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD2D110B1FE66E7200633350 /* Debug */,
+				AD2D110C1FE66E7200633350 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
