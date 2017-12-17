@@ -48,7 +48,6 @@ class PageThread extends React.Component {
           this.updateSkammekrok();
           break;
         case 'willDisappear':
-          this.loadCommentPage(1);
           arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
           break;
         case 'didDisappear':
