@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, StyleSheet, Image, View, ActivityIndicator, Text, Dimensions, WebView } from 'react-native';
+import MyWebView from 'react-native-webview-autoheight';
 import * as colors from '../Styles/colorConstants';
 
 const imageWidth = Dimensions.get('window').width;
+const customStyle = '<style>* {max-width: 100%;} body {font-family: sans-serif;}</style>';
 
 class PageUserProfile extends React.Component {
   constructor(props) {
@@ -44,8 +46,14 @@ class PageUserProfile extends React.Component {
           <Text style={{ fontSize: 28 }} >{this.state.user.name}</Text>
           {this.getRealName()}
         </View>
-        <View style={pageStyles.userInfoPiece}>
-          <WebView style={{ width: imageWidth - 20, height: 200 }} source={{ html: this.state.user.description }} />
+        <View style={{paddingTop: 10, paddingBottom: 10 }}>
+          <MyWebView
+            source={{html: customStyle + fixHtml(this.state.user.description)}}
+            startInLoadingState
+            onError={(error) => console.log(error)}
+            renderError={(error) => console.log(error)}
+            style={{ width: imageWidth - 20, height: 200 }}
+          />
         </View>
       </ScrollView>
     );
@@ -67,7 +75,12 @@ const pageStyles = StyleSheet.create({
 });
 
 function createLargeImageUrl(img){
+  if(img.indexOf(".gif") !== -1) return img;
   return img.replace("48s", "650").replace(".png", ".jpeg").replace(".jpg", "jpeg"); 
+}
+
+function fixHtml(html) {
+  return html.replace("http://", "https://");
 }
 
 function mapStateToProps(state) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, Text, LayoutAnimation } from 'react-native';
+import { View, StyleSheet, Text, LayoutAnimation, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CommentMetadata from './CommentMetadata';
@@ -45,7 +45,9 @@ export default class PostControls extends React.Component {
   getMoreControls() {
     if (!this.props.showControls) return null;
     return (
-      <Icon name={this.getArrow()} color={colors.COLOR_MIDGREY} size={20} onPress={() => { this.toggleExtended(); }} />
+      <TouchableOpacity  onPress={() => { this.toggleExtended(); }}>
+        <Icon name={this.getArrow()} style={{padding: 5}} color={colors.COLOR_MIDGREY} size={20} />
+      </TouchableOpacity>
     );
   }
 

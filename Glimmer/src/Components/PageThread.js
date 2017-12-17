@@ -45,11 +45,11 @@ class PageThread extends React.Component {
           
           break;
         case 'didAppear':
-          this.loadCommentPage(1);
           this.updateSkammekrok();
-          arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
           break;
         case 'willDisappear':
+          this.loadCommentPage(1);
+          arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
           break;
         case 'didDisappear':
           break;
@@ -63,6 +63,8 @@ class PageThread extends React.Component {
 
     componentWillMount() {
       this._isMounted = true;
+      this.loadCommentPage(1);
+      arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
     }
 
     componentWillUnmount() {
