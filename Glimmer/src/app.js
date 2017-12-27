@@ -171,21 +171,21 @@ function startMainApp() {
   Navigation.startTabBasedApp({
     animationType: 'none',
     passProps: { store: global.store },
-    tabs: [/*{
-      label: 'Aktivitet',
-      screen: 'glimmer.PageFirst',
-      icon: iconsMap['ios-list'],
-      title: 'Aktivitet',
-      navigatorStyle: NavStyles.default,
-    },*/ {
+    tabs: [{
       label: 'Mine tråder',
       screen: 'glimmer.PageFavorites',
       icon: iconsMap['ios-star'],
       title: 'Mine tråder',
       navigatorStyle: NavStyles.default,
     }, {
-      label: 'Forsiden',
+      label: 'Strøm',
       screen: 'glimmer.PageStream',
+      icon: iconsMap['ios-list'],
+      title: 'Strøm',
+      navigatorStyle: NavStyles.default,
+    }, {
+      label: 'Forsiden',
+      screen: 'glimmer.PageStart',
       icon: iconsMap['ios-home'],
       title: 'Forsiden',
       navigatorStyle: NavStyles.default,
@@ -205,7 +205,7 @@ function startMainApp() {
     ],
     tabsStyle: { 
       tabBarSelectedButtonColor: '#3499DB',
-      initialTabIndex: 1,
+      initialTabIndex: 2,
     },
 
   });
