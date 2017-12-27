@@ -130,7 +130,6 @@ class Glimmer extends React.Component {
       if (this.loggedIn === true) {
         global.arbeidsMaur.initData();
         // global.arbeidsMaur.forumListUpdater.reloadForums(true);
-
         iconsLoaded.then(() => {
           setTimeout(() => { startMainApp(); }, 500);
         });
@@ -162,32 +161,38 @@ function startLoginApp() {
       navigatorStyle: { navBarHidden: true },
     },
     passProps: {},
-    animationType: 'slide-down',
+    animationType: 'fade',
 
   });
 }
 
 function startMainApp() {
   Navigation.startTabBasedApp({
-    animationType: 'none',
+    animationType: 'fade',
     passProps: { store: global.store },
-    tabs: [/*{
-      label: 'Aktivitet',
-      screen: 'glimmer.PageFirst',
-      icon: iconsMap['ios-list'],
-      title: 'Aktivitet',
+    tabs: [{
+      label: 'Kudos',
+      screen: 'glimmer.PageKudos',
+      icon: iconsMap['ios-ribbon'],
+      title: 'Kudos',
       navigatorStyle: NavStyles.default,
-    },*/ {
+    }, {
+      label: 'Strøm',
+      screen: 'glimmer.PageStream',
+      icon: iconsMap['ios-list'],
+      title: 'Strøm',
+      navigatorStyle: NavStyles.default,
+    }, {
+      label: 'Forsiden',
+      screen: 'glimmer.PageStart',
+      icon: iconsMap['ios-home'],
+      title: 'Forsiden',
+      navigatorStyle: NavStyles.default,
+    }, {
       label: 'Mine tråder',
       screen: 'glimmer.PageFavorites',
       icon: iconsMap['ios-star'],
       title: 'Mine tråder',
-      navigatorStyle: NavStyles.default,
-    }, {
-      label: 'Forsiden',
-      screen: 'glimmer.PageStream',
-      icon: iconsMap['ios-home'],
-      title: 'Forsiden',
       navigatorStyle: NavStyles.default,
     }, {
       label: 'Samtaler',
@@ -195,17 +200,11 @@ function startMainApp() {
       icon: iconsMap['ios-chatbubbles'],
       title: 'Samtaler',
       navigatorStyle: NavStyles.default,
-    }, {
-      label: 'Røkla',
-      screen: 'glimmer.PageAnnet',
-      icon: iconsMap['ios-more'],
-      title: 'Røkla',
-      navigatorStyle: NavStyles.default,
-    },
+    }, 
     ],
     tabsStyle: { 
       tabBarSelectedButtonColor: '#3499DB',
-      initialTabIndex: 1,
+      initialTabIndex: 2,
     },
 
   });

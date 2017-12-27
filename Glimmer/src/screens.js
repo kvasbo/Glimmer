@@ -19,6 +19,7 @@ import PageGjemsel from './Components/PageGjemsel';
 import PageAbout from './Components/PageAbout';
 import PageFirst from './Components/PageFirst';
 import PageUserProfile from './Components/PageUserProfile';
+import PageStart from './Components/PageStart';
 
 import PageLogin from './Components/PageLogin';
 import PageForumList from './Components/PageForumList';
@@ -49,6 +50,7 @@ export default function registerScreens(store, Provider) {
       Navigation.registerComponent('glimmer.PageAbout', () => PageAbout, store, Provider);
       Navigation.registerComponent('glimmer.PageFirst', () => PageFirst, store, Provider);
       Navigation.registerComponent('glimmer.PageUserProfile', () => PageUserProfile, store, Provider);
+      Navigation.registerComponent('glimmer.PageStart', () => PageStart, store, Provider);
 
       // Helper pages
       Navigation.registerComponent('glimmer.PageLogin', () => PageLogin, store, Provider);
