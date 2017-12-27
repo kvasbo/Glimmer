@@ -121,58 +121,34 @@ export default class ForumTextTextile extends React.Component {
     try {
       if (node.name == 'img') {
         if (REGEX_VALID_URL.test(node.attribs.src)) {
-          {
-            defaultRenderer(node, parent);
-          }
+          defaultRenderer(node, parent);
         } else {
           return null;
         }
       }
-      if (node.name == 'iframe') {
+      if (node.name === 'iframe') {
+        
         const a = node.attribs;
+        const frameW = Number(node.attribs.width);
+        const frameH = Number(node.attribs.height);
+        const factor = frameW / maxWidth;
 
-        if (Platform.OS === 'ios') {
-          const iframeHtml = `<iframe src="${a.src}"></iframe>`;
-
-          const frameW = Number(node.attribs.width);
-          const frameH = Number(node.attribs.height);
-
-          const factor = frameW / maxWidth;
-
-          if (factor > 1) {
-            var width = Math.round(frameW / factor);
-            var height = Math.round(frameH / factor);
-          } else {
-            var width = frameW;
-            var height = frameH;
-          }
-
-          console.log(frameW, frameH, width, factor);
-
-          return (
-            <View key={index} style={{ width, height }}>
-              <WebView source={{ html: iframeHtml }} />
-            </View>
-          );
+        if (factor > 1) {
+          var width = Math.round(frameW / factor);
+          var height = Math.round(frameH / factor);
+        } else {
+          var width = frameW;
+          var height = frameH;
         }
 
-
+        const iframeHtml = `<html><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /><iframe style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="${height}px" width="${width}px" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen src="${a.src}"></iframe></html>`;
+        // console.log(frameW, frameH, width, height, factor, iframeHtml);
         return (
-          <Text
-            key={index}
-            style={{ color: colors.COLOR_HIGHLIGHT }}
-            onPress={() => {
-                            this.props.navigator.showLightBox({
-                                screen: 'glimmer.PopupEmbedViewer', // unique ID registered with Navigation.registerScreen
-                                passProps: { uri: a.src }, // simple serializable object that will pass as props to the lightbox (optional)
-                                style: {
-                                    backgroundBlur: 'light', // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
-                                },
-                            });
-                        }}
-          >Embed, trykk for å vise ({a.src})
-          </Text>
+          <View key={index} style={{ width, height, backgroundColor: colors.COLOR_DARKGREY }}>
+            <WebView  style={{ width, height, backgroundColor: colors.COLOR_BLACK }} source={{ html: iframeHtml }} />
+          </View>
         );
+        
       }
     } catch (error) {
       console.log(error);
@@ -261,7 +237,7 @@ export default class ForumTextTextile extends React.Component {
 
   render() {
     return (
-      <View >
+      <View style={{ flex: 1 }} >
         {this.getContent()}
       </View>
     );
