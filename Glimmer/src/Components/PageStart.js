@@ -23,6 +23,11 @@ class PageStart extends React.Component {
   }
 
   onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        firebase.analytics().setCurrentScreen("start");
+        break;
+    }
     if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
       if (event.id == 'tjafs') { // this is the same id field from the static navigatorButtons definition
         this.props.navigator.push({

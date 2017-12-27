@@ -14,7 +14,15 @@ export default class PageNewMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { text: null, receivers: [], buttonsActive: true };
-    console.log(this.props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        firebase.analytics().setCurrentScreen("melding_ny");
+        break;
+    }
   }
 
   componentDidMount() {

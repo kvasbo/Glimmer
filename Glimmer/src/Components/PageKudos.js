@@ -37,6 +37,7 @@ class PageKudos extends React.Component {
     switch (event.id) {
       case 'willAppear':
         this.onRefresh();
+        firebase.analytics().setCurrentScreen("kudos");
         break;
     }
   }

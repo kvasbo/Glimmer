@@ -6,10 +6,15 @@ import textStyles from '../Styles/TextStyles';
 export default class PageAbout extends React.Component {
   constructor(props) {
     super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
-  componentDidMount() {
-
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        firebase.analytics().setCurrentScreen("about");
+        break;
+    }
   }
 
   render() {

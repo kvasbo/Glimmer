@@ -11,11 +11,7 @@ export default class PageLogin extends React.Component {
   constructor(props) {
     super(props);
     this.state = { eulaAccepted: false, eulaVisible: false };
-    console.log('Pagelogin loading');
-  }
-
-  componentDidMount() {
-    console.log('login screen', this.props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   doTheLoginThing() {
@@ -28,8 +24,13 @@ export default class PageLogin extends React.Component {
     });
   }
 
-  checkStateLoop() {
-
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        this.onRefresh();
+        firebase.analytics().setCurrentScreen("login");
+        break;
+    }
   }
 
   getEula() {

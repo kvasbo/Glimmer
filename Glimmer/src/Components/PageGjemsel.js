@@ -8,6 +8,15 @@ export default class PageGjemsel extends React.Component {
     super(props);
     this.state = { krok: [] };
     this.removeFromKrok = this.removeFromKrok.bind(this);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        firebase.analytics().setCurrentScreen("gjemsel");
+        break;
+    }
   }
 
   componentWillMount() {

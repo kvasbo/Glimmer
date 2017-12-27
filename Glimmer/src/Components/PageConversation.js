@@ -19,7 +19,17 @@ class PageConversation extends React.Component {
       this.onSend = this.onSend.bind(this);
       this.state = { refreshing: null, text: null, lastPage: 1 };
       this.loadMoreItems = this.loadMoreItems.bind(this);
+      this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
+
+    onNavigatorEvent(event) {
+      switch (event.id) {
+        case 'willAppear':
+          firebase.analytics().setCurrentScreen("viewConversation");
+          break;
+      }
+    }
+  
 
     componentWillMount() {
       arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);

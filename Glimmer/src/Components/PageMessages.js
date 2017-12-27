@@ -16,9 +16,7 @@ const listStyles = require('../Styles/ListStyles');
 class PageMessages extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = { conversations: [], refreshing: false };
-
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     this._onRefresh = this._onRefresh.bind(this);
   }
@@ -39,33 +37,22 @@ class PageMessages extends React.Component {
     });
   }
 
-  onRender() {
-
-  }
-
-    static navigatorButtons = {
-      rightButtons: [
-        {
-          icon: require('../../icons/plus.png'),
-          id: 'newMessage', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
-          showAsAction: 'ifRoom', // optional, Android only. Control how the button is displayed in the Toolbar. Accepted valued: 'ifRoom' (default) - Show this item as a button in an Action Bar if the system decides there is room for it. 'always' - Always show this item as a button in an Action Bar. 'withText' - When this item is in the action bar, always show it with a text label even if it also has an icon specified. 'never' - Never show this item as a button in an Action Bar.
-        },
-      ],
+  static navigatorButtons = {
+    rightButtons: [
+      {
+        icon: require('../../icons/plus.png'),
+        id: 'newMessage', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        showAsAction: 'ifRoom', // optional, Android only. Control how the button is displayed in the Toolbar. Accepted valued: 'ifRoom' (default) - Show this item as a button in an Action Bar if the system decides there is room for it. 'always' - Always show this item as a button in an Action Bar. 'withText' - When this item is in the action bar, always show it with a text label even if it also has an icon specified. 'never' - Never show this item as a button in an Action Bar.
+      },
+    ],
     };
 
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
           arbeidsMaur.messageUpdater.updateMessageThreads(1);
+          firebase.analytics().setCurrentScreen("meldinger");
           this.updateUnreadCount();
-
-          break;
-        case 'didAppear':
-          break;
-        case 'willDisappear':
-
-          break;
-        case 'didDisappear':
           break;
       }
 

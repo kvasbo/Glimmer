@@ -27,17 +27,13 @@ export default class WriteNewPostOrComment extends React.Component {
     itemKey; //To store in async storage.
 
     constructor(props) {
-
         super(props);
-
         //Set key for storing the temp data.
         if (!this.props.edit && this.props.type === "comment") {
             this.itemKey = "@tmp_comment_" + this.props.postId;
-        }
-        else if (!this.props.edit && this.props.type === "post") {
+        } else if (!this.props.edit && this.props.type === "post") {
             this.ItemKey = "@tmp_newPost";
-        }
-        else {
+        } else {
             this.itemKey = "@trash"
         }
 
@@ -61,33 +57,25 @@ export default class WriteNewPostOrComment extends React.Component {
         };
 
         this.tick = this.tick.bind(this);
-
         this._isMounted = false;
-
     }
 
     tick() {
-
         if (this._isMounted) {
 
             let now = new moment();
             let editEnd = new moment(this.props.comment.updated_at).add(14, "m");
-
             let diff = editEnd.diff(now, "s");
-
             this.setState({timeRemaining: diff});
 
             if (diff < 0) {
                 this.setState({buttonsActive: false});
             }
-
         }
     }
 
     componentDidMount() {
-
         this._isMounted = true;
-
         //Countdown if edit
         if (this.props.edit) {
             this.interval = setInterval(this.tick, 1000);

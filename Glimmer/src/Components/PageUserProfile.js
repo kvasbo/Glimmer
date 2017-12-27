@@ -11,6 +11,15 @@ class PageUserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = { loading: true, user: undefined }
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        firebase.analytics().setCurrentScreen("brukerprofil");
+        break;
+    }
   }
 
   async componentWillMount() {

@@ -40,6 +40,7 @@ class PageUnread extends React.Component {
     switch (event.id) {
       case 'willAppear':
         this._silentRefresh();
+        firebase.analytics().setCurrentScreen("uleste");
         break;
     }
   }

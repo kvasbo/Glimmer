@@ -9,7 +9,17 @@ import { List, ListItem } from 'react-native-elements';
 export default class PageAnnet extends React.Component {
   constructor(props) {
     super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
+
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        firebase.analytics().setCurrentScreen("other");
+        break;
+    }
+  }
+
 
   loadKudos() {
     this.props.navigator.push({
