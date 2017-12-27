@@ -101,7 +101,7 @@ export default class StreamForumPost extends React.Component {
               <View>
                 {this.getHeader()}
               </View>
-              <View style={{ margin: 4, marginLeft: 6, marginBottom: 2, marginRight: 6 }}>
+              <View style={{ margin: 5, marginLeft: 6, marginBottom: 0, marginRight: 6 }}>
                 <PostControls post={this.props.data} showControls={false} showCommentCount navigator={this.props.navigator} />
               </View>
             </View>
@@ -121,7 +121,7 @@ const pageStyles = StyleSheet.create({
     backgroundColor: colors.COLOR_WHITE,
     padding: 0,
     paddingBottom: 10,
-    marginTop: 4,
+    marginTop: 7,
     flex: 1,
   },
   title: {
@@ -179,11 +179,4 @@ const pageStyles = StyleSheet.create({
     justifyContent: 'space-between',
     margin: 0,
   },
-  thePost: {
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 15,
-    marginRight: 15,
-  },
-
 });
