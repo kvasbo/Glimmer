@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "Glimmer/src"
+    },
+    {
+      "path": "Glimmer/node_modules/react-native-vector-icons/glyphmaps"
     }
   ]
 }

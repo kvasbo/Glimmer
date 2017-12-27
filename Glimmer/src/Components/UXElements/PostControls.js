@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, LayoutAnimation, TouchableOpacity } from 'react
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CommentMetadata from './CommentMetadata';
+import Badge from './Badge';
 import * as colors from '../../Styles/colorConstants';
 
 export default class PostControls extends React.Component {
@@ -45,15 +46,26 @@ export default class PostControls extends React.Component {
   getMoreControls() {
     if (!this.props.showControls) return null;
     return (
-      <TouchableOpacity  onPress={() => { this.toggleExtended(); }}>
-        <Icon name={this.getArrow()} style={{padding: 5}} color={colors.COLOR_MIDGREY} size={20} />
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity onPress={() => { this.toggleExtended(); }}>
+          <Icon name={this.getArrow()} style={{padding: 5}} color={colors.COLOR_MIDGREY} size={20} />
+        </TouchableOpacity>
+      </View>
     );
   }
 
   getArrow() {
     if (this.state.expanded) return 'ios-arrow-up';
     return 'ios-arrow-down';
+  }
+
+  getCommentCount() {
+    if (!this.props.showCommentCount || this.props.post.comment_count === 0) return null;
+    return (
+      <View>
+        <Badge text={this.props.post.comment_count} textColor={colors.COLOR_MIDGREY} color={colors.COLOR_LIGHT} />
+      </View>
+    )
   }
 
   render() {
@@ -64,9 +76,10 @@ export default class PostControls extends React.Component {
             post={this.props.post}
             navigator={this.props.navigator}
           />
-          <View>
-            {this.getMoreControls()}
+           <View>
+            {this.getCommentCount()}
           </View>
+          {this.getMoreControls()}
         </View>
         { this.getExtendedView() }
       </View>
@@ -76,18 +89,23 @@ export default class PostControls extends React.Component {
 
 PostControls.defaultProps = {
   showControls: true,
+  showCommentCount: false,
 };
 
 PostControls.propTypes = {
   showControls: PropTypes.bool,
+  showCommentCount: PropTypes.bool,
   navigator: PropTypes.object.isRequired,
 };
 
 const pageStyles = StyleSheet.create({
 
   container: {
+    marginTop: 2,
+    marginBottom: 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   extendedContainer: {

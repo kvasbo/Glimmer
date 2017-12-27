@@ -1,14 +1,10 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import CommentMetadata from './CommentMetadata';
 import ForumTextTextile from './ForumTextTextile';
 import PostControls from './PostControls';
-import KudosAndCommentsAndStuff from './KudosAndCommentsAndStuff';
 import * as colors from '../../Styles/colorConstants';
 
 const DomParser = require('xmldom').DOMParser;
@@ -32,9 +28,6 @@ export default class StreamForumPost extends React.Component {
       this.images = this.getImages();
     }
 
-    componentDidMount() {
-
-    }
 
     getTime() {
       return helpers.getCalendarTime(this.props.data.created_at);
@@ -76,30 +69,21 @@ export default class StreamForumPost extends React.Component {
       return imgOut;
     }
 
-    getFirstImage() {
-      if (this.images.length === 0 || this.state.showText) return null;
-
-
-      return <View style={pageStyles.image}><Image style={{ flex: 1 }} source={{ uri: this.images[0].src }} /></View>;
-    }
-
-    getTextSection() {
-      if (this.state.showText) {
+    getHeader() {
+      if (this.images.length === 0) {
         return (
-          <View style={pageStyles.thePost}>
-            <ForumTextTextile
-              cut={false}
-              key={this.props.data.id}
-              text={this.props.data.body_textile}
-              navigator={this.props.navigator}
-              images
-              style={{ flex: 1 }}
-            />
+          <View style={pageStyles.title}>
+            <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
           </View>
         );
+      } else {
+        return (
+          <View style={pageStyles.image}>
+            <Image style={{ flex: 1 }} source={{ uri: this.images[0].src }} />
+            <Text style={pageStyles.textOnImage}>{this.props.data.title}</Text>
+          </View>
+        )
       }
-
-      return false;
     }
 
     render() {
@@ -112,55 +96,40 @@ export default class StreamForumPost extends React.Component {
                         title: this.props.data.title,
                         passProps: { post: this.props.data },
                     })}
-            onLongPress={() => this.setState({ showText: !this.state.showText })}>
+          >
             <View>
-              <View style={pageStyles.title}>
-                <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
+              <View>
+                {this.getHeader()}
               </View>
               <View style={{ margin: 4, marginLeft: 6, marginBottom: 2, marginRight: 6 }}>
-                <PostControls post={this.props.data} showControls={false} navigator={this.props.navigator} />
+                <PostControls post={this.props.data} showControls={false} showCommentCount navigator={this.props.navigator} />
               </View>
-              {this.getFirstImage()}
             </View>
           </TouchableOpacity>
-          {this.getTextSection()}
-          <View style={pageStyles.metaDataBox}>
-            <View style={pageStyles.metaData}>
-              <View style={{ flexDirection: 'row' }}>
-                <KudosAndCommentsAndStuff
-                  showCommentBadge
-                  navigator={this.props.navigator}
-                  post={this.props.data}
-                  byMe={this.byMe}
-                />
-              </View>
-            </View>
-          </View>
         </View>
       );
     }
 }
 
 StreamForumPost.propTypes = {
-
   data: PropTypes.object.isRequired,
   navigator: PropTypes.object.isRequired,
-
 };
 
 const pageStyles = StyleSheet.create({
   container: {
     backgroundColor: colors.COLOR_WHITE,
     padding: 0,
-    marginTop: 5,
+    paddingBottom: 10,
+    marginTop: 4,
     flex: 1,
   },
   title: {
-    marginTop: 12,
+    marginTop: 0,
     marginBottom: 0,
     marginLeft: 15,
     marginRight: 15,
-    paddingTop: 0,
+    paddingTop: 8,
     paddingBottom: 0,
     backgroundColor: colors.COLOR_WHITE,
   },
@@ -181,13 +150,23 @@ const pageStyles = StyleSheet.create({
     color: colors.COLOR_MIDGREY,
   },
   image: {
-    marginTop: 10,
+    marginTop: 0,
     marginBottom: 5,
     marginLeft: 0,
     marginRight: 0,
-    height: 120,
+    height: 110,
   },
-
+  textOnImage: {
+    position: 'absolute',
+    width: '100%',
+    color: colors.COLOR_WHITE,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    fontSize: 25,
+    fontWeight: '300',
+    padding: 8,
+    paddingLeft: 15,
+  },
   metaDataBox: {
     marginTop: 5,
     marginBottom: 5,
