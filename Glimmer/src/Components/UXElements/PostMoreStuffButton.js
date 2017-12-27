@@ -4,7 +4,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, Modal, Button, Text, AlertIOS } from 'react-native';
+import { View, StyleSheet, Button, Text, AlertIOS, ActionSheetIOS } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as colors from '../../Styles/colorConstants';
 
@@ -12,7 +12,6 @@ import * as colors from '../../Styles/colorConstants';
 export default class PostMoreStuffButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { visible: false }
   }
 
   componentDidMount() {
@@ -33,8 +32,7 @@ export default class PostMoreStuffButton extends React.Component {
           text: 'Rapportér',
           onPress: (rapport) => {
             const message = `Rapport fra Glimmer.\r\nType: ${this.props.itemType}\r\nId: ${this.props.itemId}\r\nMelding: ${rapport}`;
-            global.arbeidsMaur.messageUpdater.sendMessageToUser(6619, message);
-            this.setState({ visible: false });
+            global.arbeidsMaur.messageUpdater.sendMessageToUser(1699, message);
           },
         },
       ],
@@ -55,24 +53,31 @@ export default class PostMoreStuffButton extends React.Component {
           text: 'Skammekrok',
           onPress: () => {
             global.arbeidsMaur.gjemsel.addToKrok(this.props.itemAuthorId);
-            this.setState({ visible: false });
           },
         },
       ],
     );
   }
 
+  showSheet() {
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: ['Rapporter', 'Blokker forfatter', 'Lukk'],
+      destructiveButtonIndex: 0,
+      cancelButtonIndex: 2,
+    },
+    (buttonIndex) => {
+      if (buttonIndex === 0) {
+        this.reportItem();
+      } else if (buttonIndex === 1) {
+        this.blockAuthor();
+      }
+    });
+  }
+
   render() {
     return (
       <View>
-        <Icon name="ios-more-outline" size={20} onPress={() => {this.setState({ visible: true }); }} />
-        <Modal visible={this.state.visible}>
-          <View style={pageStyles.modal}>
-            <Button title="Rapportér" onPress={() => { this.reportItem(); }} />
-            <Button title="Blokkér forfatter" onPress={() => { this.blockAuthor(); }} />
-            <Button title="Lukk" onPress={() => { this.setState({ visible: false }); }} />
-          </View>
-        </Modal>
+        <Icon name="ios-more" size={20} onPress={() => { this.showSheet(); }} />
       </View>
     );
   }
