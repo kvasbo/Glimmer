@@ -1,12 +1,8 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { filter } from 'lodash';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThreadForumPost from './UXElements/ThreadForumPost';
 import SkogsEvent from './UXElements/SkogsEvent';
@@ -23,31 +19,29 @@ class PageThread extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        loading: true,
+        loading: false,
         currentPage: 1,
         comments: [],
         skammekrok: [],
       };
       this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
-      this.isMounted = false;
+      this._isMounted = false;
       this.componentWillMount = this.componentWillMount.bind(this);
       this.componentWillUnmount = this.componentWillUnmount.bind(this);
       this.loadCommentPage = this.loadCommentPage.bind(this);
-
       this.isEvent = (this.props.post.type === 'event');
 
       console.log('isEvent', this.isEvent);
     }
 
     componentWillMount() {
-      this.isMounted = true;
+      this._isMounted = true;
       this.loadCommentPage(1);
       arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
     }
 
     componentWillUnmount() {
-      this.isMounted = false;
+      this._isMounted = false;
     }
 
     onNavigatorEvent(event) {
@@ -72,16 +66,16 @@ class PageThread extends React.Component {
       this.setState({ skammekrok });
     }
 
-    silentlyLoadCommentPage(page) {
-      arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent);
+    async silentlyLoadCommentPage(page) {
+      this.setState({ loading: true });
+      await arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent);
+      this.setState({ loading: false });     
     }
 
     async loadCommentPage(page) {
       this.setState({ currentPage: page, loading: true });
       await arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent);
-      if (this.isMounted) {
-        this.setState({ loading: false });
-      }
+      this.setState({ loading: false });
     }
 
     findLastPageOfComments() {
@@ -91,7 +85,15 @@ class PageThread extends React.Component {
     }
 
     getCurrentPageNumber() {
-      return this.findLastPageOfComments() - this.state.currentPage + 1;
+      const pageNr = this.findLastPageOfComments() - this.state.currentPage + 1;
+      if (this.state.loading) {
+        return (
+          <ActivityIndicator color={colors.COLOR_GRAD1} size="small" />
+        );
+      }
+      return (
+        <Text style={pageStyles.pageNumberText}>{pageNr}</Text>
+      );
     }
 
     /**
@@ -181,7 +183,7 @@ class PageThread extends React.Component {
                 }}
           >
             <View style={pageStyles.iconButton}>
-              <Text style={pageStyles.pageNumberText}>{this.getCurrentPageNumber()}</Text>
+              {this.getCurrentPageNumber()}
             </View>
           </TouchableOpacity>
           <TouchableOpacity onLongPress={() => this._oldestPage()} onPress={() => this._prevPage()}>
@@ -207,12 +209,6 @@ class PageThread extends React.Component {
     }
 
     getComments() {
-
-      if (false && this.state.loading) {
-        const loadText = `Laster side ${this.getCurrentPageNumber()}`;
-        return (<View style={{ paddingTop: 50, justifyContent: 'center', alignItems: 'center' }}><LoadingScreen text={loadText} /></View>);
-      }
-
       let tmpPosts = filter(this.props.comments, (c) => {
         if (c.postId === this.props.post.id && c.page === this.state.currentPage) return true;
         return false;
