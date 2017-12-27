@@ -30,7 +30,7 @@ WidgetContainer.propTypes = {
 const pageStyles = StyleSheet.create({
 
   container: {
-    backgroundColor: colors.COLOR_WHITE,
+    backgroundColor: colors.COLOR_LIGHT,
   },
 
 });
