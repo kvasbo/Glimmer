@@ -3693,8 +3693,8 @@ mkdirp@0.5.0:
     minimist "0.0.8"
 
 moment@^2.18.1:
-  version "2.19.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.4.tgz#17e5e2c6ead8819c8ecfad83a0acccb312e94682"
+  version "2.20.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
 morgan@~1.6.1:
   version "1.6.1"
@@ -4351,8 +4351,8 @@ react-native-lightbox@^0.7.0:
     prop-types "^15.5.10"
 
 react-native-navigation@^1.1:
-  version "1.1.311"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.311.tgz#4892af13bdd111dc92424ec4e268ba8180ac1839"
+  version "1.1.316"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.316.tgz#f1f50468563737ebea6c2b1b96e90419785ff331"
   dependencies:
     lodash "4.x.x"
 
@@ -4369,8 +4369,8 @@ react-native-timeline-listview@^0.2.2:
   resolved "https://registry.yarnpkg.com/react-native-timeline-listview/-/react-native-timeline-listview-0.2.2.tgz#96b65797425525cf98d17e45044b7c154ea82421"
 
 react-native-vector-icons@*:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.4.2.tgz#090f42ee0396c4cc4eae0ddaa518028ba8df40c7"
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.4.3.tgz#9e847b8c432a17e5e0ffd60ccf09f3112a18b9df"
   dependencies:
     lodash "^4.0.0"
     prop-types "^15.5.10"
