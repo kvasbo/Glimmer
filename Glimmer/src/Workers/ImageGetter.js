@@ -6,9 +6,9 @@ export default class ImageGetter {
     imageData = {};
 
     constructor() {
-      this.database = firebaseApp.database;
+      this.database = firebase.database;
 
-      this.ref = firebaseApp.database().ref('imagemeta');
+      this.ref = firebase.database().ref('imagemeta');
       this.ref.on('value', this.handlePostUpdate);
     }
 

@@ -24,7 +24,7 @@ export default class KretsUpdater {
         for (const key in data.data) {
           const tmpUser = new User(data.data[key].id, data.data[key].name, data.data[key].realname, data.data[key].image_url, data.data[key].friend);
           const cacheToStore = new CacheUser(data.data[key].id, data.data[key].name, data.data[key].realname, data.data[key].image_url);
-          global.firebaseApp.database().ref(`userInfo/${data.data[key].id}`).set(cacheToStore);
+          global.firebase.database().ref(`userInfo/${data.data[key].id}`).set(cacheToStore);
           krets.push(tmpUser.id);
           users.push(tmpUser);
         }

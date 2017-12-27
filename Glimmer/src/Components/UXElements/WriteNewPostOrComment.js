@@ -432,7 +432,7 @@ export default class WriteNewPostOrComment extends React.Component {
             this.setState({images: tmpImages});
 
             //Upload
-            firebaseApp.storage()
+            firebase.storage()
             .ref('/postImages/' + metadata.fileName)
             .putFile(metadata.uri, metadata)
             .then(uploadedFile => {

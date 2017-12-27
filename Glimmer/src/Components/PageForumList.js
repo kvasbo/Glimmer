@@ -20,7 +20,7 @@ export default class PageForumList extends React.Component {
     constructor(props) {
       super(props);
 
-      this.forumsRef = firebaseApp.database().ref('forums');
+      this.forumsRef = firebase.database().ref('forums');
       this.state = {
         filter: this.filters.special[0], // Hard coded as the first choice.
         loading: true,

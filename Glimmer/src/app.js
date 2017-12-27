@@ -51,7 +51,7 @@ setJSExceptionHandler(errorHandler, true);
 
 const firebaseApp = RNFirebase.app();
 
-global.firebaseApp = firebaseApp;
+global.firebase = firebaseApp;
 
 global.auth = new GlimmerAuth();
 global.api = new GlimmerAPI();

@@ -6,7 +6,7 @@ export default class ForumListUpdater {
     tmpForums = [];
 
     constructor() {
-      this.database = firebaseApp.database;
+      this.database = firebase.database;
     }
 
     /**
@@ -38,10 +38,10 @@ export default class ForumListUpdater {
       for (const key in this.tmpForums) {
         const f = this.tmpForums[key];
         const tmpForum = new Forum(f.id, f.title, f.body, updateId);
-        firebaseApp.database().ref(`forums/list/${f.id}`).set(tmpForum);
+        firebase.database().ref(`forums/list/${f.id}`).set(tmpForum);
       }
 
-      firebaseApp.database().ref('forums/meta').set({ lastFullUpdate: new Date().toISOString(), id: updateId });
+      firebase.database().ref('forums/meta').set({ lastFullUpdate: new Date().toISOString(), id: updateId });
 
       this.tmpForums = [];
     }
