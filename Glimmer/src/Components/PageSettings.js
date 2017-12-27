@@ -12,6 +12,15 @@ export default class PageAnnet extends React.Component {
   constructor(props) {
     super(props);
     this.state = { nsfw: undefined };
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        firebase.analytics().setCurrentScreen("innstillinger");
+        break;
+    }
   }
 
   componentWillMount() {

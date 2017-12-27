@@ -46,6 +46,7 @@ class PageStream extends React.Component {
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
+          firebase.analytics().setCurrentScreen("strøm");
           this._silentRefresh();
           this.updateSkammekrok();
           break;

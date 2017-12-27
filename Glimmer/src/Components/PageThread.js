@@ -48,6 +48,7 @@ class PageThread extends React.Component {
       switch (event.id) {
         case 'willAppear':
           this.silentlyLoadCommentPage(1);
+          firebase.analytics().setCurrentScreen("tråd");
           if (this.state.currentPage !== 1) this.silentlyLoadCommentPage(this.state.currentPage);
           break;
         case 'didAppear':

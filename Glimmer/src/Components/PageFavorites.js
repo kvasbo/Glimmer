@@ -22,9 +22,7 @@ class PageFavorites extends React.Component {
       refreshing: false,
       silentLoading: false,
     };
-
     this._isMounted = false;
-
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
@@ -54,6 +52,7 @@ class PageFavorites extends React.Component {
       switch (event.id) {
         case 'willAppear':
           this._silentRefresh();
+          firebase.analytics().setCurrentScreen("favoritesList");
           break;
         case 'alle':
 

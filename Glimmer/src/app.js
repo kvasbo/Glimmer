@@ -49,9 +49,10 @@ const errorHandler = (e, isFatal) => {
 
 setJSExceptionHandler(errorHandler, true);
 
-const firebaseApp = RNFirebase.app();
+const firebase = RNFirebase.app();
+firebase.analytics().setAnalyticsCollectionEnabled(true);
 
-global.firebase = firebaseApp;
+global.firebase = firebase;
 
 global.auth = new GlimmerAuth();
 global.api = new GlimmerAPI();
@@ -59,7 +60,7 @@ global.helpers = new Helpers();
 global.arbeidsMaur = new Workers();
 global.SafariView = SafariView;
 
-firebaseApp.auth().onAuthStateChanged((user) => {
+firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // console.log("Firebase signed in", user)
   } else {
@@ -114,7 +115,7 @@ class Glimmer extends React.Component {
       AppState.addEventListener('change', handleAppStateChange);
       this.attachStoreListener();
       registerScreens(store, Provider);
-      firebaseApp.auth().signInAnonymously();
+      firebase.auth().signInAnonymously();
 
       // This function will set the loggedin state to true or false in the store, which in term will trigger the store subscription.
       // Then the app starts. I know.
