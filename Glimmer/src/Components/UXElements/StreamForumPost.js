@@ -6,6 +6,7 @@ import CommentMetadata from './CommentMetadata';
 import ForumTextTextile from './ForumTextTextile';
 import PostControls from './PostControls';
 import * as colors from '../../Styles/colorConstants';
+import { getImagesFromForumPost } from '../../helpers';
 
 const DomParser = require('xmldom').DOMParser;
 
@@ -25,48 +26,12 @@ export default class StreamForumPost extends React.Component {
         console.log('error parsing', this.props);
       }
 
-      this.images = this.getImages();
+      this.images = getImagesFromForumPost(this.props.data.body);
     }
 
 
     getTime() {
       return helpers.getCalendarTime(this.props.data.created_at);
-    }
-
-    getImages() {
-      const imgOut = [];
-
-      try {
-        let body = '<html></html>';
-
-        if (typeof (this.props.data.body) !== 'undefined') {
-          body = this.props.data.body;
-        }
-
-        const doc = new DomParser().parseFromString(body, 'text/html');
-
-        const images = doc.getElementsByTagName('img');
-
-        for (let i = 0; i <= 1; i++) {
-          if (typeof (images[i]) !== 'undefined') {
-            for (const attr in images[i].attributes) {
-              if (images[i].attributes[attr].name === 'src') {
-                const uri = `https:${images[i].attributes[attr].value}`;
-                const image = {
-                  src: uri, id: null, width: null, height: null,
-                };
-                imgOut.push(image);
-              }
-            }
-          } else {
-            break;
-          }
-        }
-      } catch (err) {
-        console.log(err);
-      }
-
-      return imgOut;
     }
 
     getHeader() {
@@ -88,7 +53,6 @@ export default class StreamForumPost extends React.Component {
 
     render() {
       return (
-
         <View style={pageStyles.container}>
           <TouchableOpacity
             onPress={() => this.props.navigator.push({

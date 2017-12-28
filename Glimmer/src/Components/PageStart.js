@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import handleDeeplink from '../deepLink';
 import Moment from 'moment';
-import { ScrollView, StyleSheet } from 'react-native';
+import { View, StyleSheet, LayoutAnimation } from 'react-native';
+import handleDeeplink from '../deepLink';
 import WidgetFrontPage from './UXElements/WidgetFrontPage';
 import WidgetFavorites from './UXElements/WidgetFavorites';
 import * as colors from '../Styles/colorConstants';
@@ -11,7 +11,7 @@ class PageStart extends React.Component {
   static navigatorButtons = {
     rightButtons: [
       {
-        icon: require('../../icons/plus.png'),
+        icon: require('../../icons/more.png'),
         id: 'tjafs',
       },
     ],
@@ -22,10 +22,18 @@ class PageStart extends React.Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
-  onNavigatorEvent(event) {
+  componentWillMount() {
+    global.arbeidsMaur.forumUpdater.addFavorites(1, 3);
+  }
+
+  async onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
         firebase.analytics().setCurrentScreen("start");
+        LayoutAnimation.spring();
+        await global.arbeidsMaur.forumUpdater.addFavorites(1, 1);
+        LayoutAnimation.spring();
+        global.arbeidsMaur.forumUpdater.addStream(1, 1);
         break;
     }
     if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
@@ -45,10 +53,10 @@ class PageStart extends React.Component {
 
   render() {
     return (
-      <ScrollView style={pageStyles.container}>
+      <View style={pageStyles.container}>
         <WidgetFavorites navigator={this.props.navigator} />
         <WidgetFrontPage navigator={this.props.navigator} />
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -77,7 +85,7 @@ const pageStyles = StyleSheet.create({
     backgroundColor: colors.COLOR_WHITE,
     paddingLeft: 0,
     paddingTop: 0,
-    paddingBottom: 30,
+    paddingBottom: 0,
     paddingRight: 0,
   },
 });

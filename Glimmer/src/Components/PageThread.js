@@ -18,9 +18,12 @@ class PageThread extends React.Component {
 
     constructor(props) {
       super(props);
+
+      this.unreadInfo = this.findFirstUnread();
+
       this.state = {
         loading: false,
-        currentPage: 1,
+        currentPage: this.unreadInfo.unreadPage,
         comments: [],
         skammekrok: [],
       };
@@ -30,14 +33,14 @@ class PageThread extends React.Component {
       this.componentWillUnmount = this.componentWillUnmount.bind(this);
       this.loadCommentPage = this.loadCommentPage.bind(this);
       this.isEvent = (this.props.post.type === 'event');
+      
 
       console.log('isEvent', this.isEvent);
     }
 
     componentWillMount() {
       this._isMounted = true;
-      this.loadCommentPage(1);
-      arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
+      // this.loadCommentPage(1);
     }
 
     componentWillUnmount() {
@@ -47,7 +50,8 @@ class PageThread extends React.Component {
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
-          this.silentlyLoadCommentPage(1);
+          // this.silentlyLoadCommentPage(1);
+          this.silentlyLoadCommentPage(this.state.currentPage);
           firebase.analytics().setCurrentScreen("tråd");
           if (this.state.currentPage !== 1) this.silentlyLoadCommentPage(this.state.currentPage);
           break;
@@ -55,7 +59,9 @@ class PageThread extends React.Component {
           this.updateSkammekrok();
           break;
         case 'willDisappear':
-          arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
+          if(this.state.currentPage === 1) {
+            //arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
+          }
           break;
         case 'didDisappear':
           break;
@@ -93,8 +99,22 @@ class PageThread extends React.Component {
         );
       }
       return (
-        <Text style={pageStyles.pageNumberText}>{pageNr}</Text>
+        <Text style={pageStyles.pageNumberText}>{pageNr}/{this.unreadInfo.totalPages}</Text>
       );
+    }
+
+    findFirstUnread() {
+      const numberOfUnread = this.props.post.unread_comment_count;
+      const unreadPage = Math.ceil(numberOfUnread / commentsInPage);
+      const numberOnPage = numberOfUnread % 30;
+      const totalPages = Math.ceil(this.props.post.comment_count / commentsInPage);
+      const out = { unreadPage, numberOnPage, totalPages };
+      console.log("findFirstUnread post", this.props.post, out);
+      return out;
+    }
+
+    gotoFirstUnread() {
+      
     }
 
     /**
@@ -233,6 +253,7 @@ class PageThread extends React.Component {
           byStarter={byStarter}
           navigator={this.props.navigator}
           data={tmpPosts[i]}
+          onRenderDone={(height) => {console.log("post height", tmpPosts[i].id, height)}}
         />);
       }
       return out;

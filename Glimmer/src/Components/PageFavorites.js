@@ -5,7 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View, LayoutAnimation } from 'react-native';
 import LoadingScreen from './UXElements/LoadingScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as colors from '../Styles/colorConstants';
@@ -34,42 +34,18 @@ class PageFavorites extends React.Component {
     this._isMounted = false;
   }
 
-    static navigatorButtons = {
-      rightButtons: [
-        {
-          title: 'Uleste', // for a textual button, provide the button title (label)
-          id: 'alle', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
-          showAsAction: 'ifRoom', // optional, Android only. Control how the button is displayed in the Toolbar. Accepted valued: 'ifRoom' (default) - Show this item as a button in an Action Bar if the system decides there is room for it. 'always' - Always show this item as a button in an Action Bar. 'withText' - When this item is in the action bar, always show it with a text label even if it also has an icon specified. 'never' - Never show this item as a button in an Action Bar.
-        }, /* ,
-             {
-             icon: require('../../img/navicon_add.png'), // for icon button, provide the local image asset name
-             id: 'add' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
-             } */
-      ],
-    };
-
-    onNavigatorEvent(event) {
-      switch (event.id) {
-        case 'willAppear':
-          this._silentRefresh();
-          firebase.analytics().setCurrentScreen("favoritesList");
-          break;
-        case 'alle':
-
-          this.props.navigator.push({
-            screen: 'glimmer.PageUnread', // unique ID registered with Navigation.registerScreen
-            title: 'Uleste tråder', // navigation bar title of the pushed screen (optional)
-            animated: true, // does the push have transition animation or does it happen immediately (optional)
-            backButtonTitle: 'Mine tråder',
-          });
-
-          break;
-      }
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'willAppear':
+        this._silentRefresh();
+        firebase.analytics().setCurrentScreen("favoritesList");
+        break;
     }
+  }
 
     _silentRefresh() {
       this.setState({ silentLoading: true });
-
+      LayoutAnimation.spring();
       if (!this.state.loading) {
         global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then(() => {
           if (this._isMounted) {
@@ -81,7 +57,7 @@ class PageFavorites extends React.Component {
 
     _refresh() {
       this.setState({ refreshing: true });
-
+      LayoutAnimation.spring();
       global.arbeidsMaur.forumUpdater.loadFirstFavorites(1).then((data) => {
         if (this._isMounted) {
           this.setState({ refreshing: false });
@@ -126,7 +102,6 @@ class PageFavorites extends React.Component {
         }
       >
         <View>
-
           <View style={[listStyles.whiteBox, { justifyContent: 'space-between' }]}>
             <View style={listStyles.textBlock}>
               <Text style={[listStyles.listTitle, this.getUnreadStyle(item)]}>{item.title}</Text>
@@ -136,8 +111,6 @@ class PageFavorites extends React.Component {
               <Icon name="ios-arrow-forward" style={{ textAlign: 'right' }} color={colors.COLOR_LIGHTGREY} size={30} />
             </View>
           </View>
-
-
           <Divider />
         </View>
       </TouchableOpacity>

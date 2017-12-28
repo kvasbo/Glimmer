@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { Alert, Dimensions, Linking, Platform, StyleSheet, Text, View, WebView } from 'react-native';
 import textile from 'textile-js';
 import HTMLView from 'react-native-htmlview';
-import ExternalImage from './ExternalImage';
 import GlimmerImage from './GlimmerImage';
 import * as colors from '../../Styles/colorConstants';
 import { REGEX_EXTERNAL_IMAGE, REGEX_LINK_THREAD, REGEX_TEXTILE_INTERNAL_IMAGE, REGEX_VALID_URL } from '../../constants';
@@ -17,15 +16,27 @@ const baseImageUrl = 'https://images.underskog.no/versions/1250/XXXXX.jpeg';
 export default class ForumTextTextile extends React.Component {
   constructor(props) {
     super(props);
-
     this.dim = Dimensions.get('window');
-
-    this.parsed = this.parseText();// textile.parse(this.props.text);
+    this.parsed = this.parseText();
   }
 
-  // http://regexr.com
-  // Regex bilde: (!bilde [0-9]*!)
-  // regex lenke: (\"(.*?)\"\:[a-z:/.0-9-#]*)
+  styles = StyleSheet.create({
+    paragraph: {
+      marginTop: 3,
+      marginBottom: 3,
+      marginLeft: this.props.textPadding,
+      marginRight: this.props.textPadding,
+    },
+  
+    bq: {
+      marginTop: 3,
+      marginBottom: 3,
+      marginLeft: 5,
+      paddingLeft: 5,
+      borderLeftWidth: 5,
+      borderLeftColor: colors.COLOR_MIDGREY,
+    },
+  });
 
   parseText() {
     let text = this.props.text;
@@ -53,7 +64,7 @@ export default class ForumTextTextile extends React.Component {
           const arr = match.split(' ');
           const nr = arr[1].substring(0, arr[1].length - 1);
           const url = baseImageUrl.replace('XXXXX', nr);
-          return nr;
+          return url;
         });
 
         outArray.push({ type: 'img', data: tmp, internal: true });
@@ -191,46 +202,45 @@ export default class ForumTextTextile extends React.Component {
   }
 
   getContent() {
-    outArray = [];
+    const outArray = [];
 
-    for (key in this.parsed) {
-      const node = this.parsed[key];
-
+    //for (key in this.parsed) {
+    this.parsed.forEach((node, key) => {
       if (node.type === 'txt') {
         outArray.push(<HTMLView
-          style={styles.paragraph}
+          style={this.styles.paragraph}
           key={key}
           NodeComponent={Text}
           TextComponent={Text}
+          textComponentProps={{selectable: true}}
+          nodeComponentProps={{selectable: false}}
           RootComponent={View}
           value={node.data}
-          stylesheet={styles}
+          stylesheet={this.styles}
           renderNode={this.renderNode}
           onLinkPress={url => this._handleLink(url)}
-          onError={err => console.log(err)}
+          onError={err => console.log('HTMLViuw error', err)}
         />);
       } else if (node.type === 'bq') {
         outArray.push(<HTMLView
-          style={styles.bq}
+          style={this.styles.bq}
           key={key}
           NodeComponent={Text}
           TextComponent={Text}
           RootComponent={View}
           value={node.data}
-          stylesheet={styles}
+          stylesheet={this.styles}
           renderNode={this.renderNode}
           onLinkPress={url => this._handleLink(url)}
           onError={err => console.log(err)}
         />);
-      } else if (node.type === 'img' && node.internal === true) {
-        outArray.push(<GlimmerImage style={styles.paragraph} key={key} id={node.data} />);
-      } else if (node.type === 'img' && node.internal === false) {
-        outArray.push(<ExternalImage style={styles.paragraph} key={key} uri={node.data} />);
+      } else if (node.type === 'img') {
+        outArray.push(<GlimmerImage style={this.styles.paragraph} key={key} internal={node.internal} uri={node.data} />);
       } else {
         // Unknown node
         console.log('Unknown node', node);
       }
-    }
+    });
 
     return outArray;
   }
@@ -244,23 +254,12 @@ export default class ForumTextTextile extends React.Component {
   }
 }
 
+ForumTextTextile.defaultProps = {
+  textPadding: 15,
+};
+
 ForumTextTextile.propTypes = {
   text: PropTypes.string.isRequired,
   navigator: PropTypes.object.isRequired,
+  textPadding: PropTypes.number,
 };
-
-const styles = StyleSheet.create({
-  paragraph: {
-    marginTop: 3,
-    marginBottom: 3,
-  },
-
-  bq: {
-    marginTop: 3,
-    marginBottom: 3,
-    marginLeft: 5,
-    paddingLeft: 5,
-    borderLeftWidth: 3,
-    borderLeftColor: colors.COLOR_LIGHTGREY,
-  },
-});

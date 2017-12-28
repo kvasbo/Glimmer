@@ -3,7 +3,6 @@ import { Navigation } from 'react-native-navigation';
 import PageSplashScreen from './Components/PageSplashScreen';
 import PageStream from './Components/PageStream';
 import PageFavorites from './Components/PageFavorites';
-import PageUnread from './Components/PageUnread';
 import PageThread from './Components/PageThread';
 import PageMessages from './Components/PageMessages';
 import PageConversation from './Components/PageConversation';
@@ -33,7 +32,6 @@ export default function registerScreens(store, Provider) {
       Navigation.registerComponent('glimmer.PageSplashScreen', () => PageSplashScreen, store, Provider);
       Navigation.registerComponent('glimmer.PageStream', () => PageStream, store, Provider);
       Navigation.registerComponent('glimmer.PageFavorites', () => PageFavorites, store, Provider);
-      Navigation.registerComponent('glimmer.PageUnread', () => PageUnread, store, Provider);
       Navigation.registerComponent('glimmer.PageThread', () => PageThread, store, Provider);
       Navigation.registerComponent('glimmer.PageMessages', () => PageMessages, store, Provider);
       Navigation.registerComponent('glimmer.PageConversation', () => PageConversation, store, Provider);

@@ -80,7 +80,7 @@ export default class ForumComment extends React.Component {
       return (
         <View style={pageStyles.container}>
 
-          <View>
+          <View style={pageStyles.metaData}>
             <CommentMetadata
               post={this.props.data}
               byStarter={this.props.byStarter}
@@ -92,13 +92,12 @@ export default class ForumComment extends React.Component {
             <ForumTextTextile webview cut={false} text={this.props.data.body_textile} navigator={this.props.navigator} />
           </View>
           <View style={{
-flexDirection: 'row', margin: 10, marginTop: 5, padding: 0,
+flexDirection: 'row', margin: 0, marginTop: 0, padding: 10, paddingTop: 10, paddingLeft: 15,
 }}
           >
             {this.getKudosSection()}
             {this.getEditSection()}
             {this.getMoreStuff()}
-            
           </View>
         </View>
       );
@@ -118,15 +117,20 @@ ForumComment.propTypes = {
 const pageStyles = StyleSheet.create({
   container: {
     backgroundColor: colors.COLOR_WHITE,
-    padding: 10,
-    paddingBottom: 5,
+    padding: 0,
+    paddingBottom: 0,
     marginBottom: 2,
     marginTop: 2,
     flex: 1,
   },
   comment: {
-    padding: 10,
+    padding: 0,
     paddingTop: 10,
-    marginRight: 10,
+    marginRight: 5,
+    marginLeft: 10,
   },
+  metaData: {
+    padding: 5,
+    paddingTop: 10,
+  }
 });

@@ -127,7 +127,6 @@ class Glimmer extends React.Component {
     }
 
     startAppBasedOnLoginStatus() {
-      console.log('starting app based on status', this.loggedIn);
       if (this.loggedIn === true) {
         global.arbeidsMaur.initData();
         // global.arbeidsMaur.forumListUpdater.reloadForums(true);
@@ -163,42 +162,41 @@ function startLoginApp() {
     },
     passProps: {},
     animationType: 'fade',
-
   });
 }
 
 function startMainApp() {
   Navigation.startTabBasedApp({
     animationType: 'fade',
-    passProps: { store: global.store },
+    passProps: {},
     tabs: [{
-      label: 'Kudos',
+      label: '',
       screen: 'glimmer.PageKudos',
-      icon: iconsMap['ios-ribbon'],
+      icon: iconsMap['ios-ribbon--tab-bar'],
       title: 'Kudos',
       navigatorStyle: NavStyles.default,
     }, {
-      label: 'Strøm',
+      label: '',
       screen: 'glimmer.PageStream',
-      icon: iconsMap['ios-list'],
+      icon: iconsMap['ios-list--tab-bar'],
       title: 'Strøm',
       navigatorStyle: NavStyles.default,
     }, {
-      label: 'Forsiden',
+      label: '',
       screen: 'glimmer.PageStart',
-      icon: iconsMap['ios-home'],
+      icon: iconsMap['ios-home--tab-bar'],
       title: 'Forsiden',
-      navigatorStyle: NavStyles.default,
+      navigatorStyle: NavStyles.noScroll,
     }, {
-      label: 'Mine tråder',
+      label: '',
       screen: 'glimmer.PageFavorites',
-      icon: iconsMap['ios-star'],
+      icon: iconsMap['ios-star--tab-bar'],
       title: 'Mine tråder',
       navigatorStyle: NavStyles.default,
     }, {
-      label: 'Samtaler',
+      label: '',
       screen: 'glimmer.PageMessages',
-      icon: iconsMap['ios-chatbubbles'],
+      icon: iconsMap['ios-chatbubbles--tab-bar'],
       title: 'Samtaler',
       navigatorStyle: NavStyles.default,
     }, 

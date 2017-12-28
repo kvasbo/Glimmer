@@ -1,20 +1,27 @@
 
 import React from 'react';
+import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 import WidgetContainer from './WidgetContainer';
-import { View, StyleSheet, Text } from 'react-native';
+import WidgetFavoritesPost from './WidgetFavoritesPost';
 import * as colors from '../../Styles/colorConstants';
 
 class WidgetFavorites extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { numberToDisplay: 5 };
+    this.state = { numberToDisplay: 60, onlyUnread: true };
   }
 
   getPosts() {
-    let posts = Object.values(this.props.favorites); 
+    let posts = Object.values(this.props.favorites);  
+    if (this.state.onlyUnread) {
+      posts = posts.filter((p) => {
+        return (p.unread_comment_count > 0); 
+      });
+    }
+
     posts.sort((a, b) => {
       const aM = new Moment(a.updated_at);
       const bM = new Moment(b.updated_at);
@@ -23,19 +30,32 @@ class WidgetFavorites extends React.Component {
 
     posts = posts.slice(0, this.state.numberToDisplay);
 
-    console.log(posts);
-
     return posts.map((p) => {
       return (
-        <Text key={p.id} navigator={this.props.navigator} data={p}>{p.title}</Text>
+        <WidgetFavoritesPost key={p.id} navigator={this.props.navigator} post={p} />
       );
     });
   }
 
+  onLayout(event) {
+    // Height of header: 35, padding of container: 12
+    const padding = 12; 
+    const header = 35;
+    const heightOfElement = 32;
+    const numberToDisplay = Math.floor((event.nativeEvent.layout.height - padding - header) / heightOfElement);
+    console.log("onLayout", event.nativeEvent.layout,numberToDisplay);
+  }
+
   render() {
     return (
-      <WidgetContainer title="Tråder jeg følger">
-        {this.getPosts()}
+      <WidgetContainer title="Uleste i tråder jeg følger">
+         <ScrollView
+          snapToInterval={32}
+          decelerationRate="fast"
+          snapToAlignment="start"
+        >
+          {this.getPosts()}
+        </ScrollView>
       </WidgetContainer>
     );
   }
@@ -56,11 +76,3 @@ export default connect(
 WidgetFavorites.propTypes = {
 
 };
-
-const pageStyles = StyleSheet.create({
-
-  container: {
-    backgroundColor: colors.COLOR_WHITE,
-  },
-
-});

@@ -1,17 +1,18 @@
 
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 import WidgetContainer from './WidgetContainer';
+import WidgetForumPost from './WidgetForumPost';
 import StreamForumPost from './StreamForumPost';
 import * as colors from '../../Styles/colorConstants';
 
 class WidgetFrontPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { numberToDisplay: 3 };
+    this.state = { numberToDisplay: 30 };
   }
 
   getPosts() {
@@ -26,7 +27,7 @@ class WidgetFrontPage extends React.Component {
 
     return posts.map((p) => {
       return (
-        <StreamForumPost key={p.id} navigator={this.props.navigator} data={p} />
+        <WidgetForumPost key={p.id} navigator={this.props.navigator} post={p} />
       );
     });
   }
@@ -34,7 +35,13 @@ class WidgetFrontPage extends React.Component {
   render() {
     return (
       <WidgetContainer title="Siste innlegg">
-        {this.getPosts()}
+        <ScrollView
+          snapToInterval={32}
+          decelerationRate="fast"
+          snapToAlignment="start"
+        >
+          {this.getPosts()}
+        </ScrollView>
       </WidgetContainer>
     );
   }

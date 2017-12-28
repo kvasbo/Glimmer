@@ -88,10 +88,10 @@ const pageStyles = StyleSheet.create({
     marginRight: 15,
   },
   thePost: {
-    marginTop: 10,
+    marginTop: 0,
     marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 10,
+    marginRight: 10,
   },
   metaData: {
     marginTop: 10,

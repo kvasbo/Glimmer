@@ -6,17 +6,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // define your suffixes by yourself..
 // here we use active, big, small, very-big..
-const replaceSuffixPattern = /--(active|big|small|very-big)/g;
+const replaceSuffixPattern = /--(active|big|small|very-big|top-menu|tab-bar)/g;
 const icons = {
-  'ios-star': [25, '#bbb'],
-  'ios-chatbubbles': [25, '#fff'],
-  'ios-people': [30, '#bbb'],
-  'ios-paper': [25, '#bbb'],
-  'ios-ribbon': [25, '#bbb'],
-  'ios-settings': [25, '#bbb'],
-  'ios-list': [25, '#bbb'],
-  'ios-home': [25, '#bbb'],
-  'ios-more': [25, '#bbb'],
+  'ios-star--tab-bar': [25, '#bbb'],
+  'ios-chatbubbles--tab-bar': [25, '#fff'],
+  'ios-ribbon--tab-bar': [25, '#bbb'],
+  'ios-list--tab-bar': [30, '#bbb'],
+  'ios-home--tab-bar': [35, '#bbb'],
+  'ios-more--top-menu': [25, '#bbb'],
 };
 
 const defaultIconProvider = Ionicons;
