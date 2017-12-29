@@ -60,7 +60,7 @@ class PageThread extends React.Component {
           break;
         case 'willDisappear':
           if(this.state.currentPage === 1) {
-            //arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
+            arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
           }
           break;
         case 'didDisappear':
@@ -109,7 +109,7 @@ class PageThread extends React.Component {
       const numberOnPage = numberOfUnread % 30;
       const totalPages = Math.ceil(this.props.post.comment_count / commentsInPage);
       const out = { unreadPage, numberOnPage, totalPages };
-      console.log("findFirstUnread post", this.props.post, out);
+      //console.log("findFirstUnread post", this.props.post, out);
       return out;
     }
 

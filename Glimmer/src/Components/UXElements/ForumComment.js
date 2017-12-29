@@ -126,8 +126,8 @@ const pageStyles = StyleSheet.create({
   comment: {
     padding: 0,
     paddingTop: 10,
-    marginRight: 5,
-    marginLeft: 10,
+    marginRight: 0,
+    marginLeft: 0,
   },
   metaData: {
     padding: 5,

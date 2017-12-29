@@ -45,7 +45,7 @@ export default class ForumUpdater {
           f.creator.name, f.creator.id, f.creator.image_url, f.forum.id, f.forum.title, f.body_textile, f.unread_comment_count,
         );
       } catch (err) {
-        console.log('Error parsing forum post', err);
+        console.log('Error parsing forum post', err, f);
         return null;
       }
     }
@@ -66,17 +66,12 @@ export default class ForumUpdater {
     loadPost(id) {
       return new Promise((resolve, reject) => {
         const uri = `/posts/${id}`;
-
         api.makeApiGetCall(uri).then((data) => {
           const tmpPosts = [];
-
           try {
             const p = this.parseAPIForumPost(data.data);
-
             tmpPosts.push(p);
-
             store.dispatch(addPostBatch(tmpPosts));
-
             resolve(p);
           } catch (error) {
             // Could not parse, oh well.
