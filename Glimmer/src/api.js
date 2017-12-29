@@ -8,153 +8,97 @@ const config = require('../config.js');
 
 export default class glimmerAPI {
   /**
-     * Payload is an object. Yes it is. key:value becomes &key=value; urlencoded.
-     * @param call
-     * @param payload
-     * @param callback
-     */
-  makeApiPostCall(kall, payload = null, body = null) {
+   * Payload is an object. Yes it is. key:value becomes &key=value; urlencoded.
+   * @param call
+   * @param payload
+   * @param callback
+   */
+  async makeApiPostCall(kall, payload = null, body = null) {
     let data = '';
-
     for (const element in payload) {
       const tempStr = `${encodeURIComponent(element)}=${encodeURIComponent(payload[element])}&`;
       data += tempStr;
     }
-
     const theContent = JSON.stringify(body);
-
     const url = `${config.base_url + kall}?${data}`;
-
-    return new Promise((resolve, reject) => {
-      this.makeApiCall(url, 'POST', theContent).then((data) => {
-        resolve(data);
-      }).catch((error) => {
-        reject(error);
-      });
-    });
+    const reply = await makeApiCall(url, 'POST', theContent);
+    return reply;
   }
 
   /**
-     * Payload is an object. Yes it is. key:value becomes &key=value; urlencoded.
-     * @param call
-     * @param payload
-     * @param callback
-     */
-  makeApiPutCall(kall, payload = null, body = null) {
+   * Payload is an object. Yes it is. key:value becomes &key=value; urlencoded.
+   * @param call
+   * @param payload
+   * @param callback
+   */
+  async makeApiPutCall(kall, payload = null, body = null) {
     let data = '';
-
     for (const element in payload) {
       const tempStr = `${encodeURIComponent(element)}=${encodeURIComponent(payload[element])}&`;
       data += tempStr;
     }
-
     const putBody = JSON.stringify(body);
-
     let url = config.base_url + kall;
-
     if (payload !== null) url += `?${data}`;
 
-    return new Promise((resolve, reject) => {
-      this.makeApiCall(url, 'PUT', putBody).then((data) => {
-        resolve(data);
-      }).catch((error) => {
-        reject(error);
-      });
-    });
+    const reply = makeApiCall(url, 'PUT', putBody);
+    return reply;
   }
 
   /**
-     * Make Get call to the API.
-     * @param kall
-     * @returns {Promise}
-     */
-  makeApiGetCall(kall) {
+   * Make Get call to the API.
+   * @param kall
+   * @returns {Promise}
+   */
+  async makeApiGetCall(kall) {
     const url = config.base_url + kall;
-
-    return new Promise((resolve, reject) => {
-      this.makeApiCall(url, 'GET').then((data) => {
-        resolve(data);
-      }).catch((error) => {
-        reject(error);
-      });
-    });
+    const data = await makeApiCall(url, 'GET');
+    return data;
   }
+}
 
-  /**
-     * Perform an actual API call
-     * @param url
-     * @param type
-     * @returns {Promise}
-     */
-  makeApiCall(url, type, body = null) {
-    return new Promise((resolve, reject) => {
-      const start = new Date();
+/**
+ * Perform an actual API call
+ * @param url
+ * @param type
+ * @returns {Promise}
+ */
+async function makeApiCall(url, type, body = null) {
+  const start = new Date();
+  const token = await auth.getToken();
+  const response = await fetch(url, {
+    method: type,
+    body,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'User-Agent': 'glimmer',
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-      auth.getToken().then((token) => {
-        fetch(url, {
-          method: type,
-          body,
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            'User-Agent': 'glimmer',
-            Authorization: `Bearer ${token}`,
-          },
-        }).then((response) => {
-          // All is fine
-          if (response.ok === true) {
-            // JSON
-            if (response.headers.get('content-type').indexOf('application/json') !== -1) {
-              response.json().then((data) => {
-                if (__DEV__) {
-                  const end = new Date();
-                  console.log('API OK', type, url, end - start);
-                }
-                resolve(data);
-              }).catch((error) => {
-                console.log('JSON error', error);
-
-                resolve('API OK, but could not parse JSON.');
-              });
-            } else if (response.headers.get('content-type').indexOf('image') !== -1) {
-              const url = response.url;
-              resolve(url);
-            } else {
-              resolve('API OK, but could not parse JSON.');
-            }
-          } else if (response.status === 403) {
-            response.json().then((data) => {
-              console.log('API Rejected, token not accepted', data);
-
-              reject(Error(`API Rejected, token, ${data.error.body}`));
-            });
-
-            reject(Error('Token not accepted'));
-          } else if (response.status === 400) {
-            response.json().then((data) => {
-              console.log('API Rejected, validation error', data.error.body);
-              reject(Error(`API Rejected, validation, ${data.error.body}`));
-            });
-          } else if (response.status === 500) {
-            response.text().then((data) => {
-              console.log('Internal server error', data);
-              reject('Internal server error');
-            });
-          } else {
-            response.text().then((data) => {
-              console.log('Unhandled server error', data, url, type);
-              reject('Unhandled server error');
-            });
-          }
-        }).catch((error) => {
-          console.log('Fetch error', error);
-
-          reject(error);
-        });
-      }).catch((error) => {
-        console.log('Getkey error', error);
-        reject(error);
-      });
-    });
+  if (response.ok === true) {
+    // JSON
+    if (response.headers.get('content-type').indexOf('application/json') !== -1) {
+      try {
+        const data = await response.json();
+        if (__DEV__) {
+          const end = new Date();
+          console.log('API OK', type, url, end - start);
+        }
+        return (data);
+      } catch (error) {
+        console.log('JSON error', error);
+        throw new Error('API OK, but could not parse JSON.');
+      }
+    } else if (response.headers.get('content-type').indexOf('image') !== -1) {
+      const url = response.url;
+      return url;
+    } else {
+      throw new Error('API OK, but could not parse JSON.');
+    }
+  } else {
+    console.log('Error', response);
+    throw new Error('API ERROR', response.status);
   }
 }
