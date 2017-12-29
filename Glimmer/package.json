@@ -9,6 +9,7 @@
     "react-devtools": "react-devtools"
   },
   "dependencies": {
+    "ImageViewer": "^1.5.8",
     "axios": "^0.16.2",
     "babel-core": "^6.26.0",
     "fbjs": "*",

@@ -59,6 +59,12 @@
   version "7.0.46"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.46.tgz#c3dedd25558c676b3d6303e51799abb9c3f8f314"
 
+ImageViewer@^1.5.8:
+  version "1.5.8"
+  resolved "https://registry.yarnpkg.com/ImageViewer/-/ImageViewer-1.5.8.tgz#581801d704e7e75833793b908cac50e7c8860d33"
+  dependencies:
+    prop-types "^15.6.0"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
