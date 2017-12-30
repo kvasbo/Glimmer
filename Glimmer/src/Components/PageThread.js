@@ -99,7 +99,7 @@ class PageThread extends React.Component {
         );
       }
       return (
-        <Text style={pageStyles.pageNumberText}>{pageNr}/{this.unreadInfo.totalPages}</Text>
+        <Text numberOfLines={1} adjustsFontSizeToFit style={pageStyles.pageNumberText}>{pageNr} / {this.unreadInfo.totalPages}</Text>
       );
     }
 
@@ -315,7 +315,6 @@ const pageStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   pageNumberText: {
-    fontSize: 15,
     fontWeight: '300',
     color: colors.COLOR_GRAD1,
   },
