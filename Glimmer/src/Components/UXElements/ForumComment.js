@@ -4,7 +4,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import ForumTextTextile from './ForumTextTextile';
 import PostMoreStuffButton from './PostMoreStuffButton';
 import GiKudos from './GiKudos';
@@ -18,7 +18,6 @@ export default class ForumComment extends React.Component {
 
     constructor(props) {
       super(props);
-
       if (this.props.data.creator_id === store.getState().AppStatus.activeUserId) {
         this.byMe = true;
       }
@@ -85,7 +84,8 @@ export default class ForumComment extends React.Component {
               post={this.props.data}
               byStarter={this.props.byStarter}
               navigator={this.props.navigator}
-            />
+              isUnread={this.props.isUnread}
+            />          
           </View>
 
           <View style={pageStyles.comment}>
@@ -106,12 +106,14 @@ flexDirection: 'row', margin: 0, marginTop: 0, padding: 10, paddingTop: 10, padd
 
 ForumComment.defaultProps = {
   byStarter: false,
+  isUnread: false,
 };
 
 ForumComment.propTypes = {
   data: PropTypes.object.isRequired,
   navigator: PropTypes.object.isRequired,
   byStarter: PropTypes.bool, // Skrevet av trådstarter
+  isUnread: PropTypes.bool,
 };
 
 const pageStyles = StyleSheet.create({
@@ -119,8 +121,8 @@ const pageStyles = StyleSheet.create({
     backgroundColor: colors.COLOR_WHITE,
     padding: 0,
     paddingBottom: 0,
-    marginBottom: 2,
-    marginTop: 2,
+    marginBottom: 0,
+    marginTop: 0,
     flex: 1,
   },
   comment: {

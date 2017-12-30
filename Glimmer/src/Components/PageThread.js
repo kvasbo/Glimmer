@@ -1,20 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { filter } from 'lodash';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { filter, sumBy, cloneDeep } from 'lodash';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThreadForumPost from './UXElements/ThreadForumPost';
 import SkogsEvent from './UXElements/SkogsEvent';
 import ForumComment from './UXElements/ForumComment';
 import * as colors from '../Styles/colorConstants';
 import LoadingScreen from './UXElements/LoadingScreen';
+import { COLOR_LIGHT } from '../Styles/colorConstants';
 
 const commentsInPage = 30;
+const separatorHeight = 5;
 
 class PageThread extends React.Component {
     scrollbar = null;
     firstpost = null;
+    sizeIndex = { comments: {}, post: undefined };
 
     constructor(props) {
       super(props);
@@ -26,6 +29,7 @@ class PageThread extends React.Component {
         currentPage: this.unreadInfo.unreadPage,
         comments: [],
         skammekrok: [],
+        gotoFirst: true,
       };
       this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
       this._isMounted = false;
@@ -34,9 +38,8 @@ class PageThread extends React.Component {
       this.loadCommentPage = this.loadCommentPage.bind(this);
       this.isEvent = (this.props.post.type === 'event');
       
-
-      console.log('isEvent', this.isEvent);
-    }
+      // console.log('isEvent', this.isEvent);
+    }  
 
     componentWillMount() {
       this._isMounted = true;
@@ -113,8 +116,74 @@ class PageThread extends React.Component {
       return out;
     }
 
+    getComments() {
+      let tmpPosts = filter(this.props.comments, (c) => {
+        if (c.postId === this.props.post.id && c.page === this.state.currentPage) return true;
+        return false;
+      });
+
+      tmpPosts.sort((x, y) => (new Date(x.created_at) - new Date(y.created_at)));
+
+      // Skammekrok
+      tmpPosts = tmpPosts.filter((c) => {
+        if (this.state.skammekrok.indexOf(c.creator_id) !== -1) return false;
+        return true;
+      });
+
+      return tmpPosts; 
+    }
+
+    keyExtractor(element) {
+      return element.id;
+    }
+
+    /**
+     * Store the size of the post itself, for scrolling to them.
+     * @param {*} event 
+     * @param {*} index 
+     */
+    postRenderedGetSize(event) {
+      const { height, width } = event.nativeEvent.layout;
+      this.sizeIndex.post = { height, width };
+    }
+
+    /**
+     * Store the size of the comments, for scrolling to them.
+     * @param {*} event 
+     * @param {*} index 
+     */
+    commentRenderedGetSize(event, index) {
+      const { height, width } = event.nativeEvent.layout;
+      this.sizeIndex.comments[index] = { index, height, width };
+    }
+
+    /**
+     * Get the position of any item in the list.
+     */
+    getItemLayout = (data, index) => {
+      const posts = Object.values(this.sizeIndex.comments).filter((c) => {
+        return (c.index < index);
+      });
+      const heightOfComments = sumBy(posts, 'height');
+      const heightOfPost = this.sizeIndex.post.height;
+      const heightOfSeparators = (index - 1) * separatorHeight;
+      const offset = heightOfPost + heightOfComments + heightOfSeparators;
+      const length = (this.sizeIndex.comments[index]) ? this.sizeIndex.comments[index].height : 0;
+      // console.log("getItemlayout", index, heightOfPost, heightOfComments, heightOfSeparators, totalHeight);
+      return { length, offset, index };
+    }
+
     gotoFirstUnread() {
-      
+      const indexOfUnread = commentsInPage - this.unreadInfo.numberOnPage;
+      if (this.unreadInfo.unreadPage === this.state.currentPage && Object.values(this.sizeIndex.comments).length === this.getComments().length) {
+        this.gotoPost(indexOfUnread);
+      } else {
+        setTimeout(() => this.gotoFirstUnread(), 250);
+      }
+    }
+
+    gotoPost(index) {
+      this.flatListRef.scrollToIndex({ animated: true, index });
     }
 
     /**
@@ -122,50 +191,59 @@ class PageThread extends React.Component {
      * @returns {boolean}
      * @private
      */
-    _gotoTop() {
-      if (this.firstpost === null || this.scrollbar === null) return false;
-
-      this.firstpost.measure((fx, fy, width, height, px, py) => {
-        // Scroll to top if initiated
-        if (this.scrollbar !== null) {
-          this.scrollbar.scrollTo({ y: 0, animated: true });
-        }
-      });
+    gotoTop() {
+      this.flatListRef.scrollToOffset(0);
     }
 
     /**
      * Guess.
      * @private
      */
-    _gotoBottom() {
-      this.scrollbar.scrollToEnd({ animated: true });
+    gotoBottom() {
+      this.flatListRef.scrollToEnd({ animated: true });
     }
 
     // Newer page
-    _nextPage() {
+    nextPage() {
+      this.sizeIndex.comments = {};
       this.loadCommentPage(Math.max(this.state.currentPage - 1, 1));
     }
 
     // Older page
-    _prevPage() {
+    prevPage() {
+      this.sizeIndex.comments = {};
       this.loadCommentPage(Math.min(this.state.currentPage + 1, this.findLastPageOfComments()));
     }
 
-    _newestPage() {
+    newestPage() {
+      this.sizeIndex.comments = {};
       this.loadCommentPage(1);
     }
 
-    _oldestPage() {
+    oldestPage() {
+      this.sizeIndex.comments = {};
       this.loadCommentPage(this.findLastPageOfComments());
     }
 
-    _getSidevelger() {
+    enableUnreadButton() {
+      if (this.unreadInfo.unreadPage !== this.state.currentPage) return false;
+      // if (this.getComments().length === 0 || Object.values(this.sizeIndex.comments).length === 0) return false;
+      // if (this.getComments().length !== Object.values(this.sizeIndex.comments).length) return false;
+      return true;
+    }
+
+    getUnreadButtonColor() {
+      if (this.enableUnreadButton()) return colors.COLOR_GRAD1;
+      return colors.COLOR_LIGHTGREY;
+    }
+
+    getSidevelger() {
       const activeColor = colors.COLOR_GRAD1;
       const size = 30;
 
       return (
         <View style={pageStyles.sideVelgerView}>
-          <TouchableOpacity onPress={() => this._gotoTop()}>
+          <TouchableOpacity onPress={() => this.gotoTop()}>
             <View style={pageStyles.iconButton}>
               <Icon
                 size={size}
@@ -174,7 +252,16 @@ class PageThread extends React.Component {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this._gotoBottom()}>
+          <TouchableOpacity disabled={!this.enableUnreadButton()} onPress={() => this.gotoFirstUnread()}>
+            <View style={pageStyles.iconButton}>
+              <Icon
+                size={size}
+                name="ios-eye-outline"
+                color={this.getUnreadButtonColor()}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.gotoBottom()}>
             <View style={pageStyles.iconButton}>
               <Icon
                 size={size}
@@ -207,7 +294,7 @@ class PageThread extends React.Component {
               {this.getCurrentPageNumber()}
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onLongPress={() => this._oldestPage()} onPress={() => this._prevPage()}>
+          <TouchableOpacity onLongPress={() => this.oldestPage()} onPress={() => this.prevPage()}>
             <View style={pageStyles.iconButton}>
               <Icon
                 size={size}
@@ -216,7 +303,7 @@ class PageThread extends React.Component {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onLongPress={() => this._newestPage()} onPress={() => this._nextPage()}>
+          <TouchableOpacity onLongPress={() => this.newestPage()} onPress={() => this.nextPage()}>
             <View style={pageStyles.iconButton}>
               <Icon
                 size={size}
@@ -229,45 +316,58 @@ class PageThread extends React.Component {
       );
     }
 
-    getComments() {
-      let tmpPosts = filter(this.props.comments, (c) => {
-        if (c.postId === this.props.post.id && c.page === this.state.currentPage) return true;
-        return false;
-      });
-
-      tmpPosts.sort((x, y) => (new Date(x.created_at) - new Date(y.created_at)));
-
-      // Skammekrok
-      tmpPosts = tmpPosts.filter((c) => {
-        if (this.state.skammekrok.indexOf(c.creator_id) !== -1) return false;
-        return true;
-      });
-
-      let out = [];
-      for (let i = 0; i < tmpPosts.length; i++) {
-        let byStarter = false;
-        if (tmpPosts[i].creator_id === this.props.post.creator_id) byStarter = true;
-
-        out.push(<ForumComment
-          key={tmpPosts[i].id}
-          byStarter={byStarter}
-          navigator={this.props.navigator}
-          data={tmpPosts[i]}
-          onRenderDone={(height) => {console.log("post height", tmpPosts[i].id, height)}}
-        />);
-      }
-      return out;
+    /**
+     * Figure out if a comment is unread or not based on calculated info and its index.
+     * @param {*} index 
+     */
+    isUnread(index) {
+      const indexOfUnread = commentsInPage - this.unreadInfo.numberOnPage;
+      if (this.state.currentPage > this.unreadInfo.unreadPage) return true;
+      if (this.state.currentPage === this.unreadInfo.unreadPage && index >= indexOfUnread) return true;
+      return false;
     }
 
     getPost() {
       if (this.isEvent) {
         return (
-          <SkogsEvent data={this.props.post} navigator={this.props.navigator} />
+          <View onLayout={(e) => this.postRenderedGetSize(e)}>
+            <SkogsEvent data={this.props.post} navigator={this.props.navigator} />
+          </View>
         );
       }
 
       return (
-        <ThreadForumPost data={this.props.post} navigator={this.props.navigator} />
+        <View onLayout={(e) => this.postRenderedGetSize(e)}>
+          <ThreadForumPost data={this.props.post} navigator={this.props.navigator} />
+        </View>
+      );
+    }
+
+    renderSeparator() {
+      return (
+        <View style={{ width: '100%', height: separatorHeight, backgroundColor: COLOR_LIGHT }} />
+      );
+    }
+
+    renderHeader() {
+      return (
+        <View>{this.getPost()}</View>
+      );
+    }
+
+    renderItem(item) {
+      const c = item.item;
+      const byStarter = (c.creator_id === this.props.post.creator_id);
+      return (
+        <View onLayout={(e) => this.commentRenderedGetSize(e, item.index)}>
+          <ForumComment
+            key={c.id}
+            byStarter={byStarter}
+            navigator={this.props.navigator}
+            data={c}
+            isUnread={this.isUnread(item.index)}
+          />
+        </View>
       );
     }
 
@@ -275,14 +375,20 @@ class PageThread extends React.Component {
       return (
         <View style={pageStyles.container}>
           <View style={{ flex: 1 }}>
-            <ScrollView ref={component => this.scrollbar = component} style={{ flex: 1 }}>
-              {this.getPost()}
-              <View ref={component => this.firstpost = component} />
-              {this.getComments()}
-            </ScrollView>
+            <FlatList
+              data={this.getComments()}
+              extraData={this.state}
+              ref={(ref) => { this.flatListRef = ref; }}
+              keyExtractor={this.keyExtractor}
+              initialNumToRender={commentsInPage}
+              renderItem={(item) => this.renderItem(item)}
+              ItemSeparatorComponent={() => this.renderSeparator()}
+              ListHeaderComponent={() => this.renderHeader()}
+              getItemLayout={this.getItemLayout}
+            />
           </View>
           <View style={pageStyles.navBar}>
-            {this._getSidevelger()}
+            {this.getSidevelger()}
           </View>
         </View>
       );

@@ -39,6 +39,7 @@ export default class ForumUpdater {
 
     parseAPIForumPost(f) {
       try {
+        if (f.title === '[slettet]' && !f.creator) return null;
         return new ForumPost(
           f.id, f.title, f.body, f.comment_count, f.created_at,
           f.follower_count, f.following, f.kudos, f.tags, f.updated_at, f.view_count,
@@ -52,6 +53,7 @@ export default class ForumUpdater {
 
     parseAPIEvent(f) {
       try {
+        if (f.title === '[slettet]' && !f.creator) return null;
         return new ForumEvent(
           f.id, f.title, f.body, f.private, f.time, f.canceled, f.venue.city, f.venue, f.comment_count, f.created_at,
           f.follower_count, f.following, f.tags, f.updated_at,

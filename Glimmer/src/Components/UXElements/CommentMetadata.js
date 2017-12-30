@@ -1,7 +1,3 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
@@ -25,6 +21,11 @@ export default class CommentMetadata extends React.Component {
     return (
       <Text style={[styles.element, { color: colors.COLOR_MIDGREY, fontSize: 12 }]}>{this.props.post.forum_title}</Text>
     );
+  }
+
+  getUnread() {
+    if (!this.props.isUnread) return null;
+    return "(ulest)";
   }
 
 
@@ -53,7 +54,7 @@ export default class CommentMetadata extends React.Component {
             />
         </TouchableOpacity>
         <View style={{ flexDirection: 'column' }}>
-          <Text style={[{ color, fontSize: 12 }]}>{this.props.post.creator_name} {this.getTime()}</Text>
+          <Text style={[{ color, fontSize: 12 }]}>{this.props.post.creator_name} {this.getTime()} {this.getUnread()}</Text>
           {this.getForumTitle()}
         </View>
 
@@ -72,12 +73,14 @@ const styles = StyleSheet.create({
 CommentMetadata.defaultProps = {
   showImage: true,
   byStarter: false,
+  isUnread: false,
 };
 
 CommentMetadata.propTypes = {
   post: PropTypes.object.isRequired,
   showImage: PropTypes.bool,
   byStarter: PropTypes.bool, // Av trådstarter
+  isUnread: PropTypes.bool, // Av trådstarter
   navigator: PropTypes.object.isRequired,
 };
 
