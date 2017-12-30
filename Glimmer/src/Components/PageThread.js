@@ -63,7 +63,7 @@ class PageThread extends React.Component {
           break;
         case 'willDisappear':
           if(this.state.currentPage === 1) {
-            arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
+            if (this.state.currentPage === 1) arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
           }
           break;
         case 'didDisappear':
@@ -84,6 +84,8 @@ class PageThread extends React.Component {
 
     async loadCommentPage(page) {
       this.setState({ currentPage: page, loading: true });
+      this.sizeIndex.comments = {};
+      if (this.state.currentPage === 1) arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
       await arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent);
       this.setState({ loading: false });
     }
@@ -322,7 +324,7 @@ class PageThread extends React.Component {
      */
     isUnread(index) {
       const indexOfUnread = commentsInPage - this.unreadInfo.numberOnPage;
-      if (this.state.currentPage > this.unreadInfo.unreadPage) return true;
+      if (this.state.currentPage < this.unreadInfo.unreadPage) return true;
       if (this.state.currentPage === this.unreadInfo.unreadPage && index >= indexOfUnread) return true;
       return false;
     }
