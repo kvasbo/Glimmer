@@ -27,7 +27,7 @@ export default class PageLogin extends React.Component {
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        this.onRefresh();
+        // this.onRefresh();
         firebase.analytics().setCurrentScreen("login");
         break;
     }

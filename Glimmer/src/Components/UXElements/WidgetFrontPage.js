@@ -10,11 +10,6 @@ import * as colors from '../../Styles/colorConstants';
 class WidgetFrontPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { numberToDisplay: 0 };
-  }
-
-  componentWillMount() {
-    this.setState({ numberToDisplay: arbeidsMaur.settings.getSettings().frontPageNewPosts });
   }
 
   getPosts() {
@@ -25,7 +20,7 @@ class WidgetFrontPage extends React.Component {
       return (bM.valueOf() - aM.valueOf());
     });
 
-    posts = posts.slice(0, this.state.numberToDisplay);
+    posts = posts.slice(0, this.props.settings.frontPageNewPosts);
 
     return posts.map((p) => {
       return (
@@ -47,6 +42,7 @@ function mapStateToProps(state) {
   return {
     appStatus: state.AppStatus,
     stream: state.ForumStream,
+    settings: state.Settings,
   };
 }
 

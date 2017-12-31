@@ -126,9 +126,10 @@ class Glimmer extends React.Component {
       });
     }
 
-    startAppBasedOnLoginStatus() {
+   async startAppBasedOnLoginStatus() {
       if (this.loggedIn === true) {
         global.arbeidsMaur.initData();
+        await global.arbeidsMaur.settings.init();
         // global.arbeidsMaur.forumListUpdater.reloadForums(true);
         iconsLoaded.then(() => {
           setTimeout(() => { startMainApp(); }, 500);

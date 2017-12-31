@@ -9,11 +9,11 @@ import * as colors from '../../Styles/colorConstants';
 class WidgetFavorites extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { numberToDisplay: 0, onlyUnread: true };
+    this.state = { onlyUnread: true };
   }
 
   componentWillMount() {
-    this.setState({ numberToDisplay: arbeidsMaur.settings.getSettings().frontPageFavorites });
+   
   }
 
   getPosts() {
@@ -30,7 +30,7 @@ class WidgetFavorites extends React.Component {
       return (bM.valueOf() - aM.valueOf());
     });
 
-    posts = posts.slice(0, this.state.numberToDisplay);
+    posts = posts.slice(0, this.props.settings.frontPageFavorites);
 
     return posts.map((p) => {
       return (
@@ -52,6 +52,7 @@ function mapStateToProps(state) {
   return {
     appStatus: state.AppStatus,
     favorites: state.ForumFavorite,
+    settings: state.Settings,
   };
 }
 

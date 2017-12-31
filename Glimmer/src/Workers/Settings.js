@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import { updateSettings } from '../Redux/actions';
 
 export default class Settings {
   
@@ -11,9 +12,10 @@ export default class Settings {
   init = async () => {
     const settingsFromStore = await AsyncStorage.getItem('settings');
     if (settingsFromStore !== null) {
+      const parsedFromStore = JSON.parse(settingsFromStore);
       // Merge default and stored settings.
-      this.settings = Object.assign(getInitSettings(), ...JSON.parse(settingsFromStore));
-      console.log('settings hentet', this.settings);
+      this.settings = Object.assign(getInitSettings(), parsedFromStore);
+      store.dispatch(updateSettings(this.settings));
     } else {
       this.settings = getInitSettings();
       this.saveSettings();
@@ -23,6 +25,7 @@ export default class Settings {
   saveSettings() {
     console.log('Lagrer settings', this.settings);
     AsyncStorage.setItem('settings', JSON.stringify(this.settings));
+    store.dispatch(updateSettings(this.settings));
   }
 
   getSettings() {
@@ -39,11 +42,10 @@ export default class Settings {
     this.saveSettings();
   }
 
-  frontPageNewPosts(value) {
+  setFrontPageNewPosts(value) {
     this.settings.frontPageNewPosts = value;
     this.saveSettings();
   }
-
 }
 
 function getInitSettings() {

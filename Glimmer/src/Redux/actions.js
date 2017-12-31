@@ -20,6 +20,7 @@ import {
   ADD_POST_BATCH,
   ADD_EVENT_BATCH,
   KUDOS_ADD_BATCH,
+  SETTINGS_REFRESH
 } from '../constants';
 
 export function replaceForumList(forums) {
@@ -169,5 +170,12 @@ export function setActiveUserId(userId) {
   return {
     type: APPCONTROL_SET_CURRENT_USER,
     userId,
+  };
+}
+
+export function updateSettings(settings) {
+  return {
+    type: SETTINGS_REFRESH,
+    settings,
   };
 }

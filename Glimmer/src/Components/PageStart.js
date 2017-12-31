@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import { View, StyleSheet, LayoutAnimation } from 'react-native';
+import { ScrollView, StyleSheet, LayoutAnimation } from 'react-native';
 import handleDeeplink from '../deepLink';
 import WidgetFrontPage from './UXElements/WidgetFrontPage';
 import WidgetFavorites from './UXElements/WidgetFavorites';
@@ -12,7 +12,7 @@ class PageStart extends React.Component {
     rightButtons: [
       {
         icon: require('../../icons/more.png'),
-        id: 'tjafs',
+        id: 'settings',
       },
     ],
   }
@@ -31,16 +31,16 @@ class PageStart extends React.Component {
       case 'willAppear':
         firebase.analytics().setCurrentScreen("start");
         LayoutAnimation.spring();
-        await global.arbeidsMaur.forumUpdater.addFavorites(1, 1);
+        await global.arbeidsMaur.forumUpdater.addFavorites(1, 3);
         LayoutAnimation.spring();
-        global.arbeidsMaur.forumUpdater.addStream(1, 1);
+        global.arbeidsMaur.forumUpdater.addStream(1, 3);
         break;
     }
     if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
-      if (event.id == 'tjafs') { // this is the same id field from the static navigatorButtons definition
+      if (event.id == 'settings') { // this is the same id field from the static navigatorButtons definition
         this.props.navigator.push({
-          screen: 'glimmer.PageAnnet', // unique ID registered with Navigation.registerScreen
-          title: 'Røkla', // navigation bar title of the pushed screen (optional)
+          screen: 'glimmer.PageSettings', // unique ID registered with Navigation.registerScreen
+          title: 'Innstillinger', // navigation bar title of the pushed screen (optional)
           animated: true, // does the push have transition animation or does it happen immediately (optional)
         });
       }
@@ -51,12 +51,22 @@ class PageStart extends React.Component {
 
   }
 
+  getFavoritesWidget() {
+    if (this.props.settings.frontPageFavorites === 0) return null;
+    return (<WidgetFavorites navigator={this.props.navigator} />);
+  }
+
+  getFrontPageWidget() {
+    if (this.props.settings.frontPageNewPosts === 0) return null;
+    return (<WidgetFrontPage navigator={this.props.navigator} />);
+  }
+
   render() {
     return (
-      <View style={pageStyles.container}>
-        <WidgetFavorites navigator={this.props.navigator} />
-        <WidgetFrontPage navigator={this.props.navigator} />
-      </View>
+      <ScrollView style={pageStyles.container}>
+        {this.getFavoritesWidget()}
+        {this.getFrontPageWidget()}
+      </ScrollView>
     );
   }
 }
@@ -72,6 +82,7 @@ function mapStateToProps(state) {
     messages: state.Conversation,
     stream: state.ForumStream,
     favorites: state.ForumFavorite,
+    settings: state.Settings,
   };
 }
 

@@ -12,7 +12,6 @@ import PageNewMessage from './Components/PageNewMessage';
 import PageNewForumPost from './Components/PageNewForumPost';
 import PageForumCommentEdit from './Components/PageForumCommentEdit';
 import PageKudos from './Components/PageKudos';
-import PageAnnet from './Components/PageAnnet';
 import PageSettings from './Components/PageSettings';
 import PageGjemsel from './Components/PageGjemsel';
 import PageAbout from './Components/PageAbout';
@@ -41,7 +40,6 @@ export default function registerScreens(store, Provider) {
       Navigation.registerComponent('glimmer.PageNewForumPost', () => PageNewForumPost, store, Provider);
       Navigation.registerComponent('glimmer.PageKudos', () => PageKudos, store, Provider);
       Navigation.registerComponent('glimmer.PageForumCommentEdit', () => PageForumCommentEdit, store, Provider);
-      Navigation.registerComponent('glimmer.PageAnnet', () => PageAnnet, store, Provider);
       Navigation.registerComponent('glimmer.PageSettings', () => PageSettings, store, Provider);
       Navigation.registerComponent('glimmer.PageGjemsel', () => PageGjemsel, store, Provider);
       Navigation.registerComponent('glimmer.PageAbout', () => PageAbout, store, Provider);
