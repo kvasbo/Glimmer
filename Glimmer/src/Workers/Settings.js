@@ -10,7 +10,8 @@ export default class Settings {
   init = async () => {
     const settingsFromStore = await AsyncStorage.getItem('settings');
     if (settingsFromStore !== null) {
-      this.settings = JSON.parse(settingsFromStore);
+      // Merge default and stored settings.
+      this.settings = Object.assign(getInitSettings(), ...JSON.parse(settingsFromStore));
       console.log('settings hentet', this.settings);
     } else {
       this.settings = getInitSettings();
@@ -31,10 +32,13 @@ export default class Settings {
     this.settings.activityShowKudos = value;
     this.saveSettings();
   }
+
 }
 
 function getInitSettings() {
   return ({
     activityShowKudos: false,
+    frontPageFavorites: 5,
+    frontPageNewPosts: 5,
   });
 }

@@ -5,6 +5,9 @@
     },
     {
       "path": "Glimmer/node_modules/react-native-vector-icons/glyphmaps"
+    },
+    {
+      "path": "Glimmer"
     }
   ]
 }

@@ -13,6 +13,8 @@ import { COLOR_LIGHT } from '../Styles/colorConstants';
 
 const commentsInPage = 30;
 const separatorHeight = 5;
+const activeColor = colors.COLOR_DARKGREY;
+
 
 class PageThread extends React.Component {
     scrollbar = null;
@@ -100,11 +102,11 @@ class PageThread extends React.Component {
       const pageNr = this.findLastPageOfComments() - this.state.currentPage + 1;
       if (this.state.loading) {
         return (
-          <ActivityIndicator color={colors.COLOR_GRAD1} size="small" />
+          <ActivityIndicator color={activeColor} size="small" />
         );
       }
       return (
-        <Text numberOfLines={1} adjustsFontSizeToFit style={pageStyles.pageNumberText}>{pageNr} / {this.unreadInfo.totalPages}</Text>
+        <Text numberOfLines={1} adjustsFontSizeToFit style={[pageStyles.pageNumberText, { color: activeColor }]}>{pageNr} / {this.unreadInfo.totalPages}</Text>
       );
     }
 
@@ -238,12 +240,11 @@ class PageThread extends React.Component {
     }
 
     getUnreadButtonColor() {
-      if (this.enableUnreadButton()) return colors.COLOR_GRAD1;
+      if (this.enableUnreadButton()) return activeColor;
       return colors.COLOR_LIGHTGREY;
     }
 
     getSidevelger() {
-      const activeColor = colors.COLOR_GRAD1;
       const size = 30;
 
       return (
@@ -415,6 +416,7 @@ const pageStyles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     margin: 0,
+    backgroundColor: colors.COLOR_WHITE,
   },
   navBar: {
     height: 40,
@@ -427,7 +429,6 @@ const pageStyles = StyleSheet.create({
   },
   pageNumberText: {
     fontWeight: '300',
-    color: colors.COLOR_GRAD1,
   },
   iconButton: {
     padding: 0,
