@@ -11,7 +11,7 @@ class PageStart extends React.Component {
   static navigatorButtons = {
     rightButtons: [
       {
-        icon: require('../../icons/more.png'),
+        icon: require('../../icons/settings.png'),
         id: 'settings',
       },
     ],
