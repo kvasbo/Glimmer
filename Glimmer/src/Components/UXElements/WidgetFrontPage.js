@@ -1,6 +1,4 @@
-
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
@@ -12,7 +10,11 @@ import * as colors from '../../Styles/colorConstants';
 class WidgetFrontPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { numberToDisplay: 30 };
+    this.state = { numberToDisplay: 0 };
+  }
+
+  componentWillMount() {
+    this.setState({ numberToDisplay: arbeidsMaur.settings.getSettings().frontPageNewPosts });
   }
 
   getPosts() {
@@ -35,13 +37,7 @@ class WidgetFrontPage extends React.Component {
   render() {
     return (
       <WidgetContainer title="Siste innlegg">
-        <ScrollView
-          snapToInterval={32}
-          decelerationRate="fast"
-          snapToAlignment="start"
-        >
-          {this.getPosts()}
-        </ScrollView>
+        {this.getPosts()}
       </WidgetContainer>
     );
   }

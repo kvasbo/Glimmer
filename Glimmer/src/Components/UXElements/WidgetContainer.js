@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, StyleSheet, Text } from 'react-native';
@@ -26,7 +25,6 @@ WidgetContainer.propTypes = {
 const pageStyles = StyleSheet.create({
 
   container: {
-    flex: 1,
     backgroundColor: colors.COLOR_WHITE,
   },
 
@@ -49,7 +47,6 @@ const pageStyles = StyleSheet.create({
   contentBox: {
     paddingTop: 6,
     paddingBottom: 6,
-    flex: 1,
   },
 
 });

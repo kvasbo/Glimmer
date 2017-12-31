@@ -1,6 +1,4 @@
-
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
@@ -11,7 +9,11 @@ import * as colors from '../../Styles/colorConstants';
 class WidgetFavorites extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { numberToDisplay: 60, onlyUnread: true };
+    this.state = { numberToDisplay: 0, onlyUnread: true };
+  }
+
+  componentWillMount() {
+    this.setState({ numberToDisplay: arbeidsMaur.settings.getSettings().frontPageFavorites });
   }
 
   getPosts() {
@@ -37,25 +39,10 @@ class WidgetFavorites extends React.Component {
     });
   }
 
-  onLayout(event) {
-    // Height of header: 35, padding of container: 12
-    const padding = 12; 
-    const header = 35;
-    const heightOfElement = 32;
-    const numberToDisplay = Math.floor((event.nativeEvent.layout.height - padding - header) / heightOfElement);
-    console.log("onLayout", event.nativeEvent.layout,numberToDisplay);
-  }
-
   render() {
     return (
-      <WidgetContainer title="Uleste i tråder jeg følger">
-         <ScrollView
-          snapToInterval={32}
-          decelerationRate="fast"
-          snapToAlignment="start"
-        >
-          {this.getPosts()}
-        </ScrollView>
+      <WidgetContainer title="Uleste i tråder jeg følger">  
+        {this.getPosts()}
       </WidgetContainer>
     );
   }

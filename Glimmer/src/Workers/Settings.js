@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 export default class Settings {
+  
   constructor() {
     this.init();
     this.settings = {};
@@ -30,6 +31,16 @@ export default class Settings {
 
   setActivityKudos(value) {
     this.settings.activityShowKudos = value;
+    this.saveSettings();
+  }
+
+  setFrontPageFavorites(value) {
+    this.settings.frontPageFavorites = value;
+    this.saveSettings();
+  }
+
+  frontPageNewPosts(value) {
+    this.settings.frontPageNewPosts = value;
     this.saveSettings();
   }
 
