@@ -11,6 +11,7 @@ import ForumGetter from './ForumGetter';
 import Kudos from './Kudos';
 import Gjemsel from './Gjemsel';
 import Settings from './Settings';
+import EventUpdater from './EventUpdater';
 
 export default class Workers {
   constructor() {
@@ -24,13 +25,14 @@ export default class Workers {
     this.kudos = new Kudos();
     this.gjemsel = new Gjemsel();
     this.settings = new Settings();
+    this.eventUpdater = new EventUpdater();
   }
 
   initData() {
 
     console.log("Initdata");
 
-    const first = [this.forumUpdater.loadFirstFavorites(5), this.forumUpdater.loadFirstStream(1), this.messageUpdater.updateMessageThreads(1)];
+    const first = [this.forumUpdater.loadFirstFavorites(4), this.forumUpdater.loadFirstStream(1), this.messageUpdater.updateMessageThreads(1)];
 
     Promise.all(first).then(() => {
       this.kretsUpdater.initKrets();
@@ -51,7 +53,7 @@ export default class Workers {
 
   refreshForumData() {
     console.log("refreshForumData");
-    this.forumUpdater.loadFirstFavorites(1);
+    this.forumUpdater.loadFirstFavorites(4);
     this.forumUpdater.loadFirstStream(1);
   }
 }

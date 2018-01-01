@@ -16,6 +16,7 @@
     "lodash": "^4.17.4",
     "md5": "^2.2.1",
     "moment": "^2.18.1",
+    "object-hash": "^1.2.0",
     "prop-types": "^15.5.10",
     "react": "16.0.0",
     "react-native": "0.51.0",
@@ -42,6 +43,7 @@
     "shitty-qs": "^1.0.1",
     "striptags": "^3.1.0",
     "textile-js": "^2.0.3",
+    "uuid": "^3.1.0",
     "xmldom": "^0.1.27"
   },
   "devDependencies": {

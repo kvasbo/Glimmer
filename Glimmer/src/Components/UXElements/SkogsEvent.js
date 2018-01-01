@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import KudosAndCommentsAndStuff from './KudosAndCommentsAndStuff';
 import ForumTextTextile from './ForumTextTextile';
+import PostControls from './PostControls';
 import CommentMetadata from './CommentMetadata';
 import EventData from './EventData';
 import * as colors from '../../Styles/colorConstants';
@@ -29,8 +30,8 @@ export default class SkogsEvent extends React.Component {
       console.log('Event', this.props.data);
     }
 
-    componentDidMount() {
-
+    componentWillMount() {
+      // arbeidsMaur.eventUpdater.getAllParticipantsForEvent(this.props.data.id);
     }
 
     getTime() {
@@ -42,11 +43,11 @@ export default class SkogsEvent extends React.Component {
 
         <View style={pageStyles.container}>
 
-          <View style={pageStyles.creatorInfo} />
+          <View style={pageStyles.creatorInfo}>
 
-          <View style={pageStyles.eventData}>
-            <EventData event={this.props.data} />
-          </View>
+          <PostControls post={this.props.data} navigator={this.props.navigator} /> 
+ 
+ </View>
 
           <View style={pageStyles.thePost}>
             <ForumTextTextile text={this.props.data.body_textile} navigator={this.props.navigator} style={{ marginBottom: 10 }} />
@@ -57,15 +58,14 @@ export default class SkogsEvent extends React.Component {
     }
 }
 
+/* <View style={pageStyles.eventData}>
+            <EventData event={this.props.data} />
+          </View> */
+
 /*
  <KudosAndCommentsAndStuff showCommentBadge={false}
  navigator={this.props.navigator} post={this.props.data}
  byMe={this.byMe}/>
- */
-
-/*
- <CommentMetadata image={this.props.data.creator_image} name={this.props.data.creator_name}
- time={this.props.data.created_at} forum={this.props.data.forum_title}/>
  */
 
 SkogsEvent.propTypes = {

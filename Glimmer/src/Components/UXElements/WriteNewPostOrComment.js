@@ -21,6 +21,7 @@ import PropTypes from "prop-types";
 import InputStyles from "../../Styles/InputStyles";
 import * as colors from "../../Styles/colorConstants";
 const ImagePicker = require('react-native-image-picker');
+const uuidv4 = require('uuid/v4');
 
 export default class WriteNewPostOrComment extends React.Component {
 
@@ -62,7 +63,6 @@ export default class WriteNewPostOrComment extends React.Component {
 
     tick() {
         if (this._isMounted) {
-
             let now = new moment();
             let editEnd = new moment(this.props.comment.updated_at).add(14, "m");
             let diff = editEnd.diff(now, "s");
@@ -120,12 +120,9 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     _clear(force) {
-
         if (force) {
             this._doClear();
-        }
-
-        else {
+        } else {
             Alert.alert("Sikker", "Dette kan ikke angres",
                 [
                     {
@@ -150,11 +147,8 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     _post() {
-
         this.setState({buttonsActive: false});
-
         if (!this.props.edit && this.props.type === "comment") {
-
             var posttext = "";
             if (this.state.text !== "") {
                 posttext = this.parseAndReplaceImages(this.state.text);
@@ -170,9 +164,7 @@ export default class WriteNewPostOrComment extends React.Component {
             }
 
             //Post a new comment
-
             arbeidsMaur.forumUpdater.postCommentInThread(posttext, this.props.postId).then(() => {
-
                 this._doClear();
                 this.props.navigator.pop();
 
@@ -202,10 +194,8 @@ export default class WriteNewPostOrComment extends React.Component {
             }
 
             arbeidsMaur.forumUpdater.editPostComment(this.props.commentId, posttext).then(() => {
-
                 this._doClear();
                 this.props.navigator.pop();
-
             }).catch((error) => {
                 Alert.alert("Noe gikk galt :(");
                 if (this._isMounted) {
@@ -256,7 +246,6 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     textChanged(text) {
-
         if (this._isMounted) {
             this.setState({text: text});
         }
@@ -264,7 +253,6 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     titleChanged(text) {
-
         if (this._isMounted) {
             this.setState({title: text});
         }
@@ -276,7 +264,6 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     insertIntoBodyText(text) {
-
         //We have not yet started writing
         if (this.state.bodyCursorPosition === null && this.state.text === "") this.setState({text: text});
 
@@ -286,7 +273,6 @@ export default class WriteNewPostOrComment extends React.Component {
         if (this._isMounted) {
             this.setState({text: start + text + tail});
         }
-
     }
 
     cursormoved(event) {
@@ -394,8 +380,10 @@ export default class WriteNewPostOrComment extends React.Component {
         try {
 
             metadata.uri = pictureData.uri;
+            let filename = uuidv4() + ".jpg";
 
-            let filename = pictureData.fileName.toLowerCase();
+            if (pictureData.fileName != undefined) filename = pictureData.fileName.toLowerCase();
+
             let filenameArr = filename.split(".");
             var extension = filenameArr.slice(-1)[0];
 

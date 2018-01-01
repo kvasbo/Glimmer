@@ -56,7 +56,7 @@ export default class glimmerAPI {
     const url = config.base_url + kall;
     const data = await makeApiCall(url, 'GET');
 
-    if (__DEV__) {
+    if (false && __DEV__ && console.groupCollapsed && console.table && console.groupEnd) {
       if (!this.getLog[kall]) {
         this.getLog[kall] = { count: 0, lastCall: undefined };
       }

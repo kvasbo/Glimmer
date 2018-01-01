@@ -11,6 +11,8 @@ import * as colors from '../Styles/colorConstants';
 import LoadingScreen from './UXElements/LoadingScreen';
 import { COLOR_LIGHT } from '../Styles/colorConstants';
 
+const hash = require('object-hash');
+
 const commentsInPage = 30;
 const separatorHeight = 5;
 const activeColor = colors.COLOR_DARKGREY;
@@ -32,6 +34,7 @@ class PageThread extends React.Component {
         comments: [],
         skammekrok: [],
         gotoFirst: true,
+        extraData: undefined,
       };
       this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
       this._isMounted = false;
@@ -58,7 +61,7 @@ class PageThread extends React.Component {
           // this.silentlyLoadCommentPage(1);
           this.silentlyLoadCommentPage(this.state.currentPage);
           firebase.analytics().setCurrentScreen("tråd");
-          if (this.state.currentPage !== 1) this.silentlyLoadCommentPage(this.state.currentPage);
+          this.setState(this.state);
           break;
         case 'didAppear':
           this.updateSkammekrok();
@@ -134,7 +137,9 @@ class PageThread extends React.Component {
         return true;
       });
 
-      return tmpPosts; 
+      // this.setState({ extraData: Math. });
+
+      return tmpPosts;
     }
 
     keyExtractor(element) {
@@ -178,9 +183,7 @@ class PageThread extends React.Component {
     }
 
     gotoFirstUnread() {
-
       if (this.getComments().length === 0) return -1;
-
       const indexOfUnread = this.getComments().length - this.unreadInfo.numberOnPage;
       if (this.unreadInfo.unreadPage === this.state.currentPage && Object.values(this.sizeIndex.comments).length === this.getComments().length) {
         this.gotoPost(indexOfUnread);
@@ -190,7 +193,8 @@ class PageThread extends React.Component {
     }
 
     gotoPost(index) {
-      this.flatListRef.scrollToIndex({ animated: true, index });
+      const goto = Math.min((this.getComments().length - 1), index);
+      this.flatListRef.scrollToIndex({ animated: true, index: goto });
     }
 
     /**

@@ -3887,6 +3887,10 @@ object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
+object-hash@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-1.2.0.tgz#e96af0e96981996a1d47f88ead8f74f1ebc4422b"
+
 object-keys@^1.0.8:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
@@ -4367,8 +4371,8 @@ react-native-lightbox@^0.7.0:
     prop-types "^15.5.10"
 
 react-native-navigation@^1.1:
-  version "1.1.323"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.323.tgz#4c47d1ba6bbb5e9a4e8e29773f1a0f4e44ee925d"
+  version "1.1.328"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.328.tgz#fd4d8287184103430b4a614861df9b7547ef651a"
   dependencies:
     lodash "4.x.x"
 
