@@ -30,18 +30,18 @@ class PageStart extends React.Component {
     switch (event.id) {
       case 'willAppear':
         firebase.analytics().setCurrentScreen("start");
-        LayoutAnimation.spring();
-        await global.arbeidsMaur.forumUpdater.addFavorites(1, 3);
-        LayoutAnimation.spring();
-        global.arbeidsMaur.forumUpdater.addStream(1, 3);
+        LayoutAnimation.easeInEaseOut();
+        await global.arbeidsMaur.forumUpdater.addFavorites(1, 1);
+        LayoutAnimation.easeInEaseOut();
+        global.arbeidsMaur.forumUpdater.addStream(1, 1);
         break;
     }
-    if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
-      if (event.id == 'settings') { // this is the same id field from the static navigatorButtons definition
+    if (event.type == 'NavBarButtonPress') {
+      if (event.id == 'settings') {
         this.props.navigator.push({
-          screen: 'glimmer.PageSettings', // unique ID registered with Navigation.registerScreen
-          title: 'Innstillinger', // navigation bar title of the pushed screen (optional)
-          animated: true, // does the push have transition animation or does it happen immediately (optional)
+          screen: 'glimmer.PageSettings',
+          title: 'Innstillinger',
+          animated: true,
         });
       }
     }

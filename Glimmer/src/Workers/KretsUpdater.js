@@ -11,6 +11,7 @@ export default class KretsUpdater {
     krets = { folk: [], updated: null };
 
     initKrets() {
+      console.log("initKrets");
       this._getKretsPagesRecursive(1);
     }
 

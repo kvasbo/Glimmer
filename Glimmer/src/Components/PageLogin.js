@@ -1,7 +1,3 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, ScrollView, StyleSheet, Text, View, Modal, Switch } from 'react-native';
@@ -17,17 +13,14 @@ export default class PageLogin extends React.Component {
   doTheLoginThing() {
     auth.doUnderskogOauth().then(() => {
       this.props.navigator.dismissAllModals({
-        animationType: 'slide-down', // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+        animationType: 'slide-down',
       });
-
-      arbeidsMaur.initData();
     });
   }
 
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        // this.onRefresh();
         firebase.analytics().setCurrentScreen("login");
         break;
     }
@@ -99,13 +92,11 @@ const pageStyles = StyleSheet.create({
   },
 
   paragraph: {
-
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 40,
     marginRight: 40,
     padding: 0,
-
   },
 
   theButton: {},

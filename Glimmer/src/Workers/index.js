@@ -27,7 +27,10 @@ export default class Workers {
   }
 
   initData() {
-    const first = [this.forumUpdater.loadFirstFavorites(1), this.forumUpdater.loadFirstStream(1), this.messageUpdater.updateMessageThreads(1)];
+
+    console.log("Initdata");
+
+    const first = [this.forumUpdater.loadFirstFavorites(5), this.forumUpdater.loadFirstStream(1), this.messageUpdater.updateMessageThreads(1)];
 
     Promise.all(first).then(() => {
       this.kretsUpdater.initKrets();
@@ -40,12 +43,14 @@ export default class Workers {
   }
 
   refreshAppData() {
+    console.log("refreshAppData");
     this.refreshForumData();
     this.kudos.getKudos(1);
     this.messageUpdater.updateMessageThreads(1);
   }
 
   refreshForumData() {
+    console.log("refreshForumData");
     this.forumUpdater.loadFirstFavorites(1);
     this.forumUpdater.loadFirstStream(1);
   }

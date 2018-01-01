@@ -45,6 +45,8 @@ export default class glimmerAPI {
     return reply;
   }
 
+  getLog = {};
+
   /**
    * Make Get call to the API.
    * @param kall
@@ -53,6 +55,18 @@ export default class glimmerAPI {
   async makeApiGetCall(kall) {
     const url = config.base_url + kall;
     const data = await makeApiCall(url, 'GET');
+
+    if (__DEV__) {
+      if (!this.getLog[kall]) {
+        this.getLog[kall] = { count: 0, lastCall: undefined };
+      }
+      this.getLog[kall].count = this.getLog[kall].count + 1;
+      this.getLog[kall].lastCall = new Date().toLocaleTimeString();
+      console.groupCollapsed('API Getlog');
+      console.table(this.getLog, ['count', 'lastCall']);
+      console.groupEnd();
+    }
+
     return data;
   }
 }

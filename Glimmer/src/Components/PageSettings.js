@@ -64,6 +64,13 @@ export default class PageAnnet extends React.Component {
       }
     }
 
+    loadAbout() {
+      this.props.navigator.push({
+        screen: 'glimmer.PageAbout',
+        title: 'Om Glimmer',
+      });
+    }
+
     changeFrontPageFavorites(value) {
       arbeidsMaur.settings.setFrontPageFavorites(value);
       this.setState({ frontPageFavorites: value });

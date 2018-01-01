@@ -181,7 +181,7 @@ class PageThread extends React.Component {
 
       if (this.getComments().length === 0) return -1;
 
-      const indexOfUnread = commentsInPage - this.unreadInfo.numberOnPage;
+      const indexOfUnread = this.getComments().length - this.unreadInfo.numberOnPage;
       if (this.unreadInfo.unreadPage === this.state.currentPage && Object.values(this.sizeIndex.comments).length === this.getComments().length) {
         this.gotoPost(indexOfUnread);
       } else {

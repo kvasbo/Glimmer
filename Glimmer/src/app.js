@@ -120,7 +120,7 @@ class Glimmer extends React.Component {
       // This function will set the loggedin state to true or false in the store, which in term will trigger the store subscription.
       // Then the app starts. I know.
       auth.checkAuth().then(() => {
-        this.startAppBasedOnLoginStatus();
+        // this.startAppBasedOnLoginStatus();
       }).catch((err) => {
         // Not logged in
       });
