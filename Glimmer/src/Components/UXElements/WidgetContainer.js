@@ -33,19 +33,15 @@ const pageStyles = StyleSheet.create({
     padding: 10,
     height: 35,
     justifyContent: 'center',
-    backgroundColor: colors.COLOR_LIGHT,
-    borderTopWidth: 0,
-    borderBottomWidth: 0.5,
-    borderTopColor: colors.COLOR_LIGHTGREY,
-    borderBottomColor: colors.COLOR_LIGHTGREY,
   },
 
   headerText: {
-    fontWeight: '200',
+    fontWeight: '800',
+    fontSize: 17,
   },
 
   contentBox: {
-    paddingTop: 6,
+    paddingTop: 0,
     paddingBottom: 6,
   },
 

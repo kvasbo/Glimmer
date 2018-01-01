@@ -57,7 +57,7 @@ export default class ForumUpdater {
         return new ForumEvent(
           f.id, f.title, f.body, f.private, f.time, f.canceled, f.venue.city, f.venue, f.comment_count, f.created_at,
           f.follower_count, f.following, f.tags, f.updated_at,
-          f.creator.name, f.creator.id, f.creator.image_url, f.body_textile, f.unread_comment_count,
+          f.creator.name, f.creator.id, f.creator.image_url, f.body_textile, f.unread_comment_count
         );
       } catch (err) {
         console.log('Error parsing event', err);

@@ -4372,6 +4372,10 @@ react-native-navigation@^1.1:
   dependencies:
     lodash "4.x.x"
 
+react-native-open-maps@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-open-maps/-/react-native-open-maps-0.1.1.tgz#86bdd82f2abe0222fb3f6ce410b7ff4499662ced"
+
 react-native-reversed-flat-list@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-reversed-flat-list/-/react-native-reversed-flat-list-1.0.2.tgz#390d2e90fa04ea08405ee91e75126d09a2cdbd35"

@@ -6,8 +6,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import KudosAndCommentsAndStuff from './KudosAndCommentsAndStuff';
-import ForumTextTextile from './ForumTextTextile.js';
+import ForumTextTextile from './ForumTextTextile';
 import CommentMetadata from './CommentMetadata';
+import EventData from './EventData';
 import * as colors from '../../Styles/colorConstants';
 
 export default class SkogsEvent extends React.Component {
@@ -43,12 +44,12 @@ export default class SkogsEvent extends React.Component {
 
           <View style={pageStyles.creatorInfo} />
 
-          <View style={pageStyles.thePost}>
-            <ForumTextTextile text={this.props.data.body_textile} navigator={this.props.navigator} style={{ marginBottom: 10 }} />
+          <View style={pageStyles.eventData}>
+            <EventData event={this.props.data} />
           </View>
 
-          <View style={pageStyles.metaData}>
-            <View style={{ flexDirection: 'row' }} />
+          <View style={pageStyles.thePost}>
+            <ForumTextTextile text={this.props.data.body_textile} navigator={this.props.navigator} style={{ marginBottom: 10 }} />
           </View>
 
         </View>
@@ -94,6 +95,12 @@ const pageStyles = StyleSheet.create({
     marginRight: 0,
   },
   metaData: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 15,
+    marginRight: 15,
+  },
+  eventData: {
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 15,

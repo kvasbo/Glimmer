@@ -28,6 +28,7 @@
     "react-native-keychain": "^1.2.0",
     "react-native-lightbox": "^0.7.0",
     "react-native-navigation": "^1.1",
+    "react-native-open-maps": "^0.1.1",
     "react-native-reversed-flat-list": "^1.0.2",
     "react-native-safari-view": "^2.1.0",
     "react-native-timeline-listview": "^0.2.2",
