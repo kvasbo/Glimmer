@@ -395,6 +395,8 @@ class PageThread extends React.Component {
               ItemSeparatorComponent={() => this.renderSeparator()}
               ListHeaderComponent={() => this.renderHeader()}
               getItemLayout={this.getItemLayout}
+              overScrollMode="never"
+              scrollsToTop={true}
             />
           </View>
           <View style={pageStyles.navBar}>

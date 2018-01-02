@@ -1,7 +1,3 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
@@ -16,7 +12,7 @@ export default class ThreadForumPost extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {};
+      this.state = { };
 
       try {
         if (this.props.data.creator_id === store.getState().AppStatus.activeUserId) {

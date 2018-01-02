@@ -60,7 +60,6 @@ const pageStyles = StyleSheet.create({
   },
 
   unread: {
-    width: 10,
     textAlign: 'right',
     paddingRight: 10,
     paddingLeft: 20,
