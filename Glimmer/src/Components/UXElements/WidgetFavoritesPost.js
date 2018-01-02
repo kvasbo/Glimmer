@@ -19,9 +19,11 @@ export default class WidgetFavoritesPost extends React.Component {
     return (
       <TouchableOpacity onPress={() => this.loadPost()}>
         <View style={pageStyles.container}>
-          <Text style={pageStyles.title} numberOfLines={1} >{this.props.post.title}</Text>
+        <View style={pageStyles.title}>
+          <Text numberOfLines={1}>{this.props.post.title}</Text>
+          <Text style={pageStyles.time} numberOfLines={1}>{new Moment(this.props.post.updated_at).calendar()}</Text>
+        </View>
           <Text style={pageStyles.unread} >{this.props.post.unread_comment_count}</Text>
-          <Icon name="ios-arrow-forward" style={{ textAlign: 'right', paddingTop: 2, paddingRight: 5 }} color={colors.COLOR_LIGHTGREY} size={20} />
         </View>
       </TouchableOpacity>
     );
@@ -40,21 +42,28 @@ const pageStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    height: 32,
-    padding: 5,
+    padding: 7,
     paddingLeft: 10,
     paddingRight: 10,
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
 
   title: {
     flex: 1,
   },
 
+  time: {
+    color: colors.COLOR_MIDGREY,
+    fontSize: 12,
+    marginTop: 2,
+    fontWeight: '200',
+  },
+
   unread: {
-    width: 40,
-    textAlign: 'center',
+    width: 10,
+    textAlign: 'right',
     paddingRight: 10,
+    paddingLeft: 20,
     color: colors.COLOR_MIDGREY,
   },
 

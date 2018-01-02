@@ -31,13 +31,14 @@ const pageStyles = StyleSheet.create({
   header: {
     width: '100%',
     padding: 10,
-    height: 35,
+    marginTop: 5,
+    marginBottom: 0,
     justifyContent: 'center',
   },
 
   headerText: {
-    fontWeight: '800',
-    fontSize: 17,
+    fontWeight: '200',
+    fontSize: 20,
   },
 
   contentBox: {

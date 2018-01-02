@@ -64,8 +64,8 @@ class PageStart extends React.Component {
   render() {
     return (
       <ScrollView style={pageStyles.container}>
-        {this.getFavoritesWidget()}
         {this.getFrontPageWidget()}
+        {this.getFavoritesWidget()}
       </ScrollView>
     );
   }

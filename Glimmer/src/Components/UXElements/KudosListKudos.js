@@ -6,14 +6,6 @@ import * as colors from '../../Styles/colorConstants';
 const striptags = require('striptags');
 
 export default class KudosListKudos extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-
-  }
-
   getText() {
     return striptags(this.props.kudos.subjectLabel);
   }
@@ -21,8 +13,8 @@ export default class KudosListKudos extends React.Component {
   render() {
     return (
       <View style={pageStyles.container}>
-        <Image style={{ width: 60, height: 60, borderRadius: 10 }} source={{ url: this.props.kudos.creatorImage }} />
-        <View style={{ flexDirection: 'column', flex: 1, marginLeft: 10 }}>
+        <Image style={{ width: 40, height: 40, borderRadius: 20 }} source={{ url: this.props.kudos.creatorImage }} />
+        <View style={{ flexDirection: 'column', flex: 1, marginLeft: 15 }}>
           <Text>{this.props.kudos.creatorName}</Text>
           <Text>{this.props.kudos.createdAt.fromNow()}</Text>
           <Text numberOfLines={2} style={{ color: '#666666' }}>{this.getText()}</Text>

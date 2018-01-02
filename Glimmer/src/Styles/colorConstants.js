@@ -10,3 +10,9 @@ export const COLOR_GREEN = '#12801c';
 export const COLOR_WHITE = '#FFFFFF';
 export const COLOR_ORANGE = '#fca631';
 export const COLOR_BLACK = '#000000';
+
+export const COLOR_WHEEL_1 = '#004358';
+export const COLOR_WHEEL_2 = '#1F8A70';
+export const COLOR_WHEEL_3 = '#BEDB39';
+export const COLOR_WHEEL_4 = '#FFE11A';
+export const COLOR_WHEEL_5 = '#FD7400';

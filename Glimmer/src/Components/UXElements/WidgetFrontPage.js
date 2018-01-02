@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { ScrollView } from 'react-native';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 import WidgetContainer from './WidgetContainer';
@@ -32,7 +33,9 @@ class WidgetFrontPage extends React.Component {
   render() {
     return (
       <WidgetContainer title="Siste innlegg">
-        {this.getPosts()}
+        <ScrollView horizontal contentContainerStyle={{ paddingLeft: 5, paddingRight: 5, flexDirection: 'row' }}>
+          {this.getPosts()}
+        </ScrollView>
       </WidgetContainer>
     );
   }

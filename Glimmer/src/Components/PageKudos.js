@@ -90,7 +90,7 @@ const pageStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    padding: 10,
+    padding: 5,
     paddingBottom: 0,
     margin: 0,
   },

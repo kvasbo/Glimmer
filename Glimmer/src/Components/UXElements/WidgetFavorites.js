@@ -55,7 +55,7 @@ class WidgetFavorites extends React.Component {
 
   render() {
     return (
-      <WidgetContainer title="Uleste i tråder jeg følger">  
+      <WidgetContainer title="Uleste i fulgte tråder">  
         {this.getPosts()}
       </WidgetContainer>
     );
