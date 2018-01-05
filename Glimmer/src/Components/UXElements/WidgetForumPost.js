@@ -20,7 +20,7 @@ export default class WidgetForumPost extends React.Component {
   constructor(props) {
     super(props);
     this.images = getImagesFromForumPost(this.props.post.body);
-    console.log("img", this.images);
+    // console.log("img", this.images);
   }
 
   loadPost() {

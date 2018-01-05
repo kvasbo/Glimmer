@@ -13,6 +13,8 @@ import ForumPosts from './ForumPosts';
 import Events from './Events';
 import Kudos from './Kudos';
 import Settings from './Settings';
+import DimensionsPosts from './DimensionsPosts';
+import DimensionsComments from './DimensionsComments';
 
 const glimmerReducers = combineReducers({
 
@@ -30,6 +32,8 @@ const glimmerReducers = combineReducers({
   Events,
   Kudos,
   Settings,
+  DimensionsPosts,
+  DimensionsComments,
 
 });
 

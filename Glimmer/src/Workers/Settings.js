@@ -6,7 +6,7 @@ export default class Settings {
   constructor() {
     this.init();
     this.settings = {};
-    console.log('init settings', this.settings);
+    // console.log('init settings', this.settings);
   }
 
   init = async () => {

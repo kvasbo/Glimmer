@@ -5,14 +5,14 @@ export default class Gjemsel {
   constructor() {
     this.init();
     this.krok = [];
-    console.log('init gjemsel', this.krok);
+    // console.log('init gjemsel', this.krok);
   }
 
   init = async () => {
     const krok = await AsyncStorage.getItem('skammekroken');
     if (krok !== null) {
       this.krok = JSON.parse(krok);
-      console.log('krok hentet', this.krok);
+      // console.log('krok hentet', this.krok);
     } else {
       this.krok = [];
       this.saveKrok();
@@ -20,7 +20,7 @@ export default class Gjemsel {
   };
 
   saveKrok() {
-    console.log('Lagrer krok', this.krok);
+    // console.log('Lagrer krok', this.krok);
     AsyncStorage.setItem('skammekroken', JSON.stringify(this.krok));
   }
 
@@ -29,7 +29,7 @@ export default class Gjemsel {
   }
 
   addToKrok(id) {
-    console.log('legg til i skammekrok', id);
+    // console.log('legg til i skammekrok', id);
     let tmpKrok = [...this.krok];
     tmpKrok.push(id);
     tmpKrok = uniq(tmpKrok);
@@ -38,7 +38,7 @@ export default class Gjemsel {
   }
 
   removeFromKrok(id) {
-    console.log('fjern fra skammekrok', id);
+    // console.log('fjern fra skammekrok', id);
     let tmpKrok = [...this.krok];
     tmpKrok = without(tmpKrok, id);
     this.krok = tmpKrok;

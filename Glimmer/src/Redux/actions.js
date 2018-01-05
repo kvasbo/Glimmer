@@ -20,7 +20,9 @@ import {
   ADD_POST_BATCH,
   ADD_EVENT_BATCH,
   KUDOS_ADD_BATCH,
-  SETTINGS_REFRESH
+  SETTINGS_REFRESH,
+  DIMENSIONS_SET_COMMENT,
+  DIMENSIONS_SET_POST,
 } from '../constants';
 
 export function replaceForumList(forums) {
@@ -177,5 +179,21 @@ export function updateSettings(settings) {
   return {
     type: SETTINGS_REFRESH,
     settings,
+  };
+}
+
+export function storeDimensionsPost(id, dimensions) {
+  return {
+    type: DIMENSIONS_SET_POST,
+    id,
+    dimensions,
+  };
+}
+
+export function storeDimensionsComment(id, dimensions) {
+  return {
+    type: DIMENSIONS_SET_COMMENT,
+    id,
+    dimensions,
   };
 }

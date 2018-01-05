@@ -11,6 +11,7 @@ import GiKudos from './GiKudos';
 import VisKudos from './VisKudos';
 import CommentMetadata from './CommentMetadata';
 import Badge from './Badge';
+import { storeDimensionsComment } from '../../Redux/actions';
 import * as colors from '../../Styles/colorConstants';
 
 export default class ForumComment extends React.Component {
@@ -26,14 +27,11 @@ export default class ForumComment extends React.Component {
     getKudosSection() {
       if (this.byMe) {
         let kudos = [];
-
         if (typeof this.props.data.kudos.from !== 'undefined') {
           kudos = this.props.data.kudos.from;
         }
-
         return (<VisKudos kudos={kudos} />);
       }
-
       let given = false;
       if (typeof (this.props.data.kudos.given) !== 'undefined' && this.props.data.kudos.given) given = true;
       return (<GiKudos id={this.props.data.id} type="comment" given={given} />);
@@ -46,7 +44,6 @@ export default class ForumComment extends React.Component {
       const editWindow = 14;
       const now = new moment();
       const created = new moment(this.props.data.updated_at);
-
       const diff = now.diff(created, 'minutes');
       const rest = editWindow - diff;
 
@@ -66,7 +63,6 @@ export default class ForumComment extends React.Component {
           </TouchableOpacity>
         );
       }
-
     }
 
     getMoreStuff() {
@@ -75,10 +71,15 @@ export default class ForumComment extends React.Component {
       );
     }
 
+    onLayout = (event) => {
+      const { height, width } = event.nativeEvent.layout;
+      const data = { height, width, id: this.props.data.id };
+      global.store.dispatch(storeDimensionsComment(this.props.data.id, data));
+    }
+
     render() {
       return (
-        <View style={pageStyles.container}>
-
+        <View style={pageStyles.container} onLayout={this.onLayout}>
           <View style={pageStyles.metaData}>
             <CommentMetadata
               post={this.props.data}
@@ -87,7 +88,6 @@ export default class ForumComment extends React.Component {
               isUnread={this.props.isUnread}
             />          
           </View>
-
           <View style={pageStyles.comment}>
             <ForumTextTextile webview cut={false} text={this.props.data.body_textile} navigator={this.props.navigator} />
           </View>

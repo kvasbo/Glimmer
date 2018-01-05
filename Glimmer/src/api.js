@@ -98,7 +98,7 @@ async function makeApiCall(url, type, body = null) {
         const data = await response.json();
         if (__DEV__) {
           const end = new Date();
-          console.log('API OK', type, url, end - start);
+          // console.log('API OK', type, url, end - start);
         }
         return (data);
       } catch (error) {

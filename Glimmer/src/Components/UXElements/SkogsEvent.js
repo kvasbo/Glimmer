@@ -1,7 +1,3 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
@@ -11,6 +7,7 @@ import PostControls from './PostControls';
 import CommentMetadata from './CommentMetadata';
 import EventData from './EventData';
 import * as colors from '../../Styles/colorConstants';
+import { storeDimensionsPost } from '../../Redux/actions';
 
 export default class SkogsEvent extends React.Component {
     byMe = false;
@@ -26,33 +23,30 @@ export default class SkogsEvent extends React.Component {
       } catch (err) {
         console.log('error parsing', this.props);
       }
-
+     
       console.log('Event', this.props.data);
-    }
-
-    componentWillMount() {
-      // arbeidsMaur.eventUpdater.getAllParticipantsForEvent(this.props.data.id);
     }
 
     getTime() {
       return helpers.getCalendarTime(this.props.data.created_at);
     }
 
+    onLayout = (event) => {
+      const { height, width } = event.nativeEvent.layout;
+      const data = { height, width, id: this.props.data.id };
+      global.store.dispatch(storeDimensionsPost(this.props.data.id, data));
+    }
+
     render() {
       return (
 
-        <View style={pageStyles.container}>
-
+        <View style={pageStyles.container} onLayout={this.onLayout}>
           <View style={pageStyles.creatorInfo}>
-
-          <PostControls post={this.props.data} navigator={this.props.navigator} /> 
- 
- </View>
-
+            <PostControls post={this.props.data} navigator={this.props.navigator} />
+          </View>
           <View style={pageStyles.thePost}>
             <ForumTextTextile text={this.props.data.body_textile} navigator={this.props.navigator} style={{ marginBottom: 10 }} />
           </View>
-
         </View>
       );
     }

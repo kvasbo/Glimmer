@@ -6,6 +6,7 @@ import ForumTextTextile from './ForumTextTextile';
 import PostControls from './PostControls';
 import CommentMetadata from './CommentMetadata';
 import * as colors from '../../Styles/colorConstants';
+import { storeDimensionsPost } from '../../Redux/actions';
 
 export default class ThreadForumPost extends React.Component {
     byMe = false;
@@ -13,7 +14,6 @@ export default class ThreadForumPost extends React.Component {
     constructor(props) {
       super(props);
       this.state = { };
-
       try {
         if (this.props.data.creator_id === store.getState().AppStatus.activeUserId) {
           this.byMe = true;
@@ -23,18 +23,19 @@ export default class ThreadForumPost extends React.Component {
       }
     }
 
-    componentDidMount() {
-
-    }
-
     getTime() {
       return helpers.getCalendarTime(this.props.data.created_at);
     }
 
+    onLayout = (event) => {
+      const { height, width } = event.nativeEvent.layout;
+      const data = { height, width, id: this.props.data.id };
+      global.store.dispatch(storeDimensionsPost(this.props.data.id, data));
+    }
+
     render() {
       return (
-
-        <View style={pageStyles.container}>
+        <View style={pageStyles.container} onLayout={this.onLayout}>
           <View style={pageStyles.creatorInfo}>
             <PostControls post={this.props.data} navigator={this.props.navigator} />
           </View>
@@ -57,7 +58,6 @@ export default class ThreadForumPost extends React.Component {
               />
             </View>
           </View>
-
         </View>
       );
     }
