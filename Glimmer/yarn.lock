@@ -4337,8 +4337,8 @@ react-native-elements@^0.18.5:
     prop-types "^15.5.8"
 
 react-native-exception-handler@^2.3.0:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.6.2.tgz#67369de9dfe3c827112decf322f3461a542f4327"
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.7.0.tgz#4dff22df2f3f36ac7ac0f03a6f67c20c554473bd"
 
 react-native-firebase@^3.1.1:
   version "3.2.0"
@@ -4371,8 +4371,8 @@ react-native-lightbox@^0.7.0:
     prop-types "^15.5.10"
 
 react-native-navigation@^1.1:
-  version "1.1.328"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.328.tgz#fd4d8287184103430b4a614861df9b7547ef651a"
+  version "1.1.334"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.334.tgz#255cfe35ea5d7e6edd9d3583dd7a65b9d87736bd"
   dependencies:
     lodash "4.x.x"
 

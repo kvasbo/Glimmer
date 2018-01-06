@@ -1,19 +1,21 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { Tile } from 'react-native-elements';
+import { View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import Moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getImagesFromForumPost } from '../../helpers';
 import * as colors from '../../Styles/colorConstants';
 
+const height = 140;
+const width = 150;
+
 const colorSet = [
-  { featured: false, back: colors.COLOR_WHEEL_1, text: colors.COLOR_WHITE, textBack: colors.COLOR_WHITE },
-  { featured: false, back: colors.COLOR_WHEEL_2, text: colors.COLOR_WHITE, textBack: colors.COLOR_WHITE },
-  { featured: false, back: colors.COLOR_WHEEL_3, text: colors.COLOR_BLACK, textBack: colors.COLOR_WHITE },
-  { featured: false, back: colors.COLOR_WHEEL_4, text: colors.COLOR_BLACK, textBack: colors.COLOR_WHITE },
-  { featured: false, back: colors.COLOR_WHEEL_5, text: colors.COLOR_WHITE, textBack: colors.COLOR_WHITE },
+  { back: colors.COLOR_WHEEL_1, text: colors.COLOR_WHITE, textBack: colors.COLOR_WHITE },
+  { back: colors.COLOR_WHEEL_2, text: colors.COLOR_WHITE, textBack: colors.COLOR_WHITE },
+  { back: colors.COLOR_WHEEL_3, text: colors.COLOR_BLACK, textBack: colors.COLOR_WHITE },
+  { back: colors.COLOR_WHEEL_4, text: colors.COLOR_BLACK, textBack: colors.COLOR_WHITE },
+  { back: colors.COLOR_WHEEL_5, text: colors.COLOR_WHITE, textBack: colors.COLOR_WHITE },
 ];
 
 export default class WidgetForumPost extends React.Component {
@@ -31,39 +33,60 @@ export default class WidgetForumPost extends React.Component {
     });
   }
 
-  render() {
 
-    const imageSrc = (this.images.length > 0) ? { uri: this.images[0].src } : null;
-    const bgColor = (this.images.length > 0) ? colors.COLOR_DARKGREY : colors.COLOR_WHITE;
-    const fontColor = (this.images.length > 0) ? colors.COLOR_WHITE : colors.COLOR_BLACK;
+  getTileWithPicture() {
+    const imageSrc = { uri: this.images[0].src };
+    return (
+      <TouchableOpacity onPress={() => this.loadPost()}>
+        <View style={[pageStyles.container, { backgroundColor: colors.COLOR_BLACK }]}>
+        <Image resizeMode='cover' style={{ position: 'absolute', left: 0, top: 0, width, height }} source={imageSrc} />
+          <View
+            style={{
+              position: 'absolute',
+              padding: 10,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              alignItems: 'center',
+            }}
+          >
+            <Text numberOfLines={3} style={{ fontSize: 12, fontWeight: '300', color: colors.COLOR_WHITE, backgroundColor: colors.COLOR_BLACK, padding: 10, opacity: 0.9 }}>
+              {this.props.post.title}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  }
 
-    let colorsForMe = { featured: true, back: colors.COLOR_BLACK, text: colors.COLOR_WHITE, textBack: colors.COLOR_WHITE };
+  getTileNoPicture() {
 
-    if (this.images.length === 0) {
-      const colorSetId = (this.props.post.id % colorSet.length);
-      colorsForMe = colorSet[colorSetId];
-    }
+    const colorSetId = (this.props.post.id % colorSet.length);
+    colorsForMe = colorSet[colorSetId];
 
     return (
-      <View style={pageStyles.container}>
-        <Tile
-          onPress={() => this.loadPost()}
-          height={100}
-          width={150}
-          featured={colorsForMe.featured}
-          imageContainerStyle={{ backgroundColor: colorsForMe.back }}
-          contentContainerStyle={{ backgroundColor: colorsForMe.back }}
-          containerStyle={{ backgroundColor: colorsForMe.back }}
-          iconContainerStyle={{ backgroundColor: colorsForMe.back }}
-         // icon={name: "ios-next", color: colors.COLOR_MIDGREY, size: 40}
-          imageSrc={imageSrc}
-          title={this.props.post.title}
-          // caption={new Moment(this.props.post.created_at).calendar()}
-          titleNumberOfLines={5}
-          titleStyle={{ fontSize: 12, fontWeight: '200', color: colorsForMe.text, backgroundColor: colorsForMe.back, padding: 5 }}
-          captionStyle={{ fontSize: 10, fontWeight: '200', color: colorsForMe.text }}
-        />
+      <View style={[pageStyles.container, { backgroundColor: colorsForMe.back }]}>
+        <View
+          style={{
+            position: 'absolute',
+            padding: 0,
+            bottom: 0,
+            left: 0,
+          }}
+        >
+          <Text numberOfLines={5} style={{ fontSize: 12, fontWeight: '200', color: colorsForMe.text, backgroundColor: colorsForMe.back, padding: 10 }}>
+            {this.props.post.title}
+          </Text>
+        </View>
       </View>
+    );
+  }
+
+  render() {
+    return (
+      <TouchableOpacity onPress={() => this.loadPost()}>
+        {(this.images.length > 0) ? this.getTileWithPicture() : this.getTileNoPicture()}
+      </TouchableOpacity>
     );
   }
 }
@@ -76,22 +99,13 @@ WidgetForumPost.propTypes = {
 const pageStyles = StyleSheet.create({
 
   container: {
-    backgroundColor: colors.COLOR_WHITE,
+    backgroundColor: colors.COLOR_LIGHT,
     flexDirection: 'column',
     justifyContent: 'space-between',
     margin: 5,
     alignItems: 'center',
+    height,
+    width,
   },
-
-  title: {
-    flex: 1,
-  },
-
-  unread: {
-    width: 40,
-    textAlign: 'center',
-    paddingRight: 10,
-    color: colors.COLOR_MIDGREY,
-  },
-
+  
 });
