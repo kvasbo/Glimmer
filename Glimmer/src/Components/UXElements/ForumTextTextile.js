@@ -7,7 +7,7 @@ import GlimmerImage from './GlimmerImage';
 import * as colors from '../../Styles/colorConstants';
 import { REGEX_EXTERNAL_IMAGE, REGEX_LINK_THREAD, REGEX_TEXTILE_INTERNAL_IMAGE, REGEX_VALID_URL } from '../../constants';
 
-const baseImageUrl = 'https://images.underskog.no/versions/1250/XXXXX.jpeg';
+const baseImageUrl = 'https://images.underskog.no/versions/650/XXXXX.jpeg';
 
 export default class ForumTextTextile extends React.Component {
   constructor(props) {
@@ -36,12 +36,9 @@ export default class ForumTextTextile extends React.Component {
 
   parseText() {
     let text = this.props.text;
-    const outArray = [];
 
     // Newline før og etter bilde
-
     text = text.replace(REGEX_TEXTILE_INTERNAL_IMAGE, match => `\n${match}\n`);
-
     text = text.replace(REGEX_EXTERNAL_IMAGE, match => `\n${match}\n`);
 
     // Splitte ved newline
@@ -50,10 +47,10 @@ export default class ForumTextTextile extends React.Component {
     // Fjern tomme avsnitt
     textArray = textArray.filter(x => x !== '');
 
-    // Loope og parse
-    for (key in textArray) {
-      let tmp = textArray[key];
+    // Mappe og bytte ut bilder etc. 
+    const outArray = textArray.map((n) => {
 
+      let tmp = n;
       if (REGEX_TEXTILE_INTERNAL_IMAGE.test(tmp)) {
         // Bytte ut underskogs-bildekode
         tmp = tmp.replace(REGEX_TEXTILE_INTERNAL_IMAGE, (match) => {
@@ -63,21 +60,18 @@ export default class ForumTextTextile extends React.Component {
           return url;
         });
 
-        outArray.push({ type: 'img', data: tmp, internal: true });
+        return { type: 'img', data: tmp, internal: true };
       } else if (REGEX_EXTERNAL_IMAGE.test(tmp)) {
         tmp = tmp.substring(1, tmp.length - 1);
-
-        outArray.push({ type: 'img', data: tmp, internal: false });
-      } else if (tmp.indexOf('> ') === 0) // BQ
-      {
-        outArray.push({ type: 'bq', data: tmp.substring(2) });
-      } else if (tmp.indexOf('bq. ') === 0) // BQ
-      {
-        outArray.push({ type: 'bq', data: tmp.substring(3) });
+        return { type: 'img', data: tmp, internal: false };
+      } else if (tmp.indexOf('> ') === 0) {
+        return { type: 'bq', data: tmp.substring(2) };
+      } else if (tmp.indexOf('bq. ') === 0) {
+        return { type: 'bq', data: tmp.substring(3) };
       } else {
-        outArray.push({ type: 'txt', data: tmp });
+        return { type: 'txt', data: tmp };
       }
-    }
+    });
 
     const mergedArray = [];
 
@@ -197,12 +191,8 @@ export default class ForumTextTextile extends React.Component {
 
   getContent() {
     const outArray = [];
-
     const parsed = this.parseText();
 
-    console.log(this.props.text, parsed);
-
-    // for (key in this.parsed) {
     parsed.forEach((node, key) => {
       if (node.type === 'txt') {
         outArray.push(<HTMLView

@@ -35,9 +35,9 @@ export const FORUMPOST_COMMENTS_ADD = 'FORUMPOST_COMMENTS_ADD';
 
 export const USERS_ADD_USER_BATCH = 'USERS_ADD_USER_BATCH';
 
-export const REGEX_LINK_USER = /(https?:\/\/(www\.)?underskog.no\/medlem\/vis\/\w*)/gi;
-export const REGEX_LINK_THREAD = /https?:\/\/.*underskog\.no\/samtale\/[0-9]*/gi;
-export const REGEX_EXTERNAL_IMAGE = /!https?:\/\/(w*.)+!/gi;
-export const REGEX_LINK_IMAGE = /("!https?:\/\/(w*.)+!":https?:\/\/([a-z0-9.])*\/([a-z_.#$?&\-])*)/gi;
-export const REGEX_TEXTILE_INTERNAL_IMAGE = /(!bilde\s[\d]+!)/gi;
-export const REGEX_VALID_URL = /(https?|ftp):\/\/[^\s/$.?#].[^\s]*/gi;
+export const REGEX_LINK_USER = /(https?:\/\/(www\.)?underskog.no\/medlem\/vis\/\w*)/i;
+export const REGEX_LINK_THREAD = /https?:\/\/.*underskog\.no\/samtale\/[0-9]*/i;
+export const REGEX_EXTERNAL_IMAGE = /!https?:\/\/(w*.)+!/i;
+export const REGEX_LINK_IMAGE = /("!https?:\/\/(w*.)+!":https?:\/\/([a-z0-9.])*\/([a-z_.#$?&\-])*)/i;
+export const REGEX_TEXTILE_INTERNAL_IMAGE = /(!bilde\s[\d]+!)/i;
+export const REGEX_VALID_URL = /(https?|ftp):\/\/[^\s/$.?#].[^\s]*/i;
