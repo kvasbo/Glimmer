@@ -150,7 +150,7 @@ function showSplashScreen() {
       screen: 'glimmer.PageSplashScreen',
       navigatorStyle: { navBarHidden: true },
     },
-    animationType: 'fade',
+    animationType: 'none',
   });
 }
 
