@@ -2,31 +2,32 @@ import React from 'react';
 import { Provider, connect } from 'react-redux';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import { Alert, AppState, AsyncStorage } from 'react-native';
-import registerScreens from './screens';
 import { Navigation } from 'react-native-navigation';
-import Workers from './Workers/index.js';
 import { applyMiddleware, compose, createStore } from 'redux';
-import { createLogger } from 'redux-logger';
-import glimmerReducers from './Redux/index';
+import SafariView from 'react-native-safari-view';
+// import { createLogger } from 'redux-logger';
 import RNFirebase from 'react-native-firebase';
 import { setJSExceptionHandler } from 'react-native-exception-handler';
 import 'moment/locale/nb';
-import GlimmerAuth from './auth.js';
+import glimmerReducers from './Redux/index';
+import Workers from './Workers/index';
+import GlimmerAuth from './auth';
+import registerScreens from './screens';
 import GlimmerAPI from './api';
+import Logger from './logger';
 import Helpers from './helpers';
 import NavStyles from './Styles/NavigatorStyles';
 import { iconsLoaded, iconsMap } from './Components/UXElements/Icons';
-import SafariView from 'react-native-safari-view';
 
-global.moment = require('moment');
+const moment = require('moment');
 
 moment.locale('nb');
 
-console.disableYellowBox = true;
+// console.disableYellowBox = true;
 
 const config = require('../config.js');
 
-global.config = config;
+
 
 // Some hacks
 // console.disableYellowBox = true;
@@ -39,7 +40,6 @@ const errorHandler = (e, isFatal) => {
         `, [{
       text: 'OK',
       onPress: () => {
-
       },
     }]);
   } else {
@@ -52,35 +52,29 @@ setJSExceptionHandler(errorHandler, true);
 const firebase = RNFirebase.app();
 firebase.analytics().setAnalyticsCollectionEnabled(true);
 
-global.firebase = firebase;
+// Create redux store, with logging only for dev env
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(glimmerReducers, undefined, composeEnhancers(applyMiddleware()));
 
+global.firebase = firebase;
 global.auth = new GlimmerAuth();
 global.api = new GlimmerAPI();
 global.helpers = new Helpers();
 global.arbeidsMaur = new Workers();
 global.SafariView = SafariView;
+global.config = config;
+global.logger = new Logger();
+global.moment = moment;
+global.store = store;
+// global.rootNavigation = Navigation;
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // console.log("Firebase signed in", user)
   } else {
     // User is signed out.
-    // console.log("Firebase signed out", user)
   }
 });
-
-// Create the Redux Store. Saving disabled for now
-const loggerMiddleware = createLogger();
-
-// Create redux store, with logging only for dev env
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(glimmerReducers, undefined, composeEnhancers(applyMiddleware()));
-
-global.store = store;
-
-// Make root navigation callable from anywhere. Should be cleaned up and done via store!
-global.rootNavigation = Navigation;
 
 // Reload stuff on wake.
 const handleAppStateChange = (nextAppState) => {
@@ -206,6 +200,5 @@ function startMainApp() {
       tabBarSelectedButtonColor: '#3499DB',
       initialTabIndex: 2,
     },
-
   });
 }
