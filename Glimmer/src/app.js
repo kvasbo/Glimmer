@@ -43,7 +43,7 @@ const errorHandler = (e, isFatal) => {
       },
     }]);
   } else {
-    console.log(e); // So that we can see it in the ADB logs in case of Android if needed
+   // console.log(e); // So that we can see it in the ADB logs in case of Android if needed
   }
 };
 

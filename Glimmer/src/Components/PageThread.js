@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { filter, sumBy, cloneDeep } from 'lodash';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, FlatList } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThreadForumPost from './UXElements/ThreadForumPost';
 import SkogsEvent from './UXElements/SkogsEvent';
@@ -11,73 +11,41 @@ import * as colors from '../Styles/colorConstants';
 import LoadingScreen from './UXElements/LoadingScreen';
 import { COLOR_LIGHT } from '../Styles/colorConstants';
 
-const hash = require('object-hash');
-
 const commentsInPage = 30;
 const separatorHeight = 5;
 const activeColor = colors.COLOR_DARKGREY;
 
-
 class PageThread extends React.Component {
-    scrollbar = null;
-    firstpost = null;
+    contentHeight = 0;
    
-
     constructor(props) {
       super(props);
 
       this.unreadInfo = this.findFirstUnread();
-      this.initSizeIndex();
+
       this.state = {
         loading: false,
         currentPage: this.unreadInfo.unreadPage,
         comments: [],
         skammekrok: [],
         gotoFirst: true,
-        extraData: undefined,
-        randomStupidThing: Math.random(),
       };
       this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-      this.componentWillMount = this.componentWillMount.bind(this);
-      this.componentWillUnmount = this.componentWillUnmount.bind(this);
       this.loadCommentPage = this.loadCommentPage.bind(this);
-      this.renderHeader = this.renderHeader.bind(this);
       this.isEvent = (this.props.post.type === 'event');
-      
-      // console.log('isEvent', this.isEvent);
-    }
-
-    initSizeIndex() {
-      console.log("initSizeIndex");
-      this.sizeIndex = { comments: {}, post: undefined };
-    }
-
-    componentWillMount() {
-      this.initSizeIndex();
-      // this.loadCommentPage(1);
-    }
-
-    componentWillUnmount() {
-      this.initSizeIndex();
     }
 
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
-          // this.silentlyLoadCommentPage(1);
-          this.setState({ randomStupidThing: Math.random() });
-          this.header = this.renderHeader();
           this.silentlyLoadCommentPage(this.state.currentPage);
           firebase.analytics().setCurrentScreen("tråd");
-           // this.setState(this.state);
           break;
         case 'didAppear':
           this.updateSkammekrok();
           break;
         case 'willDisappear':
-          if(this.state.currentPage === 1) {
-            if (this.state.currentPage === 1) arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
-          }
+          if (this.state.currentPage === 1) arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
           break;
         case 'didDisappear':
           break;
@@ -104,13 +72,13 @@ class PageThread extends React.Component {
     }
 
     findLastPageOfComments() {
-      const cCount = parseInt(this.props.post.comment_count);
-      const pNumber = parseInt((Math.ceil(cCount / commentsInPage)));
+      const cCount = parseInt(this.props.post.comment_count, 10);
+      const pNumber = parseInt((Math.ceil(cCount / commentsInPage)), 10);
       return pNumber;
     }
 
     getCurrentPageNumber() {
-      const pageNr = this.findLastPageOfComments() - this.state.currentPage + 1;
+      const pageNr = (this.findLastPageOfComments() - this.state.currentPage) + 1;
       if (this.state.loading) {
         return (
           <ActivityIndicator color={activeColor} size="small" />
@@ -127,7 +95,6 @@ class PageThread extends React.Component {
       const numberOnPage = numberOfUnread % 30;
       const totalPages = Math.ceil(this.props.post.comment_count / commentsInPage);
       const out = { unreadPage, numberOnPage, totalPages };
-      //console.log("findFirstUnread post", this.props.post, out);
       return out;
     }
 
@@ -145,39 +112,9 @@ class PageThread extends React.Component {
         return true;
       });
 
-      // this.setState({ extraData: Math. });
-
       return tmpPosts;
     }
 
-    keyExtractor(element) {
-      return element.id;
-    }
-
-    /**
-     * Store the size of the post itself, for scrolling to them.
-     * @param {*} event 
-     * @param {*} index 
-     */
-    /*
-    postRenderedGetSize = (event) => {
-      console.log("rendered post");
-      const { height, width } = event.nativeEvent.layout;
-      this.sizeIndex.post = { height, width };
-    }
-*/
-    /**
-     * Store the size of the comments, for scrolling to them.
-     * @param {*} event 
-     * @param {*} index 
-     */
-    /*
-    commentRenderedGetSize= (event, index) => {
-      console.log("rendered comment");
-      const { height, width } = event.nativeEvent.layout;
-      this.sizeIndex.comments[index] = { index, height, width };
-    }
-*/
     /**
      * Get the position of any item in the list.
      */
@@ -191,18 +128,19 @@ class PageThread extends React.Component {
           const { height, width } = commentSizeList[c.id];
           return { height, width };
         });
-
         const heightOfComments = sumBy(commentSizes, 'height');
-        const heightOfPost = 0; // (postSizeList[this.props.post.id]) ? postSizeList[this.props.post.id].height : 0;
-        const heightOfSeparators = 0; // Math.max(0, (index - 1)) * separatorHeight;
+        const heightOfPost = (postSizeList[this.props.post.id]) ? postSizeList[this.props.post.id].height : 0;
+        const heightOfSeparators = Math.max(0, (index - 1)) * separatorHeight;
+
         const offset = heightOfPost + heightOfComments + heightOfSeparators;
+        console.log(heightOfComments,heightOfPost,heightOfSeparators, offset);
         
         let length = 0;
         if (index > 0) {
           const commentWeAreLookingAt = data[index];
+          console.log("we are looking at", commentWeAreLookingAt);
           length = (commentSizeList[commentWeAreLookingAt.id]) ? commentSizeList[commentWeAreLookingAt.id].height : 0;
         }
-        // console.log({length, offset, index});
         return { length, offset, index };
       } catch (e) {
         console.log('error in getItemLayout');
@@ -221,9 +159,13 @@ class PageThread extends React.Component {
     }
 
     gotoPost(index) {
-      const goto = Math.min((this.getCommentList().length - 1), index);
-      const offset = this.getItemLayout(this.getCommentList(), index);
-      this.scrollViewRef.scrollTo({ y: offset.offset });
+      const goto = Math.min((this.getCommentList().length), index + 1);
+      const offset = this.getItemLayout(this.getCommentList(), goto);
+      if (offset.offset < this.contentHeight) {
+        this.scrollViewRef.scrollTo({ y: offset.offset });
+      } else {
+        this.gotoBottom();
+      }
     }
 
     /**
@@ -380,18 +322,19 @@ class PageThread extends React.Component {
 
     getCommments = () => {
       const comments = this.getCommentList();
-
       return comments.map((c, index) => {
-       // console.log(c, index);
         const byStarter = (c.creator_id === this.props.post.creator_id);
         return (
-          <ForumComment
-            key={c.id}
-            byStarter={byStarter}
-            navigator={this.props.navigator}
-            data={c}
-            isUnread={this.isUnread(index)}
-          />
+          <View>
+            <ForumComment
+              key={c.id}
+              byStarter={byStarter}
+              navigator={this.props.navigator}
+              data={c}
+              isUnread={this.isUnread(index)}
+            />
+            {(index < comments.length) ? this.renderSeparator() : null }
+          </View>
         );
       });
     }
@@ -401,34 +344,16 @@ class PageThread extends React.Component {
         <View style={{ width: '100%', height: separatorHeight, backgroundColor: COLOR_LIGHT }} />
       );
     }
-
-    renderHeader() {
-      console.log('render post called');
-      return this.getPost();
-    }
-
-    renderItem(item) {
-      const c = item.item;
-      const byStarter = (c.creator_id === this.props.post.creator_id);
-      return (
-        <ForumComment
-          key={c.id}
-          byStarter={byStarter}
-          navigator={this.props.navigator}
-          data={c}
-          isUnread={this.isUnread(item.index)}
-        />
-      );
-    }
-
+  
     render() {
       return (
         <View style={pageStyles.container}>
           <ScrollView
             style={{ flex: 1 }}
             ref={(ref) => { this.scrollViewRef = ref; }}
+            onContentSizeChange={(w, h) => { this.contentHeight = h; }}
           >
-            {this.renderHeader()}
+            {this.getPost()}
             {this.getCommments()}
 
           </ScrollView>
@@ -439,22 +364,6 @@ class PageThread extends React.Component {
       );
     }
 }
-
-/*
- <FlatList
-              data={this.getCommentList()}
-              extraData={this.state}
-              ref={(ref) => { this.flatListRef = ref; }}
-              keyExtractor={this.keyExtractor}
-              initialNumToRender={commentsInPage}
-              renderItem={(item) => this.renderItem(item)}
-              ItemSeparatorComponent={() => this.renderSeparator()}
-              ListHeaderComponent={() => this.renderHeader()}
-              getItemLayout={this.getItemLayout}
-              overScrollMode="never"
-              scrollsToTop={true}
-            />
-            */
 
 const pageStyles = StyleSheet.create({
   container: {
