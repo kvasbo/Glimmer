@@ -18,7 +18,7 @@ export default class PageAnnet extends React.Component {
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("innstillinger");
+        firebase.analytics().setCurrentScreen('innstillinger');
         break;
     }
   }

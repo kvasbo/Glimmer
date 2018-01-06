@@ -13,7 +13,7 @@ export default class CommentMetadata extends React.Component {
   }
 
   showUser() {
-    
+
   }
 
   getForumTitle() {
@@ -25,7 +25,7 @@ export default class CommentMetadata extends React.Component {
 
   getUnread() {
     if (!this.props.isUnread) return null;
-    return "(ulest)";
+    return '(ulest)';
   }
 
 
@@ -43,15 +43,16 @@ export default class CommentMetadata extends React.Component {
               flex: 1,
           }}
       >
-      <TouchableOpacity onPress={() => this.props.navigator.push({
+        <TouchableOpacity onPress={() => this.props.navigator.push({
         screen: 'glimmer.PageUserProfile',
         title: '...',
         passProps: { userId: this.props.post.creator_id },
-        })} >
-            <Image
-              style={[styles.element, { width: 24, height: 24, borderRadius: 12 }]}
-              source={{ uri: this.props.post.creator_image }}
-            />
+        })}
+        >
+          <Image
+            style={[styles.element, { width: 24, height: 24, borderRadius: 12 }]}
+            source={{ uri: this.props.post.creator_image }}
+          />
         </TouchableOpacity>
         <View style={{ flexDirection: 'column' }}>
           <Text style={[{ color, fontSize: 12 }]}>{this.props.post.creator_name} {this.getTime()} {this.getUnread()}</Text>
@@ -64,11 +65,11 @@ export default class CommentMetadata extends React.Component {
 }
 
 const styles = StyleSheet.create({
-      element: {
-        margin: 0,
-        marginRight: 6,
-      },
-    })
+  element: {
+    margin: 0,
+    marginRight: 6,
+  },
+});
 
 CommentMetadata.defaultProps = {
   showImage: true,

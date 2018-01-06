@@ -12,7 +12,7 @@ export default class PageAbout extends React.Component {
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("about");
+        firebase.analytics().setCurrentScreen('about');
         break;
     }
   }
@@ -21,7 +21,7 @@ export default class PageAbout extends React.Component {
     return (
       <ScrollView style={pageStyles.container}>
         <Text style={textStyles.paragraph}>
-          Glimmer er et hobbyprosjekt som kvasbo driver med på fritida. 
+          Glimmer er et hobbyprosjekt som kvasbo driver med på fritida.
           Det vil derfor variere hvor ofte ting oppdateres, og hva som gjøres bestemmes helt av hva som virker moro.
           SLAen for denne appen kan dermed oppsummeres med "Trist og uproft, sees på Underskog".
         </Text>
@@ -32,7 +32,7 @@ export default class PageAbout extends React.Component {
           Har du tilbakemelding? Send meg en melding på Underskog da vel!
         </Text>
         <Text style={textStyles.paragraph}>
-          Hvis du er nerd nok til å lure; appen lages med følgende hovedverktøy: React Native, Redux, Firebase. 
+          Hvis du er nerd nok til å lure; appen lages med følgende hovedverktøy: React Native, Redux, Firebase.
         </Text>
       </ScrollView>
     );

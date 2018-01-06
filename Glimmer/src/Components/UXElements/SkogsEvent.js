@@ -23,7 +23,7 @@ export default class SkogsEvent extends React.Component {
       } catch (err) {
         console.log('error parsing', this.props);
       }
-     
+
       console.log('Event', this.props.data);
     }
 

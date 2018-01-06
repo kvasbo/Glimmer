@@ -8,7 +8,7 @@ export default class GlimmerImage extends React.Component {
     super(props);
     this.state = {
       shown: false,
-      curIndex: 0
+      curIndex: 0,
     };
   }
 
@@ -29,24 +29,26 @@ export default class GlimmerImage extends React.Component {
         <TouchableOpacity
           onPress={() => {
             this.setState({ shown: true });
-            //Linking.openURL(this.props.uri);
+            // Linking.openURL(this.props.uri);
           }}
           onLongPress={() => {
-            const options = { url: this.props.uri }
-            ActionSheetIOS.showShareActionSheetWithOptions(options, (error) => { console.log(error); }, (success, method) => { console.log(success, method); } );
+            const options = { url: this.props.uri };
+            ActionSheetIOS.showShareActionSheetWithOptions(options, (error) => { console.log(error); }, (success, method) => { console.log(success, method); });
           }}
         >
           <Image
             resizeMode="cover"
             source={{ uri: this.props.uri }}
-            style={{ height: 240, width: '100%', marginBottom: 10, marginTop: 10 }}
+            style={{
+ height: 240, width: '100%', marginBottom: 10, marginTop: 10,
+}}
           />
         </TouchableOpacity>
         <ImageViewer
           shown={this.state.shown}
           imageUrls={this.imgsArr}
           onClose={this.closeViewer.bind(this)}
-          index={this.state.curIndex} 
+          index={this.state.curIndex}
         />
       </View>
     );

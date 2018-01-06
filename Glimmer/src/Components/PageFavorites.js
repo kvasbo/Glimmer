@@ -38,58 +38,58 @@ class PageFavorites extends React.Component {
     switch (event.id) {
       case 'willAppear':
         this._silentRefresh();
-        firebase.analytics().setCurrentScreen("favoritesList");
+        firebase.analytics().setCurrentScreen('favoritesList');
         break;
     }
   }
 
-    _silentRefresh() {
-      this.setState({ silentLoading: true });
-      LayoutAnimation.spring();
-      if (!this.state.loading) {
-        global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then(() => {
-          if (this._isMounted) {
-            this.setState({ silentLoading: false });
-          }
-        });
-      }
-    }
-
-    _refresh() {
-      this.setState({ refreshing: true });
-      LayoutAnimation.spring();
-      global.arbeidsMaur.forumUpdater.loadFirstFavorites(1).then((data) => {
+  _silentRefresh() {
+    this.setState({ silentLoading: true });
+    LayoutAnimation.spring();
+    if (!this.state.loading) {
+      global.arbeidsMaur.forumUpdater.addFavorites(1, 1).then(() => {
         if (this._isMounted) {
-          this.setState({ refreshing: false });
+          this.setState({ silentLoading: false });
         }
       });
     }
+  }
 
-    getData() {
-      const out = Object.values(this.props.favorites);
-
-      out.sort((x, y) => (new Date(y.updated_at) - new Date(x.updated_at)));
-
-      return out;
-    }
-
-    getSubtitle(data) {
-      let outString = helpers.getCalendarTime(data.updated_at);
-
-      if (data.unread_comment_count === 1) {
-        outString += ', én ulest kommentar';
-      } else if (data.unread_comment_count > 1) {
-        outString += `, ${data.unread_comment_count} uleste kommentarer`;
+  _refresh() {
+    this.setState({ refreshing: true });
+    LayoutAnimation.spring();
+    global.arbeidsMaur.forumUpdater.loadFirstFavorites(1).then((data) => {
+      if (this._isMounted) {
+        this.setState({ refreshing: false });
       }
+    });
+  }
 
-      return outString;
+  getData() {
+    const out = Object.values(this.props.favorites);
+
+    out.sort((x, y) => (new Date(y.updated_at) - new Date(x.updated_at)));
+
+    return out;
+  }
+
+  getSubtitle(data) {
+    let outString = helpers.getCalendarTime(data.updated_at);
+
+    if (data.unread_comment_count === 1) {
+      outString += ', én ulest kommentar';
+    } else if (data.unread_comment_count > 1) {
+      outString += `, ${data.unread_comment_count} uleste kommentarer`;
     }
 
-    getUnreadStyle(data) {
-      if (data.unread_comment_count > 0) {
-        return { fontWeight: '600' };
-      }
+    return outString;
+  }
+
+  getUnreadStyle(data) {
+    if (data.unread_comment_count > 0) {
+      return { fontWeight: '600' };
     }
+  }
 
     _renderItem = ({ item }) => (
 

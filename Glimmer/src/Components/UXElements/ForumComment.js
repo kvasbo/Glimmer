@@ -86,7 +86,7 @@ export default class ForumComment extends React.Component {
               byStarter={this.props.byStarter}
               navigator={this.props.navigator}
               isUnread={this.props.isUnread}
-            />          
+            />
           </View>
           <View style={pageStyles.comment}>
             <ForumTextTextile webview cut={false} text={this.props.data.body_textile} navigator={this.props.navigator} />
@@ -134,5 +134,5 @@ const pageStyles = StyleSheet.create({
   metaData: {
     padding: 5,
     paddingTop: 10,
-  }
+  },
 });

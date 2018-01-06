@@ -11,7 +11,7 @@ export default class EmptyPage extends React.Component {
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("empty");
+        firebase.analytics().setCurrentScreen('empty');
         break;
     }
   }

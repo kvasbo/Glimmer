@@ -18,7 +18,7 @@ class WidgetFavorites extends React.Component {
 
   async componentWillMount() {
     LayoutAnimation.easeInEaseOut();
-   // this.getMorePages(1, pagesToLoadAtStart);
+    // this.getMorePages(1, pagesToLoadAtStart);
   }
 
   async getMorePages(from, number) {
@@ -27,11 +27,9 @@ class WidgetFavorites extends React.Component {
   }
 
   getPosts() {
-    let posts = Object.values(this.props.favorites);  
+    let posts = Object.values(this.props.favorites);
     if (this.state.onlyUnread) {
-      posts = posts.filter((p) => {
-        return (p.unread_comment_count > 0); 
-      });
+      posts = posts.filter(p => (p.unread_comment_count > 0));
     }
 
     posts.sort((a, b) => {
@@ -46,16 +44,14 @@ class WidgetFavorites extends React.Component {
       this.getMorePages(this.state.lastPage, 1);
     }
 
-    return posts.map((p) => {
-      return (
-        <WidgetFavoritesPost key={p.id} navigator={this.props.navigator} post={p} />
-      );
-    });
+    return posts.map(p => (
+      <WidgetFavoritesPost key={p.id} navigator={this.props.navigator} post={p} />
+    ));
   }
 
   render() {
     return (
-      <WidgetContainer title="Uleste i fulgte tråder">  
+      <WidgetContainer title="Uleste i fulgte tråder">
         {this.getPosts()}
       </WidgetContainer>
     );
@@ -70,9 +66,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-)(WidgetFavorites);
+export default connect(mapStateToProps)(WidgetFavorites);
 
 
 WidgetFavorites.propTypes = {

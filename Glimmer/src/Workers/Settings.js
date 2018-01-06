@@ -2,7 +2,6 @@ import { AsyncStorage } from 'react-native';
 import { updateSettings } from '../Redux/actions';
 
 export default class Settings {
-  
   constructor() {
     this.init();
     this.settings = {};

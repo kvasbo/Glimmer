@@ -11,7 +11,7 @@ class PageKudos extends React.Component {
     this.state = { refreshing: false };
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
-  
+
   async onRefresh() {
     this.setState({ refreshing: true });
     await global.arbeidsMaur.kudos.getKudos(1);
@@ -19,7 +19,7 @@ class PageKudos extends React.Component {
   }
 
   componentDidMount() {
-    this.confettiTimeout = setTimeout(() => { 
+    this.confettiTimeout = setTimeout(() => {
       if (this.confettiView) {
         this.confettiView.startConfetti();
       }
@@ -37,7 +37,7 @@ class PageKudos extends React.Component {
     switch (event.id) {
       case 'willAppear':
         this.onRefresh();
-        firebase.analytics().setCurrentScreen("kudos");
+        firebase.analytics().setCurrentScreen('kudos');
         break;
     }
   }
@@ -78,9 +78,9 @@ class PageKudos extends React.Component {
         >
           {this.getKudos()}
           {this.getFooter()}
-          
+
         </ScrollView>
-        <Confetti ref={(node) => this.confettiView = node}/>
+        <Confetti ref={node => this.confettiView = node} />
       </View>
     );
   }

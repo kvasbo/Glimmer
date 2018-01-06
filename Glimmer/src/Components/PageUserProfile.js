@@ -10,14 +10,14 @@ const customStyle = '<style>* {max-width: 100%;} body {font-family: sans-serif;}
 class PageUserProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { loading: true, user: undefined }
+    this.state = { loading: true, user: undefined };
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("brukerprofil");
+        firebase.analytics().setCurrentScreen('brukerprofil');
         break;
     }
   }
@@ -55,12 +55,12 @@ class PageUserProfile extends React.Component {
           <Text style={{ fontSize: 28 }} >{this.state.user.name}</Text>
           {this.getRealName()}
         </View>
-        <View style={{paddingTop: 10, paddingBottom: 10 }}>
+        <View style={{ paddingTop: 10, paddingBottom: 10 }}>
           <MyWebView
-            source={{html: customStyle + fixHtml(this.state.user.description)}}
+            source={{ html: customStyle + fixHtml(this.state.user.description) }}
             startInLoadingState
-            onError={(error) => console.log(error)}
-            renderError={(error) => console.log(error)}
+            onError={error => console.log(error)}
+            renderError={error => console.log(error)}
             style={{ width: imageWidth - 20, height: 200 }}
           />
         </View>
@@ -80,16 +80,16 @@ const pageStyles = StyleSheet.create({
   },
   userInfoPiece: {
     padding: 10,
-  }
+  },
 });
 
-function createLargeImageUrl(img){
-  if(img.indexOf(".gif") !== -1) return img;
-  return img.replace("48s", "650").replace(".png", ".jpeg").replace(".jpg", "jpeg"); 
+function createLargeImageUrl(img) {
+  if (img.indexOf('.gif') !== -1) return img;
+  return img.replace('48s', '650').replace('.png', '.jpeg').replace('.jpg', 'jpeg');
 }
 
 function fixHtml(html) {
-  return html.replace("http://", "https://");
+  return html.replace('http://', 'https://');
 }
 
 function mapStateToProps(state) {

@@ -10,15 +10,15 @@ export default class TimeLineEvent extends React.Component {
 
   getType() {
     if (this.props.item.type === 'kudos') {
-      return "kudos";
+      return 'kudos';
     } else if (this.props.item.type === 'comment') {
-      return "kommentar i tråd du følger";
+      return 'kommentar i tråd du følger';
     } else if (this.props.item.type === 'stream') {
-      return "ny post på forsiden";
+      return 'ny post på forsiden';
     } else if (this.props.item.type === 'message') {
-      return "ny melding";
+      return 'ny melding';
     }
-    return "???";
+    return '???';
   }
 
   getTitle() {

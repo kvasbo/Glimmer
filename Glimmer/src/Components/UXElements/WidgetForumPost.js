@@ -39,7 +39,13 @@ export default class WidgetForumPost extends React.Component {
     return (
       <TouchableOpacity onPress={() => this.loadPost()}>
         <View style={[pageStyles.container, { backgroundColor: colors.COLOR_BLACK }]}>
-        <Image resizeMode='cover' style={{ position: 'absolute', left: 0, top: 0, width, height }} source={imageSrc} />
+          <Image
+            resizeMode="cover"
+            style={{
+ position: 'absolute', left: 0, top: 0, width, height,
+}}
+            source={imageSrc}
+          />
           <View
             style={{
               position: 'absolute',
@@ -50,7 +56,12 @@ export default class WidgetForumPost extends React.Component {
               alignItems: 'center',
             }}
           >
-            <Text numberOfLines={3} style={{ fontSize: 12, fontWeight: '300', color: colors.COLOR_WHITE, backgroundColor: colors.COLOR_BLACK, padding: 10, opacity: 0.9 }}>
+            <Text
+              numberOfLines={3}
+              style={{
+ fontSize: 12, fontWeight: '300', color: colors.COLOR_WHITE, backgroundColor: colors.COLOR_BLACK, padding: 10, opacity: 0.9,
+}}
+            >
               {this.props.post.title}
             </Text>
           </View>
@@ -60,7 +71,6 @@ export default class WidgetForumPost extends React.Component {
   }
 
   getTileNoPicture() {
-
     const colorSetId = (this.props.post.id % colorSet.length);
     colorsForMe = colorSet[colorSetId];
 
@@ -74,7 +84,12 @@ export default class WidgetForumPost extends React.Component {
             left: 0,
           }}
         >
-          <Text numberOfLines={5} style={{ fontSize: 12, fontWeight: '200', color: colorsForMe.text, backgroundColor: colorsForMe.back, padding: 10 }}>
+          <Text
+            numberOfLines={5}
+            style={{
+ fontSize: 12, fontWeight: '200', color: colorsForMe.text, backgroundColor: colorsForMe.back, padding: 10,
+}}
+          >
             {this.props.post.title}
           </Text>
         </View>
@@ -107,5 +122,5 @@ const pageStyles = StyleSheet.create({
     height,
     width,
   },
-  
+
 });

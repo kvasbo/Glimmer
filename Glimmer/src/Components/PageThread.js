@@ -17,7 +17,7 @@ const activeColor = colors.COLOR_DARKGREY;
 
 class PageThread extends React.Component {
     contentHeight = 0;
-   
+
     constructor(props) {
       super(props);
 
@@ -39,7 +39,7 @@ class PageThread extends React.Component {
       switch (event.id) {
         case 'willAppear':
           this.silentlyLoadCommentPage(this.state.currentPage);
-          firebase.analytics().setCurrentScreen("tråd");
+          firebase.analytics().setCurrentScreen('tråd');
           break;
         case 'didAppear':
           this.updateSkammekrok();
@@ -60,7 +60,7 @@ class PageThread extends React.Component {
     async silentlyLoadCommentPage(page) {
       this.setState({ loading: true });
       await arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent);
-      this.setState({ loading: false });     
+      this.setState({ loading: false });
     }
 
     async loadCommentPage(page) {
@@ -133,7 +133,7 @@ class PageThread extends React.Component {
 
         const offset = heightOfPost + heightOfComments + heightOfSeparators;
         // console.log(heightOfComments,heightOfPost,heightOfSeparators, offset);
-        
+
         let length = 0;
         if (index > 0) {
           const commentWeAreLookingAt = data[index];
@@ -292,7 +292,7 @@ class PageThread extends React.Component {
 
     /**
      * Figure out if a comment is unread or not based on calculated info and its index.
-     * @param {*} index 
+     * @param {*} index
      */
     isUnread(index) {
       const indexOfUnread = commentsInPage - this.unreadInfo.numberOnPage;
@@ -337,7 +337,7 @@ class PageThread extends React.Component {
         <View style={{ width: '100%', height: separatorHeight, backgroundColor: COLOR_LIGHT }} />
       );
     }
-  
+
     render() {
       return (
         <View style={pageStyles.container}>

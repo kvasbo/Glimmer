@@ -9,7 +9,7 @@ import {
 function DimensionsComments(state = {}, action) {
   switch (action.type) {
     case DIMENSIONS_SET_COMMENT:
-      let newState = Object.assign({}, state);
+      const newState = Object.assign({}, state);
       newState[action.id] = action.dimensions;
       return newState;
     default:

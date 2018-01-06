@@ -23,7 +23,7 @@ export default class ForumTextTextile extends React.Component {
       marginLeft: this.props.textPadding,
       marginRight: this.props.textPadding,
     },
-  
+
     bq: {
       marginTop: 3,
       marginBottom: 3,
@@ -95,7 +95,7 @@ export default class ForumTextTextile extends React.Component {
       }
     }
 
-    //console.log('outArray', outArray, 'merged array', mergedArray);
+    // console.log('outArray', outArray, 'merged array', mergedArray);
 
     return mergedArray;
   }
@@ -134,7 +134,6 @@ export default class ForumTextTextile extends React.Component {
         }
       }
       if (node.name === 'iframe') {
-        
         const a = node.attribs;
         const frameW = Number(node.attribs.width);
         const frameH = Number(node.attribs.height);
@@ -152,10 +151,9 @@ export default class ForumTextTextile extends React.Component {
         // console.log(frameW, frameH, width, height, factor, iframeHtml);
         return (
           <View key={index} style={{ width, height, backgroundColor: colors.COLOR_DARKGREY }}>
-            <WebView  style={{ width, height, backgroundColor: colors.COLOR_BLACK }} source={{ html: iframeHtml }} />
+            <WebView style={{ width, height, backgroundColor: colors.COLOR_BLACK }} source={{ html: iframeHtml }} />
           </View>
         );
-        
       }
     } catch (error) {
       console.log(error);
@@ -204,7 +202,7 @@ export default class ForumTextTextile extends React.Component {
 
     console.log(this.props.text, parsed);
 
-    //for (key in this.parsed) {
+    // for (key in this.parsed) {
     parsed.forEach((node, key) => {
       if (node.type === 'txt') {
         outArray.push(<HTMLView
@@ -212,8 +210,8 @@ export default class ForumTextTextile extends React.Component {
           key={key}
           NodeComponent={Text}
           TextComponent={Text}
-          textComponentProps={{selectable: true}}
-          nodeComponentProps={{selectable: false}}
+          textComponentProps={{ selectable: true }}
+          nodeComponentProps={{ selectable: false }}
           RootComponent={View}
           value={node.data}
           stylesheet={this.styles}

@@ -10,11 +10,11 @@ import * as colors from '../../Styles/colorConstants';
 export default class PostControls extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { expanded: false, following: this.props.post.following }
+    this.state = { expanded: false, following: this.props.post.following };
   }
 
   getExtendedView() {
-    if (!this.state.expanded || this.state.loading ) return null;
+    if (!this.state.expanded || this.state.loading) return null;
 
     return (
       <View style={pageStyles.extendedContainer}>
@@ -31,7 +31,7 @@ export default class PostControls extends React.Component {
     if (!this.state.following) {
       result = await global.arbeidsMaur.forumUpdater.followPost(this.props.post.id);
       this.setState({ following: true });
-    } else  {
+    } else {
       result = await global.arbeidsMaur.forumUpdater.unfollowPost(this.props.post.id);
       this.setState({ following: false });
     }
@@ -42,13 +42,13 @@ export default class PostControls extends React.Component {
     LayoutAnimation.spring();
     this.setState({ expanded: !this.state.expanded });
   }
-  
+
   getMoreControls() {
     if (!this.props.showControls) return null;
     return (
       <View>
         <TouchableOpacity onPress={() => { this.toggleExtended(); }}>
-          <Icon name={this.getArrow()} style={{padding: 5}} color={colors.COLOR_MIDGREY} size={20} />
+          <Icon name={this.getArrow()} style={{ padding: 5 }} color={colors.COLOR_MIDGREY} size={20} />
         </TouchableOpacity>
       </View>
     );
@@ -65,7 +65,7 @@ export default class PostControls extends React.Component {
       <View>
         <Badge text={this.props.post.comment_count} textColor={colors.COLOR_MIDGREY} color={colors.COLOR_LIGHT} />
       </View>
-    )
+    );
   }
 
   render() {
@@ -76,7 +76,7 @@ export default class PostControls extends React.Component {
             post={this.props.post}
             navigator={this.props.navigator}
           />
-           <View>
+          <View>
             {this.getCommentCount()}
           </View>
           {this.getMoreControls()}

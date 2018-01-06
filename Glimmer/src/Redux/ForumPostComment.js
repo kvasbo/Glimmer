@@ -6,7 +6,6 @@ const initialState = [];
 function ForumPostComment(state = initialState, action) {
   switch (action.type) {
     case FORUMPOST_COMMENTS_ADD: {
-      
       // Create a copy
       let newCommentsState = cloneDeep(state);
 

@@ -14,7 +14,7 @@ export default class PageGjemsel extends React.Component {
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("gjemsel");
+        firebase.analytics().setCurrentScreen('gjemsel');
         break;
     }
   }
@@ -24,9 +24,7 @@ export default class PageGjemsel extends React.Component {
   }
 
   getList = () => {
-    const out = this.state.krok.map((p) => {
-      return <ListPerson key={p} userId={p} onPress={this.removeFromKrok} />;
-    });
+    const out = this.state.krok.map(p => <ListPerson key={p} userId={p} onPress={this.removeFromKrok} />);
     return out;
   }
 

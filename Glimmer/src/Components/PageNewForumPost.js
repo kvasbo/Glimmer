@@ -16,7 +16,7 @@ export default class PageNewForumPost extends React.Component {
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("forumpost_ny");
+        firebase.analytics().setCurrentScreen('forumpost_ny');
         break;
     }
   }

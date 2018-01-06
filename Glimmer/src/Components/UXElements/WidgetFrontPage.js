@@ -14,7 +14,7 @@ class WidgetFrontPage extends React.Component {
   }
 
   getPosts() {
-    let posts = Object.values(this.props.stream); 
+    let posts = Object.values(this.props.stream);
     posts.sort((a, b) => {
       const aM = new Moment(a.created_at);
       const bM = new Moment(b.created_at);
@@ -23,11 +23,9 @@ class WidgetFrontPage extends React.Component {
 
     posts = posts.slice(0, this.props.settings.frontPageNewPosts);
 
-    return posts.map((p) => {
-      return (
-        <WidgetForumPost key={p.id} navigator={this.props.navigator} post={p} />
-      );
-    });
+    return posts.map(p => (
+      <WidgetForumPost key={p.id} navigator={this.props.navigator} post={p} />
+    ));
   }
 
   render() {
@@ -49,9 +47,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-)(WidgetFrontPage);
+export default connect(mapStateToProps)(WidgetFrontPage);
 
 
 WidgetFrontPage.propTypes = {

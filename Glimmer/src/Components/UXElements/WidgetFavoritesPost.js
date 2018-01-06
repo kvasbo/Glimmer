@@ -19,10 +19,10 @@ export default class WidgetFavoritesPost extends React.Component {
     return (
       <TouchableOpacity onPress={() => this.loadPost()}>
         <View style={pageStyles.container}>
-        <View style={pageStyles.title}>
-          <Text numberOfLines={1}>{this.props.post.title}</Text>
-          <Text style={pageStyles.time} numberOfLines={1}>{new Moment(this.props.post.updated_at).calendar()}</Text>
-        </View>
+          <View style={pageStyles.title}>
+            <Text numberOfLines={1}>{this.props.post.title}</Text>
+            <Text style={pageStyles.time} numberOfLines={1}>{new Moment(this.props.post.updated_at).calendar()}</Text>
+          </View>
           <Text style={pageStyles.unread} >{this.props.post.unread_comment_count}</Text>
         </View>
       </TouchableOpacity>

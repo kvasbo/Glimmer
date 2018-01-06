@@ -18,7 +18,7 @@ export default class EventData extends React.Component {
 
   getMapLink() {
     if (this.props.event.venue.location.lat && this.props.event.venue.location.lon) {
-      return <Icon name="ios-map" size={25} color={colors.COLOR_GRAD1} onPress={()=>this.openMap()} />;
+      return <Icon name="ios-map" size={25} color={colors.COLOR_GRAD1} onPress={() => this.openMap()} />;
     }
   }
 

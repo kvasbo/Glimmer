@@ -43,7 +43,7 @@ const errorHandler = (e, isFatal) => {
       },
     }]);
   } else {
-   // console.log(e); // So that we can see it in the ADB logs in case of Android if needed
+    // console.log(e); // So that we can see it in the ADB logs in case of Android if needed
   }
 };
 
@@ -126,7 +126,7 @@ class Glimmer extends React.Component {
       });
     }
 
-   async startAppBasedOnLoginStatus() {
+    async startAppBasedOnLoginStatus() {
       if (this.loggedIn === true) {
         global.arbeidsMaur.initData();
         await global.arbeidsMaur.settings.init();
@@ -200,9 +200,9 @@ function startMainApp() {
       icon: iconsMap['ios-chatbubbles--tab-bar'],
       title: 'Samtaler',
       navigatorStyle: NavStyles.default,
-    }, 
+    },
     ],
-    tabsStyle: { 
+    tabsStyle: {
       tabBarSelectedButtonColor: '#3499DB',
       initialTabIndex: 2,
     },

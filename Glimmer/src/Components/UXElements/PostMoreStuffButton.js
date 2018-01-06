@@ -60,18 +60,20 @@ export default class PostMoreStuffButton extends React.Component {
   }
 
   showSheet() {
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: ['Rapporter', 'Blokker forfatter', 'Lukk'],
-      destructiveButtonIndex: 0,
-      cancelButtonIndex: 2,
-    },
-    (buttonIndex) => {
-      if (buttonIndex === 0) {
-        this.reportItem();
-      } else if (buttonIndex === 1) {
-        this.blockAuthor();
-      }
-    });
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Rapporter', 'Blokker forfatter', 'Lukk'],
+        destructiveButtonIndex: 0,
+        cancelButtonIndex: 2,
+      },
+      (buttonIndex) => {
+        if (buttonIndex === 0) {
+          this.reportItem();
+        } else if (buttonIndex === 1) {
+          this.blockAuthor();
+        }
+      },
+    );
   }
 
   render() {

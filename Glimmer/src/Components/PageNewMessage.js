@@ -20,7 +20,7 @@ export default class PageNewMessage extends React.Component {
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("melding_ny");
+        firebase.analytics().setCurrentScreen('melding_ny');
         break;
     }
   }

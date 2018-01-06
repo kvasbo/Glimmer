@@ -7,7 +7,6 @@ const initialState = {
 
 function Settings(state = initialState, action) {
   switch (action.type) {
-
     case SETTINGS_REFRESH:
       return action.settings;
 

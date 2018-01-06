@@ -21,7 +21,7 @@ export default class PageLogin extends React.Component {
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("login");
+        firebase.analytics().setCurrentScreen('login');
         break;
     }
   }
@@ -50,23 +50,23 @@ export default class PageLogin extends React.Component {
     return (
 
       <View style={pageStyles.container}>
-        <View style={{  }}>
-            <View style={pageStyles.paragraph}>
-              <Text style={pageStyles.header}>Velkommen til Glimmer</Text>
-            </View>
-            <View style={pageStyles.paragraph}>
-              <Text style={pageStyles.mainText}>For å bruke denne appen må du gi den tilgang til din
+        <View style={{ }}>
+          <View style={pageStyles.paragraph}>
+            <Text style={pageStyles.header}>Velkommen til Glimmer</Text>
+          </View>
+          <View style={pageStyles.paragraph}>
+            <Text style={pageStyles.mainText}>For å bruke denne appen må du gi den tilgang til din
                             Underskogkonto.
-              </Text>
-              <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen og gi tillatelse når
+            </Text>
+            <Text style={pageStyles.mainText}>Det gjør du ved å trykke på knappen og gi tillatelse når
                             Underskog åpner seg i din nettleser.
-              </Text>
-              <Text style={pageStyles.mainText}>Før du gjør dette må du også lese og godta sluttbrukeravtalen, som du kan se ved å trykke på knappen under.</Text>
-              <View style={{ height: 20 }} />
-              <Button title="Vis sluttbrukeravtale" onPress={() => this.setState({ eulaVisible: true })} />
-              <Button title="Logg inn på Underskog" disabled={!this.state.eulaAccepted} onPress={() => this.doTheLoginThing()} />
-            </View>
-          
+            </Text>
+            <Text style={pageStyles.mainText}>Før du gjør dette må du også lese og godta sluttbrukeravtalen, som du kan se ved å trykke på knappen under.</Text>
+            <View style={{ height: 20 }} />
+            <Button title="Vis sluttbrukeravtale" onPress={() => this.setState({ eulaVisible: true })} />
+            <Button title="Logg inn på Underskog" disabled={!this.state.eulaAccepted} onPress={() => this.doTheLoginThing()} />
+          </View>
+
         </View>
         <Modal visible={this.state.eulaVisible}>
           {this.getEula()}

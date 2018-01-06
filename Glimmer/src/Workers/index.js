@@ -29,8 +29,7 @@ export default class Workers {
   }
 
   initData() {
-
-    console.log("Initdata");
+    console.log('Initdata');
 
     const first = [this.forumUpdater.loadFirstFavorites(4), this.forumUpdater.loadFirstStream(1), this.messageUpdater.updateMessageThreads(1)];
 
@@ -45,14 +44,14 @@ export default class Workers {
   }
 
   refreshAppData() {
-    console.log("refreshAppData");
+    console.log('refreshAppData');
     this.refreshForumData();
     this.kudos.getKudos(1);
     this.messageUpdater.updateMessageThreads(1);
   }
 
   refreshForumData() {
-    console.log("refreshForumData");
+    console.log('refreshForumData');
     this.forumUpdater.loadFirstFavorites(4);
     this.forumUpdater.loadFirstStream(1);
   }

@@ -25,11 +25,11 @@ class PageConversation extends React.Component {
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
-          firebase.analytics().setCurrentScreen("viewConversation");
+          firebase.analytics().setCurrentScreen('viewConversation');
           break;
       }
     }
-  
+
 
     componentWillMount() {
       arbeidsMaur.messageUpdater.getMessagesWithUser(this.props.user_id, 1);
@@ -108,7 +108,7 @@ class PageConversation extends React.Component {
             <TextInput
               style={pageStyles.textWindow}
               multiline={false}
-              autoFocus={true}
+              autoFocus
               autoCapitalize="sentences"
               onSubmitEditing={() => this.onSend()}
               returnKeyType="send"

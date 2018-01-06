@@ -15,8 +15,7 @@ export default class KudosAndCommentsAndStuff extends React.Component {
 
   // Switch kudos section based on who created the post
   getKudosSection() {
-
-    if ( !this.props.showKudosButton) return null;
+    if (!this.props.showKudosButton) return null;
 
     if (this.props.byMe) {
       let kudos = [];
@@ -79,7 +78,10 @@ export default class KudosAndCommentsAndStuff extends React.Component {
   render() {
     return (
 
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginLeft: 0, marginRight: 0 }}>
+      <View style={{
+ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginLeft: 0, marginRight: 0,
+}}
+      >
         {this.getKudosSection()}
         {this.getCommentThing()}
         {this.getMoreStuff()}

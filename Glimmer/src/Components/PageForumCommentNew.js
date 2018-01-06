@@ -16,7 +16,7 @@ export default class PageNewForumComment extends React.Component {
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("kommentar_ny");
+        firebase.analytics().setCurrentScreen('kommentar_ny');
         break;
     }
   }

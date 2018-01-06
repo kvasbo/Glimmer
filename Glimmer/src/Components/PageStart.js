@@ -29,7 +29,7 @@ class PageStart extends React.Component {
   async onNavigatorEvent(event) {
     switch (event.id) {
       case 'willAppear':
-        firebase.analytics().setCurrentScreen("start");
+        firebase.analytics().setCurrentScreen('start');
         LayoutAnimation.easeInEaseOut();
         await global.arbeidsMaur.forumUpdater.addFavorites(1, 1);
         LayoutAnimation.easeInEaseOut();
@@ -72,7 +72,7 @@ class PageStart extends React.Component {
 }
 
 PageStart.propTypes = {
-  
+
 };
 
 function mapStateToProps(state) {
@@ -86,9 +86,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-)(PageStart);
+export default connect(mapStateToProps)(PageStart);
 
 const pageStyles = StyleSheet.create({
   container: {

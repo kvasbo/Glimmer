@@ -41,14 +41,13 @@ export default class StreamForumPost extends React.Component {
             <Text style={pageStyles.titleText}>{this.props.data.title}</Text>
           </View>
         );
-      } else {
-        return (
-          <View style={pageStyles.image}>
-            <Image style={{ flex: 1 }} source={{ uri: this.images[0].src }} />
-            <Text style={pageStyles.textOnImage}>{this.props.data.title}</Text>
-          </View>
-        )
       }
+      return (
+        <View style={pageStyles.image}>
+          <Image style={{ flex: 1 }} source={{ uri: this.images[0].src }} />
+          <Text style={pageStyles.textOnImage}>{this.props.data.title}</Text>
+        </View>
+      );
     }
 
     render() {
@@ -65,7 +64,10 @@ export default class StreamForumPost extends React.Component {
               <View>
                 {this.getHeader()}
               </View>
-              <View style={{ margin: 5, marginLeft: 6, marginBottom: 0, marginRight: 6 }}>
+              <View style={{
+ margin: 5, marginLeft: 6, marginBottom: 0, marginRight: 6,
+}}
+              >
                 <PostControls post={this.props.data} showControls={false} showCommentCount navigator={this.props.navigator} />
               </View>
             </View>

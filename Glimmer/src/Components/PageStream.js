@@ -15,7 +15,9 @@ class PageStream extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = { loading: false, refreshing: false, hide_nsfw: false, skammekrok: [] };
+      this.state = {
+        loading: false, refreshing: false, hide_nsfw: false, skammekrok: [],
+      };
       this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
       this._onRefresh = this._onRefresh.bind(this);
     }
@@ -46,7 +48,7 @@ class PageStream extends React.Component {
     onNavigatorEvent(event) {
       switch (event.id) {
         case 'willAppear':
-          firebase.analytics().setCurrentScreen("strøm");
+          firebase.analytics().setCurrentScreen('strøm');
           this._silentRefresh();
           this.updateSkammekrok();
           break;
