@@ -65,7 +65,6 @@ class PageThread extends React.Component {
 
     async loadCommentPage(page) {
       this.setState({ currentPage: page, loading: true });
-      this.sizeIndex.comments = {};
       if (this.state.currentPage === 1) arbeidsMaur.forumUpdater.markThreadAsRead(this.props.post.id, this.isEvent);
       await arbeidsMaur.forumUpdater.loadCommentsForPost(this.props.post.id, page, this.isEvent);
       this.setState({ loading: false });
@@ -187,30 +186,24 @@ class PageThread extends React.Component {
 
     // Newer page
     nextPage() {
-      this.sizeIndex.comments = {};
       this.loadCommentPage(Math.max(this.state.currentPage - 1, 1));
     }
 
     // Older page
     prevPage() {
-      this.sizeIndex.comments = {};
       this.loadCommentPage(Math.min(this.state.currentPage + 1, this.findLastPageOfComments()));
     }
 
     newestPage() {
-      this.sizeIndex.comments = {};
       this.loadCommentPage(1);
     }
 
     oldestPage() {
-      this.sizeIndex.comments = {};
       this.loadCommentPage(this.findLastPageOfComments());
     }
 
     enableUnreadButton() {
       if (this.unreadInfo.unreadPage !== this.state.currentPage) return false;
-      // if (this.getComments().length === 0 || Object.values(this.sizeIndex.comments).length === 0) return false;
-      // if (this.getComments().length !== Object.values(this.sizeIndex.comments).length) return false;
       return true;
     }
 
