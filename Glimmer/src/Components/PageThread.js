@@ -132,18 +132,18 @@ class PageThread extends React.Component {
         const heightOfSeparators = Math.max(0, (index - 1)) * separatorHeight;
 
         const offset = heightOfPost + heightOfComments + heightOfSeparators;
-        console.log(heightOfComments,heightOfPost,heightOfSeparators, offset);
+        // console.log(heightOfComments,heightOfPost,heightOfSeparators, offset);
         
         let length = 0;
         if (index > 0) {
           const commentWeAreLookingAt = data[index];
-          console.log("we are looking at", commentWeAreLookingAt);
+          // console.log("we are looking at", commentWeAreLookingAt);
           length = (commentSizeList[commentWeAreLookingAt.id]) ? commentSizeList[commentWeAreLookingAt.id].height : 0;
         }
         return { length, offset, index };
       } catch (e) {
-        console.log('error in getItemLayout');
-        throw new Error('Error in getItemLayout');
+        // console.log('error in getItemLayout');
+        throw new Error(`Error in getItemLayout: ${e.message}`);
       }
     }
 
@@ -158,9 +158,9 @@ class PageThread extends React.Component {
     }
 
     gotoPost(index) {
-      const goto = Math.min((this.getCommentList().length), index + 1);
+      const goto = Math.min((this.getCommentList().length - 1), index + 1);
       const offset = this.getItemLayout(this.getCommentList(), goto);
-      if (offset.offset < this.contentHeight) {
+      if ((offset.length + offset.offset) < this.contentHeight) {
         this.scrollViewRef.scrollTo({ y: offset.offset });
       } else {
         this.gotoBottom();
