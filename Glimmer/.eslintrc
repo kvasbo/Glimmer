@@ -18,10 +18,10 @@
   },
   // To give you an idea how to override rule options:
   "rules": {
-    "no-console": 0,
+    "no-console": 1,
     "no-empty": 0,
     "no-undef": 1,
-    "no-unused-vars": 0,
+    "no-unused-vars": 1,
     "no-fallthrough": 2,
     "react/jsx-filename-extension": 0,
     "no-use-before-define": 0
@@ -38,7 +38,9 @@
     "moment": false,
     "helpers": false,
     "arbeidsMaur": false,
-    "fetch": false
+    "fetch": false,
+    "firebase": false,
+    "global": false,
   },
   "extends": [
     "airbnb"

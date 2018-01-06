@@ -1,7 +1,3 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert, Dimensions, Linking, Platform, StyleSheet, Text, View, WebView } from 'react-native';
@@ -17,7 +13,7 @@ export default class ForumTextTextile extends React.Component {
   constructor(props) {
     super(props);
     this.dim = Dimensions.get('window');
-    this.parsed = this.parseText();
+  //  this.parsed = this.parseText();
   }
 
   styles = StyleSheet.create({
@@ -204,8 +200,12 @@ export default class ForumTextTextile extends React.Component {
   getContent() {
     const outArray = [];
 
+    const parsed = this.parseText();
+
+    console.log(this.props.text, parsed);
+
     //for (key in this.parsed) {
-    this.parsed.forEach((node, key) => {
+    parsed.forEach((node, key) => {
       if (node.type === 'txt') {
         outArray.push(<HTMLView
           style={this.styles.paragraph}

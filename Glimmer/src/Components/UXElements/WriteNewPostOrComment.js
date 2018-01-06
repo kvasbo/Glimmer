@@ -2,24 +2,25 @@
  * Created by kvasbo on 31.05.2017.
  */
 
-import React from "react";
+import React from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    AsyncStorage,
-    Button,
-    Image,
-    KeyboardAvoidingView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  Alert,
+  AsyncStorage,
+  Button,
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import PropTypes from "prop-types";
 import InputStyles from "../../Styles/InputStyles";
 import * as colors from "../../Styles/colorConstants";
+
 const ImagePicker = require('react-native-image-picker');
 const uuidv4 = require('uuid/v4');
 
@@ -175,7 +176,6 @@ export default class WriteNewPostOrComment extends React.Component {
                 }
                 console.log(error);
             });
-
         }
         else if (this.props.edit && this.props.type === "comment") {
 
@@ -223,7 +223,6 @@ export default class WriteNewPostOrComment extends React.Component {
             }
 
             //Post a new comment
-
             arbeidsMaur.forumUpdater.postNewThread(forumId, this.state.title, body, []).then(() => {
 
                 this._doClear();
@@ -304,7 +303,7 @@ export default class WriteNewPostOrComment extends React.Component {
         );
     }
 
-       //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed.
+    //To put a loading indicator on top of pictures while they are uploading. Mr fancypants I am indeed.
     getLoadingIndicator(loading) {
         if (loading) {
             return (
@@ -369,38 +368,37 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     _uploadAndAddPicture(pictureData) {
-
         //Hide modal
         this.setState({modalVisible: false});
-
-        console.log("pictureData", pictureData)
-
+        console.log("pictureData", pictureData);
         var metadata = {};
 
         try {
-
             metadata.uri = pictureData.uri;
-            let filename = uuidv4() + ".jpg";
-
-            if (pictureData.fileName != undefined) filename = pictureData.fileName.toLowerCase();
+            let filename = uuidv4();
+         //   if (pictureData.fileName != undefined) filename = pictureData.fileName.toLowerCase();
 
             let filenameArr = filename.split(".");
             var extension = filenameArr.slice(-1)[0];
 
-            if (extension === "jpg" || extension === "jpeg") {
+            if (extension === "jpg" || extension === "jpeg" || extension === "heic" || extension === "heif" ){
                 metadata.contentType = 'image/jpeg';
+                filename = filename + ".jpg";
             }
             else if (extension === "png") {
                 metadata.contentType = 'image/png';
+                filename = filename + ".png";
             }
             else if (extension === "gif") {
                 metadata.contentType = 'image/gif';
+                filename = filename + ".gif";
             }
             else if (extension === "webp") {
                 metadata.contentType = 'image/webp';
+                filename = filename + ".webp";
             }
 
-            metadata.fileName = new Date().getTime() + "_" + filename;
+            metadata.fileName = filename;
 
             let tmpImages = this.state.images;
             tmpImages[metadata.fileName] = {orig_uri: metadata.uri, uri: null, done: false}
@@ -428,7 +426,6 @@ export default class WriteNewPostOrComment extends React.Component {
     }
 
     pickPictures() {
-
       const options = {
         title: 'Hvor skal vi finne et bilde?',
         cancelButtonTitle: 'Avbryt',
@@ -445,9 +442,7 @@ export default class WriteNewPostOrComment extends React.Component {
       };
 
       ImagePicker.showImagePicker(options, (response) => {
-        
         this._uploadAndAddPicture(response);
-
         if (response.didCancel) {
           console.log('User cancelled image picker');
         }
@@ -461,32 +456,22 @@ export default class WriteNewPostOrComment extends React.Component {
           let source = { uri: response.uri };
         }
       });
-
     }
 
     _getPictureButton() {
-
         return (
             <Button disabled={!this.state.buttonsActive} onPress={() => this.pickPictures()} title="Bilder"/>)
     }
 
     render() {
-
         return (
-
             <View style={pageStyles.container}>
-
-            
                 <KeyboardAvoidingView behavior="padding"
                                       keyboardVerticalOffset={helpers.getPlatformDependentVars().keyboardAvoidingOffset}
                                       style={{flex: 1}}>
-
                     {this._getTitleBox()}
-
                     {this._getTimer()}
-
                     <View style={{flex: 1}}>
-
                         <TextInput
                             textAlignVertical="top"
                             style={[InputStyles.textBox, {flex: 1, margin: 0}]}
@@ -499,11 +484,8 @@ export default class WriteNewPostOrComment extends React.Component {
                             placeholder="Hva har du på hjertet?"
                             placeholderTextColor={colors.COLOR_LIGHTGREY}
                         />
-
                     </View>
-
                     {this.getImageView()}
-
                     <View style={{
                         height: 50,
                         flexDirection: "row",
@@ -513,21 +495,13 @@ export default class WriteNewPostOrComment extends React.Component {
                     }}>
                         <Button disabled={!this.state.buttonsActive} onPress={() => this._clear()} title="Tøm"
                                 onLongPress={() => this.clear(true)}/>
-
                         {this._getPictureButton()}
-
                         <Button disabled={!this.state.buttonsActive} onPress={() => this._post()} title="Send"/>
                     </View>
-
                 </KeyboardAvoidingView>
-
             </View>
-
-
         )
-
     }
-
 }
 
 WriteNewPostOrComment.defaultProps = {
@@ -535,7 +509,6 @@ WriteNewPostOrComment.defaultProps = {
 }
 
 WriteNewPostOrComment.propTypes = {
-
     type: PropTypes.oneOf(['comment', 'post']).isRequired,
     postId: PropTypes.number,
     navigator: PropTypes.object,
@@ -544,7 +517,6 @@ WriteNewPostOrComment.propTypes = {
     existingText: PropTypes.string,
     existingTitle: PropTypes.string,
     commentId: PropTypes.number
-
 }
 
 const
@@ -559,5 +531,4 @@ const
             backgroundColor: colors.COLOR_LIGHT,
             height: 100
         }
-
     });
