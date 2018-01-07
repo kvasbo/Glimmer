@@ -110,7 +110,7 @@ class PageSettings extends React.Component {
     }
 
     render() {
-      const favoritesWord = (this.state.frontPageFavorites === 1) ? 'favoritt' : 'favoritter';
+      const favoritesWord = (this.state.frontPageFavorites === 1) ? 'ulest' : 'uleste';
       const newPostsWord = (this.state.frontPageNewPosts === 1) ? 'nytt' : 'nye';
 
       return (

@@ -21,7 +21,7 @@ class WidgetMessages extends React.Component {
 
   render() {
     return (
-      <WidgetContainer title="Siste kudos">
+      <WidgetContainer title="Meldinger">
         {this.getConversations()}
       </WidgetContainer>
     );
@@ -36,7 +36,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(WidgetKudos);
+export default connect(mapStateToProps)(WidgetMessages);
 
 WidgetMessages.propTypes = {
 

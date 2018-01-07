@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Moment from 'moment';
 import { ScrollView, StyleSheet, LayoutAnimation } from 'react-native';
-import handleDeeplink from '../deepLink';
 import WidgetFrontPage from './UXElements/WidgetFrontPage';
 import WidgetFavorites from './UXElements/WidgetFavorites';
+import WidgetKudos from './UXElements/WidgetKudos';
+import WidgetMessages from './UXElements/WidgetMessages';
 import * as colors from '../Styles/colorConstants';
 
 class PageStart extends React.Component {
@@ -51,6 +51,16 @@ class PageStart extends React.Component {
 
   }
 
+  getMessageWidget() {
+    if (!this.props.settings.frontPageMessages) return null;
+    return (<WidgetMessages navigator={this.props.navigator} />);
+  }
+
+  getKudosWidget() {
+    if (!this.props.settings.frontPageKudos) return null;
+    return (<WidgetKudos navigator={this.props.navigator} />);
+  }
+
   getFavoritesWidget() {
     if (this.props.settings.frontPageFavorites === 0) return null;
     return (<WidgetFavorites navigator={this.props.navigator} />);
@@ -64,6 +74,8 @@ class PageStart extends React.Component {
   render() {
     return (
       <ScrollView style={pageStyles.container}>
+        {this.getMessageWidget()}
+        {this.getKudosWidget()}
         {this.getFrontPageWidget()}
         {this.getFavoritesWidget()}
       </ScrollView>
