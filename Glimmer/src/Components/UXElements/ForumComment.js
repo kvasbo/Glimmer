@@ -67,7 +67,7 @@ export default class ForumComment extends React.Component {
 
     getMoreStuff() {
       return (
-        <View style={{ marginRight: 10, marginLeft: 10 }}><PostMoreStuffButton itemId={this.props.data.id} itemType="comment" itemAuthorId={this.props.data.creator_id} /></View>
+        <View style={{ width: 30, justifyContent: 'center', alignItems: 'center' }}><PostMoreStuffButton itemId={this.props.data.id} itemType="comment" itemAuthorId={this.props.data.creator_id} /></View>
       );
     }
 
@@ -87,6 +87,7 @@ export default class ForumComment extends React.Component {
               navigator={this.props.navigator}
               isUnread={this.props.isUnread}
             />
+            {this.getMoreStuff()}
           </View>
           <View style={pageStyles.comment}>
             <ForumTextTextile webview cut={false} text={this.props.data.body_textile} navigator={this.props.navigator} />
@@ -97,7 +98,6 @@ flexDirection: 'row', margin: 0, marginTop: 0, padding: 10, paddingTop: 10, padd
           >
             {this.getKudosSection()}
             {this.getEditSection()}
-            {this.getMoreStuff()}
           </View>
         </View>
       );
@@ -134,5 +134,6 @@ const pageStyles = StyleSheet.create({
   metaData: {
     padding: 5,
     paddingTop: 10,
+    flexDirection: 'row',
   },
 });
