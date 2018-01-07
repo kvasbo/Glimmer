@@ -1,17 +1,14 @@
-/**
- * Created by kvasbo on 31.05.2017.
- */
-
 import React from 'react';
+import { connect } from 'react-redux';
 import { ScrollView, StyleSheet, AsyncStorage, View, Text } from 'react-native';
 import { List, ListItem, Slider } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Ionicons';
+// import Icon from 'react-native-vector-icons/Ionicons';
 import * as colors from '../Styles/colorConstants';
 
-export default class PageAnnet extends React.Component {
+class PageSettings extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { nsfw: undefined, frontPageFavorites: undefined, frontPageNewPosts: undefined };
+    this.state = { settings: this.props.settings, nsfw: undefined, frontPageFavorites: undefined, frontPageNewPosts: undefined };
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
@@ -21,6 +18,10 @@ export default class PageAnnet extends React.Component {
         firebase.analytics().setCurrentScreen('innstillinger');
         break;
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps);
   }
 
   componentWillMount() {
@@ -64,6 +65,29 @@ export default class PageAnnet extends React.Component {
       }
     }
 
+    toggleWidgetMeldinger = async () => {
+      if (this.props.settings.frontPageMessages === true) {
+        await arbeidsMaur.settings.setFrontPageMessages(false);
+      } else {
+        await arbeidsMaur.settings.setFrontPageMessages(true);
+      }
+      this.updateState();
+    }
+
+
+    toggleWidgetKudos = async () => {
+      if (this.props.settings.frontPageKudos === true) {
+        await arbeidsMaur.settings.setFrontPageKudos(false);
+      } else {
+        await arbeidsMaur.settings.setFrontPageKudos(true);
+      }
+      this.updateState();
+    }
+
+    updateState() {
+      this.setState({ settings: this.props.settings });
+    }
+
     loadAbout() {
       this.props.navigator.push({
         screen: 'glimmer.PageAbout',
@@ -92,9 +116,25 @@ export default class PageAnnet extends React.Component {
       return (
         <ScrollView style={pageStyles.container}>
           <List>
+          <ListItem
+              key="nsfw"
+              title="Kudos på forsida"
+              hideChevron
+              switchButton
+              switched={this.state.settings.frontPageKudos}
+              onSwitch={this.toggleWidgetKudos}
+            />
+            <ListItem
+              key="nsfw"
+              title="Meldinger på forsida"
+              hideChevron
+              switchButton
+              switched={this.state.settings.frontPageMessages}
+              onSwitch={this.toggleWidgetMeldinger}
+            />
             <ListItem
               key="frontpageFavorites"
-              title={`Vis ${this.state.frontPageFavorites} ${favoritesWord} på forsiden`}
+              title={`Vis ${this.state.frontPageFavorites} ${favoritesWord} på forsida`}
               hideChevron
               subtitle={
                 <Slider
@@ -110,7 +150,7 @@ export default class PageAnnet extends React.Component {
             />
             <ListItem
               key="frontpageNew"
-              title={`Vis ${this.state.frontPageNewPosts} ${newPostsWord} innlegg på forsiden`}
+              title={`Vis ${this.state.frontPageNewPosts} ${newPostsWord} innlegg på forsida`}
               hideChevron
               subtitle={
                 <Slider
@@ -133,8 +173,6 @@ export default class PageAnnet extends React.Component {
               switchButton
               switched={this.state.nsfw}
               onSwitch={this.toggleNsfw}
-              // leftIcon={{ name: 'award', type: 'feather' }}
-              // onPress={() => { this.loadKudos(); }}
             />
             <ListItem
               key="skammekrok"
@@ -146,7 +184,6 @@ export default class PageAnnet extends React.Component {
             <ListItem
               key="about"
               title="Om Glimmer"
-              // leftIcon={{ name: 'ios-information-circle', type: 'ionicon' }}
               onPress={() => { this.loadAbout(); }}
             />
             <ListItem
@@ -171,3 +208,11 @@ const pageStyles = StyleSheet.create({
     paddingRight: 0,
   },
 });
+
+function mapStateToProps(state) {
+  return {
+    settings: state.Settings,
+  };
+}
+
+export default connect(mapStateToProps)(PageSettings);

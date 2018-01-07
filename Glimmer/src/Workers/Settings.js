@@ -14,14 +14,13 @@ export default class Settings {
       const parsedFromStore = JSON.parse(settingsFromStore);
       // Merge default and stored settings.
       this.settings = Object.assign(getInitSettings(), parsedFromStore);
-      store.dispatch(updateSettings(this.settings));
     } else {
       this.settings = getInitSettings();
-      this.saveSettings();
     }
+    this.saveSettings(); // Save and by that also dispatch
   };
 
-  saveSettings() {
+  async saveSettings() {
     console.log('Lagrer settings', this.settings);
     AsyncStorage.setItem('settings', JSON.stringify(this.settings));
     store.dispatch(updateSettings(this.settings));
@@ -29,11 +28,6 @@ export default class Settings {
 
   getSettings() {
     return this.settings;
-  }
-
-  setActivityKudos(value) {
-    this.settings.activityShowKudos = value;
-    this.saveSettings();
   }
 
   setFrontPageFavorites(value) {
@@ -45,12 +39,23 @@ export default class Settings {
     this.settings.frontPageNewPosts = value;
     this.saveSettings();
   }
+
+  setFrontPageMessages(value) {
+    this.settings.frontPageMessages = value;
+    this.saveSettings();
+  }
+
+  setFrontPageKudos(value) {
+    this.settings.frontPageKudos = value;
+    this.saveSettings();
+  }
 }
 
 function getInitSettings() {
   return ({
-    activityShowKudos: false,
     frontPageFavorites: 5,
     frontPageNewPosts: 5,
+    frontPageKudos: true,
+    frontPageMessages: true,
   });
 }
