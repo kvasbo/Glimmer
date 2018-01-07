@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import WidgetContainer from './WidgetContainer';
 import * as colors from '../../Styles/colorConstants';
 
-class WidgetKudos extends React.Component {
+class WidgetEmpty extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -15,18 +15,14 @@ class WidgetKudos extends React.Component {
     LayoutAnimation.easeInEaseOut();
   }
 
-  getKudi() {
-    let kudos = Object.values(this.props.kudos);
-    kudos.sort((a, b) => {
-      return b.createdAt.valueOf() - a.createdAt.valueOf();
-    });
-    console.log(kudos);
+  getWidget() {
+
   }
 
   render() {
     return (
-      <WidgetContainer title="Siste kudos">
-        {this.getKudi()}
+      <WidgetContainer title="Tom Widget">
+        {this.getWidget()}
       </WidgetContainer>
     );
   }
@@ -35,13 +31,12 @@ class WidgetKudos extends React.Component {
 function mapStateToProps(state) {
   return {
     appStatus: state.AppStatus,
-    kudos: state.Kudos,
     settings: state.Settings,
   };
 }
 
-export default connect(mapStateToProps)(WidgetKudos);
+export default connect(mapStateToProps)(WidgetEmpty);
 
-WidgetKudos.propTypes = {
+WidgetEmpty.propTypes = {
 
 };

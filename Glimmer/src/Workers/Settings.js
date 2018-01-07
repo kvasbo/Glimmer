@@ -35,6 +35,16 @@ export default class Settings {
     this.saveSettings();
   }
 
+  setFrontPageCalendar(value) {
+    this.settings.frontPageCalendar = value;
+    this.saveSettings();
+  }
+
+  setFrontPageCalendarCity(value) {
+    this.settings.frontPageCalendarCity = value;
+    this.saveSettings();
+  }
+
   setFrontPageNewPosts(value) {
     this.settings.frontPageNewPosts = value;
     this.saveSettings();
@@ -54,6 +64,8 @@ export default class Settings {
 function getInitSettings() {
   return ({
     frontPageFavorites: 5,
+    frontPageCalendar: true,
+    frontPageCalendarCity: undefined,
     frontPageNewPosts: 5,
     frontPageKudos: true,
     frontPageMessages: true,

@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { filter, sumBy, cloneDeep } from 'lodash';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ThreadForumPost from './UXElements/ThreadForumPost';
 import SkogsEvent from './UXElements/SkogsEvent';
 import ForumComment from './UXElements/ForumComment';
 import * as colors from '../Styles/colorConstants';
-import LoadingScreen from './UXElements/LoadingScreen';
-import { COLOR_LIGHT } from '../Styles/colorConstants';
 
 const commentsInPage = 30;
 const separatorHeight = 5;
 const activeColor = colors.COLOR_DARKGREY;
+
+const menuHeight = 40;
+const screenHeight = Dimensions.get('window').height;
+const contentViewHeight = screenHeight - menuHeight - 60;
 
 class PageThread extends React.Component {
     contentHeight = 0;
@@ -148,19 +150,20 @@ class PageThread extends React.Component {
     }
 
     gotoFirstUnread() {
-      if (this.getCommentList().length === 0) return -1;
+      if (this.getCommentList().length === 0) return false;
       const indexOfUnread = this.getCommentList().length - this.unreadInfo.numberOnPage;
       if (this.unreadInfo.unreadPage === this.state.currentPage) {
         this.gotoPost(indexOfUnread);
       } else {
         setTimeout(() => this.gotoFirstUnread(), 250);
       }
+      return true;
     }
 
     gotoPost(index) {
       const goto = Math.min((this.getCommentList().length - 1), index + 1);
       const offset = this.getItemLayout(this.getCommentList(), goto);
-      if ((offset.length + offset.offset) < this.contentHeight) {
+      if ((contentViewHeight + offset.offset) < this.contentHeight) {
         this.scrollViewRef.scrollTo({ y: offset.offset });
       } else {
         this.gotoBottom();
@@ -334,7 +337,7 @@ class PageThread extends React.Component {
 
     renderSeparator() {
       return (
-        <View style={{ width: '100%', height: separatorHeight, backgroundColor: COLOR_LIGHT }} />
+        <View style={{ width: '100%', height: separatorHeight, backgroundColor: colors.COLOR_LIGHT }} />
       );
     }
 
@@ -376,7 +379,7 @@ const pageStyles = StyleSheet.create({
     backgroundColor: colors.COLOR_WHITE,
   },
   navBar: {
-    height: 40,
+    height: menuHeight,
     padding: 0,
     margin: 0,
     paddingTop: 0,
