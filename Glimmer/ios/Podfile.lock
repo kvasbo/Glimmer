@@ -111,7 +111,9 @@ PODS:
   - React/cxxreact_legacy (0.51.0):
     - React/jschelpers_legacy
   - React/jschelpers_legacy (0.51.0)
-  - RNFirebase (3.2.0):
+  - RNBackgroundFetch (2.2.1):
+    - React
+  - RNFirebase (3.2.1):
     - React
   - yoga (0.51.0.React)
 
@@ -127,6 +129,7 @@ DEPENDENCIES:
   - react-native-safari-view (from `../node_modules/react-native-safari-view`)
   - React/BatchedBridge (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
+  - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -137,6 +140,8 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-image-picker
   react-native-safari-view:
     :path: ../node_modules/react-native-safari-view
+  RNBackgroundFetch:
+    :path: ../node_modules/react-native-background-fetch
   RNFirebase:
     :path: ../node_modules/react-native-firebase/ios
   yoga:
@@ -165,9 +170,10 @@ SPEC CHECKSUMS:
   React: 352f02f1db6e4744f9a758527e13e3fdefbbd6ba
   react-native-image-picker: 3693786b3d5958c8f71deed66ec068b323565e0d
   react-native-safari-view: 955d7160d159241b8e9395d12d10ea0ef863dcdd
-  RNFirebase: 22b1917fec663706907bc901ed665ac4f8b9bfd6
+  RNBackgroundFetch: f62e9e27a069511ae7b7015eff9c48c8221fe625
+  RNFirebase: 6f7649e2c9a1a51a77f142195c1c00121dc076bf
   yoga: b5d96400ca8b2936965a7a6516da7c1177f432a3
 
-PODFILE CHECKSUM: c44320a8b1111f62b1c3bc97ded1c289bee320cc
+PODFILE CHECKSUM: ead4c91229270d9a0a9e5fdd993366b2ee554331
 
 COCOAPODS: 1.3.1

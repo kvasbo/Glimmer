@@ -9,6 +9,7 @@ import SafariView from 'react-native-safari-view';
 import RNFirebase from 'react-native-firebase';
 import { setJSExceptionHandler } from 'react-native-exception-handler';
 import 'moment/locale/nb';
+import GlimmerBackgroundFetch from './backgroundFetch';
 import glimmerReducers from './Redux/index';
 import Workers from './Workers/index';
 import GlimmerAuth from './auth';
@@ -107,6 +108,9 @@ class Glimmer extends React.Component {
       registerScreens(store, Provider);
       firebase.auth().signInAnonymously();
 
+      // create bg listener
+      this.bgFetch = new GlimmerBackgroundFetch(global.api, global.auth);
+      
       // This function will set the loggedin state to true or false in the store, which in term will trigger the store subscription.
       // Then the app starts. I know.
       auth.checkAuth().then(() => {
