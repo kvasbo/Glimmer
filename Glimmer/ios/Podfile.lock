@@ -113,7 +113,9 @@ PODS:
   - React/jschelpers_legacy (0.51.0)
   - RNBackgroundFetch (2.2.1):
     - React
-  - RNFirebase (3.2.1):
+  - RNFirebase (3.2.2):
+    - React
+  - RNKeychain (2.0.0):
     - React
   - yoga (0.51.0.React)
 
@@ -131,6 +133,7 @@ DEPENDENCIES:
   - React/Core (from `../node_modules/react-native`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
+  - RNKeychain (from `../node_modules/react-native-keychain`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
@@ -144,6 +147,8 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-background-fetch
   RNFirebase:
     :path: ../node_modules/react-native-firebase/ios
+  RNKeychain:
+    :path: ../node_modules/react-native-keychain
   yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga
 
@@ -171,9 +176,10 @@ SPEC CHECKSUMS:
   react-native-image-picker: 3693786b3d5958c8f71deed66ec068b323565e0d
   react-native-safari-view: 955d7160d159241b8e9395d12d10ea0ef863dcdd
   RNBackgroundFetch: f62e9e27a069511ae7b7015eff9c48c8221fe625
-  RNFirebase: 6f7649e2c9a1a51a77f142195c1c00121dc076bf
+  RNFirebase: 5cf5405d1b67c9720ce63a2da3d6d5346415d0f7
+  RNKeychain: 200bc8e8cc885d1341220981498bebed66cda667
   yoga: b5d96400ca8b2936965a7a6516da7c1177f432a3
 
-PODFILE CHECKSUM: ead4c91229270d9a0a9e5fdd993366b2ee554331
+PODFILE CHECKSUM: c1aac6a7f600581aeff0c88622ae298aba0e6f87
 
 COCOAPODS: 1.3.1

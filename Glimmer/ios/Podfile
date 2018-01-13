@@ -33,7 +33,7 @@ target 'Glimmer' do
   # Pods for Glimmer
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
-
+  pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
   pod 'react-native-safari-view', :path => '../node_modules/react-native-safari-view'
 
   target 'GlimmerTests' do

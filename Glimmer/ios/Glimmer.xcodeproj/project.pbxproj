@@ -49,7 +49,6 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		9117FB040C654A37B4DAB9E1 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6CA335C407A4744A8D1F8F5 /* SimpleLineIcons.ttf */; };
 		95EA88F75C5047928A495D52 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88C82DC48E6F4952B9368E1A /* EvilIcons.ttf */; };
-		9CC498E2DB60446BA853D8DB /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 858E1F5BC0464323919BAA63 /* libRNKeychain.a */; };
 		AD134F8F1EF9042900ED5A39 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD134F8D1EF9040B00ED5A39 /* libReactNativeNavigation.a */; };
 		AD2D11061FE66E7200633350 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD2D11051FE66E7200633350 /* Stickers.xcassets */; };
 		AD2D110A1FE66E7200633350 /* Glimmer Stickers.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AD2D11031FE66E7100633350 /* Glimmer Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -261,13 +260,6 @@
 			remoteGlobalIDString = D8AFADBD1BEE6F3F00A4592D;
 			remoteInfo = ReactNativeNavigation;
 		};
-		AD134FEF1EF9B73D00ED5A39 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0F8EEFE255AC44C8B16B14E8 /* RNKeychain.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5D82366F1B0CE05B005A9EF3;
-			remoteInfo = RNKeychain;
-		};
 		AD2D11081FE66E7200633350 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -388,7 +380,6 @@
 		018CD41F5F34A87F85D99E0C /* libPods-Glimmer-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Glimmer-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05EC0C7A934A666FA2049879 /* Pods-Glimmer-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Glimmer-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Glimmer-tvOS/Pods-Glimmer-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		0C89992CDD9382D63647B00D /* libPods-GlimmerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GlimmerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0F8EEFE255AC44C8B16B14E8 /* RNKeychain.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNKeychain.xcodeproj; path = "../node_modules/react-native-keychain/RNKeychain.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Glimmer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Glimmer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -479,7 +470,6 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				3C29A0CDE01342DE959D7FD2 /* libRNVectorIcons.a in Frameworks */,
-				9CC498E2DB60446BA853D8DB /* libRNKeychain.a in Frameworks */,
 				219217C72703A77EFB918EC2 /* libPods-Glimmer.a in Frameworks */,
 				278DFFBC457646BC84A46C5E /* libRNFirebase.a in Frameworks */,
 				BD6F32D92F474FB39B14E111 /* libReactNativeExceptionHandler.a in Frameworks */,
@@ -684,7 +674,6 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				335372550C084A8AB5801973 /* RNVectorIcons.xcodeproj */,
-				0F8EEFE255AC44C8B16B14E8 /* RNKeychain.xcodeproj */,
 				B5682EEB817140BC9D910756 /* RNFirebase.xcodeproj */,
 				92676A91D9A142318DEF3645 /* ReactNativeExceptionHandler.xcodeproj */,
 			);
@@ -760,14 +749,6 @@
 			isa = PBXGroup;
 			children = (
 				AD134F8D1EF9040B00ED5A39 /* libReactNativeNavigation.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AD134FD21EF9B73D00ED5A39 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AD134FF01EF9B73D00ED5A39 /* libRNKeychain.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1063,10 +1044,6 @@
 					ProjectRef = B5682EEB817140BC9D910756 /* RNFirebase.xcodeproj */;
 				},
 				{
-					ProductGroup = AD134FD21EF9B73D00ED5A39 /* Products */;
-					ProjectRef = 0F8EEFE255AC44C8B16B14E8 /* RNKeychain.xcodeproj */;
-				},
-				{
 					ProductGroup = ADC0584D1EF5195D007B758B /* Products */;
 					ProjectRef = 335372550C084A8AB5801973 /* RNVectorIcons.xcodeproj */;
 				},
@@ -1263,13 +1240,6 @@
 			fileType = archive.ar;
 			path = libReactNativeNavigation.a;
 			remoteRef = AD134F8C1EF9040B00ED5A39 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AD134FF01EF9B73D00ED5A39 /* libRNKeychain.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNKeychain.a;
-			remoteRef = AD134FEF1EF9B73D00ED5A39 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AD61A56A1F348B08006963C0 /* libRCTCameraRoll.a */ = {
