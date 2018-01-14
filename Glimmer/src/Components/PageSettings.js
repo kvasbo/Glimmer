@@ -109,15 +109,9 @@ class PageSettings extends React.Component {
       await global.auth.logOut();
     }
 
-    render() {
-      const favoritesWord = (this.state.frontPageFavorites === 1) ? 'ulest' : 'uleste';
-      const newPostsWord = (this.state.frontPageNewPosts === 1) ? 'nytt' : 'nye';
-
-      return (
-        <ScrollView style={pageStyles.container}>
-          <List>
-          <ListItem
-              key="nsfw"
+/*
+<ListItem
+              key="forsideKudos"
               title="Kudos på forsida"
               hideChevron
               switchButton
@@ -125,13 +119,23 @@ class PageSettings extends React.Component {
               onSwitch={this.toggleWidgetKudos}
             />
             <ListItem
-              key="nsfw"
+              key="forsideMeldinger"
               title="Meldinger på forsida"
               hideChevron
               switchButton
               switched={this.state.settings.frontPageMessages}
               onSwitch={this.toggleWidgetMeldinger}
             />
+*/
+
+    render() {
+      const favoritesWord = (this.state.frontPageFavorites === 1) ? 'ulest' : 'uleste';
+      const newPostsWord = (this.state.frontPageNewPosts === 1) ? 'nytt' : 'nye';
+
+      return (
+        <ScrollView style={pageStyles.container}>
+          <List>
+          
             <ListItem
               key="frontpageFavorites"
               title={`Vis ${this.state.frontPageFavorites} ${favoritesWord} på forsida`}

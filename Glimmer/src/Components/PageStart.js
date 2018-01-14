@@ -74,8 +74,8 @@ class PageStart extends React.Component {
   render() {
     return (
       <ScrollView style={pageStyles.container}>
-        {this.getMessageWidget()}
-        {this.getKudosWidget()}
+        {/*this.getMessageWidget()*/}
+        {/*this.getKudosWidget()*/}
         {this.getFrontPageWidget()}
         {this.getFavoritesWidget()}
       </ScrollView>
