@@ -53,6 +53,7 @@ class PageMessages extends React.Component {
         arbeidsMaur.messageUpdater.updateMessageThreads(1);
         firebase.analytics().setCurrentScreen('meldinger');
         this.updateUnreadCount();
+        global.bgFetch.doBackgroundFetchStuff();
         break;
     }
 

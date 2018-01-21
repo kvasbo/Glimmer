@@ -59,6 +59,16 @@ export default class Settings {
     this.settings.frontPageKudos = value;
     this.saveSettings();
   }
+
+  setNotifyMessages(value) {
+    this.settings.notifyMessages = value;
+    this.saveSettings();
+  }
+
+  setNotifyMessagesIgnoreRabbit(value) {
+    this.settings.notifyMessagesIgnoreRabbit = value;
+    this.saveSettings();
+  }
 }
 
 function getInitSettings() {
@@ -69,5 +79,8 @@ function getInitSettings() {
     frontPageNewPosts: 5,
     frontPageKudos: true,
     frontPageMessages: true,
+    notifyMessages: false,
+    notifyMessagesIgnoreRabbit: true,
+    notifyUnread: false,
   });
 }

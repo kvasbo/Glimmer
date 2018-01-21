@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, StyleSheet, AsyncStorage, View, Text } from 'react-native';
+import { ScrollView, StyleSheet, AsyncStorage, View, Text, Alert } from 'react-native';
 import { List, ListItem, Slider } from 'react-native-elements';
 // import Icon from 'react-native-vector-icons/Ionicons';
 import * as colors from '../Styles/colorConstants';
@@ -8,7 +8,7 @@ import * as colors from '../Styles/colorConstants';
 class PageSettings extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { settings: this.props.settings, nsfw: undefined, frontPageFavorites: undefined, frontPageNewPosts: undefined };
+    this.state = { showPermissonWarning: false, settings: this.props.settings, nsfw: undefined, frontPageFavorites: undefined, frontPageNewPosts: undefined };
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
@@ -81,6 +81,34 @@ class PageSettings extends React.Component {
       } else {
         await arbeidsMaur.settings.setFrontPageKudos(true);
       }
+      this.updateState();
+    }
+
+    toggleNotifyMessages = async () => {
+
+      const allowed = await global.firebase.messaging().requestPermissions();
+      if (!allowed.allowed) {
+        Alert.alert('Tullekopp.', 'Du sa nei til å motta notifikasjoner da du ble spurt. Fiks dette i Innstillinger på telefonen for å få slå på denne her. ...og ikke la det skje igjen!');
+        return false;
+      }
+
+      if (this.props.settings.notifyMessages === true) {
+        await arbeidsMaur.settings.setNotifyMessages(false);
+      } else {
+        await arbeidsMaur.settings.setNotifyMessages(true);
+      }
+      global.bgFetch.doBackgroundFetchStuff();
+      this.updateState();
+      return true;
+    }
+
+    toggleNotifyMessagesIgnoreRabbit = async () => {
+      if (this.props.settings.notifyMessagesIgnoreRabbit === true) {
+        await arbeidsMaur.settings.setNotifyMessagesIgnoreRabbit(false);
+      } else {
+        await arbeidsMaur.settings.setNotifyMessagesIgnoreRabbit(true);
+      }
+      global.bgFetch.doBackgroundFetchStuff();
       this.updateState();
     }
 
@@ -167,6 +195,26 @@ class PageSettings extends React.Component {
                   step={1}
                 />
               }
+            />
+          </List>
+          <List>
+            <ListItem
+              key="notifyMessages"
+              title="Merk ikon ved uleste meldinger"
+              hideChevron
+              switchButton
+              switched={this.state.settings.notifyMessages}
+              onSwitch={this.toggleNotifyMessages}
+            />
+            <ListItem
+              key="notifyMessagesIgnoreRabbit"
+              title="...men ignorer Systemkaninen"
+              subtitle="Den masekråka"
+              hideChevron
+              switchButton
+              switchDisabled={!this.state.settings.notifyMessages}
+              switched={this.state.settings.notifyMessagesIgnoreRabbit}
+              onSwitch={this.toggleNotifyMessagesIgnoreRabbit}
             />
           </List>
           <List>

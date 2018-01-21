@@ -31,13 +31,13 @@ export default class glimmerAuth {
             this.token = token;
           });
 
-          resolve('Logged in');
+          resolve(true);
         }).catch((error) => {
           if (__DEV__) {
             console.log('Error, doing auth', error);
           }
           store.dispatch(setLoginStatus(false));
-          resolve('Key not valid, logging in');
+          resolve(false);
         });
       });
     }

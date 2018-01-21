@@ -27,6 +27,9 @@ class PageConversation extends React.Component {
         case 'willAppear':
           firebase.analytics().setCurrentScreen('viewConversation');
           break;
+        case 'willDisappear':
+          arbeidsMaur.messageUpdater.updateMessageThreads(1);
+          break;
       }
     }
 

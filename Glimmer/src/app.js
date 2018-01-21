@@ -63,7 +63,9 @@ global.config = config;
 global.logger = new Logger();
 global.moment = moment;
 global.store = store;
-// global.rootNavigation = Navigation;
+
+// create bg listener
+global.bgFetch = new GlimmerBackgroundFetch(global.api, global.auth, global.arbeidsMaur);
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
@@ -107,9 +109,6 @@ class Glimmer extends React.Component {
       this.attachStoreListener();
       registerScreens(store, Provider);
       firebase.auth().signInAnonymously();
-
-      // create bg listener
-      this.bgFetch = new GlimmerBackgroundFetch(global.api, global.auth);
       
       // This function will set the loggedin state to true or false in the store, which in term will trigger the store subscription.
       // Then the app starts. I know.
@@ -161,6 +160,13 @@ function startLoginApp() {
 }
 
 function startMainApp() {
+
+  if (__DEV__) {
+    bgFetch.doBackgroundFetchStuff().then((data) => {
+      console.log('Finished bg fetch, result', data)
+    });
+  }
+
   Navigation.startTabBasedApp({
     animationType: 'fade',
     passProps: {},

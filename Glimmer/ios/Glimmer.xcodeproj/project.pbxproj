@@ -53,6 +53,7 @@
 		AD2D11061FE66E7200633350 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD2D11051FE66E7200633350 /* Stickers.xcassets */; };
 		AD2D110A1FE66E7200633350 /* Glimmer Stickers.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AD2D11031FE66E7100633350 /* Glimmer Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AD39F7A31FD97C680001322F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD39F77C1FD97C680001322F /* GoogleService-Info.plist */; };
+		AD8AF28A2014B96500AAC8BD /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8AF26C2014B94800AAC8BD /* libRCTPushNotification.a */; };
 		ADC28FBC1F0B9F68005CD37E /* GlimmerLaunch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBA1F0B9F68005CD37E /* GlimmerLaunch.storyboard */; };
 		ADC28FBE1F0BA582005CD37E /* stol.png in Resources */ = {isa = PBXBuildFile; fileRef = ADC28FBD1F0BA582005CD37E /* stol.png */; };
 		ADF2978320034C9400F39BEF /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ADF2978220034C9400F39BEF /* RNBackgroundFetch+AppDelegate.m */; };
@@ -309,6 +310,20 @@
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
 		};
+		AD8AF26B2014B94800AAC8BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD8AF25B2014B94700AAC8BD /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
+		AD8AF26D2014B94800AAC8BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD8AF25B2014B94700AAC8BD /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
+			remoteInfo = "RCTPushNotification-tvOS";
+		};
 		ADC058691EF5195D007B758B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 335372550C084A8AB5801973 /* RNVectorIcons.xcodeproj */;
@@ -428,6 +443,7 @@
 		AD2D11071FE66E7200633350 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD39F77C1FD97C680001322F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Glimmer/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AD61A5621F348B08006963C0 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		AD8AF25B2014B94700AAC8BD /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		ADC28FBB1F0B9F68005CD37E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Glimmer/Base.lproj/GlimmerLaunch.storyboard; sourceTree = "<group>"; };
 		ADC28FBD1F0BA582005CD37E /* stol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stol.png; path = ../icons/stol.png; sourceTree = "<group>"; };
 		ADF2978220034C9400F39BEF /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
@@ -456,6 +472,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD8AF28A2014B96500AAC8BD /* libRCTPushNotification.a in Frameworks */,
 				ADFD57B11F348CF600F497AF /* libRCTCameraRoll.a in Frameworks */,
 				AD134F8F1EF9042900ED5A39 /* libReactNativeNavigation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -660,6 +677,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				AD8AF25B2014B94700AAC8BD /* RCTPushNotification.xcodeproj */,
 				AD61A5621F348B08006963C0 /* RCTCameraRoll.xcodeproj */,
 				AD134F6F1EF9040B00ED5A39 /* ReactNativeNavigation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -774,6 +792,15 @@
 			isa = PBXGroup;
 			children = (
 				AD61B0691F0B6EB5000C25C5 /* libRNFirebase.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD8AF25C2014B94700AAC8BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD8AF26C2014B94800AAC8BD /* libRCTPushNotification.a */,
+				AD8AF26E2014B94800AAC8BD /* libRCTPushNotification-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1010,6 +1037,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = AD8AF25C2014B94700AAC8BD /* Products */;
+					ProjectRef = AD8AF25B2014B94700AAC8BD /* RCTPushNotification.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1282,6 +1313,20 @@
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
 			remoteRef = AD668B111F1F49DC00900869 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD8AF26C2014B94800AAC8BD /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = AD8AF26B2014B94800AAC8BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD8AF26E2014B94800AAC8BD /* libRCTPushNotification-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTPushNotification-tvOS.a";
+			remoteRef = AD8AF26D2014B94800AAC8BD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ADC0586A1EF5195D007B758B /* libRNVectorIcons.a */ = {
